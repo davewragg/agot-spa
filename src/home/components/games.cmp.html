@@ -1,0 +1,20 @@
+<section>
+  <h2>Games</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Deck type</th>
+      <th>Players</th>
+      <th>Winner</th>
+      <th>Sets</th>
+      <th>Controls</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="#game of games">
+      <td>{{ game.date }}</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
