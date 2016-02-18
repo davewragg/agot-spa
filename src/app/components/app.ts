@@ -3,11 +3,11 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {HomeCmp} from '../../home/components/home';
 import {AboutCmp} from '../../about/components/about';
-import {NameList} from '../../shared/services/name_list';
+import {NameListService} from '../../shared/services/name-list.service';
 
 @Component({
   selector: 'agot-app',
-  viewProviders: [NameList],
+  viewProviders: [NameListService],
   moduleId: module.id,
   templateUrl: './app.html',
   styleUrls: ['./app.css'],

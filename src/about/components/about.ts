@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 
-import {NameList} from '../../shared/services/name_list';
+import {NameListService} from '../../shared/services/name-list.service';
 
 @Component({
   selector: 'about',
@@ -11,7 +11,7 @@ import {NameList} from '../../shared/services/name_list';
 })
 export class AboutCmp {
   newName: string;
-  constructor(public list: NameList) {}
+  constructor(public list: NameListService) {}
  /*
  * @param newname  any text as input.
  * @returns return false to prevent default form submit behavior to refresh the page.
