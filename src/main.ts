@@ -4,10 +4,12 @@ import {APP_BASE_HREF} from 'angular2/router';
 import 'rxjs/add/operator/map';
 import {AppCmp} from './app/components/app';
 
-if ('<%= ENV %>' === 'prod') { enableProdMode(); }
+if ('<%= ENV %>' === 'prod') {
+  enableProdMode();
+}
 
 bootstrap(AppCmp, [
-  provide(APP_BASE_HREF, { useValue: '/' })
+  provide(APP_BASE_HREF, {useValue: '<%= APP_BASE %>'})
 ]);
 
 // In order to start the Service Worker located at "./sw.js"
