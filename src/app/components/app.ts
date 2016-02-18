@@ -1,13 +1,15 @@
 import {Component, ViewEncapsulation} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {ROUTER_PROVIDERS, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
 
-import {HomeCmp} from '../../home/components/home';
+import {HomeCmp} from '../../home/components/home.cmp';
 import {AboutCmp} from '../../about/components/about';
 import {NameListService} from '../../shared/services/name-list.service';
 
 @Component({
   selector: 'agot-app',
   viewProviders: [NameListService],
+  providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS],
   moduleId: module.id,
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
