@@ -3,8 +3,9 @@
 
   <div *ngIf="loadingError" class="error">
     Well, shit. {{ loadingError | json }}
+    <button (click)="loadGames()">Try again</button>
   </div>
-  <table *ngIf="games">
+  <table *ngIf="games" border="1">
     <thead>
     <tr>
       <th>Date</th>
@@ -20,7 +21,21 @@
       <td colspan="8">No games? WTF</td>
     </tr>
     <tr *ngFor="#game of games">
-      <td>{{ game.date | amDateFormat: "LL" }}</td>
+      <td>{{ game.date | amDateFormat: "D MMMM YYYY" }}</td>
+      <td>{{ game.deckType.title }}</td>
+      <td>
+        <div style="display: inline-block;" *ngFor="#gamePlayer of game.gamePlayers">
+          {{ gamePlayer.player.name }}<br>
+          {{ gamePlayer.faction.factionName }}<br>
+          {{ gamePlayer.secondaryFaction?.factionName }}<br>
+          {{ gamePlayer.agenda?.title }}<br>
+        </div>
+      </td>
+      <td>{{ (game.gamePlayers | agotFindWinner)?.player?.name }}</td>
+      <td>{{ game.coreSetCount }}</td>
+      <td>
+        View Details | Edit | Delete
+      </td>
     </tr>
     </tbody>
   </table>

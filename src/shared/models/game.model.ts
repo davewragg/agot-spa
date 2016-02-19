@@ -1,10 +1,13 @@
+import {DeckType} from './deck-type.model';
+import {GamePlayer} from './game-player.model';
+
 export interface Game {
   gameId: number;
-  date: string; //!!
+  date: string; //ISO STRING
   coreSetCount: number;
-  deckTypeId: number;
-  //public virtual DeckType DeckType { get; set; }
-  //public virtual ICollection<GamePlayer> GamePlayers { get; set; }
+  //deckTypeId: number;
+  deckType: DeckType;
+  gamePlayers: GamePlayer[];
 }
 
 /*

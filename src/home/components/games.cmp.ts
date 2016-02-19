@@ -3,6 +3,7 @@ import {Component, OnInit} from 'angular2/core';
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
 import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
+import {FindWinnerPipe} from '../../shared/pipes/find-winner-pipe';
 
 @Component({
   selector: 'agot-games',
@@ -10,7 +11,7 @@ import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
   viewProviders: [GameService],
   templateUrl: './games.cmp.html',
   styleUrls: ['./games.cmp.css'],
-  pipes: [DateFormatPipe]
+  pipes: [DateFormatPipe, FindWinnerPipe]
 })
 export class GamesCmp implements OnInit {
   games:Game[];
