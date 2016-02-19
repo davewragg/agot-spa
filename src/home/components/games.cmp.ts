@@ -2,7 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
-import {TimeAgoPipe} from '../../shared/pipes/time-ago-pipe';
+import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
 
 @Component({
   selector: 'agot-games',
@@ -10,7 +10,7 @@ import {TimeAgoPipe} from '../../shared/pipes/time-ago-pipe';
   viewProviders: [GameService],
   templateUrl: './games.cmp.html',
   styleUrls: ['./games.cmp.css'],
-  pipes: [TimeAgoPipe]
+  pipes: [DateFormatPipe]
 })
 export class GamesCmp implements OnInit {
   games:Game[];
