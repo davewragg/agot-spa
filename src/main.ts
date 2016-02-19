@@ -2,7 +2,7 @@ import {provide, enableProdMode} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {APP_BASE_HREF} from 'angular2/router';
 import 'rxjs/add/operator/map';
-import {AppCmp} from './app/components/app';
+import {AppCmp} from './app/components/app.cmp';
 
 if ('<%= ENV %>' === 'prod') {
   enableProdMode();

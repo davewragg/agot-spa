@@ -5,14 +5,15 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {HomeCmp} from '../../home/components/home.cmp';
 import {AboutCmp} from '../../about/components/about';
 import {NameListService} from '../../shared/services/name-list.service';
+import {DataService} from '../../shared/services/data.service';
 
 @Component({
   selector: 'agot-app',
   viewProviders: [NameListService],
-  providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS],
+  providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, DataService],
   moduleId: module.id,
-  templateUrl: './app.html',
-  styleUrls: ['./app.css'],
+  templateUrl: './app.cmp.html',
+  styleUrls: ['./app.cmp.css'],
   encapsulation: ViewEncapsulation.None,
   directives: [ROUTER_DIRECTIVES]
 })

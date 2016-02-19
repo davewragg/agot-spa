@@ -2,14 +2,13 @@ import {Component, OnInit} from 'angular2/core';
 
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
-import {DataService} from '../../shared/services/data.service';
 import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
 import {FindWinnerPipe} from '../../shared/pipes/find-winner-pipe';
 
 @Component({
   selector: 'agot-games',
   moduleId: module.id,
-  viewProviders: [GameService, DataService],
+  viewProviders: [GameService],
   templateUrl: './games.cmp.html',
   styleUrls: ['./games.cmp.css'],
   pipes: [DateFormatPipe, FindWinnerPipe]
