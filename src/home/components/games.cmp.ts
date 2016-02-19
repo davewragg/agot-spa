@@ -14,11 +14,26 @@ import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
 })
 export class GamesCmp implements OnInit {
   games:Game[];
+  loadingError:any = null;
 
   constructor(private _GameService:GameService) {
   }
 
   ngOnInit() {
-    this.games = this._GameService.getGames();
+    this.loadGames();
+  }
+
+  loadGames() {
+    this._GameService.getGames()
+      .subscribe(
+        (data) => {
+          this.loadingError = null;
+          this.games = data;
+        },
+        (err) => {
+          this.loadingError = err._body || err;
+        },
+        () => console.log('done')
+      );
   }
 }
