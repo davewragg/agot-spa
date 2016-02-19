@@ -10,7 +10,15 @@ export class DataService {
   }
 
   getGameIndex():Observable<GameIndex> {
-    return this.http.get('/assets/data/GetAll.json')
+    return this.getFromJson()
       .map((res:Response) => res.json());
   }
+
+  private getFromJson():Observable<Response> {
+    return this.http.get('/assets/data/GetAll.json');
+  };
+
+  //private getFromWeb():Observable<Response> {
+  //  return this.http.get('/agot/Games/GetAll');
+  //}
 }
