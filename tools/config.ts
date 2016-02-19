@@ -1,4 +1,5 @@
 import {readFileSync} from 'fs';
+//noinspection TypeScriptCheckImport
 import {argv} from 'yargs';
 import {normalize, join} from 'path';
 import * as chalk from 'chalk';

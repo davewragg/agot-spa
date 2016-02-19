@@ -13,7 +13,7 @@
     </thead>
     <tbody>
     <tr *ngFor="#game of games">
-      <td>{{ game.date }}</td>
+      <td>{{ game.date | amTimeAgo }}</td>
     </tr>
     </tbody>
   </table>
