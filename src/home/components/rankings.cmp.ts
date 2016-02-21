@@ -6,13 +6,28 @@ import {SetOfResults} from '../../shared/models/set-of-results.model';
   selector: 'agot-rankings',
   moduleId: module.id,
   //templateUrl: './rankings.cmp.html',
-  //styleUrls: ['./rankings.cmp.css'],
+  styleUrls: ['./rankings.cmp.css'],
   template: `
-    <section>
-      <h3>{{ name }}</h3>
-      <div>Player ranking</div>
-      <div>Faction ranking</div>
-      <div>Agenda ranking</div>
+    <section *ngIf="rankings">
+      <h3>{{ name }} Rankings</h3>
+      <div class="ranking-category">
+        <h4>Player ranking</h4>
+        <ol>
+          <li *ngFor="#ranking of rankings.rankedPlayers">{{ ranking.playerName }}</li>
+        </ol>
+      </div>
+      <div class="ranking-category">
+        <h4>Faction ranking</h4>
+        <ol>
+          <li *ngFor="#ranking of rankings.rankedFactions">{{ ranking.playerName }}</li>
+        </ol>
+      </div>
+      <div class="ranking-category">
+        <h4>Agenda ranking</h4>
+        <ol>
+          <li *ngFor="#ranking of rankings.rankedAgendas">{{ ranking.playerName }}</li>
+        </ol>
+      </div>
     </section>
   `,
   pipes: []

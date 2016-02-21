@@ -13,11 +13,8 @@ import {RankingsCmp} from './rankings.cmp';
   template: `
     <section>
       <h2>Rankings</h2>
-
       <agot-rankings name="Overall" [rankings]="allResults"></agot-rankings>
       <agot-rankings *ngFor="#season of seasons" [name]="season.name" [rankings]="season"></agot-rankings>
-
-      <h3>Per season</h3>
     </section>
   `,
   directives: [RankingsCmp]
