@@ -15,7 +15,10 @@ export class DataService {
   }
 
   private getFromJson():Observable<Response> {
-    return this.http.get('/assets/data/GetAll.json');
+    return this.http.get('/assets/data/GetAll.json', {
+      // TODO find out how this works
+      //cache: true
+    });
   };
 
   //private getFromWeb():Observable<Response> {
