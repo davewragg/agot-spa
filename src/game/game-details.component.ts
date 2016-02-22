@@ -12,7 +12,7 @@ import {GameFormComponent} from './game-form.component';
     <section>
       <h1>{{ editing ? 'Edit' : 'View' }} Game</h1>
       <div *ngIf="game">
-        <agot-game-form [game]="game" *ngIf="editing"></agot-game-form>
+        <agot-game-form [game]="game" *ngIf="editing" (submit)="onSubmit(game)"></agot-game-form>
         <div *ngIf="!editing">
           {{ game | json }}
         </div>
@@ -32,13 +32,6 @@ export class GameDetailsComponent implements OnInit {
   gameId:number;
   editing:boolean;
 
-  ngOnInit() {
-    if (this.gameId) {
-      this._GameService.getGame(this.gameId)
-        .subscribe((game) => this.game = game);
-    }
-  }
-
   constructor(params:RouteParams, private _GameService:GameService) {
     this.editing = !!params.get('edit');
     const idParam = params.get('id');
@@ -49,5 +42,17 @@ export class GameDetailsComponent implements OnInit {
       console.error(error);
       return;
     }
+  }
+
+  ngOnInit() {
+    if (this.gameId) {
+      this._GameService.getGame(this.gameId)
+        .subscribe((game) => this.game = game);
+    }
+  }
+
+  onSubmit(game:Game) {
+    // TODO
+    console.log(game);
   }
 }

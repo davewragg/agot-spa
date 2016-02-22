@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from 'angular2/core';
-import {GameService} from '../shared/services/game.service';
+import {Component, Input, Output, OnInit, EventEmitter} from 'angular2/core';
+import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {Game} from '../shared/models/game.model';
-import {FormBuilder} from 'angular2/common';
 
 @Component({
   selector: 'agot-game-form',
@@ -12,15 +11,37 @@ import {FormBuilder} from 'angular2/common';
 export class GameFormComponent implements OnInit {
   @Input()
   game:Game;
+  @Output()
+  submit = new EventEmitter<any>(); // TODO check type?
 
-  ngOnInit() {
-    console.log(this.game);
+  gameForm:ControlGroup;
+
+  constructor(private _FormBuilder:FormBuilder) {
   }
 
-  constructor(private _GameService:GameService, fb:FormBuilder) {
+  ngOnInit() {
+    this.serialiseGameToForm();
   }
 
   onSubmit() {
-    console.log(this.game);
+    console.log(this.gameForm.value, this.game);
+    this.deserialiseFormToGame();
+    // TODO
+    //this.submit.emit(this.game);
   }
+
+  private deserialiseFormToGame() {
+    // set date to string
+    // set deck from deckId?
+    // set other?
+  };
+
+  private serialiseGameToForm() {
+    this.gameForm = this._FormBuilder.group({
+      date: [this.game.date, Validators.required], // TODO what is the right bastard string format here?
+      coreSetCount: [this.game.coreSetCount, Validators.required],
+      deckType: [this.game.deckType.deckTypeId, Validators.required],
+      gamePlayers: [this.game.gamePlayers, Validators.required],
+    });
+  };
 }
