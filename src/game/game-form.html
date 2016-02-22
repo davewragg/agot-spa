@@ -1,0 +1,41 @@
+{{ game | json }}
+
+<form (ngSubmit)="onSubmit()" #gameForm="ngForm">
+  <div class="form-group">
+    <label>Date
+      <input type="date"
+             [(ngModel)]="game.date"
+             ngControl="date"
+             class="form-control" required>{{ game.date }}
+    </label>
+  </div>
+  <div class="form-group">
+    <label>Core set count
+      <input type="number"
+             [(ngModel)]="game.coreSetCount"
+             ngControl="coreSetCount"
+             min="1" max="3"
+             class="form-control" required>{{ game.coreSetCount }}
+    </label>
+  </div>
+  <div class="form-group">
+    <label>Deck type
+      <input type="text"
+             [(ngModel)]="game.deckType"
+             ngControl="deckType"
+             class="form-control" required>{{ game.deckType}}
+    </label>
+  </div>
+  <div class="form-group">
+    <label>Players
+      <input type="text" [(ngModel)]="game.gamePlayers" class="form-control" required>{{ game.gamePlayers }}
+    </label>
+  </div>
+  <button type="submit"
+          [disabled]="!gameForm.form.valid"
+          class="btn btn-default">{{ game.gameId ? 'Update' : 'Create' }}
+  </button>
+  <div [hidden]="gameForm.form.valid || gameForm.form.pristine" class="alert alert-danger">
+    Fix the issues, you dunce
+  </div>
+</form>
