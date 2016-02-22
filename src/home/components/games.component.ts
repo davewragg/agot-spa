@@ -1,5 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
 
+import {ROUTER_DIRECTIVES} from 'angular2/router';
+
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
 import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
@@ -9,11 +11,12 @@ import {FindWinnerPipe} from '../../shared/pipes/find-winner-pipe';
   selector: 'agot-games',
   moduleId: module.id,
   viewProviders: [GameService],
-  templateUrl: './games.cmp.html',
-  styleUrls: ['./games.cmp.css'],
-  pipes: [DateFormatPipe, FindWinnerPipe]
+  templateUrl: './games.html',
+  //styleUrls: ['./games.css'],
+  pipes: [DateFormatPipe, FindWinnerPipe],
+  directives: [ROUTER_DIRECTIVES]
 })
-export class GamesCmp implements OnInit {
+export class GamesComponent implements OnInit {
   games:Game[];
   loadingError:any = null;
 
@@ -27,9 +30,9 @@ export class GamesCmp implements OnInit {
   loadGames() {
     this._GameService.getGames()
       .subscribe(
-        (data) => {
+        (games: Game[]) => {
           this.loadingError = null;
-          this.games = data;
+          this.games = games;
         },
         (err) => {
           this.loadingError = err._body || err;

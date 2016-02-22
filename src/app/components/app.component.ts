@@ -8,6 +8,7 @@ import {NameListService} from '../../shared/services/name-list.service';
 import {DataService} from '../../shared/services/data.service';
 import {ToolbarComponent} from './toolbar.component';
 import {NavbarComponent} from './navbar.component';
+import {EditGameComponent} from '../../game/edit-game.component';
 
 @Component({
   selector: 'agot-app',
@@ -21,6 +22,7 @@ import {NavbarComponent} from './navbar.component';
 @RouteConfig([
   {path: '/', component: HomeCmp, name: 'Home', useAsDefault: true},
   {path: '/about', component: AboutComponent, name: 'About'},
+  {path: '/game/:id', component: EditGameComponent, name: 'EditGame'},
   //{path: '/decks', component: DecksCmp, name: 'Decks'},
   //{path: '/players', component: PlayersCmp, name: 'Players'},
 ])

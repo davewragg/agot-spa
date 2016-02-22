@@ -34,7 +34,9 @@
       <td>{{ (game.gamePlayers | agotFindWinner)?.player?.name }}</td>
       <td>{{ game.coreSetCount }}</td>
       <td>
-        View Details | Edit | Delete
+        View Details |
+        <a [routerLink]="['/EditGame', {id: game.gameId}]">Edit</a> |
+        Delete
       </td>
     </tr>
     </tbody>

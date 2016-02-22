@@ -13,4 +13,13 @@ export class GameService {
     return this.dataService.getGameIndex()
       .map((gameIndex:GameIndex) => gameIndex.allResults.games);
   }
+
+  getGame(gameId):Observable<Game> {
+    const games = this.getGames();
+    return games.map(
+      (games: Game[]) => {
+        return games.find((game:Game) => game.gameId === gameId);
+      }
+    );
+  }
 }

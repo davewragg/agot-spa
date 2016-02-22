@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {GamesCmp} from './games.cmp';
+import {GamesComponent} from './games.component';
 import {AllRankingsCmp} from './all-rankings.cmp';
 
 @Component({
@@ -7,7 +7,7 @@ import {AllRankingsCmp} from './all-rankings.cmp';
   moduleId: module.id,
   templateUrl: './home.cmp.html',
   styleUrls: ['./home.cmp.css'],
-  directives: [GamesCmp, AllRankingsCmp]
+  directives: [GamesComponent, AllRankingsCmp]
 })
 export class HomeCmp {
 }
