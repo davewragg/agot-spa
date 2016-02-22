@@ -7,45 +7,25 @@ import {
 } from 'angular2/testing';
 import {Component} from 'angular2/core';
 import {DOM} from 'angular2/src/platform/dom/dom_adapter';
-import {AboutCmp} from './about';
-import {NameListService} from '../../shared/services/name-list.service';
-
+import {AboutComponent} from './about.component';
 
 export function main() {
   describe('About component', () => {
     it('should work',
       injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb.createAsync(TestComponent)
-          .then(rootTC => {
-            rootTC.detectChanges();
-
-            let aboutInstance = rootTC.debugElement.children[0].componentInstance;
+          .then((rootTC) => {
             let aboutDOMEl = rootTC.debugElement.children[0].nativeElement;
-            let nameListLen = function () {
-              return aboutInstance.list.names.length;
-            };
 
-            expect(aboutInstance.list).toEqual(jasmine.any(NameListService));
-            expect(nameListLen()).toEqual(4);
-            expect(DOM.querySelectorAll(aboutDOMEl, 'li').length).toEqual(nameListLen());
-
-            aboutInstance.newName = 'Minko';
-            aboutInstance.addName();
-            rootTC.detectChanges();
-
-            expect(nameListLen()).toEqual(5);
-            expect(DOM.querySelectorAll(aboutDOMEl, 'li').length).toEqual(nameListLen());
-
-            expect(DOM.querySelectorAll(aboutDOMEl, 'li')[4].textContent).toEqual('Minko');
+            expect(DOM.querySelectorAll(aboutDOMEl, 'h2')[0].textContent).toEqual('Features');
           });
       }));
   });
 }
 
 @Component({
-  providers: [NameListService],
   selector: 'test-cmp',
-  template: '<about></about>',
-  directives: [AboutCmp]
+  directives: [AboutComponent],
+  template: '<sd-about></sd-about>'
 })
 class TestComponent {}

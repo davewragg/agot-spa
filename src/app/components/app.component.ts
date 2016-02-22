@@ -3,25 +3,26 @@ import {ROUTER_PROVIDERS, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router'
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {HomeCmp} from '../../home/components/home.cmp';
-import {AboutCmp} from '../../about/components/about';
+import {AboutComponent} from '../../about/components/about.component';
 import {NameListService} from '../../shared/services/name-list.service';
 import {DataService} from '../../shared/services/data.service';
+import {ToolbarComponent} from './toolbar.component';
+import {NavbarComponent} from './navbar.component';
 
 @Component({
   selector: 'agot-app',
   viewProviders: [NameListService],
   providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, DataService],
   moduleId: module.id,
-  templateUrl: './app.cmp.html',
-  styleUrls: ['./app.cmp.css'],
+  templateUrl: './app.html',
   encapsulation: ViewEncapsulation.None,
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, ToolbarComponent, NavbarComponent]
 })
 @RouteConfig([
   {path: '/', component: HomeCmp, name: 'Home', useAsDefault: true},
-  {path: '/about', component: AboutCmp, name: 'About'},
+  {path: '/about', component: AboutComponent, name: 'About'},
   //{path: '/decks', component: DecksCmp, name: 'Decks'},
   //{path: '/players', component: PlayersCmp, name: 'Players'},
 ])
-export class AppCmp {
+export class AppComponent {
 }

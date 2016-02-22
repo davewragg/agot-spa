@@ -1,11 +1,15 @@
 export class NameListService {
-  names = ['Dijkstra', 'Knuth', 'Turing', 'Hopper'];
+  names = [
+    'Edsger Dijkstra',
+    'Donald Knuth',
+    'Alan Turing',
+    'Grace Hopper'
+  ];
 
-  get():string[] {
+  get(): string[] {
     return this.names;
   }
-
-  add(value:string):void {
+  add(value: string): void {
     this.names.push(value);
   }
 }
