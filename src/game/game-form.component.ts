@@ -6,7 +6,7 @@ import {Game} from '../shared/models/game.model';
   selector: 'agot-game-form',
   moduleId: module.id,
   templateUrl: './game-form.html',
-  styleUrls: ['./game-form.css']
+  styleUrls: ['./game-form.css'],
 })
 export class GameFormComponent implements OnInit {
   @Input()
@@ -46,7 +46,7 @@ export class GameFormComponent implements OnInit {
   };
 
   private convertDateString() {
-    // TODO what is the right bastard string format here?
-    return this.game.date;
+    // have to remove the time and timezone to populate the control correctly
+    return this.game.date.slice(0, 10);
   };
 }
