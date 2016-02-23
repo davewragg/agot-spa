@@ -1,0 +1,77 @@
+<h5>Players</h5>
+<!--TODO set handler for pristine/touched on form if values change-->
+<table>
+  <thead>
+  <tr>
+    <th>Player</th>
+    <th>Main Faction</th>
+    <th>Second Faction</th>
+    <th>Agenda</th>
+    <th>Winner</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="#gamePlayer of gamePlayers">
+    <td>{{ gamePlayer.player.name }}</td>
+    <td>
+      <select class="form-control" [(ngModel)]="gamePlayer.factionId">
+        <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+      </select>
+    </td>
+    <td>
+      <select class="form-control" [(ngModel)]="gamePlayer.secondaryFactionId" *ngIf="gamePlayer.secondaryFactionId">
+        <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+      </select>
+    </td>
+    <td>
+      <select class="form-control" [(ngModel)]="gamePlayer.agendaId" *ngIf="gamePlayer.agendaId">
+        <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
+      </select>
+    </td>
+    <td>
+      <!--TODO change handler-->
+      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true">
+    </td>
+    <td>
+      <button type="button">Remove</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<form [ngFormModel]="newPlayerForm" (ngSubmit)="onSubmit()">
+  <h3>Add player</h3>
+  <table>
+    <tbody>
+    <tr>
+      <td>
+        <select class="form-control" ngControl="playerId">
+          <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-control" ngControl="factionId">
+          <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-control" ngControl="secondFactionId">
+          <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-control" ngControl="agendaId">
+          <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
+        </select>
+      </td>
+      <td></td>
+      <td>
+        <button type="submit"
+                [disabled]="!newPlayerForm.valid">Add
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+
+

@@ -3,19 +3,20 @@ import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
 import {Game} from '../shared/models/game.model';
 import {DeckType} from '../shared/models/deck-type.model';
-import {Player} from '../shared/models/player.model';
-import {Agenda} from '../shared/models/agenda.model';
-import {Faction} from '../shared/models/faction.model';
+import {GamePlayerFormComponent} from './game-player-form.component';
 
 @Component({
   selector: 'agot-game-form',
   moduleId: module.id,
   templateUrl: './game-form.html',
   styleUrls: ['./game-form.css'],
+  directives: [GamePlayerFormComponent]
 })
 export class GameFormComponent implements OnInit {
   @Input()
   game:Game;
+  @Input()
+  disabled:boolean;
   @Output()
   submit:EventEmitter<Game> = new EventEmitter<Game>();
   @Output()
@@ -24,16 +25,10 @@ export class GameFormComponent implements OnInit {
   gameForm:ControlGroup;
 
   deckTypes:DeckType[];
-  players:Player[];
-  agendas:Agenda[];
-  factions:Faction[];
 
   constructor(private _FormBuilder:FormBuilder, private _ReferenceDataService:ReferenceDataService) {
     // TODO probably async
     this.deckTypes = this._ReferenceDataService.getDeckTypes();
-    this.players = this._ReferenceDataService.getPlayers();
-    this.factions = this._ReferenceDataService.getFactions();
-    this.agendas = this._ReferenceDataService.getAgendas();
   }
 
   ngOnInit() {
@@ -47,6 +42,11 @@ export class GameFormComponent implements OnInit {
 
   onCancel() {
     this.cancel.emit('cancelled');
+  }
+
+  onPlayerChange(gamePlayers) {
+    // TODO
+    console.log(gamePlayers);
   }
 
   private deserialiseFormToGame() {
@@ -69,7 +69,7 @@ export class GameFormComponent implements OnInit {
       date: [this.convertDateString(), Validators.required],
       coreSetCount: [this.game.coreSetCount, Validators.required],
       deckTypeId: [this.game.deckTypeId, Validators.required],
-      gamePlayers: [this.game.gamePlayers, Validators.required],
+      //gamePlayers: [this.game.gamePlayers, Validators.required],
     });
   };
 

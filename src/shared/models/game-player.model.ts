@@ -3,7 +3,7 @@ import {Faction} from './faction.model';
 import {Agenda} from './agenda.model';
 
 export interface GamePlayer {
-  gamePlayerId: number;
+  gamePlayerId?: number;
   gameId: number;
   player: Player;
   isWinner: boolean;
