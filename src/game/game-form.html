@@ -32,10 +32,13 @@
              class="form-control">{{ game.gamePlayers }}
     </label>
   </div>
+  <div>
   <button type="submit"
           [disabled]="!gameForm.valid"
           class="btn btn-default">{{ game.gameId ? 'Update' : 'Create' }}
   </button>
+    <button type="button" class="btn" (click)="onCancel()">Cancel</button>
+  </div>
   valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}
   <div [hidden]="gameForm.valid || gameForm.pristine" class="alert alert-danger">
     Fix the issues, you dunce

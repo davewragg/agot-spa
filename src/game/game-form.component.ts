@@ -18,6 +18,8 @@ export class GameFormComponent implements OnInit {
   game:Game;
   @Output()
   submit:EventEmitter<Game> = new EventEmitter<Game>();
+  @Output()
+  cancel:EventEmitter<any> = new EventEmitter<any>();
 
   gameForm:ControlGroup;
 
@@ -41,6 +43,10 @@ export class GameFormComponent implements OnInit {
   onSubmit() {
     const updatedGame = this.deserialiseFormToGame();
     this.submit.emit(updatedGame);
+  }
+
+  onCancel() {
+    this.cancel.emit('cancelled');
   }
 
   private deserialiseFormToGame() {

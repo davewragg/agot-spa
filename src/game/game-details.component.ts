@@ -12,9 +12,14 @@ import {GameFormComponent} from './game-form.component';
     <section>
       <h1>{{ editing ? 'Edit' : 'View' }} Game</h1>
       <div *ngIf="game">
-        <agot-game-form [game]="game" *ngIf="editing" (submit)="onSubmit(game)"></agot-game-form>
+        <agot-game-form [game]="game" *ngIf="editing"
+          (submit)="onSubmit(game)" (cancel)="onCancel()"></agot-game-form>
         <div *ngIf="!editing">
           {{ game | json }}
+
+          <div>
+            <button type="button" class="btn" (click)="onEdit()">Edit</button>
+          </div>
         </div>
       </div>
       <div *ngIf="!game">
@@ -54,5 +59,13 @@ export class GameDetailsComponent implements OnInit {
       // TODO
       console.error(error);
     });
+  }
+
+  onCancel() {
+    this.editing = false;
+  }
+
+  onEdit() {
+    this.editing = true;
   }
 }
