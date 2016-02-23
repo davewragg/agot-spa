@@ -18,9 +18,11 @@
   </div>
   <div class="form-group">
     <label>Deck type
-      <input type="text"
-             ngControl="deckType"
-             class="form-control">{{ game.deckType}}
+      <select
+        ngControl="deckTypeId" class="form-control">
+        <option *ngFor="#deckType of deckTypes" [value]="deckType.deckTypeId">{{deckType.title}}</option>
+      </select>
+      {{ game.deckTypeId}}
     </label>
   </div>
   <div class="form-group">
@@ -34,7 +36,7 @@
           [disabled]="!gameForm.valid"
           class="btn btn-default">{{ game.gameId ? 'Update' : 'Create' }}
   </button>
-  {{ gameForm.valid }} {{ gameForm.pristine }}
+  valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}
   <div [hidden]="gameForm.valid || gameForm.pristine" class="alert alert-danger">
     Fix the issues, you dunce
   </div>

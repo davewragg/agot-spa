@@ -46,6 +46,13 @@ export class GameDetailsComponent implements OnInit {
 
   onSubmit(game:Game) {
     // TODO call gameservice
-    console.log(game);
+    console.log('details submit', game);
+    this._GameService.updateGame(game).subscribe((game:Game) => {
+      this.game = game;
+      this.editing = false;
+    }, (error) => {
+      // TODO
+      console.error(error);
+    });
   }
 }

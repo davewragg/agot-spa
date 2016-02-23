@@ -6,5 +6,6 @@ export interface Game {
   date: string; //ISO STRING
   coreSetCount: number;
   deckType: DeckType;
+  deckTypeId?: number;
   gamePlayers: GamePlayer[];
 }
