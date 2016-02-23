@@ -1,9 +1,10 @@
 import {Component, Input, Output, OnInit, EventEmitter} from 'angular2/core';
 import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
+import {GamePlayerFormComponent} from './game-player-form.component';
 import {Game} from '../shared/models/game.model';
 import {DeckType} from '../shared/models/deck-type.model';
-import {GamePlayerFormComponent} from './game-player-form.component';
+import {GamePlayer} from '../shared/models/game-player.model';
 
 @Component({
   selector: 'agot-game-form',
@@ -44,7 +45,7 @@ export class GameFormComponent implements OnInit {
     this.cancel.emit('cancelled');
   }
 
-  onPlayerChange(gamePlayers) {
+  onPlayerChange(gamePlayers: GamePlayer[]) {
     // TODO
     console.log(gamePlayers);
   }

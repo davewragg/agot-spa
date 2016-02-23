@@ -19,12 +19,14 @@
       </select>
     </td>
     <td>
-      <select class="form-control" [(ngModel)]="gamePlayer.secondaryFactionId" *ngIf="gamePlayer.secondaryFactionId">
+      <select class="form-control" [(ngModel)]="gamePlayer.secondaryFactionId">
+        <option value="">None</option>
         <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
       </select>
     </td>
     <td>
-      <select class="form-control" [(ngModel)]="gamePlayer.agendaId" *ngIf="gamePlayer.agendaId">
+      <select class="form-control" [(ngModel)]="gamePlayer.agendaId">
+        <option value="">None</option>
         <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
       </select>
     </td>
@@ -45,29 +47,31 @@
     <tr>
       <td>
         <select class="form-control" ngControl="playerId">
+          <option value="">Player</option>
           <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
         </select>
       </td>
       <td>
         <select class="form-control" ngControl="factionId">
+          <option value="">Main Faction</option>
           <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
         </select>
       </td>
       <td>
         <select class="form-control" ngControl="secondFactionId">
+          <option value="">Secondary Faction</option>
           <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
         </select>
       </td>
       <td>
         <select class="form-control" ngControl="agendaId">
+          <option value="">Agenda</option>
           <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
         </select>
       </td>
       <td></td>
       <td>
-        <button type="submit"
-                [disabled]="!newPlayerForm.valid">Add
-        </button>
+        <button type="submit" [disabled]="!newPlayerForm.valid">Add </button>
       </td>
     </tr>
     </tbody>

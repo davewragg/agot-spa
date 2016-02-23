@@ -6,8 +6,12 @@ export interface GamePlayer {
   gamePlayerId?: number;
   gameId: number;
   player: Player;
+  playerId: number;
   isWinner: boolean;
   faction: Faction;
-  secondFaction?: Faction;
+  factionId: number;
+  secondaryFaction?: Faction;
+  secondFactionId: number;
   agenda: Agenda;
+  agendaId: number;
 }
