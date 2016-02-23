@@ -9,15 +9,14 @@ export class GameService {
   constructor(private dataService:DataService) {
   }
 
-  getGames():Observable<Game[]> {
+  getAllGames():Observable<Game[]> {
     return this.dataService.getGameIndex()
       .map((gameIndex:GameIndex) => gameIndex.allResults.games);
   }
 
   getGame(gameId):Observable<Game> {
-    const games = this.getGames();
-    return games.map(
-      (games: Game[]) => {
+    return this.getAllGames().map(
+      (games:Game[]) => {
         return games.find((game:Game) => game.gameId === gameId);
       }
     );

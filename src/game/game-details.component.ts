@@ -34,14 +34,7 @@ export class GameDetailsComponent implements OnInit {
 
   constructor(params:RouteParams, private _GameService:GameService) {
     this.editing = !!params.get('edit');
-    const idParam = params.get('id');
-    try {
-      this.gameId = <number>+idParam;
-    } catch (error) {
-      // TODO log error elsewhere?
-      console.error(error);
-      return;
-    }
+    this.gameId = <number>+params.get('id');
   }
 
   ngOnInit() {
@@ -52,7 +45,7 @@ export class GameDetailsComponent implements OnInit {
   }
 
   onSubmit(game:Game) {
-    // TODO
+    // TODO call gameservice
     console.log(game);
   }
 }

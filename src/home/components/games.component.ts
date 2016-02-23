@@ -28,7 +28,7 @@ export class GamesComponent implements OnInit {
   }
 
   loadGames() {
-    this._GameService.getGames()
+    this._GameService.getAllGames()
       .subscribe(
         (games: Game[]) => {
           this.loadingError = null;

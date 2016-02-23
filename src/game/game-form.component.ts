@@ -38,10 +38,15 @@ export class GameFormComponent implements OnInit {
 
   private serialiseGameToForm() {
     this.gameForm = this._FormBuilder.group({
-      date: [this.game.date, Validators.required], // TODO what is the right bastard string format here?
+      date: [this.convertDateString(), Validators.required],
       coreSetCount: [this.game.coreSetCount, Validators.required],
       deckType: [this.game.deckType.deckTypeId, Validators.required],
       gamePlayers: [this.game.gamePlayers, Validators.required],
     });
+  };
+
+  private convertDateString() {
+    // TODO what is the right bastard string format here?
+    return this.game.date;
   };
 }
