@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, EventEmitter} from 'angular2/core';
+import {Component, Input, OnInit} from 'angular2/core';
 import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
 import {Player} from '../shared/models/player.model';
@@ -7,15 +7,13 @@ import {Faction} from '../shared/models/faction.model';
 import {GamePlayer} from '../shared/models/game-player.model';
 
 @Component({
-  selector: 'agot-game-player-form',
+  selector: 'agot-game-players',
   moduleId: module.id,
-  templateUrl: './game-player-form.html'
+  templateUrl: './game-players.html'
 })
-export class GamePlayerFormComponent implements OnInit {
+export class GamePlayersComponent implements OnInit {
   @Input()
   gamePlayers:GamePlayer[];
-  @Output()
-  playerChange:EventEmitter<GamePlayer[]> = new EventEmitter<GamePlayer[]>();
 
   newPlayerForm:ControlGroup;
 
@@ -39,10 +37,6 @@ export class GamePlayerFormComponent implements OnInit {
     });
   }
 
-  onPlayerDataChange() {
-    this.playerChange.emit(this.gamePlayers);
-  }
-
   onSubmit() {
     const newPlayer:GamePlayer = this.newPlayerForm.value;
     //TODO proper validation here
@@ -58,7 +52,6 @@ export class GamePlayerFormComponent implements OnInit {
   private addNewPlayer(newPlayer:GamePlayer) {
     console.log(newPlayer);
     this.gamePlayers.push(newPlayer);
-    this.onPlayerDataChange();
   };
 
   private populateNewPlayer(newPlayer:GamePlayer) {
@@ -89,7 +82,7 @@ export class GamePlayerFormComponent implements OnInit {
       return false;
     }
     // validate faction 1 != faction 2
-    if (newPlayer.factionId && newPlayer.secondFactionId) {
+    if (newPlayer.factionId === newPlayer.secondFactionId) {
       console.warn('invalid second faction');
       return false;
     }

@@ -19,7 +19,7 @@
     </label>
   </div>
   <div class="form-group">
-    <agot-game-player-form [gamePlayers]="game.gamePlayers" (playerChange)="onPlayerChange(gamePlayers)"></agot-game-player-form>
+    <agot-game-players [gamePlayers]="game.gamePlayers" (change)="onPlayerChange($event)"></agot-game-players>
   </div>
   <div>
     <button type="submit"
