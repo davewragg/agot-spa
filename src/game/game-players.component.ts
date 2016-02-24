@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from 'angular2/core';
-import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
 import {Player} from '../shared/models/player.model';
 import {Agenda} from '../shared/models/agenda.model';
@@ -17,13 +16,13 @@ export class GamePlayersComponent implements OnInit {
   @Input()
   gamePlayers:GamePlayer[];
 
-  newPlayerForm:ControlGroup;
-
   players:Player[];
   agendas:Agenda[];
   factions:Faction[];
 
-  constructor(private _FormBuilder:FormBuilder, private _ReferenceDataService:ReferenceDataService) {
+  addActive:boolean = true;
+
+  constructor(private _ReferenceDataService:ReferenceDataService) {
     // TODO probably async
     this.players = this._ReferenceDataService.getPlayers();
     this.factions = this._ReferenceDataService.getFactions();
@@ -31,33 +30,36 @@ export class GamePlayersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.newPlayerForm = this._FormBuilder.group({
-      playerId: ['', Validators.required],
-      factionId: ['', Validators.required],
-      agendaId: [''],
-      secondFactionId: [''],
-    });
+    // TODO
   }
 
   onWinnerChange(newWinner:GamePlayer) {
     this.gamePlayers.forEach((gamePlayer:GamePlayer) => {
       gamePlayer.isWinner = (gamePlayer === newWinner);
     });
-    // TODO emit change for parent component
+    // TODO emit change for parent component (dirty)
   }
 
   onRemove(playerIndex:number) {
     this.gamePlayers.splice(playerIndex, 1);
   }
 
-  onNewPlayerAdd(newPlayer) {
+  onNewPlayerAdd(newPlayer:GamePlayer) {
+    console.log(newPlayer);
     //TODO proper validation here
-    if (!this.validateNewPlayer(newPlayer)) {
+    if (!newPlayer || !this.validateNewPlayer(newPlayer)) {
       return false;
     }
-    console.log(newPlayer);
     this.gamePlayers.push(newPlayer);
+    this.resetForm();
   }
+
+  private resetForm() {
+    this.addActive = false;
+    setTimeout(() => {
+      this.addActive = true;
+    }, 0);
+  };
 
   private validateNewPlayer(newPlayer:GamePlayer) {
     // validate unique player
@@ -65,5 +67,6 @@ export class GamePlayersComponent implements OnInit {
       console.warn('player already listed');
       return false;
     }
+    return true;
   }
 }

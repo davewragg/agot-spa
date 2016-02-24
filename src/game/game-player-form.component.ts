@@ -17,7 +17,7 @@ export class GamePlayerFormComponent implements OnInit {
   //@Input()
   //creating:boolean = false;
   @Output()
-  update:EventEmitter<GamePlayer>;
+  updatePlayer:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
   gamePlayerForm:ControlGroup;
 
@@ -53,16 +53,11 @@ export class GamePlayerFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    let playerId;
-    let factionId;
-    let agendaId;
-    let secondFactionId;
-    if (this.gamePlayer) {
-      playerId = this.gamePlayer.playerId;
-      factionId = this.gamePlayer.factionId;
-      agendaId = this.gamePlayer.agendaId;
-      secondFactionId = this.gamePlayer.secondFactionId;
-    }
+    this.gamePlayer = this.gamePlayer || <GamePlayer>{};
+    let playerId = this.gamePlayer.playerId;
+    let factionId = this.gamePlayer.factionId;
+    let agendaId = this.gamePlayer.agendaId;
+    let secondFactionId = this.gamePlayer.secondFactionId;
     this.gamePlayerForm = this._FormBuilder.group({
       playerId: [playerId || '', Validators.required],
       factionId: [factionId || '', Validators.required],
@@ -77,18 +72,17 @@ export class GamePlayerFormComponent implements OnInit {
     if (!GamePlayerFormComponent.validateNewPlayer(newPlayer)) {
       return false;
     }
-    this.populateNewPlayer(newPlayer);
+    this.populatePlayer(newPlayer);
 
-    this.addNewPlayer(newPlayer);
+    // TODO update or create?
+    Object.assign(this.gamePlayer, newPlayer);
+    console.log(this.gamePlayer);
+    this.updatePlayer.emit(this.gamePlayer);
     // reset form
     //this.gamePlayerForm.reset
   }
 
-  private addNewPlayer(newPlayer:GamePlayer) {
-    //submit
-  };
-
-  private populateNewPlayer(newPlayer:GamePlayer) {
+  private populatePlayer(newPlayer:GamePlayer) {
     newPlayer.player = this.players.find((player) => player.playerId === +newPlayer.playerId);
     newPlayer.faction = this.factions.find((faction) => faction.factionId === +newPlayer.factionId);
     if (newPlayer.agendaId) {

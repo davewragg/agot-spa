@@ -43,4 +43,4 @@
   </tbody>
 </table>
 
-<!--<agot-game-player-form (update)="onNewPlayerAdd(newPlayer)"></agot-game-player-form>-->
+<agot-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-game-player-form>
