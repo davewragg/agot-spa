@@ -50,6 +50,7 @@ export class ReferenceDataService {
       {agendaId: 7, title: 'Banner of the Watch'},
       {agendaId: 8, title: 'Banner of the Rose'},
       {agendaId: 9, title: 'Fealty'},
+      {agendaId: 10, title: 'Lords of the Crossing'},
     ];
   }
 }
