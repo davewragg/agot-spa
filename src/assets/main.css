@@ -10,12 +10,13 @@ html, body, div {
 
 /* Set up a default font and some padding to provide breathing room */
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 16px;
+  font-family: Roboto, "Helvetica Neue", Tahoma, sans-serif;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*
 p {
   font-weight: 400;
   letter-spacing: 0.010em;
@@ -57,3 +58,4 @@ button {
 button:hover {
   background-color: #28739E;
 }
+*/
