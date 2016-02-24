@@ -1,5 +1,7 @@
+<blockquote>
 {{ game | json }}
-<!--TODO replace hidden with mask-->
+</blockquote>
+<!--TODO replace hidden with loading mask-->
 <form (ngSubmit)="onSubmit()" [ngFormModel]="gameForm" [hidden]="disabled">
   <div class="form-group">
     <label>Date
