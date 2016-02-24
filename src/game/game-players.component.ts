@@ -37,6 +37,13 @@ export class GamePlayersComponent implements OnInit {
     });
   }
 
+  onWinnerChange(newWinner:GamePlayer) {
+    this.gamePlayers.forEach((gamePlayer:GamePlayer) => {
+      gamePlayer.isWinner = (gamePlayer === newWinner);
+    });
+    // TODO emit change for parent component
+  }
+
   onSubmit() {
     const newPlayer:GamePlayer = this.newPlayerForm.value;
     //TODO proper validation here

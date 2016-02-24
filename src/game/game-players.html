@@ -32,7 +32,7 @@
     </td>
     <td>
       <!--TODO change handler-->
-      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true">
+      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(gamePlayer)">
     </td>
     <td>
       <button type="button">Remove</button>
