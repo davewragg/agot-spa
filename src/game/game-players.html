@@ -1,6 +1,6 @@
-<h5>Players</h5>
+<h4>Players</h4>
 <!--TODO set handler for pristine/touched on form if values change-->
-<table>
+<table class="table">
   <thead>
   <tr>
     <th>Player</th>
@@ -11,7 +11,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="#gamePlayer of gamePlayers">
+  <tr *ngIf="!gamePlayers?.length || gamePlayers?.length < 2">
+    <th colspan="5" class="error">Need more players over here</th>
+  </tr>
+  <tr *ngFor="#gamePlayer of gamePlayers; #index=index">
     <td>{{ gamePlayer.player.name }}</td>
     <td>
       <select class="form-control" [(ngModel)]="gamePlayer.factionId">
@@ -19,7 +22,7 @@
       </select>
     </td>
     <td>
-      <select class="form-control" [(ngModel)]="gamePlayer.secondaryFactionId">
+      <select class="form-control" [(ngModel)]="gamePlayer.secondFactionId">
         <option value="">None</option>
         <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
       </select>
@@ -31,18 +34,18 @@
       </select>
     </td>
     <td>
-      <!--TODO change handler-->
-      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(gamePlayer)">
+      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(index)">
     </td>
     <td>
-      <button type="button">Remove</button>
+      <button type="button" class="btn" (click)="onRemove(gamePlayer)">Remove</button>
     </td>
   </tr>
   </tbody>
 </table>
+
 <form [ngFormModel]="newPlayerForm" (ngSubmit)="onSubmit()">
-  <h3>Add player</h3>
-  <table>
+  <h5>Add player</h5>
+  <table class="table">
     <tbody>
     <tr>
       <td>
@@ -71,7 +74,7 @@
       </td>
       <td></td>
       <td>
-        <button type="submit" [disabled]="!newPlayerForm.valid">Add </button>
+        <button type="submit" class="btn" [disabled]="!newPlayerForm.valid">Add</button>
       </td>
     </tr>
     </tbody>

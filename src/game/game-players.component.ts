@@ -44,6 +44,10 @@ export class GamePlayersComponent implements OnInit {
     // TODO emit change for parent component
   }
 
+  onRemove(playerIndex:number) {
+    this.gamePlayers.splice(playerIndex, 1);
+  }
+
   onSubmit() {
     const newPlayer:GamePlayer = this.newPlayerForm.value;
     //TODO proper validation here

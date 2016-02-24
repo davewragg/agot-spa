@@ -7,13 +7,9 @@
     <label>Date
       <input type="date" ngControl="date" class="form-control">
     </label>
-  </div>
-  <div class="form-group">
     <label>Core set count
       <input type="number" ngControl="coreSetCount" min="1" max="3" class="form-control">
     </label>
-  </div>
-  <div class="form-group">
     <label>Deck type
       <select ngControl="deckTypeId" class="form-control">
         <option *ngFor="#deckType of deckTypes" [value]="deckType.deckTypeId">{{ deckType.title }}</option>
