@@ -1,0 +1,37 @@
+<form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()">
+  <h5>Add player</h5>
+  <table class="table">
+    <tbody>
+    <tr>
+      <td>
+        <select class="form-control" ngControl="playerId">
+          <option value="">Player</option>
+          <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-control" ngControl="factionId">
+          <option value="">Main Faction</option>
+          <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-control" ngControl="agendaId" [disabled]="secondFactionId.value" #agendaId>
+          <option value="">Agenda</option>
+          <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-control" ngControl="secondFactionId" [disabled]="agendaId.value" #secondFactionId>
+          <option value="">Secondary Faction</option>
+          <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+        </select>
+      </td>
+      <td></td>
+      <td>
+        <button type="submit" class="btn" [disabled]="!gamePlayerForm.valid">Add</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>

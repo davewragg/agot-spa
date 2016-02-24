@@ -10,6 +10,7 @@ export class GameService {
     return <Game>{
       date: new Date().toISOString(),
       gamePlayers: [],
+      deckType: null,
       deckTypeId: 3, // tournament
       coreSetCount: 3
     };

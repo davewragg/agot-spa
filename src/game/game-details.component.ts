@@ -15,12 +15,12 @@ import {GameFormComponent} from './game-form.component';
 export class GameDetailsComponent implements OnInit {
   game:Game;
   gameId:number;
-  editing:boolean;
+  editing:boolean = false;
   formDisabled:boolean = false;
 
   constructor(params:RouteParams, private _GameService:GameService) {
     this.gameId = <number>+params.get('id');
-    this.editing = !!params.get('edit') || !this.gameId;
+    //this.editing = !!params.get('edit') || !this.gameId;
   }
 
   ngOnInit() {

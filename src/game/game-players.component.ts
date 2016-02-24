@@ -5,11 +5,13 @@ import {Player} from '../shared/models/player.model';
 import {Agenda} from '../shared/models/agenda.model';
 import {Faction} from '../shared/models/faction.model';
 import {GamePlayer} from '../shared/models/game-player.model';
+import {GamePlayerFormComponent} from './game-player-form.component';
 
 @Component({
   selector: 'agot-game-players',
   moduleId: module.id,
-  templateUrl: './game-players.html'
+  templateUrl: './game-players.html',
+  directives: [GamePlayerFormComponent]
 })
 export class GamePlayersComponent implements OnInit {
   @Input()
@@ -48,33 +50,14 @@ export class GamePlayersComponent implements OnInit {
     this.gamePlayers.splice(playerIndex, 1);
   }
 
-  onSubmit() {
-    const newPlayer:GamePlayer = this.newPlayerForm.value;
+  onNewPlayerAdd(newPlayer) {
     //TODO proper validation here
     if (!this.validateNewPlayer(newPlayer)) {
       return false;
     }
-    this.populateNewPlayer(newPlayer);
-    this.addNewPlayer(newPlayer);
-    // reset form
-    //this.newPlayerForm.reset
-  }
-
-  private addNewPlayer(newPlayer:GamePlayer) {
     console.log(newPlayer);
     this.gamePlayers.push(newPlayer);
-  };
-
-  private populateNewPlayer(newPlayer:GamePlayer) {
-    newPlayer.player = this.players.find((player) => player.playerId === +newPlayer.playerId);
-    newPlayer.faction = this.factions.find((faction) => faction.factionId === +newPlayer.factionId);
-    if (newPlayer.agendaId) {
-      newPlayer.agenda = this.agendas.find((agenda) => agenda.agendaId === +newPlayer.agendaId);
-    }
-    if (newPlayer.secondFactionId) {
-      newPlayer.secondaryFaction = this.factions.find((faction) => faction.factionId === +newPlayer.secondFactionId);
-    }
-  };
+  }
 
   private validateNewPlayer(newPlayer:GamePlayer) {
     // validate unique player
@@ -82,21 +65,5 @@ export class GamePlayersComponent implements OnInit {
       console.warn('player already listed');
       return false;
     }
-    // validate agenda XOR secondary faction
-    if (newPlayer.agendaId && newPlayer.secondFactionId) {
-      console.warn('pick one');
-      return false;
-    }
-    // validate banner is not the same as main faction
-    if (newPlayer.agendaId === newPlayer.factionId) {
-      console.warn('invalid banner');
-      return false;
-    }
-    // validate faction 1 != faction 2
-    if (newPlayer.factionId === newPlayer.secondFactionId) {
-      console.warn('invalid second faction');
-      return false;
-    }
-    return true;
   }
 }
