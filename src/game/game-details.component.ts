@@ -8,27 +8,7 @@ import {GameFormComponent} from './game-form.component';
   selector: 'agot-game-details',
   moduleId: module.id,
   viewProviders: [GameService],
-  template: `
-    <section>
-      <h1>{{ editing ? 'Edit' : 'View' }} Game</h1>
-      <div *ngIf="game">
-        <agot-game-form [game]="game" *ngIf="editing" [disabled]="formDisabled"
-          (submit)="onSubmit(game)" (cancel)="onCancel()"></agot-game-form>
-        <div *ngIf="!editing">
-          {{ game | json }}
-
-          <div>
-            <button type="button" class="btn" (click)="onEdit()">Edit</button>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="!game">
-        <h3 class="error">Game not found</h3>
-      </div>
-      <div><a [routerLink]="['/Home']">Back to list</a></div>
-    </section>
-  `,
-  //templateUrl: './game-details.html',
+  templateUrl: './game-details.html',
   //styleUrls: ['./game-details.css']
   directives: [ROUTER_DIRECTIVES, GameFormComponent]
 })
@@ -39,14 +19,16 @@ export class GameDetailsComponent implements OnInit {
   formDisabled:boolean = false;
 
   constructor(params:RouteParams, private _GameService:GameService) {
-    this.editing = !!params.get('edit');
     this.gameId = <number>+params.get('id');
+    this.editing = !!params.get('edit') || !this.gameId;
   }
 
   ngOnInit() {
     if (this.gameId) {
       this._GameService.getGame(this.gameId)
         .subscribe((game) => this.game = game);
+    } else {
+      this.game = GameService.createNewGame();
     }
   }
 

@@ -9,7 +9,7 @@ import {NameListService} from '../../shared/services/name-list.service';
 import {ToolbarComponent} from './toolbar.component';
 import {NavbarComponent} from './navbar.component';
 
-import {HomeCmp} from '../../home/components/home.cmp';
+import {HomeComponent} from '../../home/components/home.component';
 import {AboutComponent} from '../../about/components/about.component';
 import {GameDetailsComponent} from '../../game/game-details.component';
 
@@ -23,8 +23,9 @@ import {GameDetailsComponent} from '../../game/game-details.component';
   directives: [ROUTER_DIRECTIVES, ToolbarComponent, NavbarComponent]
 })
 @RouteConfig([
-  {path: '/', component: HomeCmp, name: 'Home', useAsDefault: true},
+  {path: '/', component: HomeComponent, name: 'Home', useAsDefault: true},
   {path: '/about', component: AboutComponent, name: 'About'},
+  {path: '/game/new', component: GameDetailsComponent, name: 'NewGameDetails'},
   {path: '/game/:id', component: GameDetailsComponent, name: 'GameDetails'},
   //{path: '/decks', component: DecksCmp, name: 'Decks'},
   //{path: '/players', component: PlayersCmp, name: 'Players'},

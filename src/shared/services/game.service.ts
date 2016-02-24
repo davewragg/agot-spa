@@ -6,6 +6,13 @@ import {GameIndex} from '../models/game-index.model';
 
 @Injectable()
 export class GameService {
+  static createNewGame():Game {
+    return <Game>{
+      date: new Date().toISOString(),
+      gamePlayers: []
+    };
+  }
+
   constructor(private _DataService:DataService) {
   }
 
