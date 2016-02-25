@@ -6,6 +6,7 @@ import {SetOfResults} from '../../shared/models/set-of-results.model';
   selector: 'agot-rankings',
   moduleId: module.id,
   templateUrl: './rankings.html',
+  styleUrls: ['./rankings.css'],
   directives: []
 })
 export class RankingsComponent {

@@ -15,7 +15,11 @@
           <tr *ngFor="#ranking of rankings.rankedPlayers; #i = index">
             <td>{{ i + 1 }}.</td>
             <td>{{ ranking.playerName }}</td>
-            <td>{{ rankings.playerWinLossRecord[ranking.playerId] }}</td>
+            <td>
+              <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId]" class="icon icon-{{ result | lowercase }}">
+                {{ result }}
+              </span>
+            </td>
           </tr>
         </table>
       </div>
