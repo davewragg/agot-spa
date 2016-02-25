@@ -4,7 +4,7 @@
 
 <!--TODO replace hidden with loading mask-->
 <form (ngSubmit)="onSubmit()" [ngFormModel]="gameForm" [hidden]="disabled" class="form">
-  <fieldset>
+  <fieldset class="card card-block">
     <div class="row">
       <div class="col-sm-4 form-group">
         <label class="form-control-label">Date</label>
@@ -31,8 +31,10 @@
             class="btn btn-primary">{{ game.gameId ? 'Save' : 'Create' }}
     </button>
     <button type="button" class="btn" (click)="onCancel()">Cancel</button>
+
+    <code>valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}</code>
   </div>
-  valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}
+
   <div [hidden]="gameForm.valid || gameForm.pristine" class="alert alert-danger">
     Fix the issues, you dunce
   </div>

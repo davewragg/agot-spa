@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
+import {ROUTER_DIRECTIVES, Router, RouteParams} from 'angular2/router';
 import {GameService} from '../shared/services/game.service';
 import {Game} from '../shared/models/game.model';
 import {GameFormComponent} from './game-form.component';
@@ -14,18 +14,21 @@ import {GameFormComponent} from './game-form.component';
 })
 export class GameDetailsComponent implements OnInit {
   game:Game;
-  gameId:number;
+  gameIdParam:number;
+  editParam:boolean;
+
   editing:boolean = false;
   formDisabled:boolean = false;
 
-  constructor(params:RouteParams, private _GameService:GameService) {
-    this.gameId = <number>+params.get('id');
-    this.editing = !!params.get('edit') || !this.gameId;
+  constructor(params:RouteParams, private _GameService:GameService, private router:Router) {
+    this.gameIdParam = <number>+params.get('id');
+    this.editParam = !!params.get('edit');
+    this.editing = this.editParam || !this.gameIdParam;
   }
 
   ngOnInit() {
-    if (this.gameId) {
-      this._GameService.getGame(this.gameId)
+    if (this.gameIdParam) {
+      this._GameService.getGame(this.gameIdParam)
         .subscribe((game) => this.game = game);
     } else {
       this.game = GameService.createNewGame();
@@ -50,8 +53,12 @@ export class GameDetailsComponent implements OnInit {
   }
 
   onCancel() {
-    this.editing = false;
-    // TODO restore / reset values?
+    // if creating or editing directly, GTFO
+    if (!this.game.gameId || this.editParam) {
+      this.router.navigate(['/Home']);
+    } else {
+      this.editing = false;
+    }
   }
 
   onEdit() {

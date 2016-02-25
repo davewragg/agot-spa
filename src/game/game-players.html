@@ -1,30 +1,28 @@
-<h4>Players</h4>
+<div class="card">
+  <h3 class="card-header">Players</h3>
+  <div class="card-block">
+    <div class="row">
+      <div class="col-sm-1"><h5>Player</h5></div>
+      <div class="col-sm-8"><h5>Faction & Agenda</h5></div>
+    </div>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th>Player</th>
-    <th>Faction & Agenda</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngIf="!gamePlayers?.length || gamePlayers?.length < 2">
-    <th colspan="5" class="alert alert-danger">Need more players over here</th>
-  </tr>
-  <agot-game-player-row *ngFor="#gamePlayer of gamePlayers" [gamePlayer]="gamePlayer"
-                        (updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">
-  </agot-game-player-row>
-  </tbody>
-</table>
+    <div *ngIf="!gamePlayers?.length || gamePlayers?.length < 2" class="alert alert-danger">
+      Need more players over here
+    </div>
 
-<div class="form-group">
-  <h5>Add player</h5>
+    <agot-game-player-row *ngFor="#gamePlayer of gamePlayers" [gamePlayer]="gamePlayer"
+                          (updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">
+    </agot-game-player-row>
+  </div>
+</div>
+
+<div class="card card-block">
+  <h5 class="card-title">Add player</h5>
   <agot-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-game-player-form>
 </div>
 
-<div class="form-group">
-  <h5>Who won?</h5>
+<div class="card card-block">
+  <h5 class="card-title">Who won?</h5>
   <div class="form-group btn-group" date-toggle="buttons">
     <label class="btn btn-primary" *ngFor="#gamePlayer of gamePlayers" [class.active]="gamePlayer.isWinner">
       <input type="radio" name="isWinner" value="true"
