@@ -1,38 +1,31 @@
-<form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()">
-  <table class="table">
-    <tbody>
-    <tr>
-      <td *ngIf="creating">
-        <select class="form-control" ngControl="playerId">
-          <option value="">Player</option>
-          <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
-        </select>
-      </td>
-      <td>
-        <select class="form-control" ngControl="factionId">
-          <option value="">Main Faction</option>
-          <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
-        </select>
-      </td>
-      <td>
-        <select class="form-control" ngControl="agendaId" [disabled]="secondFactionId.value" #agendaId>
-          <option value="">Agenda</option>
-          <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
-        </select>
-      </td>
-      <td>
-        <select class="form-control" ngControl="secondFactionId" [disabled]="agendaId.value" #secondFactionId>
-          <option value="">Secondary Faction</option>
-          <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
-        </select>
-      </td>
-      <td></td>
-      <td>
-        <button type="submit" class="btn" [disabled]="!gamePlayerForm.valid">
-          {{ creating ? 'Add' : 'Update' }}
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form form-inline">
+  <div *ngIf="creating" class="form-group">
+    <select class="form-control" ngControl="playerId">
+      <option value="">Player</option>
+      <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" ngControl="factionId">
+      <option value="">Main Faction</option>
+      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" ngControl="agendaId" [disabled]="secondFactionId.value" #agendaId>
+      <option value="">Agenda</option>
+      <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" ngControl="secondFactionId" [disabled]="agendaId.value" #secondFactionId>
+      <option value="">Secondary Faction</option>
+      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn" [disabled]="!gamePlayerForm.valid">
+      {{ creating ? 'Add' : 'Update' }}
+    </button>
+  </div>
 </form>
