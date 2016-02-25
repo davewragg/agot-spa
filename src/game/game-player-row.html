@@ -1,16 +1,23 @@
-<div class="row" [class.table-active]="editing">
-  <div class="col-sm-1 font-weight-bold">{{ gamePlayer.player.name }}</div>
-  <div class="col-sm-8" *ngIf="editing">
-    <agot-game-player-form [gamePlayer]="gamePlayer"
-                           (updatePlayer)="onPlayerUpdate(gamePlayer)"></agot-game-player-form>
+<div [class.table-active]="editing" class="text-xs-center">
+  <div class="card-block">
+    <h4 class="card-title">{{ gamePlayer.player.name }}</h4>
+
+    <p class="card-text" *ngIf="!editing">
+      {{ gamePlayer.faction.factionName }},
+      {{ gamePlayer.agenda?.title || gamePlayer.secondaryFaction?.factionName || 'No Agenda' }}
+    </p>
+    <div class="card-text" *ngIf="editing">
+      <agot-game-player-form [gamePlayer]="gamePlayer"
+                             (updatePlayer)="onPlayerUpdate(gamePlayer)"></agot-game-player-form>
+    </div>
+    <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Edit' }}
+    </button>
+    <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
   </div>
-  <div class="col-sm-8" *ngIf="!editing">
-    {{ gamePlayer.faction.factionName }},
-    {{ gamePlayer.agenda?.title }}
-    {{ gamePlayer.secondaryFaction?.factionName }}
+  <div class="card-footer text-warning" *ngIf="gamePlayer.isWinner">
+    Winner
   </div>
-  <div class="col-sm-3 text-sm-right">
-    <button type="button" class="btn btn-info btn-sm" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Edit' }}</button>
-    <button type="button" class="btn btn-danger btn-sm" (click)="onRemove(gamePlayer)">Remove</button>
+  <div class="card-footer text-muted" *ngIf="!gamePlayer.isWinner">
+    Loser big loser
   </div>
 </div>
