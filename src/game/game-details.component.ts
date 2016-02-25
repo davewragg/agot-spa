@@ -20,7 +20,7 @@ export class GameDetailsComponent implements OnInit {
 
   constructor(params:RouteParams, private _GameService:GameService) {
     this.gameId = <number>+params.get('id');
-    //this.editing = !!params.get('edit') || !this.gameId;
+    this.editing = !!params.get('edit') || !this.gameId;
 
     // TODO clone gamePlayers into holding var, update on save
   }
