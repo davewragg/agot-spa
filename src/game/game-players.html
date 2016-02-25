@@ -1,5 +1,4 @@
 <h4>Players</h4>
-<!--TODO set handler for pristine/touched on form if values change-->
 <table class="table">
   <thead>
   <tr>
@@ -18,7 +17,7 @@
       <agot-game-player-form [gamePlayer]="gamePlayer"></agot-game-player-form>
     </td>
     <td>
-      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(index)">
+      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(gamePlayer)">
     </td>
     <td>
       <button type="button" class="btn" (click)="onRemove(gamePlayer)">Remove</button>

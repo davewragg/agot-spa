@@ -4,7 +4,7 @@
       game.gameId ? 'Edit' : 'Create'
       : 'View' }} Game</h1>
     <agot-game-form [game]="game" *ngIf="editing" [disabled]="formDisabled"
-                    (submit)="onSubmit(game)" (cancel)="onCancel()"></agot-game-form>
+                    (update)="onSubmit(game)" (cancel)="onCancel()"></agot-game-form>
     <div *ngIf="!editing">
       <!--TODO view game-->
       <blockquote>

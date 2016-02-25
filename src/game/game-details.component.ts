@@ -21,8 +21,6 @@ export class GameDetailsComponent implements OnInit {
   constructor(params:RouteParams, private _GameService:GameService) {
     this.gameId = <number>+params.get('id');
     this.editing = !!params.get('edit') || !this.gameId;
-
-    // TODO clone gamePlayers into holding var, update on save
   }
 
   ngOnInit() {
@@ -36,7 +34,9 @@ export class GameDetailsComponent implements OnInit {
 
   onSubmit(game:Game) {
     this.formDisabled = true;
-    // TODO call gameservice
+    //const winner = game.gamePlayers.find((player) => player.isWinner).player.name;
+    //console.log(winner);
+
     console.log('details submit', game);
     this._GameService.updateGame(game).subscribe((game:Game) => {
       this.game = game;
