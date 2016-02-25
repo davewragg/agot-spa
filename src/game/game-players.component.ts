@@ -14,7 +14,7 @@ export class GamePlayersComponent {
 
   addActive:boolean = true;
 
-  onWinnerChange(newWinner:GamePlayer) {
+  onWinnerChange(newWinner?:GamePlayer) {
     this.gamePlayers.forEach((gamePlayer:GamePlayer) => {
       gamePlayer.isWinner = (gamePlayer === newWinner);
     });

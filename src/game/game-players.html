@@ -19,7 +19,7 @@
       <agot-game-player-form [gamePlayer]="gamePlayer" (updatePlayer)="editing = false"></agot-game-player-form>
     </td>
     <td *ngIf="!editing">
-      {{ gamePlayer.faction?.factionName }},
+      {{ gamePlayer.faction.factionName }},
       {{ gamePlayer.agenda?.title }}
       {{ gamePlayer.secondaryFaction?.factionName }}
     </td>
