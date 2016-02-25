@@ -12,21 +12,9 @@
   <tr *ngIf="!gamePlayers?.length || gamePlayers?.length < 2">
     <th colspan="5" class="alert alert-danger">Need more players over here</th>
   </tr>
-  <tr *ngFor="#gamePlayer of gamePlayers; #index=index">
-    <td>{{ gamePlayer.player.name }}</td>
-    <td *ngIf="editing">
-      <agot-game-player-form [gamePlayer]="gamePlayer" (updatePlayer)="editing = false"></agot-game-player-form>
-    </td>
-    <td *ngIf="!editing">
-      {{ gamePlayer.faction.factionName }},
-      {{ gamePlayer.agenda?.title }}
-      {{ gamePlayer.secondaryFaction?.factionName }}
-    </td>
-    <td>
-      <button type="button" class="btn btn-info" (click)="editing = !editing">{{ editing ? 'Cancel' : 'Edit' }}</button>
-      <button type="button" class="btn btn-danger" (click)="onRemove(index)">Remove</button>
-    </td>
-  </tr>
+  <agot-game-player-row *ngFor="#gamePlayer of gamePlayers" [gamePlayer]="gamePlayer"
+                        (updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">
+  </agot-game-player-row>
   </tbody>
 </table>
 

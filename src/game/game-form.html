@@ -23,12 +23,12 @@
     </div>
   </fieldset>
 
-  <agot-game-players [gamePlayers]="gamePlayers" (change)="onPlayerChange($event)"></agot-game-players>
+  <agot-game-players [gamePlayers]="gamePlayers" (playerChange)="onPlayerChange($event)"></agot-game-players>
 
   <div class="form-group">
     <button type="submit"
             [disabled]="!gameForm.valid"
-            class="btn btn-primary">{{ game.gameId ? 'Update' : 'Create' }}
+            class="btn btn-primary">{{ game.gameId ? 'Save' : 'Create' }}
     </button>
     <button type="button" class="btn" (click)="onCancel()">Cancel</button>
   </div>

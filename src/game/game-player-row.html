@@ -1,0 +1,16 @@
+<tr>
+  <td>{{ gamePlayer.player.name }}</td>
+  <td *ngIf="editing">
+    <agot-game-player-form [gamePlayer]="gamePlayer"
+                           (updatePlayer)="onPlayerUpdate(gamePlayer)"></agot-game-player-form>
+  </td>
+  <td *ngIf="!editing">
+    {{ gamePlayer.faction.factionName }},
+    {{ gamePlayer.agenda?.title }}
+    {{ gamePlayer.secondaryFaction?.factionName }}
+  </td>
+  <td class="text-md-right">
+    <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Edit' }}</button>
+    <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
+  </td>
+</tr>

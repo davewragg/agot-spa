@@ -1,16 +1,19 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {GamePlayer} from '../shared/models/game-player.model';
 import {GamePlayerFormComponent} from './game-player-form.component';
+import {GamePlayerRowComponent} from './game-player-row.component';
 
 @Component({
   selector: 'agot-game-players',
   moduleId: module.id,
   templateUrl: './game-players.html',
-  directives: [GamePlayerFormComponent]
+  directives: [GamePlayerRowComponent, GamePlayerFormComponent]
 })
 export class GamePlayersComponent {
   @Input()
   gamePlayers:GamePlayer[];
+  @Output()
+  playerChange:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
   addActive:boolean = true;
 
@@ -18,12 +21,19 @@ export class GamePlayersComponent {
     this.gamePlayers.forEach((gamePlayer:GamePlayer) => {
       gamePlayer.isWinner = (gamePlayer === newWinner);
     });
-    // TODO emit change for parent component (dirty)
+    this.playerChange.emit(newWinner);
   }
 
-  onRemove(playerIndex:number) {
-    this.gamePlayers.splice(playerIndex, 1);
-    // TODO emit change for parent component (dirty)
+  onRemove(gamePlayer:GamePlayer) {
+    const playerIndex = this.gamePlayers.indexOf(gamePlayer);
+    if (playerIndex > -1) {
+      this.gamePlayers.splice(playerIndex, 1);
+      this.playerChange.emit(gamePlayer);
+    }
+  }
+
+  onPlayerEdit(updatedPlayer:GamePlayer) {
+    this.playerChange.emit(updatedPlayer);
   }
 
   onNewPlayerAdd(newPlayer:GamePlayer) {
@@ -34,7 +44,7 @@ export class GamePlayersComponent {
     }
     this.gamePlayers.push(newPlayer);
     this.resetForm();
-    // TODO emit change for parent component (dirty)
+    this.playerChange.emit(newPlayer);
   }
 
   private resetForm() {
