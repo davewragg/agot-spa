@@ -1,8 +1,4 @@
-import {Component, Input, OnInit} from 'angular2/core';
-import {ReferenceDataService} from '../shared/services/reference-data.service';
-import {Player} from '../shared/models/player.model';
-import {Agenda} from '../shared/models/agenda.model';
-import {Faction} from '../shared/models/faction.model';
+import {Component, Input} from 'angular2/core';
 import {GamePlayer} from '../shared/models/game-player.model';
 import {GamePlayerFormComponent} from './game-player-form.component';
 
@@ -12,26 +8,11 @@ import {GamePlayerFormComponent} from './game-player-form.component';
   templateUrl: './game-players.html',
   directives: [GamePlayerFormComponent]
 })
-export class GamePlayersComponent implements OnInit {
+export class GamePlayersComponent {
   @Input()
   gamePlayers:GamePlayer[];
 
-  players:Player[];
-  agendas:Agenda[];
-  factions:Faction[];
-
   addActive:boolean = true;
-
-  constructor(private _ReferenceDataService:ReferenceDataService) {
-    // TODO probably async
-    this.players = this._ReferenceDataService.getPlayers();
-    this.factions = this._ReferenceDataService.getFactions();
-    this.agendas = this._ReferenceDataService.getAgendas();
-  }
-
-  ngOnInit() {
-    // TODO
-  }
 
   onWinnerChange(newWinner:GamePlayer) {
     this.gamePlayers.forEach((gamePlayer:GamePlayer) => {
