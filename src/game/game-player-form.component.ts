@@ -14,31 +14,30 @@ import {GamePlayer} from '../shared/models/game-player.model';
 export class GamePlayerFormComponent implements OnInit {
   @Input()
   gamePlayer:GamePlayer;
-  //@Input()
-  //creating:boolean = false;
   @Output()
   updatePlayer:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
   gamePlayerForm:ControlGroup;
+  creating:boolean = false;
 
   players:Player[];
   agendas:Agenda[];
   factions:Faction[];
 
   // TODO move to service
-  private static validateNewPlayer(newPlayer:GamePlayer) {
+  private static validateGamePlayer(newPlayer:GamePlayer) {
     // validate agenda XOR secondary faction
     if (newPlayer.agendaId && newPlayer.secondFactionId) {
       console.warn('pick one');
       return false;
     }
     // validate banner is not the same as main faction
-    if (newPlayer.agendaId === newPlayer.factionId) {
+    if (newPlayer.agendaId === +newPlayer.factionId) {
       console.warn('invalid banner');
       return false;
     }
     // validate faction 1 != faction 2
-    if (newPlayer.factionId === newPlayer.secondFactionId) {
+    if (newPlayer.factionId === +newPlayer.secondFactionId) {
       console.warn('invalid second faction');
       return false;
     }
@@ -53,34 +52,42 @@ export class GamePlayerFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gamePlayer = this.gamePlayer || <GamePlayer>{};
-    let playerId = this.gamePlayer.playerId;
-    let factionId = this.gamePlayer.factionId;
-    let agendaId = this.gamePlayer.agendaId;
-    let secondFactionId = this.gamePlayer.secondFactionId;
-    this.gamePlayerForm = this._FormBuilder.group({
-      playerId: [playerId || '', Validators.required],
-      factionId: [factionId || '', Validators.required],
-      agendaId: [agendaId || ''],
-      secondFactionId: [secondFactionId || ''],
-    });
+    if (!this.gamePlayer) {
+      this.creating = true;
+      this.gamePlayer = <GamePlayer>{};
+    }
+    this.populateForm();
   }
 
   onSubmit() {
-    const newPlayer:GamePlayer = this.gamePlayerForm.value;
+    // FIXME newPlayer properties default to strings
+    const updatedPlayer:GamePlayer = this.gamePlayerForm.value;
     //TODO proper validation here
-    if (!GamePlayerFormComponent.validateNewPlayer(newPlayer)) {
+    if (!GamePlayerFormComponent.validateGamePlayer(updatedPlayer)) {
       return false;
     }
-    this.populatePlayer(newPlayer);
+    this.populatePlayer(updatedPlayer);
 
     // TODO update or create?
-    Object.assign(this.gamePlayer, newPlayer);
+    Object.assign(this.gamePlayer, updatedPlayer);
     console.log(this.gamePlayer);
     this.updatePlayer.emit(this.gamePlayer);
     // reset form
     //this.gamePlayerForm.reset
   }
+
+  private populateForm() {
+    let playerId = this.gamePlayer.playerId || '';
+    let factionId = this.gamePlayer.factionId || '';
+    let agendaId = this.gamePlayer.agendaId || '';
+    let secondFactionId = this.gamePlayer.secondFactionId || '';
+    this.gamePlayerForm = this._FormBuilder.group({
+      playerId: [playerId, Validators.required],
+      factionId: [factionId, Validators.required],
+      agendaId: [agendaId],
+      secondFactionId: [secondFactionId],
+    });
+  };
 
   private populatePlayer(newPlayer:GamePlayer) {
     newPlayer.player = this.players.find((player) => player.playerId === +newPlayer.playerId);

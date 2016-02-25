@@ -1,9 +1,8 @@
 <form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()">
-  <h5>Add player</h5>
   <table class="table">
     <tbody>
     <tr>
-      <td>
+      <td *ngIf="creating">
         <select class="form-control" ngControl="playerId">
           <option value="">Player</option>
           <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
@@ -29,7 +28,9 @@
       </td>
       <td></td>
       <td>
-        <button type="submit" class="btn" [disabled]="!gamePlayerForm.valid">Add</button>
+        <button type="submit" class="btn" [disabled]="!gamePlayerForm.valid">
+          {{ creating ? 'Add' : 'Update' }}
+        </button>
       </td>
     </tr>
     </tbody>

@@ -42,6 +42,7 @@ export class GamePlayersComponent implements OnInit {
 
   onRemove(playerIndex:number) {
     this.gamePlayers.splice(playerIndex, 1);
+    // TODO emit change for parent component (dirty)
   }
 
   onNewPlayerAdd(newPlayer:GamePlayer) {
@@ -52,6 +53,7 @@ export class GamePlayersComponent implements OnInit {
     }
     this.gamePlayers.push(newPlayer);
     this.resetForm();
+    // TODO emit change for parent component (dirty)
   }
 
   private resetForm() {

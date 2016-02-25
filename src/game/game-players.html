@@ -4,9 +4,7 @@
   <thead>
   <tr>
     <th>Player</th>
-    <th>Main Faction</th>
-    <th>Agenda</th>
-    <th>Second Faction</th>
+    <th>Faction & Agenda</th>
     <th>Winner</th>
   </tr>
   </thead>
@@ -17,21 +15,7 @@
   <tr *ngFor="#gamePlayer of gamePlayers; #index=index">
     <td>{{ gamePlayer.player.name }}</td>
     <td>
-      <select class="form-control" [(ngModel)]="gamePlayer.factionId">
-        <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
-      </select>
-    </td>
-    <td>
-      <select class="form-control" [(ngModel)]="gamePlayer.agendaId">
-        <option value="">None</option>
-        <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
-      </select>
-    </td>
-    <td>
-      <select class="form-control" [(ngModel)]="gamePlayer.secondFactionId">
-        <option value="">None</option>
-        <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
-      </select>
+      <agot-game-player-form [gamePlayer]="gamePlayer"></agot-game-player-form>
     </td>
     <td>
       <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(index)">
@@ -43,4 +27,5 @@
   </tbody>
 </table>
 
+<h5>Add player</h5>
 <agot-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-game-player-form>
