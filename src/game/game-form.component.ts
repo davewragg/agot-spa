@@ -38,12 +38,15 @@ export class GameFormComponent implements OnInit {
   }
 
   onSubmit() {
+    if (!this.validateGame()) {
+      return false;
+    }
     const updatedGame = this.deserialiseFormToGame();
     this.update.emit(updatedGame);
   }
 
   onCancel() {
-    // TODO dirty check?
+    // TODO dirty AYS check?
     this.cancel.emit('cancelled');
   }
 
@@ -51,6 +54,14 @@ export class GameFormComponent implements OnInit {
     // TODO anything else here?
     this.gameForm.markAsDirty(true);
   }
+
+  private validateGame() {
+    if (this.gamePlayers.length < 2) {
+      console.warn('not enough players');
+      return false;
+    }
+    return true;
+  };
 
   private serialiseGameToForm() {
     this.gameForm = this._FormBuilder.group({

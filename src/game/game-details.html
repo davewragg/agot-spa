@@ -17,7 +17,9 @@
     </div>
   </div>
   <div *ngIf="!game">
-    <h3 class="error">Game not found</h3>
+    <h3 class="alert alert-danger">Game not found</h3>
   </div>
-  <div><a [routerLink]="['/Home']">Back to list</a></div>
+  <div>
+    <a [routerLink]="['/Home']">&laquo; Back to list</a>
+  </div>
 </section>

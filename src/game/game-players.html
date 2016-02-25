@@ -6,7 +6,6 @@
     <th>Player</th>
     <th>Faction & Agenda</th>
     <th></th>
-    <th>Winner</th>
   </tr>
   </thead>
   <tbody>
@@ -27,12 +26,27 @@
       <button type="button" class="btn btn-info" (click)="editing = !editing">{{ editing ? 'Cancel' : 'Edit' }}</button>
       <button type="button" class="btn btn-danger" (click)="onRemove(index)">Remove</button>
     </td>
-    <td>
-      <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(gamePlayer)">
-    </td>
   </tr>
   </tbody>
 </table>
 
-<h5>Add player</h5>
-<agot-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-game-player-form>
+<div class="form-group">
+  <h5>Add player</h5>
+  <agot-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-game-player-form>
+</div>
+
+<div class="form-group">
+  <h5>Who won?</h5>
+  <div class="form-group btn-group" date-toggle="buttons">
+    <label class="btn btn-primary" *ngFor="#gamePlayer of gamePlayers" [class.active]="gamePlayer.isWinner">
+      <input type="radio" name="isWinner" value="true"
+             autocomplete="off" [checked]="gamePlayer.isWinner"
+             (change)="onWinnerChange(gamePlayer)"> {{ gamePlayer.player.name }}
+    </label>
+
+    <label class="btn btn-primary-outline">
+      <input type="radio" name="isWinner" value="true" autocomplete="off"
+             (change)="onWinnerChange()"> Draw/Unfinished
+    </label>
+  </div>
+</div>
