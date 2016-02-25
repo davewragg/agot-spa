@@ -30,7 +30,14 @@
             [disabled]="!gameForm.valid"
             class="btn btn-primary">{{ game.gameId ? 'Save' : 'Create' }}
     </button>
-    <button type="button" class="btn" (click)="onCancel()">Cancel</button>
+
+    <button type="button" class="btn" (click)="onCancel()" [hidden]="cancelling">Cancel</button>
+
+    <div [hidden]="!cancelling" class="card card-block alert-warning">
+      <p class="card-text">Woah, abandon changes?</p>
+      <button type="button" class="btn btn-sm btn-danger" (click)="onCancel(true)">Yep</button>
+      <button type="button" class="btn btn-sm btn-secondary" (click)="cancelling = false">Whoops</button>
+    </div>
 
     <code>valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}</code>
   </div>

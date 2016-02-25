@@ -25,6 +25,7 @@ export class GameFormComponent implements OnInit {
 
   gameForm:ControlGroup;
   gamePlayers:GamePlayer[];
+  cancelling:boolean = false;
 
   deckTypes:DeckType[];
 
@@ -45,9 +46,13 @@ export class GameFormComponent implements OnInit {
     this.update.emit(updatedGame);
   }
 
-  onCancel() {
-    // TODO dirty AYS check?
-    this.cancel.emit('cancelled');
+  onCancel(force:boolean) {
+    if (!force && this.gameForm.dirty) {
+      console.warn('dirty');
+      this.cancelling = true;
+    } else {
+      this.cancel.emit('cancelled');
+    }
   }
 
   onPlayerChange() {

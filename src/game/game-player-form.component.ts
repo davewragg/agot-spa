@@ -99,5 +99,4 @@ export class GamePlayerFormComponent implements OnInit {
       newPlayer.secondaryFaction = this.factions.find((faction) => faction.factionId === +newPlayer.secondFactionId);
     }
   }
-
 }
