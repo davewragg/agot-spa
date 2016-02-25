@@ -2,24 +2,22 @@ import {Component, OnInit} from 'angular2/core';
 
 import {SetOfResults} from '../../shared/models/set-of-results.model';
 import {RankingService} from '../../shared/services/ranking.service';
-import {RankingsCmp} from './rankings.cmp';
+import {RankingsComponent} from './rankings.component';
 
 @Component({
   selector: 'agot-all-rankings',
   moduleId: module.id,
   viewProviders: [RankingService],
-  //templateUrl: './all-rankings.cmp.html',
-  //styleUrls: ['./all-rankings.cmp.css'],
   template: `
     <section>
       <h2>Rankings</h2>
-      <agot-rankings name="Overall" [rankings]="allResults"></agot-rankings>
+      <agot-rankings name="Overall" [rankings]="allResults" [expanded]="true"></agot-rankings>
       <agot-rankings *ngFor="#season of seasons" [name]="season.name" [rankings]="season"></agot-rankings>
     </section>
   `,
-  directives: [RankingsCmp]
+  directives: [RankingsComponent]
 })
-export class AllRankingsCmp implements OnInit {
+export class AllRankingsComponent implements OnInit {
   allResults:SetOfResults;
   seasons:SetOfResults[];
   loadingError:any = null;
