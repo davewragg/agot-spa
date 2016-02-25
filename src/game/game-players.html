@@ -13,14 +13,21 @@
   </tr>
   <tr *ngFor="#gamePlayer of gamePlayers; #index=index">
     <td>{{ gamePlayer.player.name }}</td>
-    <td>
-      <agot-game-player-form [gamePlayer]="gamePlayer"></agot-game-player-form>
+    <td *ngIf="editing">
+      <agot-game-player-form [gamePlayer]="gamePlayer" (updatePlayer)="editing = false"></agot-game-player-form>
+      <button (click)="editing = false" class="btn">Cancel</button>
+    </td>
+    <td *ngIf="!editing">
+      {{ gamePlayer.faction?.factionName }},
+      {{ gamePlayer.agenda?.title }}
+      {{ gamePlayer.secondaryFaction?.factionName }}
+      <button (click)="editing = true" class="btn">Edit</button>
     </td>
     <td>
       <input type="radio" name="isWinner" [checked]="gamePlayer.isWinner" value="true" (change)="onWinnerChange(gamePlayer)">
     </td>
     <td>
-      <button type="button" class="btn" (click)="onRemove(gamePlayer)">Remove</button>
+      <button type="button" class="btn" (click)="onRemove(index)">Remove</button>
     </td>
   </tr>
   </tbody>

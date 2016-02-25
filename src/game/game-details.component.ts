@@ -51,6 +51,7 @@ export class GameDetailsComponent implements OnInit {
 
   onCancel() {
     this.editing = false;
+    // TODO restore / reset values?
   }
 
   onEdit() {
