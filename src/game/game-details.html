@@ -1,8 +1,8 @@
 <section class="container">
   <div *ngIf="game">
-    <h1>{{ editing ?
+    <h2>{{ editing ?
       game.gameId ? 'Edit' : 'Create'
-      : 'View' }} Game</h1>
+      : 'View' }} Game</h2>
     <agot-game-form [game]="game" *ngIf="editing" [disabled]="formDisabled"
                     (update)="onSubmit(game)" (cancel)="onCancel()"></agot-game-form>
 
