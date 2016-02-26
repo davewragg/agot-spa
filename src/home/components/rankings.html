@@ -1,38 +1,38 @@
 <section *ngIf="rankings" class="card">
   <div class="card-header">
-    <h3>{{ name }} Rankings
+    <h4>{{ name }} Rankings
       <span class="pull-xs-right">
         <button type="button" class="btn-sm btn btn-primary-outline" (click)="expanded = !expanded">...</button>
       </span>
-    </h3>
+    </h4>
   </div>
-  <div class="card-block card-deck-wrapper" [hidden]="!expanded">
-    <div class="card-deck">
+  <div [hidden]="!expanded">
+    <div class="card-group">
 
       <div class="card card-block text-xs-left">
-        <h4 class="card-title">Player ranking</h4>
+        <h5 class="card-title">Player ranking</h5>
         <table class="card-text table">
           <tr *ngFor="#ranking of rankings.rankedPlayers; #i = index">
             <td>{{ i + 1 }}.</td>
             <td>{{ ranking.playerName }}</td>
-            <td>
-              <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId]" class="icon icon-{{ result | lowercase }}">
-                {{ result }}
-              </span>
+            <td nowrap="true">
+              <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId]"
+                   src="/assets/img/result-{{ result | lowercase }}.png"
+                   alt="{{ result }}" title="{{ result }}" class="icon"/>
             </td>
           </tr>
         </table>
       </div>
 
       <div class="card card-block text-xs-left">
-        <h4 class="card-title">Faction ranking</h4>
+        <h5 class="card-title">Faction ranking</h5>
         <ol class="card-text">
           <li *ngFor="#ranking of rankings.rankedFactions">{{ ranking.playerName }}</li>
         </ol>
       </div>
 
       <div class="card card-block text-xs-left">
-        <h4 class="card-title">Agenda ranking</h4>
+        <h5 class="card-title">Agenda ranking</h5>
         <ol class="card-text">
           <li *ngFor="#ranking of rankings.rankedAgendas">{{ ranking.playerName }}</li>
         </ol>

@@ -3,18 +3,24 @@
 .icon-win,
 .icon-lose,
 .icon-draw {
-  border: 0;
-  font: 0/0 a;
-  text-shadow: none;
-  color: transparent;
-  background: url(/assets/img/tick.png);
-  width: 28px;
-  height: 28px;
+  /*border: 0;*/
+  /*!*font: 0/0 a;*!*/
+  /*text-indent: 100%;*/
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
+  /*text-shadow: none;*/
+  /*color: transparent;*/
+  /*background-image: url(/assets/img/tick.png);*/
+  width: 19px;
+  height: 19px;
+  /*background-repeat: no-repeat; */
+  /*background-size: contain;*/
 }
 
-.icon-lose {
-  background: url(/assets/img/cross.png);
-}
-.icon-draw {
-  background: url(/assets/img/minus.png);
-}
+/*.icon-lose {*/
+  /*background-image: url(/assets/img/cross.png);*/
+/*}*/
+
+/*.icon-draw {*/
+  /*background-image: url(/assets/img/minus.png);*/
+/*}*/
