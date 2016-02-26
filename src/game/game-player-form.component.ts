@@ -90,7 +90,7 @@ export class GamePlayerFormComponent implements OnInit {
   };
 
   private populatePlayer(gamePlayer:GamePlayer) {
-    gamePlayer.player = this.players.find((player) => player.playerId === +player.playerId);
+    gamePlayer.player = this.players.find((player) => player.playerId === +gamePlayer.playerId);
     gamePlayer.faction = this.factions.find((faction) => faction.factionId === +gamePlayer.factionId);
     if (gamePlayer.agendaId) {
       gamePlayer.agenda = this.agendas.find((agenda) => agenda.agendaId === +gamePlayer.agendaId);
