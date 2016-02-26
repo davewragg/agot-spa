@@ -1,4 +1,8 @@
 <div [class.table-active]="editing" class="text-xs-center">
+  <div class="card-header">
+    <img class="card-image-top" src="/assets/img/icon{{ gamePlayer.faction.factionId }}.png"
+         alt="{{ gamePlayer.faction.factionName }}">
+  </div>
   <div class="card-block">
     <h4 class="card-title">{{ gamePlayer.player.name }}</h4>
 
@@ -14,7 +18,7 @@
     </button>
     <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
   </div>
-  <div class="card-footer text-warning" *ngIf="gamePlayer.isWinner">
+  <div class="card-footer text-warning font-weight-bold" *ngIf="gamePlayer.isWinner">
     Winner
   </div>
   <div class="card-footer text-muted" *ngIf="!gamePlayer.isWinner">
