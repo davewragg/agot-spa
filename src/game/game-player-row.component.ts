@@ -6,6 +6,7 @@ import {GamePlayerFormComponent} from './game-player-form.component';
   selector: 'agot-game-player-row',
   moduleId: module.id,
   templateUrl: './game-player-row.html',
+  styleUrls: ['./game-player-row.css'],
   directives: [GamePlayerFormComponent]
 })
 export class GamePlayerRowComponent {
