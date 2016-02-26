@@ -11,6 +11,8 @@ import {GamePlayerFormComponent} from './game-player-form.component';
 export class GamePlayerRowComponent {
   @Input()
   gamePlayer:GamePlayer;
+  @Input()
+  readOnly:boolean = false;
   @Output()
   updatePlayer:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
   @Output()

@@ -5,21 +5,10 @@
       : 'View' }} Game</h1>
     <agot-game-form [game]="game" *ngIf="editing" [disabled]="formDisabled"
                     (update)="onSubmit(game)" (cancel)="onCancel()"></agot-game-form>
-    <div *ngIf="!editing">
-      <!--TODO view game-->
-      <code>
-        {{ game | json }}
-      </code>
 
-      <div>
-        <button type="button" class="btn btn-success-outline" (click)="onEdit()">Edit</button>
-      </div>
-    </div>
+    <agot-view-game *ngIf="!editing" [game]="game" (edit)="onEdit()"></agot-view-game>
   </div>
   <div *ngIf="!game">
     <h3 class="alert alert-danger">Game not found</h3>
-  </div>
-  <div>
-    <a [routerLink]="['/Home']">&laquo; Back to list</a>
   </div>
 </section>

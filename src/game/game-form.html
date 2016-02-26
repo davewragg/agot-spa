@@ -23,11 +23,11 @@
     </div>
   </fieldset>
 
-  <agot-game-players [gamePlayers]="gamePlayers" (playerChange)="onPlayerChange($event)"></agot-game-players>
+  <agot-game-players [gamePlayers]="gamePlayers" [readOnly]="false"
+                     (playerChange)="onPlayerChange($event)"></agot-game-players>
 
   <div class="form-group">
-    <button type="submit"
-            [disabled]="!gameForm.valid"
+    <button type="submit" [disabled]="!gameForm.valid"
             class="btn btn-primary">{{ game.gameId ? 'Save' : 'Create' }}
     </button>
 
@@ -39,7 +39,7 @@
       <button type="button" class="btn btn-sm btn-secondary" (click)="cancelling = false">Whoops</button>
     </div>
 
-    <code>valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}</code>
+    <!--<code>valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}</code>-->
   </div>
 
   <div [hidden]="gameForm.valid || gameForm.pristine" class="alert alert-danger">

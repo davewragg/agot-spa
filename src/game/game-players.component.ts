@@ -12,6 +12,8 @@ import {GamePlayerRowComponent} from './game-player-row.component';
 export class GamePlayersComponent {
   @Input()
   gamePlayers:GamePlayer[];
+  @Input()
+  readOnly:boolean = false;
   @Output()
   playerChange:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 

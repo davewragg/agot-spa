@@ -14,9 +14,11 @@
       <agot-game-player-form [gamePlayer]="gamePlayer"
                              (updatePlayer)="onPlayerUpdate(gamePlayer)"></agot-game-player-form>
     </div>
-    <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Edit' }}
-    </button>
-    <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
+    <div *ngIf="!readOnly">
+      <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Edit' }}
+      </button>
+      <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
+    </div>
   </div>
   <div class="card-footer text-warning font-weight-bold" *ngIf="gamePlayer.isWinner">
     Winner

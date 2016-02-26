@@ -9,6 +9,7 @@
     <div class="card-deck-wrapper">
       <div class="card-deck">
         <agot-game-player-row *ngFor="#gamePlayer of gamePlayers" [gamePlayer]="gamePlayer" class="card"
+                              [readOnly]="readOnly"
                               (updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">
         </agot-game-player-row>
       </div>
@@ -16,12 +17,12 @@
   </div>
 </div>
 
-<div class="card card-block">
+<div class="card card-block" *ngIf="!readOnly">
   <h5 class="card-title">Add player</h5>
   <agot-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-game-player-form>
 </div>
 
-<div class="card card-block">
+<div class="card card-block" *ngIf="!readOnly">
   <h5 class="card-title">Who won?</h5>
   <div class="form-group btn-group" date-toggle="buttons">
     <label class="btn btn-primary" *ngFor="#gamePlayer of gamePlayers" [class.active]="gamePlayer.isWinner">

@@ -1,8 +1,9 @@
 import {Component, OnInit} from 'angular2/core';
-import {ROUTER_DIRECTIVES, Router, RouteParams} from 'angular2/router';
+import {Router, RouteParams} from 'angular2/router';
 import {GameService} from '../shared/services/game.service';
 import {Game} from '../shared/models/game.model';
 import {GameFormComponent} from './game-form.component';
+import {ViewGameComponent} from './view-game.component';
 
 @Component({
   selector: 'agot-game-details',
@@ -10,7 +11,7 @@ import {GameFormComponent} from './game-form.component';
   viewProviders: [GameService],
   templateUrl: './game-details.html',
   //styleUrls: ['./game-details.css']
-  directives: [ROUTER_DIRECTIVES, GameFormComponent]
+  directives: [GameFormComponent, ViewGameComponent]
 })
 export class GameDetailsComponent implements OnInit {
   game:Game;

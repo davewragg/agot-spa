@@ -66,10 +66,10 @@ export class GamePlayerFormComponent implements OnInit {
     if (!GamePlayerFormComponent.validateGamePlayer(updatedPlayer)) {
       return false;
     }
-    this.populatePlayer(updatedPlayer);
 
     // TODO update or create?
     Object.assign(this.gamePlayer, updatedPlayer);
+    this.populatePlayer(this.gamePlayer);
     console.log(this.gamePlayer);
     this.updatePlayer.emit(this.gamePlayer);
     // reset form
@@ -89,14 +89,18 @@ export class GamePlayerFormComponent implements OnInit {
     });
   };
 
-  private populatePlayer(newPlayer:GamePlayer) {
-    newPlayer.player = this.players.find((player) => player.playerId === +newPlayer.playerId);
-    newPlayer.faction = this.factions.find((faction) => faction.factionId === +newPlayer.factionId);
-    if (newPlayer.agendaId) {
-      newPlayer.agenda = this.agendas.find((agenda) => agenda.agendaId === +newPlayer.agendaId);
+  private populatePlayer(gamePlayer:GamePlayer) {
+    gamePlayer.player = this.players.find((player) => player.playerId === +player.playerId);
+    gamePlayer.faction = this.factions.find((faction) => faction.factionId === +gamePlayer.factionId);
+    if (gamePlayer.agendaId) {
+      gamePlayer.agenda = this.agendas.find((agenda) => agenda.agendaId === +gamePlayer.agendaId);
+    } else {
+      gamePlayer.agenda = null;
     }
-    if (newPlayer.secondFactionId) {
-      newPlayer.secondaryFaction = this.factions.find((faction) => faction.factionId === +newPlayer.secondFactionId);
+    if (gamePlayer.secondFactionId) {
+      gamePlayer.secondaryFaction = this.factions.find((faction) => faction.factionId === +gamePlayer.secondFactionId);
+    } else {
+      gamePlayer.secondaryFaction = null;
     }
   }
 }
