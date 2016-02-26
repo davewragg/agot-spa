@@ -2,15 +2,20 @@
   <div class="row">
     <div class="col-sm-4 form-group">
       <label class="form-control-label">Date</label>
-      <p class="form-control-static font-weight-bold">{{ game.date | amDateFormat: "D MMMM YYYY" }}</p>
+      <span class="form-control-static font-weight-bold">
+        <time title="{{ game.date | amDateFormat: 'LLLL' }}">
+          <!--datetime="{{ game.date }}"-->
+          {{ game.date | amDateFormat: "D MMMM YYYY" }}
+        </time>
+      </span>
     </div>
     <div class="col-sm-4 form-group">
       <label class="form-control-label">Core set count</label>
-      <p class="form-control-static font-weight-bold">{{ game.coreSetCount }}</p>
+      <span class="form-control-static font-weight-bold">{{ game.coreSetCount }}</span>
     </div>
     <div class="col-sm-4 form-group">
       <label class="form-control-label">Deck type</label>
-      <p class="form-control-static font-weight-bold">{{ game.deckType.title }}</p>
+      <span class="form-control-static font-weight-bold">{{ game.deckType.title }}</span>
     </div>
   </div>
 </fieldset>

@@ -24,7 +24,7 @@
 
 <div class="card card-block" *ngIf="!readOnly">
   <h5 class="card-title">Who won?</h5>
-  <div class="form-group btn-group" date-toggle="buttons">
+  <div class="form-group btn-group" data-toggle="buttons">
     <label class="btn btn-primary" *ngFor="#gamePlayer of gamePlayers" [class.active]="gamePlayer.isWinner">
       <input type="radio" name="isWinner" value="true"
              autocomplete="off" [checked]="gamePlayer.isWinner"

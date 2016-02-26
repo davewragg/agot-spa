@@ -22,7 +22,12 @@
       <td colspan="8" class="alert alert-warning">No games? WTF</td>
     </tr>
     <tr *ngFor="#game of games">
-      <td>{{ game.date | amDateFormat: "D MMMM YYYY" }}</td>
+      <td>
+        <time title="{{ game.date | amDateFormat: 'LLLL' }}">
+          <!--datetime="{{ game.date }}"-->
+          {{ game.date | amDateFormat: "D MMMM YYYY" }}
+        </time>
+      </td>
       <td>{{ game.deckType.title }}</td>
       <td>
         <div style="display: inline-block;" *ngFor="#gamePlayer of game.gamePlayers">

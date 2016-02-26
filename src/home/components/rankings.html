@@ -11,17 +11,16 @@
 
       <div class="card card-block text-xs-left">
         <h5 class="card-title">Player ranking</h5>
-        <table class="card-text table table-responsive">
-          <tr *ngFor="#ranking of rankings.rankedPlayers; #i = index">
-            <td>{{ i + 1 }}.</td>
-            <td>{{ ranking.playerName }}</td>
-            <td nowrap="true">
+        <ul class="list-group list-group-flush">
+          <li *ngFor="#ranking of rankings.rankedPlayers; #i = index" class="list-group-item">
+            {{ i + 1 }}. {{ ranking.playerName }}
+            <span class="label pull-xs-right">
               <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
                    src="/assets/img/result-{{ result | lowercase }}.png"
                    alt="{{ result }}" title="{{ result }}" class="icon"/>
-            </td>
-          </tr>
-        </table>
+            </span>
+          </li>
+        </ul>
       </div>
 
       <div class="card card-block text-xs-left">
