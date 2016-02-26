@@ -1,6 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
 import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
+import {NotificationService} from '../shared/services/notification.service';
 import {Player} from '../shared/models/player.model';
 import {Agenda} from '../shared/models/agenda.model';
 import {Faction} from '../shared/models/faction.model';
@@ -25,26 +26,24 @@ export class GamePlayerFormComponent implements OnInit {
   factions:Faction[];
 
   // TODO move to service
-  private static validateGamePlayer(newPlayer:GamePlayer) {
+  private static validateGamePlayer(newPlayer:GamePlayer):string {
     // validate agenda XOR secondary faction
-    if (newPlayer.agendaId && newPlayer.secondFactionId) {
-      console.warn('pick one');
-      return false;
+    if (+newPlayer.agendaId && newPlayer.secondFactionId) {
+      return 'pick one';
     }
     // validate banner is not the same as main faction
-    if (newPlayer.agendaId === +newPlayer.factionId) {
-      console.warn('invalid banner');
-      return false;
+    if (+newPlayer.agendaId === +newPlayer.factionId) {
+      return 'invalid banner';
     }
     // validate faction 1 != faction 2
-    if (newPlayer.factionId === +newPlayer.secondFactionId) {
-      console.warn('invalid second faction');
-      return false;
+    if (+newPlayer.factionId === +newPlayer.secondFactionId) {
+      return 'invalid second faction';
     }
-    return true;
   }
 
-  constructor(private _FormBuilder:FormBuilder, private _ReferenceDataService:ReferenceDataService) {
+  constructor(private _FormBuilder:FormBuilder,
+              private _ReferenceDataService:ReferenceDataService,
+              private notificationService:NotificationService) {
     // TODO probably async
     this.players = this._ReferenceDataService.getPlayers();
     this.factions = this._ReferenceDataService.getFactions();
@@ -63,7 +62,10 @@ export class GamePlayerFormComponent implements OnInit {
     // FIXME newPlayer properties default to strings
     const updatedPlayer:GamePlayer = this.gamePlayerForm.value;
     //TODO proper validation here
-    if (!GamePlayerFormComponent.validateGamePlayer(updatedPlayer)) {
+    const error = GamePlayerFormComponent.validateGamePlayer(updatedPlayer);
+    if (error) {
+      this.notificationService.warn('Nope', error);
+      console.warn(error);
       return false;
     }
 

@@ -1,6 +1,7 @@
 import {Component, Input, Output, OnInit, EventEmitter} from 'angular2/core';
 import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
+import {NotificationService} from '../shared/services/notification.service';
 import {GamePlayersComponent} from './game-players.component';
 import {Game} from '../shared/models/game.model';
 import {DeckType} from '../shared/models/deck-type.model';
@@ -29,7 +30,9 @@ export class GameFormComponent implements OnInit {
 
   deckTypes:DeckType[];
 
-  constructor(private _FormBuilder:FormBuilder, private _ReferenceDataService:ReferenceDataService) {
+  constructor(private _FormBuilder:FormBuilder,
+              private _ReferenceDataService:ReferenceDataService,
+              private notificationService:NotificationService) {
     // TODO probably async
     this.deckTypes = this._ReferenceDataService.getDeckTypes();
   }
@@ -48,7 +51,6 @@ export class GameFormComponent implements OnInit {
 
   onCancel(force:boolean) {
     if (!force && this.gameForm.dirty) {
-      console.warn('dirty');
       this.cancelling = true;
     } else {
       this.cancel.emit('cancelled');
@@ -63,6 +65,7 @@ export class GameFormComponent implements OnInit {
   private validateGame() {
     if (this.gamePlayers.length < 2) {
       console.warn('not enough players');
+      this.notificationService.warn('Nope', 'not enough players');
       return false;
     }
     return true;

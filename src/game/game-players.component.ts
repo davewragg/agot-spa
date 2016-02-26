@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {NotificationService} from '../shared/services/notification.service';
 import {GamePlayer} from '../shared/models/game-player.model';
 import {GamePlayerFormComponent} from './game-player-form.component';
 import {GamePlayerRowComponent} from './game-player-row.component';
@@ -18,6 +19,9 @@ export class GamePlayersComponent {
   playerChange:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
   addActive:boolean = true;
+
+  constructor(private notificationService:NotificationService) {
+  }
 
   onWinnerChange(newWinner?:GamePlayer) {
     this.gamePlayers.forEach((gamePlayer:GamePlayer) => {
@@ -60,6 +64,7 @@ export class GamePlayersComponent {
     // validate unique player
     if (this.gamePlayers.find((gamePlayer) => gamePlayer.player.playerId === +newPlayer.playerId)) {
       console.warn('player already listed');
+      this.notificationService.warn('Nope', 'player already listed');
       return false;
     }
     return true;

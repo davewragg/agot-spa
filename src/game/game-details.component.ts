@@ -4,6 +4,7 @@ import {GameService} from '../shared/services/game.service';
 import {Game} from '../shared/models/game.model';
 import {GameFormComponent} from './game-form.component';
 import {ViewGameComponent} from './view-game.component';
+import {NotificationService} from '../shared/services/notification.service';
 
 @Component({
   selector: 'agot-game-details',
@@ -21,7 +22,10 @@ export class GameDetailsComponent implements OnInit {
   editing:boolean = false;
   formDisabled:boolean = false;
 
-  constructor(params:RouteParams, private _GameService:GameService, private router:Router) {
+  constructor(params:RouteParams,
+              private gameService:GameService,
+              private router:Router,
+              private notificationService:NotificationService) {
     this.gameIdParam = <number>+params.get('id');
     this.editParam = !!params.get('edit');
     this.editing = this.editParam || !this.gameIdParam;
@@ -29,7 +33,7 @@ export class GameDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.gameIdParam) {
-      this._GameService.getGame(this.gameIdParam)
+      this.gameService.getGame(this.gameIdParam)
         .subscribe((game) => this.game = game);
     } else {
       this.game = GameService.createNewGame();
@@ -42,14 +46,14 @@ export class GameDetailsComponent implements OnInit {
     //console.log(winner);
 
     console.log('details submit', game);
-    this._GameService.updateGame(game).subscribe((game:Game) => {
+    this.gameService.updateGame(game).subscribe((game:Game) => {
       this.game = game;
       this.formDisabled = false;
       this.editing = false;
     }, (error) => {
-      // TODO
       this.formDisabled = false;
       console.error(error);
+      this.notificationService.error('Whoops', error.message || error._body || error);
     });
   }
 
