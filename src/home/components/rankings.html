@@ -16,7 +16,7 @@
             <td>{{ i + 1 }}.</td>
             <td>{{ ranking.playerName }}</td>
             <td nowrap="true">
-              <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId]"
+              <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
                    src="/assets/img/result-{{ result | lowercase }}.png"
                    alt="{{ result }}" title="{{ result }}" class="icon"/>
             </td>

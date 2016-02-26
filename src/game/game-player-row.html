@@ -3,7 +3,7 @@
     <h4 class="card-title">{{ gamePlayer.player.name }}</h4>
 
     <p class="card-text" *ngIf="!editing">
-      {{ gamePlayer.faction.factionName }},
+      {{ gamePlayer.faction.factionName }}<br>
       {{ gamePlayer.agenda?.title || gamePlayer.secondaryFaction?.factionName || 'No Agenda' }}
     </p>
     <div class="card-text" *ngIf="editing">
