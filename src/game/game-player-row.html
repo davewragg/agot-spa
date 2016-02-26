@@ -22,7 +22,7 @@
     </button>
     <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
   </div>
-  <div class="card-footer text-warning font-weight-bold" *ngIf="gamePlayer.isWinner">
+  <div class="card-footer alert-warning font-weight-bold" *ngIf="gamePlayer.isWinner">
     Winner
   </div>
   <div class="card-footer text-muted" *ngIf="!gamePlayer.isWinner">
