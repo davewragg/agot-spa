@@ -69,4 +69,15 @@ export class GameDetailsComponent implements OnInit {
   onEdit() {
     this.editing = true;
   }
+
+  onDelete() {
+    console.log('delete', this.game);
+    this.gameService.deleteGame(this.game.gameId).subscribe((result) => {
+      this.game = null;
+      this.notificationService.success('There', `I hope you're happy`);
+    }, (error) => {
+      console.error(error);
+      this.notificationService.error('Whoops', error.message || error._body || error);
+    });
+  }
 }

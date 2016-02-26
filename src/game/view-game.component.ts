@@ -16,8 +16,20 @@ export class ViewGameComponent {
   game:Game;
   @Output()
   edit:EventEmitter<Game> = new EventEmitter<Game>();
+  @Output()
+  deleteGame:EventEmitter<Game> = new EventEmitter<Game>();
+
+  deleting:boolean = false;
 
   onEdit() {
     this.edit.emit(this.game);
+  }
+
+  onDelete(force:boolean) {
+    if (!force) {
+      this.deleting = true;
+    } else {
+      this.deleteGame.emit(this.game);
+    }
   }
 }

@@ -16,11 +16,11 @@ export class GameService {
     };
   }
 
-  constructor(private _DataService:DataService) {
+  constructor(private dataService:DataService) {
   }
 
   getAllGames():Observable<Game[]> {
-    return this._DataService.getGameIndex()
+    return this.dataService.getGameIndex()
       .map((gameIndex:GameIndex) => gameIndex.allResults.games);
   }
 
@@ -34,9 +34,13 @@ export class GameService {
 
   updateGame(game:Game):Observable<Game> {
     if (game.gameId) {
-      return this._DataService.updateGame(game);
+      return this.dataService.updateGame(game);
     } else {
-      return this._DataService.createGame(game);
+      return this.dataService.createGame(game);
     }
+  }
+
+  deleteGame(gameId:number):Observable<any> {
+    return this.dataService.deleteGame(gameId);
   }
 }

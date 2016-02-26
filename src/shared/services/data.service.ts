@@ -36,6 +36,11 @@ export class DataService {
     // TODO insert into cache
   }
 
+  deleteGame(gameId:number):Observable<any> {
+    return this.http.delete('/agot/Games/Delete/' + gameId)
+      .map((response:Response) => response.json());
+  }
+
   private _getGameIndex():Observable<GameIndex> {
     return this.getFromJson()
       .map((res:Response) => res.json());

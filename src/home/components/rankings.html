@@ -11,7 +11,7 @@
 
       <div class="card card-block text-xs-left">
         <h5 class="card-title">Player ranking</h5>
-        <table class="card-text table">
+        <table class="card-text table table-responsive">
           <tr *ngFor="#ranking of rankings.rankedPlayers; #i = index">
             <td>{{ i + 1 }}.</td>
             <td>{{ ranking.playerName }}</td>
