@@ -11,7 +11,7 @@ import {RankingsComponent} from './rankings.component';
   template: `
     <section>
       <h2>Rankings</h2>
-      <agot-rankings name="Overall" [rankings]="allResults" [expanded]="true"></agot-rankings>
+      <agot-rankings name="All-time" [rankings]="allResults" [expanded]="true"></agot-rankings>
       <agot-rankings *ngFor="#season of seasons" [name]="season.name" [rankings]="season"></agot-rankings>
     </section>
   `,
