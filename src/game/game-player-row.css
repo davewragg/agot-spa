@@ -1,6 +1,6 @@
 .faction-body {
   background-repeat: no-repeat;
-  background-position: -32% -32%;
+  background-position: -32% -22%;
   background-size: cover;
 }
 
@@ -37,13 +37,15 @@
 }
 
 .faction-body.faction-9 {
+  background-image: url(/assets/img/icon9.png);
 }
 
 .faction-body.faction-10 {
+  background-image: url(/assets/img/icon10.png);
 }
 
 .player-title {
-  color: white;
+  color: #fdfdfd;
   font-weight: bold;
   text-shadow: black 0 0 2px;
 }
