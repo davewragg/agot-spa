@@ -6,42 +6,47 @@
     <button type="button" (click)="loadGames()">Try again</button>
   </div>
 
-  <table *ngIf="games" class="table table-striped table-responsive">
-    <thead>
-    <tr>
-      <th>Date</th>
-      <th>Deck type</th>
-      <th>Players</th>
-      <th>Winner</th>
-      <th>Sets</th>
-      <th>Controls</th>
-    </tr>
-    </thead>
+  <table *ngIf="games" class="table table-striped">
     <tbody>
     <tr *ngIf="!games.length">
-      <td colspan="8" class="alert alert-warning">No games? WTF</td>
+      <td colspan="3" class="alert alert-warning">No games? WTF</td>
     </tr>
     <tr *ngFor="#game of games">
       <td>
-        <time title="{{ game.date | amDateFormat: 'LLLL' }}">
-          <!--datetime="{{ game.date }}"-->
-          {{ game.date | amDateFormat: "D MMMM YYYY" }}
-        </time>
-      </td>
-      <td>{{ game.deckType.title }}</td>
-      <td>
-        <div style="display: inline-block;" *ngFor="#gamePlayer of game.gamePlayers">
-          {{ gamePlayer.player.name }}<br>
-          {{ gamePlayer.faction.factionName }}<br>
-          {{ gamePlayer.secondaryFaction?.factionName }}<br>
-          {{ gamePlayer.agenda?.title }}<br>
+        <div>
+          <a [routerLink]="['/GameDetails', {id: game.gameId}]">{{ game.deckType.title }}</a>
+          ({{ game.coreSetCount }})
         </div>
+
+        <small class="text-muted">
+          <time title="{{ game.date | amDateFormat: 'LLLL' }}">
+            <!--datetime="{{ game.date }}"-->
+            {{ game.date | amDateFormat: "D MMMM YYYY" }}
+          </time>
+        </small>
       </td>
-      <td>{{ (game.gamePlayers | agotFindWinner)?.player?.name }}</td>
-      <td>{{ game.coreSetCount }}</td>
-      <td>
-        <a [routerLink]="['/GameDetails', {id: game.gameId}]">Details</a>
-        <!--<a [routerLink]="['/GameDetails', {id: game.gameId, edit: true}]">Edit</a> |-->
+      <td class="card-deck-wrapper">
+        <div class="card-deck">
+          <div class="card text-xs-center" [class.alert-warning]="gamePlayer.isWinner"
+               *ngFor="#gamePlayer of game.gamePlayers">
+            <h6 class="card-header font-weight-bold">{{ gamePlayer.player.name }}</h6>
+            <div class="card-block">
+              <p class="card-text">
+                <img class="" src="/assets/img/icon{{ gamePlayer.faction.factionId }}.png"
+                     alt="{{ gamePlayer.faction.factionName }}" height="32" width="32">
+                {{ gamePlayer.faction.factionName }}
+              </p>
+              <p class="card-text" *ngIf="gamePlayer.secondaryFaction">
+                <img class="" src="/assets/img/icon{{ gamePlayer.secondaryFaction.factionId }}.png"
+                     alt="{{ gamePlayer.secondaryFaction.factionName }}" height="32" width="32">
+                {{ gamePlayer.secondaryFaction?.factionName }}
+              </p>
+              <p class="card-text" *ngIf="gamePlayer.agenda">
+                <small class="text-muted">{{ gamePlayer.agenda?.title }}</small>
+              </p>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
     </tbody>
