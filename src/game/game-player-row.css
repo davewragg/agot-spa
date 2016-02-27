@@ -1,6 +1,6 @@
 .faction-body {
   background-repeat: no-repeat;
-  background-position: -32% -22%;
+  background-position: top center;
   background-size: cover;
 }
 
@@ -42,6 +42,14 @@
 
 .faction-body.faction-10 {
   background-image: url(/assets/img/icon10.png);
+}
+
+.card-header {
+  background-color: rgba(230, 230, 230, 0.6);
+}
+
+.edit-buttons {
+  background-color: #fffffc;
 }
 
 .player-title {

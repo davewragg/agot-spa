@@ -1,10 +1,10 @@
 <div [class.table-active]="editing"
-     class="text-xs-center">
-  <div class="card-header faction-body faction-{{ gamePlayer.agendaId || gamePlayer.secondFactionId }}">
+     class="text-xs-center faction-body faction-{{ gamePlayer.agendaId || gamePlayer.secondFactionId }}">
+  <div class="card-header">
     <img class="card-image-top" src="/assets/img/icon{{ gamePlayer.faction.factionId }}.png"
          alt="{{ gamePlayer.faction.factionName }}">
   </div>
-  <div class="card-block">
+  <div class="card-block player-header">
     <h4 class="card-title player-title">{{ gamePlayer.player.name }}</h4>
   </div>
   <ul class="list-group list-group-flush" *ngIf="!editing">
@@ -13,11 +13,11 @@
       }}
     </li>
   </ul>
-  <div class="card-block" *ngIf="editing">
+  <div class="card-block edit-buttons" *ngIf="editing">
     <agot-game-player-form [gamePlayer]="gamePlayer"
                            (updatePlayer)="onPlayerUpdate(gamePlayer)"></agot-game-player-form>
   </div>
-  <div class="card-block" *ngIf="!readOnly">
+  <div class="card-block edit-buttons" *ngIf="!readOnly">
     <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Edit' }}
     </button>
     <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
