@@ -30,9 +30,7 @@
               <agot-faction-badge [faction]="gamePlayer.secondaryFaction"></agot-faction-badge>
             </p>
             <p class="card-text" *ngIf="gamePlayer.agenda">
-              <small class="text-muted">{{ gamePlayer.agenda?.title }}</small>
-              <img style="opacity: 0.7" class="" src="/assets/img/icon{{ gamePlayer.agenda.agendaId }}.png"
-                   alt="{{ gamePlayer.agenda.title }}" height="26">
+              <agot-agenda-badge [agenda]="gamePlayer.agenda"></agot-agenda-badge>
             </p>
           </div>
         </div>
