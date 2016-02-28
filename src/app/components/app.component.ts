@@ -14,6 +14,7 @@ import {NavbarComponent} from './navbar.component';
 import {HomeComponent} from '../../home/components/home.component';
 import {AboutComponent} from '../../about/components/about.component';
 import {GameDetailsComponent} from '../../game/game-details.component';
+import {FooterComponent} from './footer.component';
 
 @Component({
   selector: 'agot-app',
@@ -22,7 +23,7 @@ import {GameDetailsComponent} from '../../game/game-details.component';
   moduleId: module.id,
   templateUrl: './app.html',
   encapsulation: ViewEncapsulation.None,
-  directives: [ROUTER_DIRECTIVES, ToasterContainerComponent, ToolbarComponent, NavbarComponent],
+  directives: [ROUTER_DIRECTIVES, ToasterContainerComponent, ToolbarComponent, NavbarComponent, FooterComponent],
 })
 @RouteConfig([
   {path: '/', component: HomeComponent, name: 'Home', useAsDefault: true},
