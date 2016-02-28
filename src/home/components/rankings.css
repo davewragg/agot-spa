@@ -11,3 +11,9 @@ ul li:first-child {
   font-size: 1.35em;
   font-weight: bolder;
 }
+
+ol li:last-child,
+ul li:last-child {
+  font-size: 0.75em;
+  opacity: 0.75;
+}
