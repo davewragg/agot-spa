@@ -9,12 +9,14 @@
   <div [hidden]="!expanded">
     <div class="card-group">
 
-      <div class="card card-block text-xs-left">
-        <h5 class="card-title">Player ranking</h5>
+      <div class="card text-xs-left">
+        <div class="card-block">
+          <h5 class="card-title">Players</h5>
+        </div>
         <ul class="list-group list-group-flush">
           <li *ngFor="#ranking of rankings.rankedPlayers; #i = index" class="list-group-item">
             {{ i + 1 }}. {{ ranking.playerName }}
-            <span class="label pull-xs-right pull-sm-none pull-xl-right">
+            <span class="label pull-xs-right pull-sm-none pull-lg-right">
               <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
                    src="/assets/img/result-{{ result | lowercase }}.png"
                    alt="{{ result }}" title="{{ result }}" class="icon"/>
@@ -23,22 +25,31 @@
         </ul>
       </div>
 
-      <div class="card card-block text-xs-left">
-        <h5 class="card-title">Faction ranking</h5>
-        <ol class="card-text">
-          <li *ngFor="#ranking of rankings.rankedFactions" class="faction-ranking">
+      <div class="card text-xs-left">
+        <div class="card-block">
+          <h5 class="card-title">Factions</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li *ngFor="#ranking of rankings.rankedFactions; #i = index" class="list-group-item">
+            {{ i + 1 }}.
             <img class="icon" src="/assets/img/icon{{ ranking.playerId }}.png"
                  alt="{{ ranking.playerName }}">
             {{ ranking.playerName }}
           </li>
-        </ol>
+        </ul>
       </div>
 
-      <div class="card card-block text-xs-left">
-        <h5 class="card-title">Agenda ranking</h5>
-        <ol class="card-text">
-          <li *ngFor="#ranking of rankings.rankedAgendas">{{ ranking.playerName }}</li>
-        </ol>
+      <div class="card text-xs-left">
+        <div class="card-block">
+          <h5 class="card-title">Agendas</h5>
+        </div>
+        <ul class="list-group list-group-flush small">
+          <li *ngFor="#ranking of rankings.rankedAgendas; #i = index" class="list-group-item">
+            <img class="icon badge pull-xs-right" src="/assets/img/icon{{ ranking.playerId }}.png"
+                 alt="{{ ranking.playerName }}">
+            {{ i + 1 }}. {{ ranking.playerName }}
+          </li>
+        </ul>
       </div>
 
     </div>
