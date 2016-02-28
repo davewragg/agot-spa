@@ -15,10 +15,11 @@ h1 {
   margin: 0;
 }
 
-more {
-  background: url("/assets/svg/more.svg");
+.header-icon {
+  background: url(/assets/img/icon2.png);
   float: right;
-  height: 24px;
-  margin-top: 12px;
-  width: 24px;
+  height: 2.5em;
+  margin-top: .5em;
+  width: 2.5em;
+  background-size: cover;
 }

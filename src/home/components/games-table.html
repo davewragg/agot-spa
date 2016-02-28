@@ -1,0 +1,43 @@
+<table *ngIf="games" class="table table-striped">
+  <tbody>
+  <tr *ngIf="!games.length">
+    <td colspan="3" class="alert alert-warning">No games? WTF</td>
+  </tr>
+  <tr *ngFor="#game of games">
+    <td>
+      <div>
+        <a [routerLink]="['/GameDetails', {id: game.gameId}]">{{ game.deckType.title }}</a>
+        ({{ game.coreSetCount }})
+      </div>
+
+      <small class="text-muted">
+        <time title="{{ game.date | amDateFormat: 'LLLL' }}">
+          <!--datetime="{{ game.date }}"-->
+          {{ game.date | amDateFormat: "D MMMM YYYY" }}
+        </time>
+      </small>
+    </td>
+    <td class="card-deck-wrapper">
+      <div class="card-deck">
+        <div class="card text-xs-center" [class.alert-warning]="gamePlayer.isWinner"
+             *ngFor="#gamePlayer of game.gamePlayers">
+          <h6 class="card-header font-weight-bold">{{ gamePlayer.player.name }}</h6>
+          <div class="card-block">
+            <p class="card-text">
+              <agot-faction-badge [faction]="gamePlayer.faction"></agot-faction-badge>
+            </p>
+            <p class="card-text" *ngIf="gamePlayer.secondaryFaction">
+              <agot-faction-badge [faction]="gamePlayer.secondaryFaction"></agot-faction-badge>
+            </p>
+            <p class="card-text" *ngIf="gamePlayer.agenda">
+              <small class="text-muted">{{ gamePlayer.agenda?.title }}</small>
+              <img style="opacity: 0.7" class="" src="/assets/img/icon{{ gamePlayer.agenda.agendaId }}.png"
+                   alt="{{ gamePlayer.agenda.title }}" height="26">
+            </p>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>

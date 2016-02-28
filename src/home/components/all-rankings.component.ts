@@ -10,7 +10,7 @@ import {RankingsComponent} from './rankings.component';
   viewProviders: [RankingService],
   template: `
     <section>
-      <h2>Rankings</h2>
+      <br>
       <agot-rankings name="All-time" [rankings]="allResults" [expanded]="true"></agot-rankings>
       <agot-rankings *ngFor="#season of seasons" [name]="season.name" [rankings]="season"></agot-rankings>
     </section>

@@ -1,20 +1,15 @@
 import {Component, OnInit} from 'angular2/core';
 
-import {ROUTER_DIRECTIVES} from 'angular2/router';
-
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
-import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
-import {FindWinnerPipe} from '../../shared/pipes/find-winner-pipe';
+import {GamesTableComponent} from './games-table.component';
 
 @Component({
   selector: 'agot-games',
   moduleId: module.id,
   viewProviders: [GameService],
   templateUrl: './games.html',
-  //styleUrls: ['./games.css'],
-  pipes: [DateFormatPipe, FindWinnerPipe],
-  directives: [ROUTER_DIRECTIVES]
+  directives: [GamesTableComponent]
 })
 export class GamesComponent implements OnInit {
   games:Game[];
