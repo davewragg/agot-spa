@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
 import {SeasonService} from '../../shared/services/season.service';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
 import {Season} from '../../shared/models/season.model';
@@ -11,11 +11,9 @@ import * as moment from 'moment/moment';
   templateUrl: './date-range.html',
   viewProviders: [SeasonService],
 })
-export class DateRangeComponent {
+export class DateRangeComponent implements OnInit {
   @Input()
   criteria:FilterCriteria;
-  @Input()
-  rangeSelection:any = DateRangeType.ALL_TIME;
   @Input()
   showSort:boolean = true;
   @Output()
@@ -31,7 +29,7 @@ export class DateRangeComponent {
   private static convertDateString(dateString?:string) {
     // have to remove the time and timezone to populate the control correctly
     return dateString && dateString.slice(0, 10);
-  };
+  }
 
   constructor(private _seasonService:SeasonService) {
     _seasonService.getAllSeasons().subscribe((seasons:Season[]) => {
@@ -39,11 +37,14 @@ export class DateRangeComponent {
     });
     this.today = moment().add(1, 'days').toISOString();
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();
+  }
+
+  ngOnInit() {
     if (!this.criteria) {
       this.criteria = <FilterCriteria>{
         ascending: false,
+        rangeSelection: DateRangeType.ALL_TIME
       };
-      this.setRangeDates(this.rangeSelection);
     }
   }
 
@@ -53,16 +54,13 @@ export class DateRangeComponent {
   }
 
   onSetSeason(season:Season) {
-    this.rangeSelection = season.name;
+    this.criteria.rangeSelection = DateRangeType.CUSTOM;
     this.setDates(season.startDate, season.endDate);
     this.onExecute();
   }
 
-  onSetRange(range:any) {
-    console.log(range);
-    this.rangeSelection = range;
-    this.setRangeDates(range);
-
+  onSetRange(range:DateRangeType) {
+    this.criteria.rangeSelection = range;
     this.onExecute();
   }
 
@@ -70,22 +68,6 @@ export class DateRangeComponent {
     //.debounceTime(400).distinctUntilChanged()
     this.rangeChange.emit(this.criteria);
   }
-
-  private setRangeDates(range) {
-    if (range === DateRangeType.THIS_WEEK) {
-      this.setAWeekAgo();
-    } else if (range === DateRangeType.ALL_TIME) {
-      this.setAllTime();
-    }
-  };
-
-  private setAWeekAgo() {
-    this.setDates(this.aWeekAgo, this.today);
-  };
-
-  private setAllTime() {
-    this.setDates(null, null);
-  };
 
   private setDates(fromDate?:string, toDate?:string) {
     Object.assign(this.criteria, {

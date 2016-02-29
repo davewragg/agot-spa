@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Input} from 'angular2/core';
 
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
@@ -14,14 +14,21 @@ import {FilterCriteria} from '../../shared/models/filter-criteria.model';
   directives: [GamesTableComponent, DateRangeComponent]
 })
 export class GamesComponent implements OnInit {
+  @Input()
+  title:string;
+  @Input()
+  defaultFiltering:FilterCriteria;
+  @Input()
+  hideFilters:boolean = false;
+
   games:Game[];
   loadingError:any = null;
 
-  constructor(private _GameService:GameService) {
+  constructor(private _gameService:GameService) {
   }
 
   ngOnInit() {
-    this.loadGames();
+    this.loadGames(this.defaultFiltering);
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
@@ -31,9 +38,9 @@ export class GamesComponent implements OnInit {
   loadGames(criteria?:FilterCriteria) {
     let gamesStream;
     if (criteria) {
-      gamesStream = this._GameService.getGames(criteria);
+      gamesStream = this._gameService.getGames(criteria);
     } else {
-      gamesStream = this._GameService.getAllGames();
+      gamesStream = this._gameService.getAllGames();
     }
     gamesStream
       .subscribe(
