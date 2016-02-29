@@ -3952,6 +3952,62 @@
         "date": "2016-02-24T00:00:00",
         "coreSetCount": 3,
         "deckTypeId": 3
+      },
+      {
+        "deckType": {
+          "deckTypeId": 3,
+          "title": "Tournament"
+        },
+        "gamePlayers": [
+          {
+            "agenda": {
+              "agendaId": 2,
+              "title": "Banner of the Dragon"
+            },
+            "faction": {
+              "factionId": 6,
+              "factionName": "Lannister"
+            },
+            "player": {
+              "playerId": 2,
+              "name": "Dan"
+            },
+            "secondaryFaction": null,
+            "gamePlayerId": 1149,
+            "gameId": 1076,
+            "playerId": 2,
+            "isWinner": false,
+            "factionId": 6,
+            "secondFactionId": null,
+            "agendaId": 2
+          },
+          {
+            "agenda": {
+              "agendaId": 9,
+              "title": "Fealty"
+            },
+            "faction": {
+              "factionId": 1,
+              "factionName": "Greyjoy"
+            },
+            "player": {
+              "playerId": 3,
+              "name": "Dave"
+            },
+            "secondaryFaction": null,
+            "gamePlayerId": 1150,
+            "gameId": 1076,
+            "playerId": 3,
+            "isWinner": true,
+            "factionId": 1,
+            "secondFactionId": null,
+            "agendaId": 9
+          }
+        ],
+        "gameId": 1076,
+        "date": "2016-02-29T00:00:00",
+        "coreSetCount": 3,
+        "deckTypeId": 3
       }
     ],
     "rankedPlayers": [
@@ -3966,14 +4022,14 @@
         "eloRating": 979.0
       },
       {
-        "playerId": 2,
-        "playerName": "Dan",
-        "eloRating": 965.0
-      },
-      {
         "playerId": 3,
         "playerName": "Dave",
-        "eloRating": 951.0
+        "eloRating": 968.0
+      },
+      {
+        "playerId": 2,
+        "playerName": "Dan",
+        "eloRating": 948.0
       }
     ],
     "rankedFactions": [
@@ -3990,7 +4046,7 @@
       {
         "playerId": 6,
         "playerName": "Lannister",
-        "eloRating": 1043.0
+        "eloRating": 1022.0
       },
       {
         "playerId": 8,
@@ -4003,6 +4059,11 @@
         "eloRating": 970.0
       },
       {
+        "playerId": 1,
+        "playerName": "Greyjoy",
+        "eloRating": 963.0
+      },
+      {
         "playerId": 3,
         "playerName": "Baratheon",
         "eloRating": 963.0
@@ -4011,11 +4072,6 @@
         "playerId": 7,
         "playerName": "Nights Watch",
         "eloRating": 944.0
-      },
-      {
-        "playerId": 1,
-        "playerName": "Greyjoy",
-        "eloRating": 942.0
       }
     ],
     "rankedAgendas": [
@@ -4025,13 +4081,13 @@
         "eloRating": 1103.0
       },
       {
-        "playerId": 2,
-        "playerName": "Banner of the Dragon",
+        "playerId": 9,
+        "playerName": "Fealty",
         "eloRating": 1035.0
       },
       {
-        "playerId": 9,
-        "playerName": "Fealty",
+        "playerId": 2,
+        "playerName": "Banner of the Dragon",
         "eloRating": 1018.0
       },
       {
@@ -4085,19 +4141,19 @@
         "Lose",
         "Win"
       ],
-      "2": [
+      "3": [
         "Win",
-        "Win",
-        "Win",
-        "Win",
+        "Lose",
+        "Lose",
+        "Lose",
         "Lose"
       ],
-      "3": [
+      "2": [
         "Lose",
-        "Lose",
-        "Lose",
-        "Lose",
-        "Lose"
+        "Win",
+        "Win",
+        "Win",
+        "Win"
       ]
     }
   },
@@ -8211,6 +8267,62 @@
           "date": "2016-02-24T00:00:00",
           "coreSetCount": 3,
           "deckTypeId": 3
+        },
+        {
+          "deckType": {
+            "deckTypeId": 3,
+            "title": "Tournament"
+          },
+          "gamePlayers": [
+            {
+              "agenda": {
+                "agendaId": 2,
+                "title": "Banner of the Dragon"
+              },
+              "faction": {
+                "factionId": 6,
+                "factionName": "Lannister"
+              },
+              "player": {
+                "playerId": 2,
+                "name": "Dan"
+              },
+              "secondaryFaction": null,
+              "gamePlayerId": 1149,
+              "gameId": 1076,
+              "playerId": 2,
+              "isWinner": false,
+              "factionId": 6,
+              "secondFactionId": null,
+              "agendaId": 2
+            },
+            {
+              "agenda": {
+                "agendaId": 9,
+                "title": "Fealty"
+              },
+              "faction": {
+                "factionId": 1,
+                "factionName": "Greyjoy"
+              },
+              "player": {
+                "playerId": 3,
+                "name": "Dave"
+              },
+              "secondaryFaction": null,
+              "gamePlayerId": 1150,
+              "gameId": 1076,
+              "playerId": 3,
+              "isWinner": true,
+              "factionId": 1,
+              "secondFactionId": null,
+              "agendaId": 9
+            }
+          ],
+          "gameId": 1076,
+          "date": "2016-02-29T00:00:00",
+          "coreSetCount": 3,
+          "deckTypeId": 3
         }
       ],
       "rankedPlayers": [
@@ -8220,19 +8332,19 @@
           "eloRating": 1056.0
         },
         {
+          "playerId": 3,
+          "playerName": "Dave",
+          "eloRating": 994.0
+        },
+        {
           "playerId": 4,
           "playerName": "James",
           "eloRating": 981.0
         },
         {
-          "playerId": 3,
-          "playerName": "Dave",
-          "eloRating": 978.0
-        },
-        {
           "playerId": 2,
           "playerName": "Dan",
-          "eloRating": 969.0
+          "eloRating": 953.0
         }
       ],
       "rankedFactions": [
@@ -8242,14 +8354,14 @@
           "eloRating": 1043.0
         },
         {
-          "playerId": 6,
-          "playerName": "Lannister",
-          "eloRating": 1039.0
-        },
-        {
           "playerId": 2,
           "playerName": "Targaryen",
           "eloRating": 1034.0
+        },
+        {
+          "playerId": 6,
+          "playerName": "Lannister",
+          "eloRating": 1019.0
         },
         {
           "playerId": 5,
@@ -8269,7 +8381,7 @@
         {
           "playerId": 1,
           "playerName": "Greyjoy",
-          "eloRating": 941.0
+          "eloRating": 961.0
         },
         {
           "playerId": 7,
@@ -8284,14 +8396,14 @@
           "eloRating": 1098.0
         },
         {
+          "playerId": 9,
+          "playerName": "Fealty",
+          "eloRating": 1026.0
+        },
+        {
           "playerId": 10,
           "playerName": "The Lord of the Crossing",
           "eloRating": 1015.0
-        },
-        {
-          "playerId": 9,
-          "playerName": "Fealty",
-          "eloRating": 1011.0
         },
         {
           "playerId": 4,
@@ -8299,14 +8411,14 @@
           "eloRating": 1005.0
         },
         {
-          "playerId": 2,
-          "playerName": "Banner of the Dragon",
-          "eloRating": 1000.0
-        },
-        {
           "playerId": 5,
           "playerName": "Banner of the Sun",
           "eloRating": 993.0
+        },
+        {
+          "playerId": 2,
+          "playerName": "Banner of the Dragon",
+          "eloRating": 985.0
         },
         {
           "playerId": 7,
@@ -8337,6 +8449,13 @@
           "Lose",
           "Win"
         ],
+        "3": [
+          "Win",
+          "Lose",
+          "Lose",
+          "Lose",
+          "Lose"
+        ],
         "4": [
           "Win",
           "Lose",
@@ -8344,19 +8463,12 @@
           "Lose",
           "Win"
         ],
-        "3": [
-          "Lose",
-          "Lose",
-          "Lose",
-          "Lose",
-          "Lose"
-        ],
         "2": [
+          "Lose",
           "Win",
           "Win",
           "Win",
-          "Win",
-          "Lose"
+          "Win"
         ]
       }
     }
