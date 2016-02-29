@@ -1,0 +1,58 @@
+<section *ngIf="rankings" class="card">
+  <div class="card-header">
+    <h4>{{ name }} rankings
+      <span class="pull-xs-right">
+        <button type="button" class="btn-sm btn btn-primary-outline" (click)="expanded = !expanded">...</button>
+      </span>
+    </h4>
+  </div>
+  <div [hidden]="!expanded">
+    <div class="card-group">
+
+      <div class="card text-xs-left">
+        <div class="card-block">
+          <h5 class="card-title">Players</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li *ngFor="#ranking of rankings.rankedPlayers; #i = index" class="list-group-item">
+            {{ i + 1 }}. {{ ranking.playerName }}
+            <span class="label pull-xs-right pull-sm-none pull-lg-right">
+              <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
+                   src="/assets/img/result-{{ result | lowercase }}.png"
+                   alt="{{ result }}" title="{{ result }}" class="icon"/>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card text-xs-left">
+        <div class="card-block">
+          <h5 class="card-title">Factions</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li *ngFor="#ranking of rankings.rankedFactions; #i = index" class="list-group-item">
+            {{ i + 1 }}.
+            <img class="icon" src="/assets/img/icon{{ ranking.playerId }}.png"
+                 alt="{{ ranking.playerName }}">
+            {{ ranking.playerName }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="card text-xs-left">
+        <div class="card-block">
+          <h5 class="card-title">Agendas</h5>
+        </div>
+        <ul class="list-group list-group-flush small">
+          <li *ngFor="#ranking of rankings.rankedAgendas; #i = index" class="list-group-item">
+            <img class="icon badge pull-xs-right" src="/assets/img/icon{{ ranking.playerId }}.png"
+                 alt="{{ ranking.playerName }}">
+            {{ i + 1 }}. {{ ranking.playerName }}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</section>

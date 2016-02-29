@@ -1,0 +1,19 @@
+.icon,
+.icon-win,
+.icon-lose,
+.icon-draw {
+  /*width: 19px;*/
+  height: 2.0em;
+}
+
+ol li:first-child,
+ul li:first-child {
+  font-size: 1.35em;
+  font-weight: bolder;
+}
+
+ol li:last-child,
+ul li:last-child {
+  font-size: 0.75em;
+  opacity: 0.75;
+}

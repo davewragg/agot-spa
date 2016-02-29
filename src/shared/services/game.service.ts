@@ -1,16 +1,46 @@
 import {Injectable} from 'angular2/core';
 import {Game} from '../models/game.model';
+import {Observable} from 'rxjs/Observable';
+import {DataService} from './data.service';
+import {GameIndex} from '../models/game-index.model';
 
 @Injectable()
 export class GameService {
-  private games: Game[] = [
-    {gameId: 1, date: '2016-02-18T15:30:33.695Z', coreSetCount: 3, deckTypeId: 1},
-    {gameId: 2, date: '2016-02-17T15:30:33.695Z', coreSetCount: 3, deckTypeId: 1},
-    {gameId: 3, date: '2016-02-16T15:30:33.695Z', coreSetCount: 3, deckTypeId: 1},
-    {gameId: 4, date: '2016-02-15T15:30:33.695Z', coreSetCount: 3, deckTypeId: 1},
-  ];
+  static createNewGame():Game {
+    return <Game>{
+      date: new Date().toISOString(),
+      gamePlayers: [],
+      deckType: null,
+      deckTypeId: 3, // tournament
+      coreSetCount: 3
+    };
+  }
 
-  getGames(): Game[] {
-    return this.games;
+  constructor(private dataService:DataService) {
+  }
+
+  getAllGames():Observable<Game[]> {
+    return this.dataService.getGameIndex()
+      .map((gameIndex:GameIndex) => gameIndex.allResults.games);
+  }
+
+  getGame(gameId:number):Observable<Game> {
+    return this.getAllGames().map(
+      (games:Game[]) => {
+        return games.find((game:Game) => game.gameId === gameId);
+      }
+    );
+  }
+
+  updateGame(game:Game):Observable<Game> {
+    if (game.gameId) {
+      return this.dataService.updateGame(game);
+    } else {
+      return this.dataService.createGame(game);
+    }
+  }
+
+  deleteGame(gameId:number):Observable<any> {
+    return this.dataService.deleteGame(gameId);
   }
 }

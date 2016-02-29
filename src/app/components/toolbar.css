@@ -1,0 +1,25 @@
+:host {
+  background-color: #000;
+  color: rgba(255,255,255,0.87);
+  display: block;
+  height: 48px;
+  padding: 0 16px;
+}
+
+h1 {
+  display: inline;
+  font-size: 20px;
+  font-weight: normal;
+  letter-spacing: 0.1px;
+  line-height: 48px;
+  margin: 0;
+}
+
+.header-icon {
+  background: url(/assets/img/icon2.png);
+  float: right;
+  height: 2.5em;
+  margin-top: .5em;
+  width: 2.5em;
+  background-size: cover;
+}

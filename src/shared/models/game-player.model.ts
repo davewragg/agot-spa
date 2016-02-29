@@ -1,19 +1,17 @@
+import {Player} from './player.model';
+import {Faction} from './faction.model';
+import {Agenda} from './agenda.model';
+
 export interface GamePlayer {
-  gamePlayerId: number;
+  gamePlayerId?: number;
   gameId: number;
+  player: Player;
   playerId: number;
   isWinner: boolean;
+  faction: Faction;
   factionId: number;
-  secondFaction? :number;
-  agendaId?: number;
-//
-//virtual Agenda Agenda { get; set; }
-//
-//virtual Faction Faction { get; set; }
-//
-//virtual Faction SecondaryFaction { get; set; }
-//
-//virtual Game Game { get; set; }
-//
-//virtual Player Player { get; set; }
+  secondaryFaction?: Faction;
+  secondFactionId: number;
+  agenda: Agenda;
+  agendaId: number;
 }
