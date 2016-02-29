@@ -22,7 +22,6 @@ export class GameService {
     };
   }
 
-
   constructor(private dataService:DataService) {
     this.today = moment().add(1, 'days').toISOString();
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();

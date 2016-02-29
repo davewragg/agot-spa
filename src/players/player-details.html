@@ -1,0 +1,18 @@
+<code>{{ player | json }}</code>
+
+Create player stats page - percentage win for each house and vs each person
+
+for each faction  games played  games won  lost, drawn
+for each agenda    ditto
+against each other player    ditto
+for each deck(?)    ditto
+
+<!--<code>{{ playerStats | json }}</code>-->
+<code>You've played {{ playerStats?.games?.length }} times</code>
+<code>Agendas {{ playerStats?.agendas?.entries() | json }}</code>
+
+<h3 *ngIf="!player" class="alert alert-danger">Player not found</h3>
+
+<div class="">
+  <a [routerLink]="['/Players']" class="btn btn-primary-outline">&laquo; Back to list</a>
+</div>

@@ -1,22 +1,11 @@
 import {Injectable} from 'angular2/core';
 import {DeckType} from '../models/deck-type.model';
-import {Player} from '../models/player.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
 
 @Injectable()
 export class ReferenceDataService {
   //constructor() {}
-
-  // TODO move to PlayerService
-  getPlayers():Player[] {
-    return [
-      {playerId: 1, name: 'Fonz'},
-      {playerId: 2, name: 'Dan'},
-      {playerId: 3, name: 'Dave'},
-      {playerId: 4, name: 'James'},
-    ];
-  }
 
   getDeckTypes():DeckType[] {
     return [
