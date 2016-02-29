@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Input} from 'angular2/core';
 
 import {SetOfResults} from '../../shared/models/set-of-results.model';
 import {RankingService} from '../../shared/services/ranking.service';
@@ -12,12 +12,17 @@ import {RankingsComponent} from './rankings.component';
     <section>
       <br>
       <agot-rankings name="All-time" [rankings]="allResults" [expanded]="true"></agot-rankings>
-      <agot-rankings *ngFor="#season of seasons" [name]="season.name" [rankings]="season"></agot-rankings>
+      <div *ngIf="!hideSeasons">
+        <agot-rankings *ngFor="#season of seasons" [name]="season.name" [rankings]="season"></agot-rankings>
+      </div>
     </section>
   `,
   directives: [RankingsComponent]
 })
 export class AllRankingsComponent implements OnInit {
+  @Input()
+  hideSeasons:boolean = false;
+
   allResults:SetOfResults;
   seasons:SetOfResults[];
   loadingError:any = null;
