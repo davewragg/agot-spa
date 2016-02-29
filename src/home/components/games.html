@@ -1,6 +1,8 @@
 <section>
   <h2>Games</h2>
 
+  <agot-date-range [showSort]="true" (rangeChange)="onDateRangeChange($event)"></agot-date-range>
+
   <div *ngIf="loadingError" class="alert alert-danger">
     Well, shit. {{ loadingError | json }}
     <button type="button" (click)="loadGames()">Try again</button>

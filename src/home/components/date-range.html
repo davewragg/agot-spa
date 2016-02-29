@@ -1,0 +1,48 @@
+<form (ngSubmit)="onExecute()" [ngFormModel]="dateRangeForm" class="form">
+  <div class="btn-group pull-sm-right" data-toggle="buttons" *ngIf="showSort">
+    <label class="btn btn-secondary" [class.active]="!criteria.ascending">
+      <input type="radio" name="sortDir" (change)="onSortChange(false)"
+             [checked]="!criteria.ascending"
+             value="false" autocomplete="off"> Oldest first
+    </label>
+    <label class="btn btn-secondary" [class.active]="criteria.ascending">
+      <input type="radio" name="sortDir" (change)="onSortChange(true)"
+             [checked]="criteria.ascending"
+             value="true" autocomplete="off"> Newest first
+    </label>
+  </div>
+
+  <fieldset>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-secondary">
+        <input type="radio" name="selectRange" autocomplete="off" checked> This week
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="selectRange" autocomplete="off"> Season 1
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="selectRange" autocomplete="off"> Season 2
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="selectRange" autocomplete="off"> All-time
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="selectRange" autocomplete="off"
+               (change)="showCustomRange = !showCustomRange"> Custom
+      </label>
+    </div>
+    <div [hidden]="!showCustomRange" class="form-group form-inline">
+      <label class="sr-only" for="exampleInputAmount">From date</label>
+      <div class="input-group">
+        <div class="input-group-addon">From</div>
+        <input type="date" class="form-control" id="exampleInputAmount">
+      </div>
+      <label class="sr-only" for="exampleInputAmount2">To date</label>
+      <div class="input-group">
+        <div class="input-group-addon">To</div>
+        <input type="date" class="form-control" id="exampleInputAmount2">
+      </div>
+      <button type="submit" class="btn btn-primary-outline">Execute</button>
+    </div>
+  </fieldset>
+</form>
