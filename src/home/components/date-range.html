@@ -1,4 +1,4 @@
-<form (ngSubmit)="onExecute()" [ngFormModel]="dateRangeForm" class="form">
+<form (ngSubmit)="onExecute()" class="form">
   <div class="btn-group pull-sm-right" data-toggle="buttons" *ngIf="showSort">
     <label class="btn btn-secondary" [class.active]="!criteria.ascending">
       <input type="radio" name="sortDir" (change)="onSortChange(false)"
@@ -14,33 +14,38 @@
 
   <fieldset>
     <div class="btn-group" data-toggle="buttons">
-      <label class="btn btn-secondary">
-        <input type="radio" name="selectRange" autocomplete="off" checked> This week
+      <label class="btn btn-secondary" [class.active]="rangeSelection === dateRangeType.THIS_WEEK">
+        <input type="radio" name="selectRange"
+               (change)="onSetRange(dateRangeType.THIS_WEEK)"
+               value="this week" autocomplete="off"> This week
       </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="selectRange" autocomplete="off"> Season 1
+      <label class="btn btn-secondary" *ngFor="#season of seasons" [class.active]="rangeSelection === season.name">
+        <input type="radio" name="selectRange"
+               value="{{ season.name }}" (change)="onSetSeason(season)"
+               autocomplete="off"> {{ season.name }}
       </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="selectRange" autocomplete="off"> Season 2
+      <label class="btn btn-secondary" [class.active]="rangeSelection === dateRangeType.ALL_TIME">
+        <input type="radio" (change)="onSetRange(dateRangeType.ALL_TIME)"
+               value="all time"
+               name="selectRange" autocomplete="off"> All-time
       </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="selectRange" autocomplete="off"> All-time
-      </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="selectRange" autocomplete="off"
-               (change)="showCustomRange = !showCustomRange"> Custom
+      <label class="btn btn-secondary" [class.active]="rangeSelection === dateRangeType.CUSTOM">
+        <input type="radio" value="custom"
+               name="selectRange" autocomplete="off"
+               (click)="rangeSelection = dateRangeType.CUSTOM"> Custom
       </label>
     </div>
-    <div [hidden]="!showCustomRange" class="form-group form-inline">
-      <label class="sr-only" for="exampleInputAmount">From date</label>
+
+    <div [hidden]="rangeSelection !== dateRangeType.CUSTOM" class="form-group form-inline">
+      <label class="sr-only" for="fromDate">From date</label>
       <div class="input-group">
         <div class="input-group-addon">From</div>
-        <input type="date" class="form-control" id="exampleInputAmount">
+        <input type="date" [(ngModel)]="criteria.fromDate" class="form-control" id="fromDate">
       </div>
-      <label class="sr-only" for="exampleInputAmount2">To date</label>
+      <label class="sr-only" for="toDate">To date</label>
       <div class="input-group">
         <div class="input-group-addon">To</div>
-        <input type="date" class="form-control" id="exampleInputAmount2">
+        <input type="date" [(ngModel)]="criteria.toDate" class="form-control" id="toDate">
       </div>
       <button type="submit" class="btn btn-primary-outline">Execute</button>
     </div>
