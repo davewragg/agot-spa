@@ -20,4 +20,5 @@ nav a {
 
 nav a.router-link-active {
   color: #106CC8;
+  font-weight: bold;
 }

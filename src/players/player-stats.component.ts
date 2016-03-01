@@ -45,6 +45,6 @@ export class PlayerStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.playerStats);
+    //console.log(this.playerStats);
   }
 }
