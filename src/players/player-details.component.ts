@@ -2,6 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 import {RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
+import {PlayerStats} from '../shared/models/player-stats.model';
 
 @Component({
   selector: 'agot-player-details',
@@ -13,7 +14,7 @@ import {Player} from '../shared/models/player.model';
 })
 export class PlayerDetailsComponent implements OnInit {
   player:Player;
-  playerStats;
+  playerStats:PlayerStats;
   playerIdParam:number;
 
   constructor(params:RouteParams,

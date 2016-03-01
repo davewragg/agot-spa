@@ -5,6 +5,9 @@ import {Player} from '../models/player.model';
 import {GameIndex} from '../models/game-index.model';
 import {Game} from '../models/game.model';
 import {GamePlayer} from '../models/game-player.model';
+import {Result} from '../models/result.enum';
+import {Stats} from '../models/stats.model';
+import {PlayerStats} from '../models/player-stats.model';
 
 @Injectable()
 export class PlayerService {
@@ -70,7 +73,7 @@ export class PlayerService {
 
   private setStats(keyId, statsMap, result:Result) {
     if (keyId) {
-      const keyStats = statsMap.get(keyId) || <Stats>{won: 0, drawn: 0, lost: 0};
+      const keyStats = statsMap.get(keyId) || <Stats>{played: 0, won: 0, drawn: 0, lost: 0};
       this.setResult(keyStats, result);
       statsMap.set(keyId, keyStats);
     }
@@ -87,25 +90,4 @@ export class PlayerService {
     }
   };
 }
-interface PlayerStats {
-  games: Game[];
-  overall: Stats;
-  factionsVs: Map<number, Stats>;
-  factionsAs: Map<number, Stats>;
-  agendasVs: Map<number, Stats>;
-  agendasAs: Map<number, Stats>;
-  playersVs: Map<number, Stats>;
-}
 
-interface Stats {
-  played:number;
-  won:number;
-  drawn:number;
-  lost:number;
-}
-
-enum Result {
-  LOST = -1,
-  DREW = 0,
-  WON = 1,
-}
