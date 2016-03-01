@@ -3,6 +3,7 @@ import {RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {PlayerStats} from '../shared/models/player-stats.model';
+import {PlayerStatsComponent} from './player-stats.component';
 
 @Component({
   selector: 'agot-player-details',
@@ -10,7 +11,7 @@ import {PlayerStats} from '../shared/models/player-stats.model';
   viewProviders: [PlayerService],
   templateUrl: './player-details.html',
   //styleUrls: ['./player-details.css']
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, PlayerStatsComponent]
 })
 export class PlayerDetailsComponent implements OnInit {
   player:Player;

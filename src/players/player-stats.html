@@ -1,0 +1,15 @@
+<div *ngIf="playerStats">
+
+  <!--<code>{{ playerStats | json }}</code>-->
+  <code>You've played {{ playerStats?.games?.length }} times</code>
+  <code>You've won {{ playerStats?.overall?.won }} times</code>
+  <code>You've drawn {{ playerStats?.overall?.drawn }} times</code>
+  <code>You've lost {{ playerStats?.overall?.lost }} times</code>
+  <code>Agendas {{ playerStats?.agendasAs?.keys() | json }}</code>
+
+  <div *ngFor="#keyStats of playerStats?.agendasAs?.entries()">
+    {{ keyStats | json }}
+
+  </div>
+
+</div>
