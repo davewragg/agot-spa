@@ -1,15 +1,77 @@
 <div *ngIf="playerStats">
-
-  <!--<code>{{ playerStats | json }}</code>-->
   <code>You've played {{ playerStats?.games?.length }} times</code>
   <code>You've won {{ playerStats?.overall?.won }} times</code>
   <code>You've drawn {{ playerStats?.overall?.drawn }} times</code>
   <code>You've lost {{ playerStats?.overall?.lost }} times</code>
-  <code>Agendas {{ playerStats?.agendasAs?.keys() | json }}</code>
 
-  <div *ngFor="#keyStats of playerStats?.agendasAs?.entries()">
-    {{ keyStats | json }}
+  <table class="table">
+    <thead>
+    <tr>
+      <th>As</th>
+      <th>P</th>
+      <th>W</th>
+      <th>D</th>
+      <th>L</th>
+      <!--<th>%</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="#entry of playerStats?.factionsAs?.entries()">
+      <td>{{ getFaction(entry[0]).factionName }}</td>
+      <td>{{ entry[1].played }}</td>
+      <td>{{ entry[1].won }}</td>
+      <td>{{ entry[1].drawn }}</td>
+      <td>{{ entry[1].lost }}</td>
+      <!--<td>{{ (entry[1].won / entry[1].played) * 100  }}%</td>-->
+    </tr>
+    <tr *ngFor="#entry of playerStats?.agendasAs?.entries()">
+      <td>{{ getAgenda(entry[0]).title }}</td>
+      <td>{{ entry[1].played }}</td>
+      <td>{{ entry[1].won }}</td>
+      <td>{{ entry[1].drawn }}</td>
+      <td>{{ entry[1].lost }}</td>
+      <!--<td>{{ (entry[1].won / entry[1].played) * 100  }}%</td>-->
+    </tr>
+    </tbody>
+  </table>
 
-  </div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Versus</th>
+      <th>P</th>
+      <th>W</th>
+      <th>D</th>
+      <th>L</th>
+      <!--<th>%</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="#entry of playerStats?.playersVs?.entries()">
+      <td>{{ getPlayer(entry[0]).name }}</td>
+      <td>{{ entry[1].played }}</td>
+      <td>{{ entry[1].won }}</td>
+      <td>{{ entry[1].drawn }}</td>
+      <td>{{ entry[1].lost }}</td>
+      <!--<td>{{ (entry[1].won / entry[1].played) * 100  }}%</td>-->
+    </tr>
+    <tr *ngFor="#entry of playerStats?.factionsVs?.entries()">
+      <td>{{ getFaction(entry[0]).factionName }}</td>
+      <td>{{ entry[1].played }}</td>
+      <td>{{ entry[1].won }}</td>
+      <td>{{ entry[1].drawn }}</td>
+      <td>{{ entry[1].lost }}</td>
+      <!--<td>{{ (entry[1].won / entry[1].played) * 100  }}%</td>-->
+    </tr>
+    <tr *ngFor="#entry of playerStats?.agendasVs?.entries()">
+      <td>{{ getAgenda(entry[0]).title }}</td>
+      <td>{{ entry[1].played }}</td>
+      <td>{{ entry[1].won }}</td>
+      <td>{{ entry[1].drawn }}</td>
+      <td>{{ entry[1].lost }}</td>
+      <!--<td>{{ (entry[1].won / entry[1].played) * 100  }}%</td>-->
+    </tr>
+    </tbody>
+  </table>
 
 </div>
