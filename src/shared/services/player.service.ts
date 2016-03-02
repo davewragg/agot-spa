@@ -2,12 +2,12 @@ import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {DataService} from './data.service';
 import {Player} from '../models/player.model';
-import {GameIndex} from '../models/game-index.model';
 import {Game} from '../models/game.model';
 import {GamePlayer} from '../models/game-player.model';
 import {Result} from '../models/result.enum';
 import {Stats} from '../models/stats.model';
 import {PlayerStats} from '../models/player-stats.model';
+import {FilterCriteria} from '../models/filter-criteria.model';
 
 @Injectable()
 export class PlayerService {
@@ -29,7 +29,7 @@ export class PlayerService {
     return this.getPlayers().find((player:Player) => player.playerId === playerId);
   }
 
-  getPlayerStats(playerId:number):Observable<any> {
+  getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<any> {
     const stats = <PlayerStats>{
       games: [],
       overall: <Stats>{won: 0, drawn: 0, lost: 0},
@@ -39,8 +39,8 @@ export class PlayerService {
       agendasAs: new Map<number, Stats>(),
       playersVs: new Map<number, Stats>()
     };
-    return this._dataService.getGameIndex().map((gameIndex:GameIndex) => {
-      return gameIndex.allResults.games.filter((game:Game) => {
+    return this._dataService.getGames(criteria).map((games:Game[]) => {
+      return games.filter((game:Game) => {
         return !!game.gamePlayers.find(
           (gamePlayer:GamePlayer) => gamePlayer.playerId === playerId
         );

@@ -1,5 +1,8 @@
 <h3>{{ player.name }}</h3>
 
+<agot-date-range [showSort]="false" [criteria]="defaultFiltering"
+                 (rangeChange)="onDateRangeChange($event)"></agot-date-range>
+
 <div *ngIf="playerStats">
   <agot-player-stats [playerStats]="playerStats"></agot-player-stats>
 </div>
