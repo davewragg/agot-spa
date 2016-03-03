@@ -8,12 +8,7 @@ import {Player} from '../shared/models/player.model';
   selector: 'agot-all-players',
   moduleId: module.id,
   viewProviders: [PlayerService],
-  template: `
-    <h2>Players</h2>
-    <div *ngFor="#player of players">
-      <a [routerLink]="['/PlayerDetails', {id: player.playerId}]">{{ player.name }}</a>
-    </div>
-  `,
+  templateUrl: './players.html',
   directives: [ROUTER_DIRECTIVES]
 })
 export class PlayersComponent implements OnInit {
