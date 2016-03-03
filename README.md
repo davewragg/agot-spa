@@ -12,12 +12,10 @@ You must have `ts-node` installed as global. If you don't, use:
 npm install -g ts-node
 ```
 
-In order to start the seed use:
+In order to start use:
 
 
 ```bash
-git clone --depth 1 https://github.com/mgechev/angular2-seed.git
-cd angular2-seed
 # install the project's dependencies
 npm install
 # watches your files and uses livereload by default
@@ -39,14 +37,8 @@ _Does not rely on any global dependencies._
 - [How to start](#how-to-start)
 - [Table of Content](#table-of-content)
 - [Configuration](#configuration)
-- [How to extend?](#how-to-extend)
 - [Running tests](#running-tests)
-- [Contributing](#contributing)
-- [Examples](#examples)
 - [Directory Structure](#directory-structure)
-- [Contributors](#contributors)
-- [Change Log](#change-log)
-- [License](#license)
 
 # Configuration
 
@@ -81,6 +73,7 @@ npm run serve.coverage
 
 # e2e (aka. end-to-end, integration) - In three different shell windows
 # Make sure you don't have a global instance of Protractor
+
 # npm run webdriver-update <- You will need to run this the first time
 npm run webdriver-start
 npm run serve.e2e
@@ -91,3 +84,64 @@ npm run e2e
 npm run e2e.live
 ```
 You can learn more about [Protractor Interactive Mode here](https://github.com/angular/protractor/blob/master/docs/debugging.md#testing-out-protractor-interactively)
+
+# Directory Structure
+
+```
+.
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+├── src
+│   ├── about
+│   │   └── components
+│   │       ├── about.e2e.ts
+│   │       ├── about.html
+│   │       ├── about.ts
+│   │       └── about.spec.ts
+│   ├── app
+│   │   └── components
+│   │       ├── app.css
+│   │       ├── app.e2e.ts
+│   │       ├── app.html
+│   │       ├── app.ts
+│   │       └── app.spec.ts
+│   ├── assets
+│   │   ├── img
+│   │   │   └── smile.png
+│   │   └── main.css
+│   ├── home
+│   │   └── components
+│   │       ├── home.css
+│   │       ├── home.html
+│   │       ├── home.ts
+│   │       ├── home.e2e.ts
+│   │       └── home.spec.ts
+│   ├── shared
+│   │   └── services
+│   │       ├── name_list.ts
+│   │       └── name_list.spec.ts
+│   ├── hot_loader_main.ts
+│   ├── main.ts
+│   └── index.html
+├── dist
+├── tools
+│   ├── manual_typings
+│   ├── tasks
+│   ├── utils
+│   ├── config.ts
+│   └── utils.ts
+├── appveyor.yml
+├── gulpfile.ts
+├── karma.conf.js
+├── package.json
+├── protractor.conf.js
+├── test-main.js
+├── tsconfig.json
+├── tslint.json
+└── typings.json
+```
+
+# License
+
+MIT

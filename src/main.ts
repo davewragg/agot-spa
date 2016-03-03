@@ -9,7 +9,7 @@ if ('<%= ENV %>' === 'prod') {
 }
 
 bootstrap(AppComponent, [
-  provide(APP_BASE_HREF, {useValue: '<%= APP_BASE %>'})
+  provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
 ]);
 
 // In order to start the Service Worker located at "./sw.js"
