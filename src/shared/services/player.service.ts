@@ -8,6 +8,7 @@ import {Result} from '../models/result.enum';
 import {Stats} from '../models/stats.model';
 import {PlayerStats} from '../models/player-stats.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
+import {DeckClass} from '../models/deck-class.model';
 
 @Injectable()
 export class PlayerService {
@@ -30,15 +31,7 @@ export class PlayerService {
   }
 
   getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<any> {
-    const stats = <PlayerStats>{
-      games: [],
-      overall: new Stats(),
-      factionsVs: new Map<number, Stats>(),
-      factionsAs: new Map<number, Stats>(),
-      agendasVs: new Map<number, Stats>(),
-      agendasAs: new Map<number, Stats>(),
-      playersVs: new Map<number, Stats>()
-    };
+    const stats = new PlayerStats();
     return this._dataService.getGames(criteria).map((games:Game[]) => {
       return games.filter((game:Game) => {
         return !!game.gamePlayers.find(
@@ -53,12 +46,17 @@ export class PlayerService {
         const overallStats = stats.overall;
         this.setResult(overallStats, result);
 
+        const deckClassId = DeckClass.getDeckClassId(me.factionId, me.agendaId);
+        this.setStats(deckClassId, stats.deckClassAs, result);
+
         this.setStats(me.agendaId, stats.agendasAs, result);
         this.setStats(me.factionId, stats.factionsAs, result);
         this.setStats(me.secondFactionId, stats.factionsAs, result);
 
         game.gamePlayers.forEach((gamePlayer:GamePlayer) => {
           if (gamePlayer.playerId !== me.playerId) {
+            const deckClassId = DeckClass.getDeckClassId(me.factionId, me.agendaId);
+            this.setStats(deckClassId, stats.deckClassVs, result);
             this.setStats(gamePlayer.playerId, stats.playersVs, result);
             this.setStats(gamePlayer.agendaId, stats.agendasVs, result);
             this.setStats(gamePlayer.factionId, stats.factionsVs, result);

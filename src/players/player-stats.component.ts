@@ -10,6 +10,7 @@ import {AgendaBadgeComponent} from '../shared/components/agenda-badge.component'
 import {CountComponent} from '../shared/components/count.component';
 import {PlayerLinkComponent} from '../shared/components/player-link.component';
 import {ColourRangeDirective} from '../shared/directives/colour-range.directive';
+import {DeckClass} from '../shared/models/deck-class.model';
 
 @Component({
   selector: 'agot-player-stats',
@@ -47,7 +48,16 @@ export class PlayerStatsComponent implements OnInit {
     return this.players.find((player) => player.playerId === playerId);
   }
 
+  getDeckClass(deckClassId:number):DeckClass {
+    const ids = DeckClass.getFactionAndAgendaId(deckClassId);
+    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
+  }
+
   ngOnInit() {
-    //console.log(this.playerStats);
+    //console.log(
+    //  this.getDeckClass(
+    //    this.playerStats.deckClassAs.entries().next().value[0]
+    //  ).title
+    //);
   }
 }
