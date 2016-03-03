@@ -9,13 +9,14 @@ import {FactionBadgeComponent} from '../shared/components/faction-badge.componen
 import {AgendaBadgeComponent} from '../shared/components/agenda-badge.component';
 import {CountComponent} from '../shared/components/count.component';
 import {PlayerLinkComponent} from '../shared/components/player-link.component';
+import {ColourRangeDirective} from '../shared/directives/colour-range.directive';
 
 @Component({
   selector: 'agot-player-stats',
   moduleId: module.id,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './player-stats.html',
-  directives: [FactionBadgeComponent, AgendaBadgeComponent, CountComponent, PlayerLinkComponent]
+  directives: [FactionBadgeComponent, AgendaBadgeComponent, CountComponent, PlayerLinkComponent, ColourRangeDirective]
 })
 export class PlayerStatsComponent implements OnInit {
   @Input()
