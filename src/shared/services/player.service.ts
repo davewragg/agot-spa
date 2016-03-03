@@ -32,7 +32,7 @@ export class PlayerService {
   getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<any> {
     const stats = <PlayerStats>{
       games: [],
-      overall: <Stats>{played: 0, won: 0, drawn: 0, lost: 0},
+      overall: new Stats(),
       factionsVs: new Map<number, Stats>(),
       factionsAs: new Map<number, Stats>(),
       agendasVs: new Map<number, Stats>(),
@@ -73,7 +73,7 @@ export class PlayerService {
 
   private setStats(keyId, statsMap:Map<number, Stats>, result:Result) {
     if (keyId) {
-      const keyStats = statsMap.get(keyId) || <Stats>{played: 0, won: 0, drawn: 0, lost: 0};
+      const keyStats = statsMap.get(keyId) || new Stats();
       this.setResult(keyStats, result);
       statsMap.set(keyId, keyStats);
     }
