@@ -37,9 +37,7 @@ export class PlayerService {
           .filter(filterMyGames)
           .reduce(buildStatsFromGames, new PlayerStats());
       }).do((playerStats:PlayerStats) => {
-        // tOdo time to sort!
-        console.log(playerStats);
-        return playerStats;
+        return playerStats.sort();
       });
 
     function buildStatsFromGames(stats:PlayerStats, game:Game):any {
