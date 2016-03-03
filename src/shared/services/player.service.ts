@@ -55,7 +55,7 @@ export class PlayerService {
 
         game.gamePlayers.forEach((gamePlayer:GamePlayer) => {
           if (gamePlayer.playerId !== me.playerId) {
-            const deckClassId = DeckClass.getDeckClassId(me.factionId, me.agendaId);
+            const deckClassId = DeckClass.getDeckClassId(gamePlayer.factionId, gamePlayer.agendaId);
             this.setStats(deckClassId, stats.deckClassVs, result);
             this.setStats(gamePlayer.playerId, stats.playersVs, result);
             this.setStats(gamePlayer.agendaId, stats.agendasVs, result);
