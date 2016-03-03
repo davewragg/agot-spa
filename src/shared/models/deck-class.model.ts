@@ -18,22 +18,12 @@ export class DeckClass {
     };
   }
 
-  constructor(faction:Faction, agenda?:Agenda);
-  constructor(factionId:number, agendaId?:number);
-  constructor(factionOrId:any, agendaOrId?:any) {
-    // TODO bin this generic nonsense?
-    console.log(arguments);
-    if (typeof factionOrId === 'number') {
-      this.factionId = factionOrId;
-    } else {
-      this.faction = factionOrId;
-      this.factionId = factionOrId.factionId;
-    }
-    if (typeof agendaOrId === 'number') {
-      this.agendaId = agendaOrId;
-    } else {
-      this.agenda = agendaOrId;
-      this.agendaId = agendaOrId.agendaId;
+  constructor(faction:Faction, agenda?:Agenda) {
+    this.faction = faction;
+    this.factionId = faction.factionId;
+    if (agenda) {
+      this.agenda = agenda;
+      this.agendaId = agenda.agendaId;
     }
   }
 
