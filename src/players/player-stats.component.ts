@@ -8,13 +8,14 @@ import {Agenda} from '../shared/models/agenda.model';
 import {FactionBadgeComponent} from '../shared/components/faction-badge.component';
 import {AgendaBadgeComponent} from '../shared/components/agenda-badge.component';
 import {CountComponent} from '../shared/components/count.component';
+import {PlayerLinkComponent} from '../shared/components/player-link.component';
 
 @Component({
   selector: 'agot-player-stats',
   moduleId: module.id,
-  templateUrl: './player-stats.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [FactionBadgeComponent, AgendaBadgeComponent, CountComponent]
+  templateUrl: './player-stats.html',
+  directives: [FactionBadgeComponent, AgendaBadgeComponent, CountComponent, PlayerLinkComponent]
 })
 export class PlayerStatsComponent implements OnInit {
   @Input()

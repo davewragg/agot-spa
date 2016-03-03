@@ -5,13 +5,14 @@ import {Game} from '../../shared/models/game.model';
 import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
 import {FactionBadgeComponent} from '../../shared/components/faction-badge.component';
 import {AgendaBadgeComponent} from '../../shared/components/agenda-badge.component';
+import {PlayerLinkComponent} from '../../shared/components/player-link.component';
 
 @Component({
   selector: 'agot-games-table',
   moduleId: module.id,
   templateUrl: './games-table.html',
   pipes: [DateFormatPipe],
-  directives: [ROUTER_DIRECTIVES, FactionBadgeComponent, AgendaBadgeComponent]
+  directives: [ROUTER_DIRECTIVES, PlayerLinkComponent, FactionBadgeComponent, AgendaBadgeComponent]
 })
 export class GamesTableComponent {
   @Input()

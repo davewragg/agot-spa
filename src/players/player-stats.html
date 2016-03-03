@@ -69,7 +69,7 @@
       <th colspan="6" class="table-active">Players</th>
     </tr>
     <tr *ngFor="#entry of playerStats?.playersVs?.entries()">
-      <td>{{ getPlayer(entry[0]).name }}</td>
+      <td><agot-player-link [player]="getPlayer(entry[0])"></agot-player-link></td>
       <td>{{ entry[1].played }}</td>
       <td>{{ entry[1].won }}</td>
       <td>{{ entry[1].drawn }}</td>

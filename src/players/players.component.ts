@@ -1,15 +1,15 @@
 import {Component, OnInit} from 'angular2/core';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
+import {PlayerLinkComponent} from '../shared/components/player-link.component';
 
 @Component({
   selector: 'agot-all-players',
   moduleId: module.id,
   viewProviders: [PlayerService],
   templateUrl: './players.html',
-  directives: [ROUTER_DIRECTIVES]
+  directives: [PlayerLinkComponent]
 })
 export class PlayersComponent implements OnInit {
   players:Player[];

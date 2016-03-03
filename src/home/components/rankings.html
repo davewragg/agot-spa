@@ -15,7 +15,7 @@
         </div>
         <ul class="list-group list-group-flush">
           <li *ngFor="#ranking of rankings.rankedPlayers; #i = index" class="list-group-item">
-            {{ i + 1 }}. {{ ranking.playerName }}
+            {{ i + 1 }}. <agot-player-link [player]="ranking"></agot-player-link>
             <span class="label pull-xs-right pull-sm-none pull-lg-right">
               <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
                    src="/assets/img/result-{{ result | lowercase }}.png"
