@@ -30,7 +30,7 @@ export class PlayerService {
     return this.getPlayers().find((player:Player) => player.playerId === playerId);
   }
 
-  getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<any> {
+  getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<PlayerStats> {
     const stats = new PlayerStats();
     return this._dataService.getGames(criteria).map((games:Game[]) => {
       return games.filter((game:Game) => {

@@ -25,6 +25,21 @@
     </thead>
     <tbody>
     <tr>
+      <th colspan="6">Decks</th>
+    </tr>
+    <tr *ngFor="#entry of playerStats?.deckClassAs?.entries()">
+      <td>
+        <!--<agot-faction-badge [faction]="getDeckClass(entry[0]).faction"></agot-faction-badge>-->
+        {{ getDeckClass(entry[0]).title }}
+        <!--<agot-agenda-badge [agenda]="getDeckClass(entry[0]).agenda"></agot-agenda-badge>-->
+      </td>
+      <td>{{ entry[1].played }}</td>
+      <td>{{ entry[1].won }}</td>
+      <td>{{ entry[1].drawn }}</td>
+      <td>{{ entry[1].lost }}</td>
+      <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+    </tr>
+    <tr>
       <th colspan="6" class="table-active">Factions</th>
     </tr>
     <tr *ngFor="#entry of playerStats?.factionsAs?.entries()">
@@ -70,6 +85,21 @@
     </tr>
     <tr *ngFor="#entry of playerStats?.playersVs?.entries()">
       <td><agot-player-link [player]="getPlayer(entry[0])"></agot-player-link></td>
+      <td>{{ entry[1].played }}</td>
+      <td>{{ entry[1].won }}</td>
+      <td>{{ entry[1].drawn }}</td>
+      <td>{{ entry[1].lost }}</td>
+      <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+    </tr>
+    <tr>
+      <th colspan="6">Decks</th>
+    </tr>
+    <tr *ngFor="#entry of playerStats?.deckClassVs?.entries()">
+      <td>
+        <!--<agot-faction-badge [faction]="getDeckClass(entry[0]).faction"></agot-faction-badge>-->
+        {{ getDeckClass(entry[0]).title }}
+        <!--<agot-agenda-badge [agenda]="getDeckClass(entry[0]).agenda"></agot-agenda-badge>-->
+      </td>
       <td>{{ entry[1].played }}</td>
       <td>{{ entry[1].won }}</td>
       <td>{{ entry[1].drawn }}</td>
