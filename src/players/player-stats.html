@@ -1,8 +1,16 @@
 <div *ngIf="playerStats">
-  <code>You've played {{ playerStats?.games?.length }} times</code>
-  <code>You've won {{ playerStats?.overall?.won }} times</code>
-  <code>You've drawn {{ playerStats?.overall?.drawn }} times</code>
-  <code>You've lost {{ playerStats?.overall?.lost }} times</code>
+  <div class="m-b-1">
+    <code>
+      {{ player?.name || 'Player' }} has played
+      <agot-count [count]="playerStats?.overall?.played"></agot-count>,
+      won
+      <agot-count [count]="playerStats?.overall?.won"></agot-count>,
+      drawn
+      <agot-count [count]="playerStats?.overall?.drawn"></agot-count>,
+      and lost
+      <agot-count [count]="playerStats?.overall?.lost"></agot-count>
+    </code>
+  </div>
 
   <table class="table table-striped">
     <thead class="thead-inverse">

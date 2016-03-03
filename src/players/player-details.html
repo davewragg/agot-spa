@@ -4,7 +4,7 @@
                  (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
 <div *ngIf="playerStats">
-  <agot-player-stats [playerStats]="playerStats"></agot-player-stats>
+  <agot-player-stats [playerStats]="playerStats" [player]="player"></agot-player-stats>
 </div>
 
 <h3 *ngIf="!player" class="alert alert-danger">Player not found</h3>
