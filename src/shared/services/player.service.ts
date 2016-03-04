@@ -54,8 +54,10 @@ export class PlayerService {
 
       function updateOpponentStats(gamePlayer:GamePlayer) {
         if (gamePlayer.playerId !== me.playerId) {
-          const deckClassId = DeckClass.getDeckClassId(gamePlayer.factionId, gamePlayer.agendaId);
-          updateStatsFor(deckClassId, stats.deckClassVs, result);
+          if(!gamePlayer.secondFactionId) {
+            const deckClassId = DeckClass.getDeckClassId(gamePlayer.factionId, gamePlayer.agendaId);
+            updateStatsFor(deckClassId, stats.deckClassVs, result);
+          }
           updateStatsFor(gamePlayer.playerId, stats.playersVs, result);
           updateStatsFor(gamePlayer.agendaId, stats.agendasVs, result);
           updateStatsFor(gamePlayer.factionId, stats.factionsVs, result);
@@ -83,8 +85,10 @@ export class PlayerService {
       const overallStats = stats.overall;
       addResultFor(overallStats, result);
 
-      const deckClassId = DeckClass.getDeckClassId(me.factionId, me.agendaId);
-      updateStatsFor(deckClassId, stats.deckClassAs, result);
+      if(!me.secondFactionId) {
+        const deckClassId = DeckClass.getDeckClassId(me.factionId, me.agendaId);
+        updateStatsFor(deckClassId, stats.deckClassAs, result);
+      }
 
       updateStatsFor(me.agendaId, stats.agendasAs, result);
       updateStatsFor(me.factionId, stats.factionsAs, result);
