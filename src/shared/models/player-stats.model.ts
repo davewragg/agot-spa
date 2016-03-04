@@ -23,11 +23,11 @@ export class PlayerStats {
     return this;
   }
 
-  sortMap(map:Map<number, Stats>, asc?:boolean, byLosing?:boolean) {
+  sortMap(map:Map<number, Stats>, asc?:boolean, byLosing?:boolean):Map<number, Stats> {
     const entries = Array.from(map);
-    return new Map(entries.sort(sortStats));
+    return new Map<number, Stats>(entries.sort(sortStats));
 
-    function sortStats(o1:Array, o2:Array) {
+    function sortStats(o1:Array<any>, o2:Array<any>) {
       const stats1:Stats = o1[1];
       const stats2:Stats = o2[1];
 
