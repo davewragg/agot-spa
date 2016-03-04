@@ -7,7 +7,7 @@ import {Input, Component, ChangeDetectionStrategy, OnChanges} from 'angular2/cor
 @Component({
   selector: 'ng-pluralize',
   template: `<span>{{content}}</span>`,
-  changeDetection: ChangeDetectionStrategy.OnPushObserve,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgPluralize implements OnChanges {
   @Input()

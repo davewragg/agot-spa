@@ -5,9 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import {AppComponent} from './app/app.component';
 
-if ('<%= ENV %>' === 'prod') {
-  enableProdMode();
-}
+if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
 bootstrap(AppComponent, [
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
