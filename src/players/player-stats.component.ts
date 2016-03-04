@@ -11,13 +11,15 @@ import {CountComponent} from '../shared/components/count.component';
 import {PlayerLinkComponent} from '../shared/components/player-link.component';
 import {ColourRangeDirective} from '../shared/directives/colour-range.directive';
 import {DeckClass} from '../shared/models/deck-class.model';
+import {DeckClassBadgeComponent} from '../shared/components/deck-class-badge.component';
 
 @Component({
   selector: 'agot-player-stats',
   moduleId: module.id,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './player-stats.html',
-  directives: [FactionBadgeComponent, AgendaBadgeComponent, CountComponent, PlayerLinkComponent, ColourRangeDirective]
+  directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
+    CountComponent, PlayerLinkComponent, ColourRangeDirective]
 })
 export class PlayerStatsComponent implements OnInit {
   @Input()

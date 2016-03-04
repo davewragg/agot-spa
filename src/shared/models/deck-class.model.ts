@@ -32,11 +32,10 @@ export class DeckClass {
   }
 
   get title():string {
-    return `${this.faction && this.faction.factionName} ${(this.agenda && this.agenda.title) || 'No Agenda'}`;
+    return `${this.faction && this.faction.factionName}, ${(this.agenda && this.agenda.title) || 'No Agenda'}`;
   }
 
   equals(o2:DeckClass) {
-    console.log(o2.id);
     return this.id === o2.id;
   }
 }

@@ -29,9 +29,7 @@
     </tr>
     <tr *ngFor="#entry of playerStats?.deckClassAs?.entries()">
       <td>
-        <!--<agot-faction-badge [faction]="getDeckClass(entry[0]).faction"></agot-faction-badge>-->
-        {{ getDeckClass(entry[0]).title }}
-        <!--<agot-agenda-badge [agenda]="getDeckClass(entry[0]).agenda"></agot-agenda-badge>-->
+        <agot-deck-class-badge [deckClass]="getDeckClass(entry[0])"></agot-deck-class-badge>
       </td>
       <td>{{ entry[1].played }}</td>
       <td>{{ entry[1].won }}</td>
@@ -96,9 +94,7 @@
     </tr>
     <tr *ngFor="#entry of playerStats?.deckClassVs?.entries()">
       <td>
-        <!--<agot-faction-badge [faction]="getDeckClass(entry[0]).faction"></agot-faction-badge>-->
-        {{ getDeckClass(entry[0]).title }}
-        <!--<agot-agenda-badge [agenda]="getDeckClass(entry[0]).agenda"></agot-agenda-badge>-->
+        <agot-deck-class-badge [deckClass]="getDeckClass(entry[0])"></agot-deck-class-badge>
       </td>
       <td>{{ entry[1].played }}</td>
       <td>{{ entry[1].won }}</td>
