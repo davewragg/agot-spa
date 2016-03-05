@@ -9,6 +9,7 @@ import {Stats} from '../models/stats.model';
 import {PlayerStats} from '../models/player-stats.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DeckClass} from '../models/deck-class.model';
+import {PlayerStatsSet} from '../models/player-stats-set.model';
 
 @Injectable()
 export class PlayerService {
@@ -54,14 +55,8 @@ export class PlayerService {
 
       function updateOpponentStats(gamePlayer:GamePlayer) {
         if (gamePlayer.playerId !== me.playerId) {
-          if(!gamePlayer.secondFactionId) {
-            const deckClassId = DeckClass.getDeckClassId(gamePlayer.factionId, gamePlayer.agendaId);
-            updateStatsFor(deckClassId, stats.deckClassVs, result);
-          }
-          updateStatsFor(gamePlayer.playerId, stats.playersVs, result);
-          updateStatsFor(gamePlayer.agendaId, stats.agendasVs, result);
-          updateStatsFor(gamePlayer.factionId, stats.factionsVs, result);
-          updateStatsFor(gamePlayer.secondFactionId, stats.factionsVs, result);
+          updateStatsFor(gamePlayer.playerId, stats.vs.players, result);
+          updatePlayerStats(gamePlayer, stats.vs, result);
         }
       }
     }
@@ -72,7 +67,7 @@ export class PlayerService {
       );
     }
 
-    function getMe(game) {
+    function getMe(game:Game) {
       return game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.playerId === playerId);
     }
 
@@ -81,18 +76,22 @@ export class PlayerService {
       return me.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW;
     }
 
-    function updateMyStats(me, stats, result) {
+    function updateMyStats(me:GamePlayer, stats:PlayerStats, result:Result) {
       const overallStats = stats.overall;
       addResultFor(overallStats, result);
 
-      if(!me.secondFactionId) {
-        const deckClassId = DeckClass.getDeckClassId(me.factionId, me.agendaId);
-        updateStatsFor(deckClassId, stats.deckClassAs, result);
+      updatePlayerStats(me, stats.as, result);
+    }
+
+    function updatePlayerStats(player:GamePlayer, stats:PlayerStatsSet, result) {
+      if (!player.secondFactionId) {
+        const deckClassId = DeckClass.getDeckClassId(player.factionId, player.agendaId);
+        updateStatsFor(deckClassId, stats.deckClass, result);
       }
 
-      updateStatsFor(me.agendaId, stats.agendasAs, result);
-      updateStatsFor(me.factionId, stats.factionsAs, result);
-      updateStatsFor(me.secondFactionId, stats.factionsAs, result);
+      updateStatsFor(player.agendaId, stats.agendas, result);
+      updateStatsFor(player.factionId, stats.factions, result);
+      updateStatsFor(player.secondFactionId, stats.factions, result);
     }
 
     function updateStatsFor(keyId, statsMap:Map<number, Stats>, result:Result) {
@@ -103,7 +102,7 @@ export class PlayerService {
       }
     }
 
-    function addResultFor(keyStats, result) {
+    function addResultFor(keyStats:Stats, result:Result) {
       keyStats.played++;
       if (result === Result.WON) {
         keyStats.won++;
