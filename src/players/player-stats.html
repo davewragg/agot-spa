@@ -1,6 +1,6 @@
 <div *ngIf="playerStats">
   <div class="m-b-1">
-    <code>
+    <code>In this period
       {{ player?.name || 'Player' }} has played
       <agot-count [count]="playerStats?.overall?.played"></agot-count>,
       won
@@ -8,7 +8,9 @@
       drawn
       <agot-count [count]="playerStats?.overall?.drawn"></agot-count>,
       and lost
-      <agot-count [count]="playerStats?.overall?.lost"></agot-count>
+      <agot-count [count]="playerStats?.overall?.lost"></agot-count>.
+      {{ player?.name || 'Player' }}'s win rate is {{ playerStats?.overall?.winPercentage }}%,
+      with a loss rate of {{ playerStats?.overall?.lossPercentage }}%.
     </code>
   </div>
 

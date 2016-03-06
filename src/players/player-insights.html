@@ -4,31 +4,35 @@
                            class="card"
                            title="Most used deck"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.mostSuccessfulDeckClass"
-                           class="card"
+                           class="card" headerClass="text-success"
                            title="Most successful"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.leastSuccessfulDeckClass"
-                           class="card"
+                           class="card" headerClass="text-danger"
                            title="Least successful"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.bestResultsVsDeckClass"
-                           class="card"
+                           class="card" headerClass="text-success"
                            title="Eats for breakfast"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.worstResultsVsDeckClass"
-                           class="card"
+                           class="card" headerClass="text-danger"
                            title="Needs to avoid"></agot-deck-class-block>
   </div>
 </div>
 
-<div class="m-b-1">
-  <code *ngIf="!playerInsights.neverPlayedFactions.length">
-    {{ player?.name || 'Player' }} has played as every faction
-  </code>
-  <code *ngIf="playerInsights.neverPlayedFactions.length">
-    {{ player?.name || 'Player' }} has never played as {{ playerInsights.neverPlayedFactions | json }}
-  </code>
-  <code *ngIf="!playerInsights.neverPlayedAgendas.length">
-    {{ player?.name || 'Player' }} has played as every agenda
-  </code>
-  <code *ngIf="playerInsights.neverPlayedAgendas.length">
-    {{ player?.name || 'Player' }} has never played as {{ playerInsights.neverPlayedAgendas | json}}
-  </code>
+<div class="m-b-1 m-t-1 row">
+  <div class="col-lg-6">
+    <code *ngIf="!playerInsights.neverPlayedFactions.length">
+      {{ player?.name || 'Player' }} has played as every faction
+    </code>
+    <code *ngIf="playerInsights.neverPlayedFactions.length">
+      {{ player?.name || 'Player' }} has not played as {{ playerInsights.neverPlayedFactions | json }}
+    </code>
+  </div>
+  <div class="col-lg-6">
+    <code *ngIf="!playerInsights.neverPlayedAgendas.length">
+      {{ player?.name || 'Player' }} has played as every agenda
+    </code>
+    <code *ngIf="playerInsights.neverPlayedAgendas.length">
+      {{ player?.name || 'Player' }} has not played as {{ playerInsights.neverPlayedAgendas | json}}
+    </code>
+  </div>
 </div>
