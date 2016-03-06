@@ -147,7 +147,7 @@ export class PlayerService {
       }
       return currentStats[field] > newStats[field] ? lastEntry : entry;
     });
-    return winningEntry ? this._referenceDataService.getDeckClass(winningEntry[0]) : null;
+    return winningEntry && winningEntry[1][field] > 0 ? this._referenceDataService.getDeckClass(winningEntry[0]) : null;
   }
 
   private filterOutPlayedFactions(factionsMap:Map<number, Stats>):Faction[] {
