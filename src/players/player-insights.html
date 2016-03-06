@@ -1,0 +1,39 @@
+<div class="card-deck-wrapper">
+  <div class="card-deck">
+    <div class="card">
+      Most used deck
+      {{ playerInsights.mostUsedDeckClass.title }}
+    </div>
+    <div class="card">
+      Most successful deck
+      {{ playerInsights.mostSuccessfulDeckClass.title }}
+    </div>
+    <div class="card">
+      Worst-performing deck
+      {{ playerInsights.leastSuccessfulDeckClass.title }}
+    </div>
+    <div class="card">
+      Eats for breakfast
+      {{ playerInsights.bestResultsVsDeckClass.title }}
+    </div>
+    <div class="card">
+      Should definitely avoid
+      {{ playerInsights.worstResultsVsDeckClass.title }}
+    </div>
+  </div>
+</div>
+
+<div>
+  <code *ngIf="!playerInsights.neverPlayedFactions.length">
+    {{ player?.name || 'Player' }} has played as every faction
+  </code>
+  <code *ngIf="playerInsights.neverPlayedFactions.length">
+    {{ player?.name || 'Player' }} has never played as {{ playerInsights.neverPlayedFactions | json }}
+  </code>
+  <code *ngIf="!playerInsights.neverPlayedAgendas.length">
+    {{ player?.name || 'Player' }} has played as every agenda
+  </code>
+  <code *ngIf="playerInsights.neverPlayedAgendas.length">
+    {{ player?.name || 'Player' }} has never played as {{ playerInsights.neverPlayedAgendas | json}}
+  </code>
+</div>
