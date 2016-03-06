@@ -1,25 +1,20 @@
 <div class="card-deck-wrapper">
   <div class="card-deck">
-    <div class="card">
-      Most used deck
-      {{ playerInsights.mostUsedDeckClass.title }}
-    </div>
-    <div class="card">
-      Most successful deck
-      {{ playerInsights.mostSuccessfulDeckClass.title }}
-    </div>
-    <div class="card">
-      Worst-performing deck
-      {{ playerInsights.leastSuccessfulDeckClass.title }}
-    </div>
-    <div class="card">
-      Eats for breakfast
-      {{ playerInsights.bestResultsVsDeckClass.title }}
-    </div>
-    <div class="card">
-      Should definitely avoid
-      {{ playerInsights.worstResultsVsDeckClass.title }}
-    </div>
+    <agot-deck-class-block [deckClass]="playerInsights.mostUsedDeckClass"
+                           class="card"
+                           title="Most used deck"></agot-deck-class-block>
+    <agot-deck-class-block [deckClass]="playerInsights.mostSuccessfulDeckClass"
+                           class="card"
+                           title="Most successful"></agot-deck-class-block>
+    <agot-deck-class-block [deckClass]="playerInsights.leastSuccessfulDeckClass"
+                           class="card"
+                           title="Least successful"></agot-deck-class-block>
+    <agot-deck-class-block [deckClass]="playerInsights.bestResultsVsDeckClass"
+                           class="card"
+                           title="Eats for breakfast"></agot-deck-class-block>
+    <agot-deck-class-block [deckClass]="playerInsights.worstResultsVsDeckClass"
+                           class="card"
+                           title="Needs to avoid"></agot-deck-class-block>
   </div>
 </div>
 
