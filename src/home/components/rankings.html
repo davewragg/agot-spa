@@ -45,7 +45,7 @@
         </div>
         <ul class="list-group list-group-flush small">
           <li *ngFor="#ranking of rankings.rankedAgendas; #i = index" class="list-group-item">
-            <img class="icon badge pull-xs-right" src="/assets/img/icon{{ ranking.playerId }}.png"
+            <img class="icon badge pull-xs-right" src="/assets/img/agenda{{ ranking.playerId }}.png"
                  alt="{{ ranking.playerName }}">
             {{ i + 1 }}. {{ ranking.playerName }}
           </li>

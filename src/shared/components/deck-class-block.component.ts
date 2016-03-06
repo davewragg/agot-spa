@@ -6,7 +6,7 @@ import {DeckClass} from '../models/deck-class.model';
   moduleId: module.id,
   template: `
     <div *ngIf="deckClass" class="text-xs-center deck-class-block"
-         style="background-image: url(/assets/img/icon{{ deckClass.agenda?.agendaId }}.png)">
+         style="background-image: url(/assets/img/agenda{{ deckClass.agenda?.agendaId }}.png)">
       <div class="card-header {{ headerClass }}">{{ title }}</div>
       <img class="card-img" src="/assets/img/icon{{ deckClass.faction.factionId }}.png"
          alt="{{ deckClass.faction.factionName }}">
@@ -16,7 +16,7 @@ import {DeckClass} from '../models/deck-class.model';
   styles: [`
     .deck-class-block {
       background-repeat: no-repeat;
-      background-position: center center;
+      background-position: top center;
       background-size: cover;
     }
   `]

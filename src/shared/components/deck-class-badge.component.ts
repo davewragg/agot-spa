@@ -7,7 +7,7 @@ import {DeckClass} from '../models/deck-class.model';
   template: `
     <img class="faction-badge" src="/assets/img/icon{{ deckClass.faction.factionId }}.png"
          alt="{{ deckClass.faction.factionName }}">
-    <img *ngIf="deckClass.agenda" class="faction-badge" src="/assets/img/icon{{ deckClass.agenda.agendaId }}.png"
+    <img *ngIf="deckClass.agenda" class="faction-badge" src="/assets/img/agenda{{ deckClass.agenda.agendaId }}.png"
          alt="{{ deckClass.agenda.title }}">
     <span class="small">{{ deckClass.title }}</span>
   `,

@@ -6,12 +6,11 @@ import {Agenda} from '../models/Agenda.model';
   moduleId: module.id,
   template: `
     <small class="text-muted">{{ agenda.title }}</small>
-    <img class="agenda-badge" src="/assets/img/icon{{ agenda.agendaId }}.png" alt="{{ agenda.title }}">
+    <img class="agenda-badge" src="/assets/img/agenda{{ agenda.agendaId }}.png" alt="{{ agenda.title }}">
   `,
   styles: [`
    .agenda-badge {
       height: 2.0em;
-      opacity: 0.7;
    }
   `]
 })
