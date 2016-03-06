@@ -2,6 +2,7 @@ import {Injectable} from 'angular2/core';
 import {DeckType} from '../models/deck-type.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
+import {DeckClass} from '../models/deck-class.model';
 
 @Injectable()
 export class ReferenceDataService {
@@ -41,5 +42,18 @@ export class ReferenceDataService {
       {agendaId: 9, title: 'Fealty'},
       {agendaId: 10, title: 'The Lord of the Crossing'},
     ];
+  }
+
+  getFaction(factionId:number):Faction {
+    return this.getFactions().find((faction) => faction.factionId === factionId);
+  }
+
+  getAgenda(agendaId:number):Agenda {
+    return this.getAgendas().find((agenda) => agenda.agendaId === agendaId);
+  }
+
+  getDeckClass(deckClassId:number):DeckClass {
+    const ids = DeckClass.getFactionAndAgendaId(deckClassId);
+    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
   }
 }

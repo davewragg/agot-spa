@@ -1,6 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {DataService} from './data.service';
+import {ReferenceDataService} from './reference-data.service';
 import {Player} from '../models/player.model';
 import {Game} from '../models/game.model';
 import {GamePlayer} from '../models/game-player.model';
@@ -10,10 +11,13 @@ import {PlayerStats} from '../models/player-stats.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DeckClass} from '../models/deck-class.model';
 import {PlayerStatsSet} from '../models/player-stats-set.model';
+import {PlayerInsights} from '../models/player-insights.model';
+import {Faction} from '../models/faction.model';
+import {Agenda} from '../models/agenda.model';
 
 @Injectable()
 export class PlayerService {
-  constructor(private _dataService:DataService) {
+  constructor(private _dataService:DataService, private _referenceDataService:ReferenceDataService) {
   }
 
   getPlayers():Player[] {
@@ -117,18 +121,20 @@ export class PlayerService {
   }
 
   private buildPlayerInsights(playerStats:PlayerStats):PlayerStats {
-    const insights = playerStats.insights;
-    insights.mostUsedDeckClass = this.findDeckClassBy(playerStats.as.deckClass, 'played');
-    insights.mostSuccessfulDeckClass = this.findDeckClassBy(playerStats.as.deckClass, 'winPercentage');
-    insights.leastSuccessfulDeckClass = this.findDeckClassBy(playerStats.as.deckClass, 'lossPercentage');
-    insights.bestResultsVsDeckClass = this.findDeckClassBy(playerStats.vs.deckClass, 'winPercentage');
-    insights.worstResultsVsDeckClass = this.findDeckClassBy(playerStats.vs.deckClass, 'lossPercentage');
+    const insights:PlayerInsights = playerStats.insights;
+    insights.mostUsedDeckClass = this.findTopDeckClassBy(playerStats.as.deckClass, 'played');
+    insights.mostSuccessfulDeckClass = this.findTopDeckClassBy(playerStats.as.deckClass, 'winPercentage');
+    insights.leastSuccessfulDeckClass = this.findTopDeckClassBy(playerStats.as.deckClass, 'lossPercentage');
+    insights.bestResultsVsDeckClass = this.findTopDeckClassBy(playerStats.vs.deckClass, 'winPercentage');
+    insights.worstResultsVsDeckClass = this.findTopDeckClassBy(playerStats.vs.deckClass, 'lossPercentage');
 
-    console.log(insights);
+    insights.neverPlayedFactions = this.filterOutPlayedFactions(playerStats.as.factions);
+    insights.neverPlayedAgendas = this.filterOutPlayedAgendas(playerStats.as.agendas);
+
     return playerStats;
   }
 
-  private findDeckClassBy(deckMap:Map<number, Stats>, field:string) {
+  private findTopDeckClassBy(deckMap:Map<number, Stats>, field:string):DeckClass {
     const entries:[number, Stats][] = Array.from(deckMap.entries());
     const winningEntry:[number, Stats] = entries.reduce((lastEntry:[number, Stats], entry:[number, Stats]) => {
       if (!lastEntry) {
@@ -136,10 +142,29 @@ export class PlayerService {
       }
       const currentStats:Stats = lastEntry[1];
       const newStats:Stats = entry[1];
-      return currentStats[field] === newStats[field] ? currentStats.played > newStats.played :
-        currentStats[field] > newStats[field] ? lastEntry : entry;
+      if (currentStats[field] === newStats[field]) {
+        return currentStats.played > newStats.played ? lastEntry : entry;
+      }
+      return currentStats[field] > newStats[field] ? lastEntry : entry;
     });
-    return winningEntry ? winningEntry[0] : null;
+    return winningEntry ? this._referenceDataService.getDeckClass(winningEntry[0]) : null;
+  }
+
+  private filterOutPlayedFactions(factionsMap:Map<number, Stats>):Faction[] {
+    return <Faction[]>this.filterPlayed(this._referenceDataService.getFactions(), factionsMap, 'factionId');
+  }
+
+  private filterOutPlayedAgendas(agendasMap:Map<number, Stats>):Agenda[] {
+    return <Agenda[]>this.filterPlayed(this._referenceDataService.getAgendas(), agendasMap, 'agendaId');
+  }
+
+  private filterPlayed(allValues:Array<any>, playedValuesMap:Map<number, Stats>, idField:string) {
+    const allValuesCopy = Array.of(...allValues);
+    Array.from(playedValuesMap.keys()).forEach((playedId:number) => {
+      allValuesCopy.splice(allValuesCopy.findIndex((value) => value[idField] === playedId), 1);
+    });
+
+    return allValuesCopy;
   }
 }
 

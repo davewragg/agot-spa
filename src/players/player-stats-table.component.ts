@@ -37,11 +37,11 @@ export class PlayerStatsTableComponent implements OnInit {
   }
 
   getFaction(factionId:number):Faction {
-    return this.factions.find((faction) => faction.factionId === factionId);
+    return this._referenceDataService.getFaction(factionId);
   }
 
   getAgenda(agendaId:number):Agenda {
-    return this.agendas.find((agenda) => agenda.agendaId === agendaId);
+    return this._referenceDataService.getAgenda(agendaId);
   }
 
   getPlayer(playerId:number):Player {
@@ -49,8 +49,7 @@ export class PlayerStatsTableComponent implements OnInit {
   }
 
   getDeckClass(deckClassId:number):DeckClass {
-    const ids = DeckClass.getFactionAndAgendaId(deckClassId);
-    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
+    return this._referenceDataService.getDeckClass(deckClassId);
   }
 
   ngOnInit() {
