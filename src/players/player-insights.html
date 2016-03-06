@@ -1,18 +1,23 @@
 <div class="card-deck-wrapper">
   <div class="card-deck">
     <agot-deck-class-block [deckClass]="playerInsights.mostUsedDeckClass"
+                           *ngIf="playerInsights.mostUsedDeckClass"
                            class="card"
                            title="Most used deck"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.mostSuccessfulDeckClass"
+                           *ngIf="playerInsights.mostSuccessfulDeckClass"
                            class="card" headerClass="text-success"
                            title="Most successful"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.leastSuccessfulDeckClass"
+                           *ngIf="playerInsights.leastSuccessfulDeckClass"
                            class="card" headerClass="text-danger"
                            title="Least successful"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.bestResultsVsDeckClass"
+                           *ngIf="playerInsights.bestResultsVsDeckClass"
                            class="card" headerClass="text-success"
                            title="Eats for breakfast"></agot-deck-class-block>
     <agot-deck-class-block [deckClass]="playerInsights.worstResultsVsDeckClass"
+                           *ngIf="playerInsights.worstResultsVsDeckClass"
                            class="card" headerClass="text-danger"
                            title="Needs to avoid"></agot-deck-class-block>
   </div>
@@ -20,19 +25,27 @@
 
 <div class="m-b-1 m-t-1 row">
   <div class="col-lg-6">
-    <code *ngIf="!playerInsights.neverPlayedFactions.length">
+    <code *ngIf="!playerInsights.neverPlayedFactions.length">In this period
       {{ player?.name || 'Player' }} has played as every faction
     </code>
-    <code *ngIf="playerInsights.neverPlayedFactions.length">
-      {{ player?.name || 'Player' }} has not played as {{ playerInsights.neverPlayedFactions | json }}
+    <code *ngIf="playerInsights.neverPlayedFactions.length">In this period
+      {{ player?.name || 'Player' }} has not played as
+      <span *ngFor="#faction of playerInsights.neverPlayedFactions; #i = index">
+        {{ faction.factionName }}{{ i < playerInsights.neverPlayedFactions.length -2 ? ',' :
+        i === playerInsights.neverPlayedFactions.length -2 ? ' or' : '' }}
+      </span>
     </code>
   </div>
   <div class="col-lg-6">
-    <code *ngIf="!playerInsights.neverPlayedAgendas.length">
+    <code *ngIf="!playerInsights.neverPlayedAgendas.length">In this period
       {{ player?.name || 'Player' }} has played as every agenda
     </code>
-    <code *ngIf="playerInsights.neverPlayedAgendas.length">
-      {{ player?.name || 'Player' }} has not played as {{ playerInsights.neverPlayedAgendas | json}}
+    <code *ngIf="playerInsights.neverPlayedAgendas.length">In this period
+      {{ player?.name || 'Player' }} has not played as
+      <span *ngFor="#agenda of playerInsights.neverPlayedAgendas; #i = index">
+        {{ agenda.title }}{{ i < playerInsights.neverPlayedAgendas.length -2 ? ',' :
+        i === playerInsights.neverPlayedAgendas.length -2 ? ' or' : '' }}
+      </span>
     </code>
   </div>
 </div>
