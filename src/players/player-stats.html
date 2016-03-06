@@ -12,6 +12,46 @@
     </code>
   </div>
 
+  <div class="card-deck-wrapper">
+    <div class="card-deck">
+      <div class="card">
+        Most used deck
+        {{ playerStats.insights.mostUsedDeckClass.title }}
+      </div>
+      <div class="card">
+        Most successful deck
+        {{ playerStats.insights.mostSuccessfulDeckClass.title }}
+      </div>
+      <div class="card">
+        Worst-performing deck
+        {{ playerStats.insights.leastSuccessfulDeckClass.title }}
+      </div>
+      <div class="card">
+        Eats for breakfast
+        {{ playerStats.insights.bestResultsVsDeckClass.title }}
+      </div>
+      <div class="card">
+        Should definitely avoid
+        {{ playerStats.insights.worstResultsVsDeckClass.title }}
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <code *ngIf="!playerStats.insights.neverPlayedFactions.length">
+      {{ player?.name || 'Player' }} has played as every faction
+    </code>
+    <code *ngIf="playerStats.insights.neverPlayedFactions.length">
+      {{ player?.name || 'Player' }} has never played as {{ playerStats.insights.neverPlayedFactions | json }}
+    </code>
+    <code *ngIf="!playerStats.insights.neverPlayedAgendas.length">
+      {{ player?.name || 'Player' }} has played as every agenda
+    </code>
+    <code *ngIf="playerStats.insights.neverPlayedAgendas.length">
+      {{ player?.name || 'Player' }} has never played as {{ playerStats.insights.neverPlayedAgendas | json}}
+    </code>
+  </div>
+
   <div class="row">
     <agot-player-stats-table title="Playing As" [playerStatsSet]="playerStats.as"
                              class="col-lg-6 col-xs-12"></agot-player-stats-table>
