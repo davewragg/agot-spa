@@ -39,6 +39,8 @@ export class PlayerService {
           .reduce(buildStatsFromGames, new PlayerStats());
       }).do((playerStats:PlayerStats) => {
         return playerStats.sort();
+      }).do((playerStats:PlayerStats) => {
+        return this.buildPlayerInsights(playerStats);
       });
 
     function buildStatsFromGames(stats:PlayerStats, game:Game):any {
@@ -112,6 +114,32 @@ export class PlayerService {
         keyStats.lost++;
       }
     }
+  }
+
+  private buildPlayerInsights(playerStats:PlayerStats):PlayerStats {
+    const insights = playerStats.insights;
+    insights.mostUsedDeckClass = this.findDeckClassBy(playerStats.as.deckClass, 'played');
+    insights.mostSuccessfulDeckClass = this.findDeckClassBy(playerStats.as.deckClass, 'winPercentage');
+    insights.leastSuccessfulDeckClass = this.findDeckClassBy(playerStats.as.deckClass, 'lossPercentage');
+    insights.bestResultsVsDeckClass = this.findDeckClassBy(playerStats.vs.deckClass, 'winPercentage');
+    insights.worstResultsVsDeckClass = this.findDeckClassBy(playerStats.vs.deckClass, 'lossPercentage');
+
+    console.log(insights);
+    return playerStats;
+  }
+
+  private findDeckClassBy(deckMap:Map<number, Stats>, field:string) {
+    const entries:[number, Stats][] = Array.from(deckMap.entries());
+    const winningEntry:[number, Stats] = entries.reduce((lastEntry:[number, Stats], entry:[number, Stats]) => {
+      if (!lastEntry) {
+        return entry;
+      }
+      const currentStats:Stats = lastEntry[1];
+      const newStats:Stats = entry[1];
+      return currentStats[field] === newStats[field] ? currentStats.played > newStats.played :
+        currentStats[field] > newStats[field] ? lastEntry : entry;
+    });
+    return winningEntry ? winningEntry[0] : null;
   }
 }
 
