@@ -12,7 +12,7 @@
 
       <small class="text-muted">
         <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
-          {{ game.date | amDateFormat: "D MMMM YYYY" }}
+          {{ game.date | amTimeAgo }}
         </time>
       </small>
     </td>
