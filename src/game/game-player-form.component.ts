@@ -2,6 +2,7 @@ import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
 import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
 import {NotificationService} from '../shared/services/notification.service';
+import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {Agenda} from '../shared/models/agenda.model';
 import {Faction} from '../shared/models/faction.model';
@@ -41,13 +42,14 @@ export class GamePlayerFormComponent implements OnInit {
     }
   }
 
-  constructor(private _FormBuilder:FormBuilder,
-              private _ReferenceDataService:ReferenceDataService,
-              private notificationService:NotificationService) {
+  constructor(private _formBuilder:FormBuilder,
+              private _referenceDataService:ReferenceDataService,
+              private _playerService:PlayerService,
+              private _notificationService:NotificationService) {
     // TODO probably async
-    this.players = this._ReferenceDataService.getPlayers();
-    this.factions = this._ReferenceDataService.getFactions();
-    this.agendas = this._ReferenceDataService.getAgendas();
+    this.players = this._playerService.getPlayers();
+    this.factions = this._referenceDataService.getFactions();
+    this.agendas = this._referenceDataService.getAgendas();
   }
 
   ngOnInit() {
@@ -64,7 +66,7 @@ export class GamePlayerFormComponent implements OnInit {
     //TODO proper validation here
     const error = GamePlayerFormComponent.validateGamePlayer(updatedPlayer);
     if (error) {
-      this.notificationService.warn('Nope', error);
+      this._notificationService.warn('Nope', error);
       console.warn(error);
       return false;
     }
@@ -83,7 +85,7 @@ export class GamePlayerFormComponent implements OnInit {
     let factionId = this.gamePlayer.factionId || '';
     let agendaId = this.gamePlayer.agendaId || '';
     let secondFactionId = this.gamePlayer.secondFactionId || '';
-    this.gamePlayerForm = this._FormBuilder.group({
+    this.gamePlayerForm = this._formBuilder.group({
       playerId: [playerId, Validators.required],
       factionId: [factionId, Validators.required],
       agendaId: [agendaId],

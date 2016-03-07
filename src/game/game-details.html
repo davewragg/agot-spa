@@ -7,6 +7,5 @@
 
   <agot-view-game *ngIf="!editing" [game]="game" (edit)="onEdit()" (deleteGame)="onDelete()"></agot-view-game>
 </div>
-<div *ngIf="!game">
-  <h3 class="alert alert-danger">Game not found</h3>
-</div>
+
+<h3 *ngIf="!game" class="alert alert-danger">Game not found</h3>

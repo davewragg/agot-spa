@@ -2,14 +2,13 @@ import {provide, enableProdMode} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {APP_BASE_HREF} from 'angular2/router';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 import {AppComponent} from './app/app.component';
 
-if ('<%= ENV %>' === 'prod') {
-  enableProdMode();
-}
+if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
 bootstrap(AppComponent, [
-  provide(APP_BASE_HREF, {useValue: '<%= APP_BASE %>'})
+  provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
 ]);
 
 // In order to start the Service Worker located at "./sw.js"

@@ -1,22 +1,12 @@
 import {Injectable} from 'angular2/core';
 import {DeckType} from '../models/deck-type.model';
-import {Player} from '../models/player.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
+import {DeckClass} from '../models/deck-class.model';
 
 @Injectable()
 export class ReferenceDataService {
   //constructor() {}
-
-  // TODO move to PlayerService
-  getPlayers():Player[] {
-    return [
-      {playerId: 1, name: 'Fonz'},
-      {playerId: 2, name: 'Dan'},
-      {playerId: 3, name: 'Dave'},
-      {playerId: 4, name: 'James'},
-    ];
-  }
 
   getDeckTypes():DeckType[] {
     return [
@@ -52,5 +42,18 @@ export class ReferenceDataService {
       {agendaId: 9, title: 'Fealty'},
       {agendaId: 10, title: 'The Lord of the Crossing'},
     ];
+  }
+
+  getFaction(factionId:number):Faction {
+    return this.getFactions().find((faction) => faction.factionId === factionId);
+  }
+
+  getAgenda(agendaId:number):Agenda {
+    return this.getAgendas().find((agenda) => agenda.agendaId === agendaId);
+  }
+
+  getDeckClass(deckClassId:number):DeckClass {
+    const ids = DeckClass.getFactionAndAgendaId(deckClassId);
+    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
   }
 }

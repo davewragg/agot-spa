@@ -10,12 +10,14 @@ import {NameListService} from '../shared/services/name-list.service';
 
 import {ToolbarComponent} from './components/toolbar.component';
 import {NavbarComponent} from './components/navbar.component';
+import {FooterComponent} from './components/footer.component';
 
 import {HomeComponent} from '../home/home.component';
-import {GameDetailsComponent} from '../game/game-details.component';
-import {FooterComponent} from './components/footer.component';
 import {GamesComponent} from '../home/components/games.component';
+import {GameDetailsComponent} from '../game/game-details.component';
 import {AllRankingsComponent} from '../home/components/all-rankings.component';
+import {PlayersComponent} from '../players/players.component';
+import {PlayerDetailsComponent} from '../players/player-details.component';
 
 @Component({
   selector: 'agot-app',
@@ -24,7 +26,7 @@ import {AllRankingsComponent} from '../home/components/all-rankings.component';
   moduleId: module.id,
   templateUrl: './app.html',
   encapsulation: ViewEncapsulation.None,
-  directives: [ROUTER_DIRECTIVES, ToasterContainerComponent, ToolbarComponent, NavbarComponent, FooterComponent, GamesComponent],
+  directives: [ROUTER_DIRECTIVES, ToasterContainerComponent, ToolbarComponent, NavbarComponent, FooterComponent],
 })
 @RouteConfig([
   {path: '/', component: HomeComponent, name: 'Home', useAsDefault: true},
@@ -32,9 +34,9 @@ import {AllRankingsComponent} from '../home/components/all-rankings.component';
   {path: '/games/new', component: GameDetailsComponent, name: 'NewGameDetails'},
   {path: '/games/:id', component: GameDetailsComponent, name: 'GameDetails'},
   {path: '/rankings', component: AllRankingsComponent, name: 'AllRankings'},
-  {path: '/players/', component: HomeComponent, name: 'Players'},
   //{path: '/decks', component: DecksCmp, name: 'Decks'},
-  //{path: '/players', component: PlayersCmp, name: 'Players'},
+  {path: '/players', component: PlayersComponent, name: 'Players'},
+  {path: '/players/:id', component: PlayerDetailsComponent, name: 'PlayerDetails'},
 ])
 export class AppComponent {
 }
