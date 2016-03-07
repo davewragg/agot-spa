@@ -47,7 +47,7 @@ export class PlayerService {
         return this.buildPlayerInsights(playerStats);
       });
 
-    function buildStatsFromGames(stats:PlayerStats, game:Game):any {
+    function buildStatsFromGames(stats:PlayerStats, game:Game):PlayerStats {
       stats.games.push(game);
 
       var me = getMe(game);
@@ -68,9 +68,7 @@ export class PlayerService {
     }
 
     function filterMyGames(game:Game) {
-      return !!game.gamePlayers.find(
-        (gamePlayer:GamePlayer) => gamePlayer.playerId === playerId
-      );
+      return !!getMe(game);
     }
 
     function getMe(game:Game) {
@@ -83,8 +81,7 @@ export class PlayerService {
     }
 
     function updateMyStats(me:GamePlayer, stats:PlayerStats, result:Result) {
-      const overallStats = stats.overall;
-      addResultFor(overallStats, result);
+      addResultFor(stats.overall, result);
 
       updatePlayerStats(me, stats.as, result);
     }
