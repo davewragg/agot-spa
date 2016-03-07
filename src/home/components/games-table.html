@@ -11,8 +11,7 @@
       </div>
 
       <small class="text-muted">
-        <time title="{{ game.date | amDateFormat: 'LLLL' }}">
-          <!--datetime="{{ game.date }}"-->
+        <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
           {{ game.date | amDateFormat: "D MMMM YYYY" }}
         </time>
       </small>
