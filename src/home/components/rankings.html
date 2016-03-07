@@ -6,53 +6,81 @@
       </span>
     </h4>
   </div>
-  <div [hidden]="!expanded">
-    <div class="card-group">
+  <div [hidden]="!expanded" class="row">
 
-      <div class="card text-xs-left">
-        <div class="card-block">
-          <h5 class="card-title">Players</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li *ngFor="#ranking of rankings.rankedPlayers; #i = index" class="list-group-item">
-            {{ i + 1 }}. <agot-player-link [player]="ranking"></agot-player-link>
-            <span class="label pull-xs-right pull-sm-none pull-lg-right">
-              <img *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
-                   src="/assets/img/result-{{ result | lowercase }}.png"
-                   alt="{{ result }}" title="{{ result }}" class="icon"/>
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="card text-xs-left">
-        <div class="card-block">
-          <h5 class="card-title">Factions</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li *ngFor="#ranking of rankings.rankedFactions; #i = index" class="list-group-item">
-            {{ i + 1 }}.
-            <img class="icon" src="/assets/img/icon{{ ranking.playerId }}.png"
-                 alt="{{ ranking.playerName }}">
-            {{ ranking.playerName }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="card text-xs-left">
-        <div class="card-block">
-          <h5 class="card-title">Agendas</h5>
-        </div>
-        <ul class="list-group list-group-flush small">
-          <li *ngFor="#ranking of rankings.rankedAgendas; #i = index" class="list-group-item">
-            <img class="icon badge pull-xs-right" src="/assets/img/agenda{{ ranking.playerId }}.png"
-                 alt="{{ ranking.playerName }}">
-            {{ i + 1 }}. {{ ranking.playerName }}
-          </li>
-        </ul>
-      </div>
-
+    <div class="col-lg-4">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th colspan="5">Players</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="#ranking of rankings.rankedPlayers; #i = index"
+            [class.table-warning]="i == 0">
+          <td class="text-xs-right col-xs-1 col-sm-2">{{ i + 1 }}.</td>
+          <td class="col-xs-7 col-sm-4">
+            <agot-player-link [player]="ranking"></agot-player-link>
+          </td>
+          <td class="text-muted small text-xs-right col-xs-2 col-sm-3">{{ ranking.eloRating }}</td>
+          <td class="text-xs-right col-xs-2 col-sm-3">
+            <div class="player__results">
+                <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
+                      class="player-result player-result--{{ result | lowercase }}" title="{{ result }}">
+                  {{ result }}
+                </span>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+
+    <div class="col-lg-4">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th colspan="5">Factions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="#ranking of rankings.rankedFactions; #i = index"
+            [class.table-warning]="i == 0">
+          <td class="col-xs-1 text-xs-right">{{ i + 1 }}.</td>
+          <td class="col-xs-2 text-xs-right"><img class="icon" src="/assets/img/icon{{ ranking.playerId }}.png"
+                                                  alt="{{ ranking.playerName }}"></td>
+          <td class="col-xs-7">
+            {{ ranking.playerName }}
+          </td>
+          <td class="text-muted small text-xs-right col-xs-1">{{ ranking.eloRating }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-4">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th colspan="5">Agendas</th>
+        </tr>
+        </thead>
+        <tbody class="small">
+        <tr *ngFor="#ranking of rankings.rankedAgendas; #i = index"
+            [class.table-warning]="i == 0">
+          <td class="col-xs-1 text-xs-right">{{ i + 1 }}.</td>
+          <td class="col-xs-7">
+            {{ ranking.playerName }}
+          </td>
+          <td class="col-xs-2 text-xs-right">
+            <img class="icon" src="/assets/img/agenda{{ ranking.playerId }}.png" alt="{{ ranking.playerName }}">
+          </td>
+          <td class="text-muted text-xs-right col-xs-1">{{ ranking.eloRating }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
 </section>
