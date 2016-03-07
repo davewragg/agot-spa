@@ -16,6 +16,8 @@ export class DataService {
   private today:string;
   private aWeekAgo:string;
 
+  private baseUrl = '//paulhoughton.org';
+
 
   private static _serialiseGame(game:Game):string {
     return JSON.stringify(game);
@@ -61,35 +63,41 @@ export class DataService {
   }
 
   updateGame(game:Game):Observable<Game> {
-    return this.http.put('/agot/Games/Update', DataService._serialiseGame(game))
+    return this.http.put(this.baseUrl + '/agot/Games/Update', DataService._serialiseGame(game))
       .map((response:Response) => response.json());
     // TODO update cache? PBR covered?
   }
 
   createGame(game:Game):Observable<Game> {
-    return this.http.post('/agot/Games/Create', DataService._serialiseGame(game))
+    return this.http.post(this.baseUrl + '/agot/Games/Create', DataService._serialiseGame(game))
       .map((response:Response) => response.json());
     // TODO check for response id
     // TODO insert into cache
   }
 
   deleteGame(gameId:number):Observable<any> {
-    return this.http.delete('/agot/Games/Delete/' + gameId)
+    return this.http.delete(this.baseUrl + '/agot/Games/Delete/' + gameId)
       .map((response:Response) => response.json());
   }
 
   private _getGameIndex():Observable<GameIndex> {
-    return this.getFromJson()
+    return this.getFromWeb()
+      .catch((error) => {
+        console.warn(error);
+        return this.getFromJson();
+      });
+  }
+
+  private getFromJson():Observable<GameIndex> {
+    return this.http.get('/assets/data/GetAll.json')
       .map((res:Response) => res.json());
   }
 
-  private getFromJson():Observable<Response> {
-    return this.http.get('/assets/data/GetAll.json');
+  private getFromWeb():Observable<GameIndex> {
+    return this.http.get(this.baseUrl + '/agot/Games/GetAll')
+      .timeout(1000, new Error('timed out web'))
+      .map((res:Response) => res.json().data);
   }
-
-  //private getFromWeb():Observable<Response> {
-  //  return this.http.get('/agot/Games/GetAll');
-  //}
 
   private setDatesFromRangeType(criteria:FilterCriteria) {
     const updatedCriteria = Object.assign({}, criteria);

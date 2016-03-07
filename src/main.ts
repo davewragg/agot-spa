@@ -3,6 +3,8 @@ import {bootstrap} from 'angular2/platform/browser';
 import {APP_BASE_HREF} from 'angular2/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/timeout';
 import {AppComponent} from './app/app.component';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
