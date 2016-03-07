@@ -1,24 +1,31 @@
 <div class="card-deck-wrapper">
   <div class="card-deck">
-    <agot-deck-class-block [deckClass]="playerInsights.mostUsedDeckClass"
+    <agot-deck-class-block [deckClass]="playerInsights.mostUsedDeckClass.deckClass"
                            *ngIf="playerInsights.mostUsedDeckClass"
                            class="card"
+                           footerText="{{ playerInsights.mostUsedDeckClass.stats.played }} game{{ playerInsights.mostUsedDeckClass.stats.played > 1 ? 's' : '' }}"
                            title="Most used deck"></agot-deck-class-block>
-    <agot-deck-class-block [deckClass]="playerInsights.mostSuccessfulDeckClass"
+    <agot-deck-class-block [deckClass]="playerInsights.mostSuccessfulDeckClass.deckClass"
                            *ngIf="playerInsights.mostSuccessfulDeckClass"
                            class="card" headerClass="text-success"
+                           footerText="{{ playerInsights.mostSuccessfulDeckClass.stats.won }} win{{ playerInsights.mostSuccessfulDeckClass.stats.won > 1 ? 's' : '' }}
+                           ({{ playerInsights.mostSuccessfulDeckClass.stats.winPercentage }}%)"
                            title="Most successful"></agot-deck-class-block>
-    <agot-deck-class-block [deckClass]="playerInsights.leastSuccessfulDeckClass"
+    <agot-deck-class-block [deckClass]="playerInsights.leastSuccessfulDeckClass.deckClass"
                            *ngIf="playerInsights.leastSuccessfulDeckClass"
                            class="card" headerClass="text-danger"
+                           footerText="{{ playerInsights.leastSuccessfulDeckClass.stats.lost }} defeat{{ playerInsights.leastSuccessfulDeckClass.stats.lost > 1 ? 's' : '' }}
+                           ({{ playerInsights.leastSuccessfulDeckClass.stats.lossPercentage }}%)"
                            title="Least successful"></agot-deck-class-block>
-    <agot-deck-class-block [deckClass]="playerInsights.bestResultsVsDeckClass"
+    <agot-deck-class-block [deckClass]="playerInsights.bestResultsVsDeckClass.deckClass"
                            *ngIf="playerInsights.bestResultsVsDeckClass"
                            class="card" headerClass="text-success"
+                           footerText="{{ playerInsights.bestResultsVsDeckClass.stats.won }} triumph{{ playerInsights.bestResultsVsDeckClass.stats.won > 1 ? 's' : '' }}"
                            title="Eats for breakfast"></agot-deck-class-block>
-    <agot-deck-class-block [deckClass]="playerInsights.worstResultsVsDeckClass"
+    <agot-deck-class-block [deckClass]="playerInsights.worstResultsVsDeckClass.deckClass"
                            *ngIf="playerInsights.worstResultsVsDeckClass"
                            class="card" headerClass="text-danger"
+                           footerText="{{ playerInsights.worstResultsVsDeckClass.stats.lost }} humiliation{{ playerInsights.worstResultsVsDeckClass.stats.lost > 1 ? 's' : '' }}"
                            title="Mortal nemesis"></agot-deck-class-block>
   </div>
 </div>

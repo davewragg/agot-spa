@@ -14,6 +14,7 @@ import {PlayerStatsSet} from '../models/player-stats-set.model';
 import {PlayerInsights} from '../models/player-insights.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
+import {DeckClassStats} from '../models/deck-class-stats.model';
 
 @Injectable()
 export class PlayerService {
@@ -131,7 +132,7 @@ export class PlayerService {
     return playerStats;
   }
 
-  private findTopDeckClassBy(deckMap:Map<number, Stats>, field:string):DeckClass {
+  private findTopDeckClassBy(deckMap:Map<number, Stats>, field:string):DeckClassStats {
     const entries:[number, Stats][] = Array.from(deckMap.entries());
     const winningEntry:[number, Stats] = entries.reduce((lastEntry:[number, Stats], entry:[number, Stats]) => {
       if (!lastEntry) {
@@ -144,7 +145,11 @@ export class PlayerService {
       }
       return currentStats[field] > newStats[field] ? lastEntry : entry;
     });
-    return winningEntry && winningEntry[1][field] > 0 ? this._referenceDataService.getDeckClass(winningEntry[0]) : null;
+    if (winningEntry && winningEntry[1][field] > 0) {
+      const deckClass = this._referenceDataService.getDeckClass(winningEntry[0]);
+      return new DeckClassStats(deckClass, winningEntry[1]);
+    }
+    return null;
   }
 
   private filterOutPlayedFactions(factionsMap:Map<number, Stats>):Faction[] {
