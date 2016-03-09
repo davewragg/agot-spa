@@ -24,7 +24,7 @@ export class SeedConfig {
 
   BOOTSTRAP_MODULE     = this.ENABLE_HOT_LOADING ? 'hot_loader_main' : 'main';
 
-  APP_TITLE            = 'AGOT Tracker';
+  APP_TITLE            = 'My Angular2 App';
 
   APP_SRC              = 'src';
   ASSETS_SRC           = `${this.APP_SRC}/assets`;
@@ -62,9 +62,7 @@ export class SeedConfig {
     { src: 'rxjs/bundles/Rx.js', inject: 'libs' },
     { src: 'angular2/bundles/angular2.js', inject: 'libs' },
     { src: 'angular2/bundles/router.js', inject: 'libs' },
-    { src: 'angular2/bundles/http.js', inject: 'libs' },
-    { src: 'bootstrap/dist/css/bootstrap.css', inject: true },
-    { src: 'angular2-toaster/lib/toaster.css', inject: true },
+    { src: 'angular2/bundles/http.js', inject: 'libs' }
   ]);
 
   PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencies([
@@ -72,9 +70,7 @@ export class SeedConfig {
     { src: 'reflect-metadata/Reflect.js', inject: 'shims' },
     { src: 'es6-shim/es6-shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.js', inject: 'shims' },
-    { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
-    { src: 'bootstrap/dist/css/bootstrap.min.css', inject: true },
-    { src: 'angular2-toaster/lib/toaster.css', inject: true },
+    { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' }
   ]);
 
   // Declare local files that needs to be injected
@@ -120,7 +116,7 @@ export class SeedConfig {
 // --------------
 // Utils.
 
-function normalizeDependencies(deps: InjectableDependency[]) {
+export function normalizeDependencies(deps: InjectableDependency[]) {
   deps
     .filter((d:InjectableDependency) => !/\*/.test(d.src)) // Skip globs
     .forEach((d:InjectableDependency) => d.src = require.resolve(d.src));
