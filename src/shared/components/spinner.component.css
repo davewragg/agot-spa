@@ -1,9 +1,17 @@
 .spinner {
-  margin: 100px auto;
+  margin: 20px auto;
   width: 50px;
   height: 40px;
   text-align: center;
   font-size: 10px;
+  opacity: 1;
+  transition: height 0.1s ease-out, opacity 0.2s ease 0.2s;
+}
+
+.spinner.isHidden {
+  height: 0;
+  opacity: 0;
+  transition: height 0.3s ease-out, opacity 0.2s ease 0.2s;
 }
 
 .spinner > div {

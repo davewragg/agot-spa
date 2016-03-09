@@ -5,13 +5,14 @@ import {GameService} from '../../shared/services/game.service';
 import {GamesTableComponent} from './games-table.component';
 import {DateRangeComponent} from './date-range.component';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
+import {SpinnerComponent} from '../../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-games',
   moduleId: module.id,
   viewProviders: [GameService],
   templateUrl: './games.html',
-  directives: [GamesTableComponent, DateRangeComponent]
+  directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent]
 })
 export class GamesComponent implements OnInit {
   @Input()
@@ -23,6 +24,7 @@ export class GamesComponent implements OnInit {
 
   games:Game[];
   loadingError:any = null;
+  isLoading:boolean;
 
   constructor(private _gameService:GameService) {
   }
@@ -36,13 +38,8 @@ export class GamesComponent implements OnInit {
   }
 
   loadGames(criteria?:FilterCriteria) {
-    let gamesStream;
-    if (criteria) {
-      gamesStream = this._gameService.getGames(criteria);
-    } else {
-      gamesStream = this._gameService.getAllGames();
-    }
-    gamesStream
+    this.isLoading = true;
+    this._gameService.getGames(criteria)
       .subscribe(
         (games:Game[]) => {
           this.loadingError = null;
@@ -50,8 +47,12 @@ export class GamesComponent implements OnInit {
         },
         (err) => {
           this.loadingError = err._body || err;
+          this.isLoading = false;
         },
-        () => console.log('done')
+        () => {
+          console.log('done');
+          this.isLoading = false;
+        }
       );
   }
 }

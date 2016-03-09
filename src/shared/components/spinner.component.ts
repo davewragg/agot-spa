@@ -11,7 +11,7 @@ import {Component, Input, OnDestroy} from 'angular2/core';
 })
 export class SpinnerComponent implements OnDestroy {
   @Input()
-  public delay:number = 20;
+  public delay:number = 100;
 
   @Input()
   public set isRunning(value:boolean) {

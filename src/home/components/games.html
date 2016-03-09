@@ -5,6 +5,8 @@
                    [hidden]="hideFilters"
                    (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
+  <agot-spinner [isRunning]="isLoading"></agot-spinner>
+
   <div *ngIf="loadingError" class="alert alert-danger">
     Well, shit. {{ loadingError | json }}
     <button type="button" (click)="loadGames(defaultFiltering)">Try again</button>
