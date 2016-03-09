@@ -43,8 +43,14 @@ export class PlayerService {
           .filter(filterMyGames)
           .reduce(buildStatsFromGames, new PlayerStats());
       }).do((playerStats:PlayerStats) => {
+        if (playerStats.games.length === 0) {
+          return playerStats;
+        }
         return playerStats.sort();
       }).do((playerStats:PlayerStats) => {
+        if (playerStats.games.length === 0) {
+          return playerStats;
+        }
         return this.buildPlayerInsights(playerStats);
       });
 

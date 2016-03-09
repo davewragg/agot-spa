@@ -52,8 +52,11 @@ export class PlayerDetailsComponent implements OnInit {
       .subscribe((stats) => {
           this.playerStats = stats;
         },
-        ()=> this.stopLoading(),
-        ()=> this.stopLoading());
+        (error) => {
+          console.error(error);
+          this.stopLoading();
+        },
+        () => this.stopLoading());
   }
 
   private stopLoading() {
