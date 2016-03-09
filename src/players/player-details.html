@@ -5,7 +5,7 @@
 
 <agot-spinner [isRunning]="isLoading"></agot-spinner>
 
-<div *ngIf="playerStats">
+<div *ngIf="playerStats" [hidden]="isLoading">
   <agot-player-stats [playerStats]="playerStats" [player]="player"></agot-player-stats>
 </div>
 
