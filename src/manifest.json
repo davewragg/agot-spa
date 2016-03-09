@@ -1,5 +1,7 @@
 {
-  "name": "AGOT Tracker",
+  "name": "Game of Thrones Tracker",
+  "short_name": "AGOT Tracker",
+  "scope": "./",
   "icons": [
     {
       "src": "\/android-chrome-36x36.png",
@@ -37,5 +39,9 @@
       "type": "image\/png",
       "density": 4
     }
-  ]
+  ],
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "./",
+  "theme_color": "#000000"
 }
