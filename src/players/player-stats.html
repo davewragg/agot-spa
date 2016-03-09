@@ -24,8 +24,11 @@
                              class="col-lg-6 col-xs-12"></agot-player-stats-table>
   </div>
 
-  <div class="row">
-    <button class="btn btn-success-outline" (click)="showGames = !showGames">Show games</button>
+  <div class="m-b-1">
+    <button class="btn btn-success-outline" (click)="showGames = !showGames">Show/hide games</button>
   </div>
-  <agot-games-table *ngIf="showGames" [games]="playerStats?.games"></agot-games-table>
+
+  <div class="m-b-1">
+    <agot-games-table *ngIf="showGames" [games]="playerStats?.games"></agot-games-table>
+  </div>
 </div>
