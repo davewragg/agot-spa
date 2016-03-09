@@ -7,7 +7,7 @@ body {
 }
 
 a {
-  /*color: #b30001;*/
+  color: #b30001;
   color: var(--primary-colour);
 }
 
@@ -23,7 +23,7 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  /*background-color: #333;*/
+  background-color: #b30001;
   background-color: var(--primary-colour);
   opacity: 0.6;
   position: absolute;
