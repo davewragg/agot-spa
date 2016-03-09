@@ -3,6 +3,8 @@
 <agot-date-range [showSort]="false" [criteria]="defaultFiltering"
                  (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
+<agot-spinner [isRunning]="isLoading"></agot-spinner>
+
 <div *ngIf="playerStats">
   <agot-player-stats [playerStats]="playerStats" [player]="player"></agot-player-stats>
 </div>

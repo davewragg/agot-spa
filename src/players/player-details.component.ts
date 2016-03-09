@@ -7,6 +7,7 @@ import {PlayerStatsComponent} from './player-stats.component';
 import {FilterCriteria} from '../shared/models/filter-criteria.model';
 import {DateRangeType} from '../shared/models/date-range-type.model';
 import {DateRangeComponent} from '../home/components/date-range.component';
+import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-player-details',
@@ -14,12 +15,14 @@ import {DateRangeComponent} from '../home/components/date-range.component';
   viewProviders: [PlayerService],
   templateUrl: './player-details.html',
   //styleUrls: ['./player-details.css']
-  directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent]
+  directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent, SpinnerComponent]
 })
 export class PlayerDetailsComponent implements OnInit {
   player:Player;
   playerStats:PlayerStats;
   playerIdParam:number;
+
+  isLoading:boolean;
 
   defaultFiltering:FilterCriteria;
 
@@ -44,9 +47,17 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   private loadStats(criteria?:FilterCriteria) {
+    this.isLoading = true;
     this._playerService.getPlayerStats(this.playerIdParam, criteria)
       .subscribe((stats) => {
-        this.playerStats = stats;
-      });
-  };
+          this.playerStats = stats;
+        },
+        ()=> this.stopLoading(),
+        ()=> this.stopLoading());
+  }
+
+  private stopLoading() {
+    console.log('done loadstats');
+    this.isLoading = false;
+  }
 }
