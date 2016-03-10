@@ -17,7 +17,8 @@ export class DataService {
   private today:string;
   private aWeekAgo:string;
 
-  private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org';
+  //private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
+  private baseUrl = '//paulhoughton.org/agot';
 
   private static _serialiseGame(game:Game):string {
     return JSON.stringify(game);
@@ -68,12 +69,12 @@ export class DataService {
   }
 
   getGame(gameId:number):Observable<Game> {
-    return this.http.get(this.baseUrl + '/agot/api/games/get/' + gameId)
+    return this.http.get(this.baseUrl + '/api/games/get/' + gameId)
       .map((res:Response) => res.json().payload);
   }
 
   updateGame(game:Game):Observable<Game> {
-    return this.http.put(this.baseUrl + '/agot/api/games/update',
+    return this.http.put(this.baseUrl + '/api/games/update',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map((response:Response) => response.json());
@@ -81,7 +82,7 @@ export class DataService {
   }
 
   createGame(game:Game):Observable<Game> {
-    return this.http.post(this.baseUrl + '/agot/api/games/create',
+    return this.http.post(this.baseUrl + '/api/games/create',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map((response:Response) => response.json());
@@ -90,7 +91,7 @@ export class DataService {
   }
 
   deleteGame(gameId:number):Observable<any> {
-    return this.http.delete(this.baseUrl + '/agot/api/games/delete/' + gameId)
+    return this.http.delete(this.baseUrl + '/api/games/delete/' + gameId)
       .map((response:Response) => response.json());
   }
 
@@ -103,7 +104,7 @@ export class DataService {
   }
 
   private getFromWeb():Observable<GameIndex> {
-    return this.http.get(this.baseUrl + '/agot/api/games/getall')
+    return this.http.get(this.baseUrl + '/api/games/getall')
       .timeout(this.REMOTE_TIMEOUT, new Error('timed out web'))
       .map((res:Response) => res.json().payload);
   }
