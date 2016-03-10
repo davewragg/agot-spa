@@ -1,5 +1,6 @@
 import {Faction} from './faction.model';
 import {Agenda} from './agenda.model';
+
 export class DeckClass {
   factionId:number;
   faction:Faction;
