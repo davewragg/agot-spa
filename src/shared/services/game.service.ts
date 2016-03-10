@@ -35,11 +35,7 @@ export class GameService {
   }
 
   getGame(gameId:number):Observable<Game> {
-    return this.getAllGames().map(
-      (games:Game[]) => {
-        return games.find((game:Game) => game.gameId === gameId);
-      }
-    );
+    return this.dataService.getGame(gameId);
   }
 
   updateGame(game:Game):Observable<Game> {

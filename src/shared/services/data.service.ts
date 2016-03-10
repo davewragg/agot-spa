@@ -11,13 +11,13 @@ import * as moment from 'moment/moment';
 
 @Injectable()
 export class DataService {
+  private REMOTE_TIMEOUT = 30000;
   private data:Observable<GameIndex>;
 
   private today:string;
   private aWeekAgo:string;
 
-  private baseUrl = '//paulhoughton.org';
-
+  private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org';
 
   private static _serialiseGame(game:Game):string {
     return JSON.stringify(game);
@@ -41,7 +41,7 @@ export class DataService {
   }
 
   getGames(filterCriteria?:FilterCriteria) {
-    const criteria = this.setDatesFromRangeType(filterCriteria);
+    const criteria:FilterCriteria = this.setDatesFromRangeType(filterCriteria);
     return this.getAllGames().map(filterGames);
 
     function filterGames(games:Game[]) {
@@ -62,21 +62,26 @@ export class DataService {
     }
   }
 
+  getGame(gameId:number):Observable<Game> {
+    return this.http.get(this.baseUrl + '/agot/api/games/get/' + gameId)
+      .map((res:Response) => res.json().payload);
+  }
+
   updateGame(game:Game):Observable<Game> {
-    return this.http.put(this.baseUrl + '/agot/Games/Update', DataService._serialiseGame(game))
+    return this.http.put(this.baseUrl + '/agot/api/games/update', DataService._serialiseGame(game))
       .map((response:Response) => response.json());
     // TODO update cache? PBR covered?
   }
 
   createGame(game:Game):Observable<Game> {
-    return this.http.post(this.baseUrl + '/agot/Games/Create', DataService._serialiseGame(game))
+    return this.http.post(this.baseUrl + '/agot/api/games/create', DataService._serialiseGame(game))
       .map((response:Response) => response.json());
     // TODO check for response id
     // TODO insert into cache
   }
 
   deleteGame(gameId:number):Observable<any> {
-    return this.http.delete(this.baseUrl + '/agot/Games/Delete/' + gameId)
+    return this.http.delete(this.baseUrl + '/agot/api/games/delete/' + gameId)
       .map((response:Response) => response.json());
   }
 
@@ -88,15 +93,15 @@ export class DataService {
       });
   }
 
+  private getFromWeb():Observable<GameIndex> {
+    return this.http.get(this.baseUrl + '/agot/api/games/getall')
+      .timeout(this.REMOTE_TIMEOUT, new Error('timed out web'))
+      .map((res:Response) => res.json().payload);
+  }
+
   private getFromJson():Observable<GameIndex> {
     return this.http.get('/assets/data/GetAll.json')
       .map((res:Response) => res.json());
-  }
-
-  private getFromWeb():Observable<GameIndex> {
-    return this.http.get(this.baseUrl + '/agot/Games/GetAll')
-      .timeout(1000, new Error('timed out web'))
-      .map((res:Response) => res.json().data);
   }
 
   private setDatesFromRangeType(criteria:FilterCriteria) {
@@ -118,7 +123,7 @@ export class DataService {
     return this.setDates(criteria, null, null);
   };
 
-  private setDates(criteria, fromDate?:string, toDate?:string) {
+  private setDates(criteria:FilterCriteria, fromDate?:string, toDate?:string) {
     return Object.assign(criteria, {
       fromDate: fromDate,
       toDate: toDate,
