@@ -7,7 +7,7 @@ import {Game} from '../models/game.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DateRangeType} from '../models/date-range-type.model';
 import * as moment from 'moment/moment';
-
+import {Headers} from 'angular2/http';
 
 @Injectable()
 export class DataService {
@@ -21,6 +21,11 @@ export class DataService {
 
   private static _serialiseGame(game:Game):string {
     return JSON.stringify(game);
+  }
+
+  private static _getContentHeaders() {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return {headers: headers};
   }
 
   constructor(private http:Http) {
@@ -68,13 +73,17 @@ export class DataService {
   }
 
   updateGame(game:Game):Observable<Game> {
-    return this.http.put(this.baseUrl + '/agot/api/games/update', DataService._serialiseGame(game))
+    return this.http.put(this.baseUrl + '/agot/api/games/update',
+      DataService._serialiseGame(game),
+      DataService._getContentHeaders())
       .map((response:Response) => response.json());
     // TODO update cache? PBR covered?
   }
 
   createGame(game:Game):Observable<Game> {
-    return this.http.post(this.baseUrl + '/agot/api/games/create', DataService._serialiseGame(game))
+    return this.http.post(this.baseUrl + '/agot/api/games/create',
+      DataService._serialiseGame(game),
+      DataService._getContentHeaders())
       .map((response:Response) => response.json());
     // TODO check for response id
     // TODO insert into cache
@@ -129,5 +138,4 @@ export class DataService {
       toDate: toDate,
     });
   };
-
 }
