@@ -14,7 +14,6 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
   moduleId: module.id,
   viewProviders: [PlayerService],
   templateUrl: './player-details.html',
-  //styleUrls: ['./player-details.css']
   directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent, SpinnerComponent]
 })
 export class PlayerDetailsComponent implements OnInit {

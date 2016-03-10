@@ -11,7 +11,6 @@ import {NotificationService} from '../shared/services/notification.service';
   moduleId: module.id,
   viewProviders: [GameService],
   templateUrl: './game-details.html',
-  //styleUrls: ['./game-details.css']
   directives: [GameFormComponent, ViewGameComponent]
 })
 export class GameDetailsComponent implements OnInit {
