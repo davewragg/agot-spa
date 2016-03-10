@@ -33,6 +33,10 @@ export class DeckClass {
   }
 
   get title():string {
-    return `${this.faction && this.faction.factionName}, ${(this.agenda && this.agenda.title) || 'No Agenda'}`;
+    return this.getTitle();
   }
+
+  getTitle() {
+    return `${this.faction && this.faction.factionName}, ${(this.agenda && this.agenda.title) || 'No Agenda'}`;
+  };
 }

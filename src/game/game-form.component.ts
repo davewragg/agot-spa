@@ -45,7 +45,7 @@ export class GameFormComponent implements OnInit {
 
   onSubmit() {
     if (!this.validateGame()) {
-      return false;
+      return;
     }
     const updatedGame = this.deserialiseFormToGame();
     this.update.emit(updatedGame);
@@ -76,8 +76,6 @@ export class GameFormComponent implements OnInit {
   private serialiseGameToForm() {
     this.gameForm = this._FormBuilder.group({
       date: [this.convertDateString(), Validators.required],
-      coreSetCount: [this.game.coreSetCount, Validators.required],
-      deckTypeId: [this.game.deckTypeId, Validators.required],
     });
     // clone players to new array
     this.gamePlayers = this.game.gamePlayers.map((gamePlayer) => Object.assign({}, gamePlayer));
