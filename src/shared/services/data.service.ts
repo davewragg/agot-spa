@@ -79,7 +79,7 @@ export class DataService {
     return this.http.put(this.baseUrl + '/api/games/update',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map((response:Response) => response.json());
+      .map((response:Response) => response.json().payload);
     // TODO update cache? PBR covered?
   }
 
@@ -87,14 +87,14 @@ export class DataService {
     return this.http.post(this.baseUrl + '/api/games/create',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map((response:Response) => response.json());
+      .map((response:Response) => response.json().payload);
     // TODO check for response id
     // TODO insert into cache
   }
 
   deleteGame(gameId:number):Observable<any> {
     return this.http.delete(this.baseUrl + '/api/games/delete/' + gameId)
-      .map((response:Response) => response.json());
+      .map((response:Response) => response.json().payload);
   }
 
   private _getGameIndex():Observable<GameIndex> {

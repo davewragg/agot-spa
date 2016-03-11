@@ -16,6 +16,7 @@
           <div class="card-header">{{ gamePlayer.player.name }}</div>
           <div class="card-block">
             <p>{{ gamePlayer.deck.getTitle() }}</p>
+            <p *ngIf="!gamePlayer.deck.deckId">New deck</p>
           </div>
         </div>
       </div>
