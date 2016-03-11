@@ -1,18 +1,12 @@
 <!--my decks selector-->
 <div [hidden]="showAllDecks">
-  <!--existing deck selector-->
-  <agot-spinner [isRunning]="isLoadingMyDecks"></agot-spinner>
-  <select class="form-control" [disabled]="isLoadingMyDecks">
-    <option *ngFor="#deck of myDecks">{{ deck.getTitle() }}</option>
-  </select>
+  <agot-deck-chooser [decks]="myDecks" [isLoading]="isLoadingMyDecks"
+                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <!--all decks selector-->
 <div [hidden]="!showAllDecks">
-  <!--existing deck selector-->
-  <agot-spinner [isRunning]="isLoadingAllDecks"></agot-spinner>
-  <select class="form-control" [disabled]="isLoadingAllDecks">
-    <option *ngFor="#deck of allDecks">{{ deck.getTitle() }}</option>
-  </select>
+  <agot-deck-chooser [decks]="allDecks" [isLoading]="isLoadingAllDecks"
+                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <div class="form-group btn-group" data-toggle="buttons">
   <label class="btn btn-secondary-outline" [class.active]="!showAllDecks">
