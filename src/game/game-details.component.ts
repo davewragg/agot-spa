@@ -45,6 +45,7 @@ export class GameDetailsComponent implements OnInit {
     //console.log(winner);
 
     console.log('details submit', game);
+    // TODO if creating, redirect to /game/id on submit?
     this.gameService.updateGame(game).subscribe((game:Game) => {
       this.game = game;
       this.formDisabled = false;

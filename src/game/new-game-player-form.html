@@ -9,9 +9,9 @@
   <agot-deck-selector *ngIf="gamePlayer?.playerId"
     (updateDeck)="onUpdateDeck($event)" [playerId]="gamePlayer.playerId"></agot-deck-selector>
 
-  <div class="form-group">
-    <button type="submit" class="btn btn-success" [disabled]="!gamePlayerForm.valid || !gamePlayer.deck">
-      Add Player
-    </button>
-  </div>
+  <!--<div class="form-group">-->
+    <!--<button type="submit" class="btn btn-success" [disabled]="!gamePlayerForm.valid || !gamePlayer.deck">-->
+      <!--Add Player-->
+    <!--</button>-->
+  <!--</div>-->
 </form>

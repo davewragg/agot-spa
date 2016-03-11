@@ -13,10 +13,6 @@ export class Deck {
   // legacy
   secondFactionId:number;
 
-  constructor(deckConfig:any) {
-    Object.assign(this, deckConfig);
-  }
-
   getTitle() {
      //cover legacy decks
     return this.title || this.fallbackTitle;

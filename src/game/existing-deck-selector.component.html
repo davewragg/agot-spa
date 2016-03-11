@@ -1,10 +1,10 @@
 <!--my decks selector-->
-<div [hidden]="showAllDecks">
+<div *ngIf="!showAllDecks">
   <agot-deck-chooser [decks]="myDecks" [isLoading]="isLoadingMyDecks"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <!--all decks selector-->
-<div [hidden]="!showAllDecks">
+<div *ngIf="showAllDecks">
   <agot-deck-chooser [decks]="allDecks" [isLoading]="isLoadingAllDecks"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
