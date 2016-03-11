@@ -21,6 +21,8 @@ export class DataService {
   private baseUrl = '//paulhoughton.org/agot';
 
   private static _serialiseGame(game:Game):string {
+    // TODO if deck has id, strip everything else
+    // TODO remove non-primitives
     return JSON.stringify(game);
   }
 

@@ -11,12 +11,12 @@ import {Deck} from '../shared/models/deck.model';
 import {DeckSelectorComponent} from './deck-selector.component';
 
 @Component({
-  selector: 'agot-game-player-form',
+  selector: 'agot-new-game-player-form',
   moduleId: module.id,
-  templateUrl: './game-player-form.html',
+  templateUrl: './new-game-player-form.html',
   directives: [DeckSelectorComponent],
 })
-export class GamePlayerFormComponent implements OnInit {
+export class NewGamePlayerFormComponent implements OnInit {
   @Output()
   updatePlayer:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 

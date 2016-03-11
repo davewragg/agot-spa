@@ -1,13 +1,13 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {GamePlayer} from '../shared/models/game-player.model';
-import {GamePlayerFormComponent} from './game-player-form.component';
+import {NewGamePlayerFormComponent} from './new-game-player-form.component';
 
 @Component({
   selector: 'agot-game-player-row',
   moduleId: module.id,
   templateUrl: './game-player-row.html',
   styleUrls: ['./game-player-row.css'],
-  directives: [GamePlayerFormComponent]
+  directives: [NewGamePlayerFormComponent]
 })
 export class GamePlayerRowComponent {
   @Input()
