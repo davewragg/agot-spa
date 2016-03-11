@@ -8,16 +8,6 @@ import {FilterCriteria} from '../models/filter-criteria.model';
 @Injectable()
 export class GameService {
 
-  static createNewGame():Game {
-    return <Game>{
-      date: new Date().toISOString(),
-      gamePlayers: [],
-      deckType: null,
-      deckTypeId: 3, // tournament
-      coreSetCount: 3
-    };
-  }
-
   constructor(private dataService:DataService) {
   }
 

@@ -86,15 +86,9 @@ export class GameFormComponent implements OnInit {
     // FIXME form values are strings
     const game = Object.assign({}, this.game, this.gameForm.value);
 
-    // deckTypeId from form is a string
-    game.deckType = this.deckTypes.find((deckType) => deckType.deckTypeId === +game.deckTypeId);
-
     // set updated players back to game
     this.game.gamePlayers = this.gamePlayers;
 
-    // set date format to correct string
-    // set deck from deckId? vice versa?
-    // set other?
     return game;
   };
 

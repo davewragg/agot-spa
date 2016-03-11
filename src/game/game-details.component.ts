@@ -35,7 +35,7 @@ export class GameDetailsComponent implements OnInit {
       this.gameService.getGame(this.gameIdParam)
         .subscribe((game) => this.game = game);
     } else {
-      this.game = GameService.createNewGame();
+      this.game = new Game();
     }
   }
 

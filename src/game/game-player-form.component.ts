@@ -63,7 +63,7 @@ export class GamePlayerFormComponent implements OnInit {
     // TODO handle this properly, clear deck if !players?
     // new gamePlayer? player from Players
     this.gamePlayer.playerId = +playerId;
-    //this.gamePlayer.deck = undefined;
+    this.gamePlayer.deck = null;
     console.log(this.gamePlayer);
   }
 
