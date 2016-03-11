@@ -1,28 +1,14 @@
 <form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form" [class.form-inline]="creating">
   <div *ngIf="creating" class="form-group">
-    <select class="form-control" ngControl="playerId">
+    <select class="form-control" ngControl="playerId" (change)="onPlayerSelectChange(playerId.value)" #playerId>
       <option value="">Player</option>
       <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
     </select>
   </div>
-  <div class="form-group">
-    <select class="form-control" ngControl="factionId">
-      <option value="">Main Faction</option>
-      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <select class="form-control" ngControl="agendaId" [disabled]="secondFactionId.value" #agendaId>
-      <option value="">Agenda</option>
-      <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <select class="form-control" ngControl="secondFactionId" [disabled]="agendaId.value" #secondFactionId>
-      <option value="">Secondary Faction</option>
-      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.factionName }}</option>
-    </select>
-  </div>
+
+  <agot-deck-selector *ngIf="gamePlayer?.playerId"
+    (updateDeck)="onUpdateDeck($event)" [playerId]="gamePlayer.playerId"></agot-deck-selector>
+
   <div class="form-group">
     <button type="submit" class="btn btn-success" [disabled]="!gamePlayerForm.valid">
       {{ creating ? 'Add Player' : 'Update' }}

@@ -46,7 +46,7 @@ export class GamePlayersComponent {
     console.log(newPlayer);
     //TODO proper validation here
     if (!newPlayer || !this.validateNewPlayer(newPlayer)) {
-      return false;
+      return;
     }
     this.gamePlayers.push(newPlayer);
     this.resetForm();

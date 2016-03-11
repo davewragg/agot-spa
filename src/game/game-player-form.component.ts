@@ -7,11 +7,14 @@ import {Player} from '../shared/models/player.model';
 import {Agenda} from '../shared/models/agenda.model';
 import {Faction} from '../shared/models/faction.model';
 import {GamePlayer} from '../shared/models/game-player.model';
+import {Deck} from '../shared/models/deck.model';
+import {DeckSelectorComponent} from './deck-selector.component';
 
 @Component({
   selector: 'agot-game-player-form',
   moduleId: module.id,
-  templateUrl: './game-player-form.html'
+  templateUrl: './game-player-form.html',
+  directives: [DeckSelectorComponent],
 })
 export class GamePlayerFormComponent implements OnInit {
   @Input()
@@ -27,19 +30,20 @@ export class GamePlayerFormComponent implements OnInit {
   factions:Faction[];
 
   // TODO move to service
-  private static validateGamePlayer(newPlayer:GamePlayer):string {
+  private static validateDeck(newDeck:Deck):string {
     // validate agenda XOR secondary faction
-    if (+newPlayer.agendaId && newPlayer.secondFactionId) {
+    if (+newDeck.agendaId && newDeck.secondFactionId) {
       return 'pick one';
     }
     // validate banner is not the same as main faction
-    if (+newPlayer.agendaId === +newPlayer.factionId) {
+    if (+newDeck.agendaId === +newDeck.factionId) {
       return 'invalid banner';
     }
     // validate faction 1 != faction 2
-    if (+newPlayer.factionId === +newPlayer.secondFactionId) {
+    if (+newDeck.factionId === +newDeck.secondFactionId) {
       return 'invalid second faction';
     }
+    return null;
   }
 
   constructor(private _formBuilder:FormBuilder,
@@ -60,15 +64,21 @@ export class GamePlayerFormComponent implements OnInit {
     this.populateForm();
   }
 
+  onPlayerSelectChange(playerId:string) {
+    this.gamePlayer.playerId = +playerId;
+    console.log(this.gamePlayer);
+  }
+
   onSubmit() {
     // FIXME newPlayer properties default to strings
     const updatedPlayer:GamePlayer = this.gamePlayerForm.value;
+    const updatedDeck:Deck = updatedPlayer.deck;
     //TODO proper validation here
-    const error = GamePlayerFormComponent.validateGamePlayer(updatedPlayer);
+    const error = GamePlayerFormComponent.validateDeck(updatedDeck);
     if (error) {
       this._notificationService.warn('Nope', error);
       console.warn(error);
-      return false;
+      return;
     }
 
     // TODO update or create?
@@ -82,29 +92,29 @@ export class GamePlayerFormComponent implements OnInit {
 
   private populateForm() {
     let playerId = this.gamePlayer.playerId || '';
-    let factionId = this.gamePlayer.factionId || '';
-    let agendaId = this.gamePlayer.agendaId || '';
-    let secondFactionId = this.gamePlayer.secondFactionId || '';
+    //let factionId = this.gamePlayer.factionId || '';
+    //let agendaId = this.gamePlayer.agendaId || '';
+    //let secondFactionId = this.gamePlayer.secondFactionId || '';
     this.gamePlayerForm = this._formBuilder.group({
       playerId: [playerId, Validators.required],
-      factionId: [factionId, Validators.required],
-      agendaId: [agendaId],
-      secondFactionId: [secondFactionId],
+      //factionId: [factionId, Validators.required],
+      //agendaId: [agendaId],
+      //secondFactionId: [secondFactionId],
     });
   };
 
   private populatePlayer(gamePlayer:GamePlayer) {
     gamePlayer.player = this.players.find((player) => player.playerId === +gamePlayer.playerId);
-    gamePlayer.faction = this.factions.find((faction) => faction.factionId === +gamePlayer.factionId);
-    if (gamePlayer.agendaId) {
-      gamePlayer.agenda = this.agendas.find((agenda) => agenda.agendaId === +gamePlayer.agendaId);
-    } else {
-      gamePlayer.agenda = null;
-    }
-    if (gamePlayer.secondFactionId) {
-      gamePlayer.secondaryFaction = this.factions.find((faction) => faction.factionId === +gamePlayer.secondFactionId);
-    } else {
-      gamePlayer.secondaryFaction = null;
-    }
+    //gamePlayer.faction = this.factions.find((faction) => faction.factionId === +gamePlayer.factionId);
+    //if (gamePlayer.agendaId) {
+    //  gamePlayer.agenda = this.agendas.find((agenda) => agenda.agendaId === +gamePlayer.agendaId);
+    //} else {
+    //  gamePlayer.agenda = null;
+    //}
+    //if (gamePlayer.secondFactionId) {
+    //  gamePlayer.secondaryFaction = this.factions.find((faction) => faction.factionId === +gamePlayer.secondFactionId);
+    //} else {
+    //  gamePlayer.secondaryFaction = null;
+    //}
   }
 }

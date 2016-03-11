@@ -1,15 +1,14 @@
 import {DeckClass} from './deck-class.model';
 import {DeckType} from './deck-type.model';
 import {Player} from './player.model';
-import {Faction} from './faction.model';
-import {Agenda} from './agenda.model';
 
 export class Deck extends DeckClass {
   deckId:number;
   coreSetCount:number = 3;
   deckType:DeckType;
-  deckTypeId:number;
+  deckTypeId:number = 3;
   title:string;
+  fallbackTitle:string;
   thronesDbId:number;
   thronesDbLink:string;
   thronesDbVersion:string;
@@ -18,21 +17,13 @@ export class Deck extends DeckClass {
   // legacy
   secondFactionId:number;
 
-  constructor(creator:Player, faction:Faction, agenda?:Agenda, title?:string) {
-    super(faction, agenda);
-
-    this.creator = creator;
-    this.creatorId = creator.playerId;
-
-    this.title = title || `New ${super.getTitle()} deck`;
-
-    // TODO deckType
-    //this.deckType = Tournament
-    this.coreSetCount = 3;
+  constructor(deckConfig:any) {
+    super(deckConfig.faction, deckConfig.agenda);
+    Object.assign(this, deckConfig);
   }
 
-  get title() {
-    // cover legacy decks
-    return this.title || `Unnamed ${super.getTitle()} deck`;
+  getTitle() {
+     //cover legacy decks
+    return this.title || this.fallbackTitle;
   }
 }

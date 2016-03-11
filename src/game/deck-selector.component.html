@@ -1,0 +1,21 @@
+<fieldset>
+  <div class="form-group btn-group" data-toggle="buttons">
+    <label class="btn btn-primary-outline" [class.active]="!useNewDeck">
+      <input type="radio" name="useNewDeck" value="false" autocomplete="off"
+             (change)="onDeckSelectChange(false)"> Existing deck
+    </label>
+    <label class="btn btn-primary-outline" [class.active]="useNewDeck">
+      <input type="radio" name="useNewDeck" value="true" autocomplete="off"
+             (change)="onDeckSelectChange(true)"> Import deck
+    </label>
+    <label class="btn btn-primary-outline" [class.active]="useNewDeck">
+      <input type="radio" name="useNewDeck" value="true" autocomplete="off"
+             (change)="onDeckSelectChange(true)"> New deck
+    </label>
+  </div>
+</fieldset>
+
+<!--existing deck selection-->
+<div *ngIf="!useNewDeck">
+  <agot-existing-deck-selector [playerId]="playerId" (selectDeck)="onDeckSelect($event)"></agot-existing-deck-selector>
+</div>

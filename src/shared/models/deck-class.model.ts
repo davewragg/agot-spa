@@ -19,9 +19,15 @@ export class DeckClass {
     };
   }
 
+  static getDeckClassTitle(faction:Faction, agenda?:Agenda):string {
+    return `${faction && faction.factionName}, ${(agenda && agenda.title) || 'No Agenda'}`;
+  };
+
   constructor(faction:Faction, agenda?:Agenda) {
-    this.faction = faction;
-    this.factionId = faction.factionId;
+    if (faction) {
+      this.faction = faction;
+      this.factionId = faction.factionId;
+    }
     if (agenda) {
       this.agenda = agenda;
       this.agendaId = agenda.agendaId;
@@ -32,11 +38,7 @@ export class DeckClass {
     return DeckClass.getDeckClassId(this.factionId, this.agendaId);
   }
 
-  get title():string {
-    return this.getTitle();
+  get name():string {
+    return DeckClass.getDeckClassTitle(this.faction, this.agenda);
   }
-
-  getTitle() {
-    return `${this.faction && this.faction.factionName}, ${(this.agenda && this.agenda.title) || 'No Agenda'}`;
-  };
 }

@@ -1,0 +1,26 @@
+<!--my decks selector-->
+<div [hidden]="showAllDecks">
+  <!--existing deck selector-->
+  <agot-spinner [isRunning]="isLoadingMyDecks"></agot-spinner>
+  <select class="form-control" [disabled]="isLoadingMyDecks">
+    <option *ngFor="#deck of myDecks">{{ deck.getTitle() }}</option>
+  </select>
+</div>
+<!--all decks selector-->
+<div [hidden]="!showAllDecks">
+  <!--existing deck selector-->
+  <agot-spinner [isRunning]="isLoadingAllDecks"></agot-spinner>
+  <select class="form-control" [disabled]="isLoadingAllDecks">
+    <option *ngFor="#deck of allDecks">{{ deck.getTitle() }}</option>
+  </select>
+</div>
+<div class="form-group btn-group" data-toggle="buttons">
+  <label class="btn btn-secondary-outline" [class.active]="!showAllDecks">
+    <input type="radio" name="showAllDecks" value="false" autocomplete="off"
+           (change)="setShowAllDecks(false)"> Player's decks ({{ myDecks?.length }})
+  </label>
+  <label class="btn btn-secondary-outline" [class.active]="showAllDecks">
+    <input type="radio" name="showAllDecks" value="true" autocomplete="off"
+           (change)="setShowAllDecks(true)"> Everyone's decks ({{ allDecks?.length }})
+  </label>
+</div>
