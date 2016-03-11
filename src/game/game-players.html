@@ -8,10 +8,16 @@
 
     <div class="card-deck-wrapper">
       <div class="card-deck">
-        <agot-game-player-row *ngFor="#gamePlayer of gamePlayers" [gamePlayer]="gamePlayer" class="card"
-                              [readOnly]="readOnly"
-                              (updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">
-        </agot-game-player-row>
+        <!--<agot-game-player-row *ngFor="#gamePlayer of gamePlayers" [gamePlayer]="gamePlayer" class="card"-->
+                              <!--[readOnly]="readOnly"-->
+                              <!--(updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">-->
+        <!--</agot-game-player-row>-->
+        <div class="card" *ngFor="#gamePlayer of gamePlayers">
+          <div class="card-header">{{ gamePlayer.player.name }}</div>
+          <div class="card-block">
+            <p>{{ gamePlayer.deck.getTitle() }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

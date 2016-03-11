@@ -25,7 +25,8 @@ export class DeckSelectorComponent {
     this.useNewDeck = useNewDeck;
   }
 
-  onDeckSelect(event:any) {
-    console.log(event);
+  onDeckSelect(deck:Deck) {
+    console.log(deck);
+    this.updateDeck.emit(deck);
   }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
+import {Component, Output, EventEmitter, OnInit} from 'angular2/core';
 import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
 import {NotificationService} from '../shared/services/notification.service';
@@ -17,34 +17,33 @@ import {DeckSelectorComponent} from './deck-selector.component';
   directives: [DeckSelectorComponent],
 })
 export class GamePlayerFormComponent implements OnInit {
-  @Input()
-  gamePlayer:GamePlayer;
   @Output()
   updatePlayer:EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
+  gamePlayer:GamePlayer = <GamePlayer>{};
+
   gamePlayerForm:ControlGroup;
-  creating:boolean = false;
 
   players:Player[];
   agendas:Agenda[];
   factions:Faction[];
 
-  // TODO move to service
-  private static validateDeck(newDeck:Deck):string {
-    // validate agenda XOR secondary faction
-    if (+newDeck.agendaId && newDeck.secondFactionId) {
-      return 'pick one';
-    }
-    // validate banner is not the same as main faction
-    if (+newDeck.agendaId === +newDeck.factionId) {
-      return 'invalid banner';
-    }
-    // validate faction 1 != faction 2
-    if (+newDeck.factionId === +newDeck.secondFactionId) {
-      return 'invalid second faction';
-    }
-    return null;
-  }
+  // TODO move to deck component/service
+  //private static validateDeck(newDeck:Deck):string {
+  //  // validate agenda XOR secondary faction
+  //  if (+newDeck.agendaId && newDeck.secondFactionId) {
+  //    return 'pick one';
+  //  }
+  //  // validate banner is not the same as main faction
+  //  if (+newDeck.agendaId === +newDeck.factionId) {
+  //    return 'invalid banner';
+  //  }
+  //  // validate faction 1 != faction 2
+  //  if (+newDeck.factionId === +newDeck.secondFactionId) {
+  //    return 'invalid second faction';
+  //  }
+  //  return null;
+  //}
 
   constructor(private _formBuilder:FormBuilder,
               private _referenceDataService:ReferenceDataService,
@@ -57,29 +56,32 @@ export class GamePlayerFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.gamePlayer) {
-      this.creating = true;
-      this.gamePlayer = <GamePlayer>{};
-    }
     this.populateForm();
   }
 
   onPlayerSelectChange(playerId:string) {
+    // TODO handle this properly, clear deck if !players?
+    // new gamePlayer? player from Players
     this.gamePlayer.playerId = +playerId;
+    //this.gamePlayer.deck = undefined;
     console.log(this.gamePlayer);
+  }
+
+  onUpdateDeck(deck:Deck) {
+    console.log(deck);
+    this.gamePlayer.deck = deck;
   }
 
   onSubmit() {
     // FIXME newPlayer properties default to strings
     const updatedPlayer:GamePlayer = this.gamePlayerForm.value;
-    const updatedDeck:Deck = updatedPlayer.deck;
     //TODO proper validation here
-    const error = GamePlayerFormComponent.validateDeck(updatedDeck);
-    if (error) {
-      this._notificationService.warn('Nope', error);
-      console.warn(error);
-      return;
-    }
+    //const error = GamePlayerFormComponent.validateDeck(updatedPlayer.deck);
+    //if (error) {
+    //  this._notificationService.warn('Nope', error);
+    //  console.warn(error);
+    //  return;
+    //}
 
     // TODO update or create?
     Object.assign(this.gamePlayer, updatedPlayer);
@@ -105,16 +107,5 @@ export class GamePlayerFormComponent implements OnInit {
 
   private populatePlayer(gamePlayer:GamePlayer) {
     gamePlayer.player = this.players.find((player) => player.playerId === +gamePlayer.playerId);
-    //gamePlayer.faction = this.factions.find((faction) => faction.factionId === +gamePlayer.factionId);
-    //if (gamePlayer.agendaId) {
-    //  gamePlayer.agenda = this.agendas.find((agenda) => agenda.agendaId === +gamePlayer.agendaId);
-    //} else {
-    //  gamePlayer.agenda = null;
-    //}
-    //if (gamePlayer.secondFactionId) {
-    //  gamePlayer.secondaryFaction = this.factions.find((faction) => faction.factionId === +gamePlayer.secondFactionId);
-    //} else {
-    //  gamePlayer.secondaryFaction = null;
-    //}
   }
 }

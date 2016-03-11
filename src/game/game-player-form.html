@@ -1,5 +1,5 @@
-<form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form" [class.form-inline]="creating">
-  <div *ngIf="creating" class="form-group">
+<form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form form-inline">
+  <div class="form-group">
     <select class="form-control" ngControl="playerId" (change)="onPlayerSelectChange(playerId.value)" #playerId>
       <option value="">Player</option>
       <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
@@ -10,8 +10,8 @@
     (updateDeck)="onUpdateDeck($event)" [playerId]="gamePlayer.playerId"></agot-deck-selector>
 
   <div class="form-group">
-    <button type="submit" class="btn btn-success" [disabled]="!gamePlayerForm.valid">
-      {{ creating ? 'Add Player' : 'Update' }}
+    <button type="submit" class="btn btn-success" [disabled]="!gamePlayerForm.valid || !gamePlayer.deck">
+      Add Player
     </button>
   </div>
 </form>

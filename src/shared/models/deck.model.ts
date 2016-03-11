@@ -1,24 +1,19 @@
-import {DeckClass} from './deck-class.model';
-import {DeckType} from './deck-type.model';
-import {Player} from './player.model';
-
-export class Deck extends DeckClass {
+export class Deck {
   deckId:number;
+  factionId:number;
+  agendaId:number;
   coreSetCount:number = 3;
-  deckType:DeckType;
   deckTypeId:number = 3;
   title:string;
   fallbackTitle:string;
   thronesDbId:number;
   thronesDbLink:string;
   thronesDbVersion:string;
-  creator:Player;
   creatorId:number;
   // legacy
   secondFactionId:number;
 
   constructor(deckConfig:any) {
-    super(deckConfig.faction, deckConfig.agenda);
     Object.assign(this, deckConfig);
   }
 
