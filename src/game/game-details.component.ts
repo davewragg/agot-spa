@@ -41,12 +41,15 @@ export class GameDetailsComponent implements OnInit {
 
   onSubmit(game:Game) {
     this.formDisabled = true;
-    //const winner = game.gamePlayers.find((player) => player.isWinner).player.name;
-    //console.log(winner);
+    const creating = !game.gameId;
 
     console.log('details submit', game);
     // TODO if creating, redirect to /game/id on submit?
     this.gameService.updateGame(game).subscribe((game:Game) => {
+      if (creating) {
+        this.router.navigate(['/GameDetails', {id: game.gameId}]);
+        return;
+      }
       this.game = game;
       this.formDisabled = false;
       this.editing = false;

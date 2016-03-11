@@ -18,6 +18,9 @@
             <p>{{ gamePlayer.deck.getTitle() }}</p>
             <p *ngIf="!gamePlayer.deck.deckId">New deck</p>
           </div>
+          <div class="card-footer" [class.alert-warning]="gamePlayer.isWinner">
+            <p>{{ gamePlayer.isWinner ? 'Big Winner' : 'Wretched loser' }}</p>
+          </div>
         </div>
       </div>
     </div>

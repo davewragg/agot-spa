@@ -16,7 +16,7 @@ export class DeckSelectorComponent {
   @Output()
   updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
 
-  existingDeck:Deck = new Deck();
+  existingDeck:Deck;
 
   deckSelection:DeckSelectionType = DeckSelectionType.EXISTING;
   deckSelectionType = DeckSelectionType;
@@ -38,6 +38,8 @@ export class DeckSelectorComponent {
 
   onNewDeckSelect(deck:Deck) {
     this.existingDeck = null;
+    // TODO relocate somewhere more appropriate?
+    deck.creatorId = this.playerId;
     this.updateDeck.emit(deck);
   }
 }
