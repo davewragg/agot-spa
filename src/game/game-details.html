@@ -12,4 +12,4 @@
 </div>
 
 <h3 *ngIf="!isLoading && !game" class="alert alert-danger">Game not found</h3>
-<h3 *ngIf="loadError" class="alert alert-danger">{{ loadError }}</h3>
+<h3 *ngIf="loadError" class="alert alert-danger">Diaster {{ loadError | json }}</h3>
