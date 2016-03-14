@@ -52,6 +52,7 @@ export class DeckEditFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    // TODO can't edit imported/saved decks when creating game
     if (this.creating || this.deck.deckId) {
       this.deck = new Deck();
     }
@@ -63,7 +64,7 @@ export class DeckEditFormComponent implements OnInit {
   }
 
   onSubmit() {
-    // FIXME new properties default to strings
+    // form properties default to strings
     const updatedDeck:Deck = this.deckForm.value;
     //TODO proper validation here
     const error = DeckEditFormComponent.validateDeck(updatedDeck);
@@ -73,13 +74,10 @@ export class DeckEditFormComponent implements OnInit {
       return;
     }
 
-    // TODO update or create?
     Object.assign(this.deck, updatedDeck);
     this.populateDeck(this.deck);
     console.log(this.deck);
     this.updateDeck.emit(this.deck);
-    // reset form
-    //this.deckForm.reset
   }
 
   private populateForm() {
@@ -111,7 +109,7 @@ export class DeckEditFormComponent implements OnInit {
   }
 
   private populateDeck(gamePlayer:Deck) {
-    // FIXME new properties default to strings
+    // form properties default to strings
     gamePlayer.faction = this._referenceDataService.getFaction(+gamePlayer.factionId);
     if (gamePlayer.agendaId) {
       gamePlayer.agenda = this._referenceDataService.getAgenda(+gamePlayer.agendaId);

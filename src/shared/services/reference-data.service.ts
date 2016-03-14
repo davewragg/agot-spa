@@ -89,7 +89,7 @@ export class ReferenceDataService {
         title: 'Banner of the Rose',
         thronesDbCode: '01205'
       }, {
-        agendaId: 9, title: 'Fealty', thronesDbCode: '01207'
+        agendaId: 9, title: 'Fealty', thronesDbCode: '01027'
       }, {
         agendaId: 10,
         title: 'The Lord of the Crossing',
@@ -99,11 +99,19 @@ export class ReferenceDataService {
   }
 
   getFaction(factionId:number):Faction {
-    return this.getFactions().find((faction) => faction.factionId === factionId);
+    return this.getFactionBy('factionId', factionId);
+  }
+
+  getFactionBy(field:string, value:number | string):Faction {
+    return this.getFactions().find((faction) => faction[field] === value);
   }
 
   getAgenda(agendaId:number):Agenda {
-    return this.getAgendas().find((agenda) => agenda.agendaId === agendaId);
+    return this.getAgendaBy('agendaId', agendaId);
+  }
+
+  getAgendaBy(field:string, value:number | string):Agenda {
+    return this.getAgendas().find((agenda) => agenda[field] === value);
   }
 
   getDeckClass(deckClassId:number):DeckClass {

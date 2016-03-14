@@ -29,13 +29,7 @@
     </div>
   </div>
   <div *ngSwitchWhen="deckSelectionType.IMPORT">
-    Import from ThronesDB coming soon
-    <div class="form-group">
-      <!--TODO validity-->
-      <button type="submit" class="btn btn-success" [disabled]="true">
-        {{ creating ? 'Add Player' : 'Update' }}
-      </button>
-    </div>
+    <agot-deck-import-form (updateDeck)="onImportedDeckSelect($event)"></agot-deck-import-form>
   </div>
   <div *ngSwitchWhen="deckSelectionType.NEW">
     <agot-deck-edit-form (updateDeck)="onNewDeckSelect($event)"

@@ -21,6 +21,12 @@ export class DeckService {
     });
   }
 
+  getDeckBy(field:string, value:string | number):Observable<Deck> {
+    return this.getDecks().map((allDecks:Deck[]) => {
+      return allDecks.find((deck:Deck) => deck[field] === value);
+    });
+  }
+
   getDecks():Observable<Deck[]> {
     if (!this.data) {
       this.data = this._getDecks();
