@@ -1,16 +1,4 @@
-<!--my decks selector-->
-<div *ngIf="!showAllDecks">
-  <agot-deck-chooser [decks]="myDecks" [isLoading]="isLoadingMyDecks"
-                     [existingDeck]="existingDeck"
-                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
-</div>
-<!--all decks selector-->
-<div *ngIf="showAllDecks">
-  <agot-deck-chooser [decks]="allDecks" [isLoading]="isLoadingAllDecks"
-                     [existingDeck]="existingDeck"
-                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
-</div>
-<div class="form-group btn-group" data-toggle="buttons">
+<div class="btn-group" data-toggle="buttons">
   <label class="btn btn-secondary-outline" [class.active]="!showAllDecks">
     <input type="radio" name="showAllDecks" value="false" autocomplete="off"
            (change)="setShowAllDecks(false)"> Player's decks ({{ myDecks?.length }})
@@ -19,4 +7,16 @@
     <input type="radio" name="showAllDecks" value="true" autocomplete="off"
            (change)="setShowAllDecks(true)"> Everyone's decks ({{ allDecks?.length }})
   </label>
+</div>
+<!--my decks selector-->
+<div *ngIf="!showAllDecks" class="form-group">
+  <agot-deck-chooser [decks]="myDecks" [isLoading]="isLoadingMyDecks"
+                     [existingDeck]="existingDeck"
+                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
+</div>
+<!--all decks selector-->
+<div *ngIf="showAllDecks" class="form-group">
+  <agot-deck-chooser [decks]="allDecks" [isLoading]="isLoadingAllDecks"
+                     [existingDeck]="existingDeck"
+                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>

@@ -3,12 +3,14 @@ import {Deck} from '../shared/models/deck.model';
 import {DeckService} from '../shared/services/deck.service';
 import {ExistingDeckSelectorComponent} from './existing-deck-selector.component';
 import {DeckEditFormComponent} from '../decks/deck-edit-form.component';
+import {DeckImportFormComponent} from '../decks/deck-import-form.component';
+import {NotificationService} from '../shared/services/notification.service';
 
 @Component({
   selector: 'agot-deck-selector',
   moduleId: module.id,
   templateUrl: './deck-selector.component.html',
-  directives: [ExistingDeckSelectorComponent, DeckEditFormComponent]
+  directives: [ExistingDeckSelectorComponent, DeckEditFormComponent, DeckImportFormComponent]
 })
 export class DeckSelectorComponent implements OnInit {
   @Input()
@@ -23,7 +25,7 @@ export class DeckSelectorComponent implements OnInit {
   deckSelection:DeckSelectionType;
   deckSelectionType = DeckSelectionType;
 
-  constructor(private deckService:DeckService) {
+  constructor(private deckService:DeckService, private notificationService:NotificationService) {
   }
 
   ngOnInit() {
@@ -41,6 +43,20 @@ export class DeckSelectorComponent implements OnInit {
 
   onExistingDeckSelect() {
     this.updateDeck.emit(this.existingDeck);
+  }
+
+  onImportedDeckSelect(deck:Deck) {
+    this.deckService.getDeckBy('thronesDbId', deck.thronesDbId).subscribe(
+      (existingDeck:Deck) => {
+        if (existingDeck) {
+          this.notificationService.warn('Already imported', 'Deck has already been imported, selecting existing');
+          console.warn('Deck has already been imported', deck, existingDeck);
+          this.existingDeck = existingDeck;
+          this.onExistingDeckSelect();
+        } else {
+          this.onNewDeckSelect(deck);
+        }
+      });
   }
 
   onNewDeckSelect(deck:Deck) {

@@ -43,24 +43,27 @@ export class GameDetailsComponent implements OnInit {
 
   onSubmit(game:Game) {
     this.formDisabled = true;
+    this.isLoading = true;
     const creating = !game.gameId;
 
     console.log('details submit', game);
     // TODO if creating, redirect to /game/id on submit?
     this.gameService.updateGame(game).subscribe((game:Game) => {
-      if (creating) {
-        // TODO skip reload
-        this.router.navigate(['/GameDetails', {id: game.gameId}]);
-        return;
-      }
-      this.game = game;
-      this.formDisabled = false;
-      this.editing = false;
-    }, (error) => {
-      this.formDisabled = false;
-      console.error(error);
-      this.notificationService.error('Whoops', error.message || error._body || error);
-    });
+        if (creating) {
+          // TODO skip reload
+          this.router.navigate(['/GameDetails', {id: game.gameId}]);
+          return;
+        }
+        this.game = game;
+        this.formDisabled = false;
+        this.editing = false;
+      }, (error) => {
+        this.formDisabled = false;
+        console.error(error);
+        this.notificationService.error('Whoops', error.message || error._body || error);
+        this.isLoading = false;
+      }, () => this.isLoading = false
+    );
   }
 
   onCancel() {

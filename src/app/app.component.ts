@@ -19,6 +19,7 @@ import {AllRankingsComponent} from '../home/components/all-rankings.component';
 import {PlayersComponent} from '../players/players.component';
 import {PlayerDetailsComponent} from '../players/player-details.component';
 import {DeckService} from '../shared/services/deck.service';
+import {ThronesDbService} from '../shared/services/thrones-db.service';
 
 @Component({
   selector: 'agot-app',
@@ -29,7 +30,8 @@ import {DeckService} from '../shared/services/deck.service';
     NotificationService,
     DataService,
     ReferenceDataService,
-    DeckService],
+    DeckService,
+    ThronesDbService],
   moduleId: module.id,
   templateUrl: './app.html',
   encapsulation: ViewEncapsulation.None,
