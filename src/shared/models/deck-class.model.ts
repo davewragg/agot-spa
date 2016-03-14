@@ -2,17 +2,19 @@ import {Faction} from './faction.model';
 import {Agenda} from './agenda.model';
 
 export class DeckClass {
+  private static ID_SEPARATOR = ':';
+
   factionId:number;
   faction:Faction;
   agendaId:number;
   agenda:Agenda;
 
-  static getDeckClassId(factionId:number, agendaId?:number):number {
-    return +`${factionId}.${agendaId || '0'}`;
+  static getDeckClassId(factionId:number, agendaId?:number):string {
+    return `${factionId}${DeckClass.ID_SEPARATOR}${agendaId || '0'}`;
   };
 
   static getFactionAndAgendaId(deckClassId:number) {
-    const ids = ('' + deckClassId).split('.');
+    const ids = ('' + deckClassId).split(DeckClass.ID_SEPARATOR);
     return {
       factionId: ids.length > 0 ? +ids[0] : 0,
       agendaId: ids.length > 1 ? +ids[1] : 0
@@ -20,7 +22,7 @@ export class DeckClass {
   }
 
   static getDeckClassTitle(faction:Faction, agenda?:Agenda):string {
-    return `${faction && faction.name}, ${(agenda && agenda.title) || 'No Agenda'}`;
+    return `${faction && faction.name} / ${(agenda && agenda.title) || 'No Agenda'}`;
   };
 
   constructor(faction:Faction, agenda?:Agenda) {
@@ -34,7 +36,7 @@ export class DeckClass {
     }
   }
 
-  get id():number {
+  get id():string {
     return DeckClass.getDeckClassId(this.factionId, this.agendaId);
   }
 

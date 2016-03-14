@@ -11,9 +11,11 @@
   <ul class="list-group list-group-flush" *ngIf="!editing">
     <li class="list-group-item font-weight-bold">
       {{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}<span *ngIf="!gamePlayer.deck.deckId">*</span>
+      <!--TODO fancy icon?-->
+      <a *ngIf="gamePlayer.deck.thronesDbLink" [href]="gamePlayer.deck.thronesDbLink" target="_blank">TDB</a>
     </li>
     <li class="list-group-item">
-      <span font-weight-bold>{{ gamePlayer.deck.faction?.name }}</span> /
+      <span>{{ gamePlayer.deck.faction?.name }}</span> /
       {{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondaryFaction?.name || 'No Agenda' }}
     </li>
   </ul>

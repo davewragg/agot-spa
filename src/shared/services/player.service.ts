@@ -104,7 +104,7 @@ export class PlayerService {
       updateStatsFor(player.deck.secondFactionId, stats.factions, result);
     }
 
-    function updateStatsFor(keyId:number, statsMap:Map<number, Stats>, result:Result) {
+    function updateStatsFor(keyId:number | string, statsMap:Map<number | string, Stats>, result:Result) {
       if (keyId) {
         const keyStats = statsMap.get(keyId) || new Stats();
         addResultFor(keyStats, result);
@@ -177,4 +177,3 @@ export class PlayerService {
     return allValuesCopy;
   }
 }
-
