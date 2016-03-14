@@ -1,23 +1,21 @@
-<fieldset>
-  <div class="form-group btn-group" data-toggle="buttons">
-    <label class="btn btn-primary-outline" [class.active]="deckSelection === deckSelectionType.EXISTING">
-      <input type="radio" name="useNewDeck" value="deckSelectionType.EXISTING" autocomplete="off"
-             (change)="onDeckSelectTypeChange(deckSelectionType.EXISTING)"> Existing
-    </label>
-    <label class="btn btn-primary-outline" [class.active]="deckSelection === deckSelectionType.IMPORT">
-      <input type="radio" name="useNewDeck" value="deckSelectionType.IMPORT" autocomplete="off"
-             (change)="onDeckSelectTypeChange(deckSelectionType.IMPORT)"> Import
-    </label>
-    <label class="btn btn-primary-outline" [class.active]="deckSelection === deckSelectionType.NEW">
-      <input type="radio" name="useNewDeck" value="deckSelectionType.NEW" autocomplete="off"
-             (change)="onDeckSelectTypeChange(deckSelectionType.NEW)"> New
-    </label>
-  </div>
-</fieldset>
+<div class="form-group btn-group" data-toggle="buttons">
+  <label class="btn btn-primary-outline" [class.active]="deckSelection === deckSelectionType.EXISTING">
+    <input type="radio" name="useNewDeck" value="deckSelectionType.EXISTING" autocomplete="off"
+           (change)="onDeckSelectTypeChange(deckSelectionType.EXISTING)"> Existing
+  </label>
+  <label class="btn btn-primary-outline" [class.active]="deckSelection === deckSelectionType.IMPORT">
+    <input type="radio" name="useNewDeck" value="deckSelectionType.IMPORT" autocomplete="off"
+           (change)="onDeckSelectTypeChange(deckSelectionType.IMPORT)"> Import
+  </label>
+  <label class="btn btn-primary-outline" [class.active]="deckSelection === deckSelectionType.NEW">
+    <input type="radio" name="useNewDeck" value="deckSelectionType.NEW" autocomplete="off"
+           (change)="onDeckSelectTypeChange(deckSelectionType.NEW)"> New
+  </label>
+</div>
 
-<div [ngSwitch]="deckSelection">
+<div [ngSwitch]="deckSelection" class="row">
   <!--existing deck selection-->
-  <div *ngSwitchWhen="deckSelectionType.EXISTING">
+  <div *ngSwitchWhen="deckSelectionType.EXISTING" class="col-md-12">
     <agot-existing-deck-selector [playerId]="playerId" [existingDeck]="existingDeck"
                                  (selectDeck)="onExistingDeckUpdate($event)"></agot-existing-deck-selector>
 
@@ -27,10 +25,10 @@
       </button>
     </div>
   </div>
-  <div *ngSwitchWhen="deckSelectionType.IMPORT">
+  <div *ngSwitchWhen="deckSelectionType.IMPORT" class="col-md-12">
     <agot-deck-import-form (updateDeck)="onImportedDeckSelect($event)" [creating]="creating"></agot-deck-import-form>
   </div>
-  <div *ngSwitchWhen="deckSelectionType.NEW">
+  <div *ngSwitchWhen="deckSelectionType.NEW" class="col-md-12">
     <agot-deck-edit-form (updateDeck)="onNewDeckSelect($event)"
                          [deck]="existingDeck" [creating]="creating"></agot-deck-edit-form>
   </div>
