@@ -1,27 +1,31 @@
 <div [class.table-active]="editing"
-     class="text-xs-center faction-body faction-{{ gamePlayer.secondFactionId }}"
-     [style.backgroundImage]="gamePlayer.agendaId && ('url(/assets/img/agenda' + gamePlayer.agendaId + '.png)')">
+     class="text-xs-center faction-body faction-{{ gamePlayer.deck?.secondFactionId }}"
+     [style.backgroundImage]="gamePlayer.deck?.agendaId && ('url(/assets/img/agenda' + gamePlayer.deck?.agendaId + '.png)')">
   <div class="card-header">
-    <img class="card-image-top" src="/assets/img/icon{{ gamePlayer.faction.factionId }}.png"
-         alt="{{ gamePlayer.faction.factionName }}">
+    <img class="card-image-top" src="/assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
+         alt="{{ gamePlayer.faction?.factionName }}">
+    <!--TODO faction name-->
   </div>
+  <!--TODO game player name-->
   <div class="card-block player-header">
-    <h4 class="card-title player-title">{{ gamePlayer.player.name }}</h4>
+    <h4 class="card-title player-title">{{ gamePlayer.player?.name || gamePlayer.playerId }}</h4>
   </div>
   <ul class="list-group list-group-flush" *ngIf="!editing">
-    <li class="list-group-item font-weight-bold">{{ gamePlayer.faction.factionName }}</li>
-    <li class="list-group-item">{{ gamePlayer.agenda?.title || gamePlayer.secondaryFaction?.factionName || 'No Agenda'
+    <li class="list-group-item font-weight-bold">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}</li>
+    <li class="list-group-item font-weight-bold">{{ gamePlayer.deck.faction?.factionName }}</li>
+    <li class="list-group-item">{{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondaryFaction?.factionName || 'No Agenda'
       }}
     </li>
+    <li *ngIf="!gamePlayer.deck.deckId">New deck</li>
   </ul>
   <div class="card-block edit-buttons" *ngIf="editing">
-    <agot-game-player-form [gamePlayer]="gamePlayer"
-                           (updatePlayer)="onPlayerUpdate(gamePlayer)"></agot-game-player-form>
+    change deck
+    <!--TODO deck selector-->
   </div>
   <div class="card-block edit-buttons" *ngIf="!readOnly">
-    <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Edit' }}
+    <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Change deck' }}
     </button>
-    <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove</button>
+    <button type="button" class="btn btn-danger" (click)="onRemove(gamePlayer)">Remove player</button>
   </div>
   <div class="card-footer alert-warning font-weight-bold" *ngIf="gamePlayer.isWinner">
     Winner
