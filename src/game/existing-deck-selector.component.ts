@@ -53,7 +53,7 @@ export class ExistingDeckSelectorComponent implements OnInit, OnChanges {
     if (!playerId) {
       return;
     }
-    this.deckService.getDecksFor(playerId)
+    this.deckService.getDecksFor(+playerId)
       .subscribe(
         (decks:Deck[]) => {
           this.myDecks = decks;
