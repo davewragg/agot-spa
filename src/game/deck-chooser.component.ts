@@ -9,7 +9,7 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
     <agot-spinner [isRunning]="isLoading"></agot-spinner>
     <select class="form-control icon-menu" [disabled]="isLoading"
       (change)="onDeckChange(deckSelect.value)" #deckSelect>
-      <option value="">--Choose deck--</option>
+      <option value="">--{{ isLoading ? 'Loading decks' : 'Choose deck' }}--</option>
       <option *ngFor="#deck of decks; #i = index"
        [style.backgroundImage]="deck.factionId && ('url(/assets/img/agenda' + deck.factionId + '.png)')"
       value="{{ i }}">{{ deck.getTitle() }}</option>

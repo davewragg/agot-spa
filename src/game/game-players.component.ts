@@ -48,6 +48,9 @@ export class GamePlayersComponent {
     if (!newPlayer || !this.validateNewPlayer(newPlayer)) {
       return;
     }
+    if (this.gamePlayers.length < 1) {
+      newPlayer.isWinner = true;
+    }
     this.gamePlayers.push(newPlayer);
     this.resetForm();
     this.playerChange.emit(newPlayer);

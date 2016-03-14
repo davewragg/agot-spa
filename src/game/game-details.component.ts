@@ -47,6 +47,7 @@ export class GameDetailsComponent implements OnInit {
     // TODO if creating, redirect to /game/id on submit?
     this.gameService.updateGame(game).subscribe((game:Game) => {
       if (creating) {
+        // TODO skip reload
         this.router.navigate(['/GameDetails', {id: game.gameId}]);
         return;
       }
