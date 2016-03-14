@@ -1,16 +1,19 @@
-import {Component, Output, EventEmitter, OnInit} from 'angular2/core';
+import {Component, Output, EventEmitter, Input, OnInit} from 'angular2/core';
 import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {Deck} from '../shared/models/deck.model';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 import {ThronesDbService} from '../shared/services/thrones-db.service';
+import {DeckClassBlockComponent} from '../shared/components/deck-class-block.component';
 
 @Component({
   selector: 'agot-deck-import-form',
   moduleId: module.id,
   templateUrl: './deck-import-form.component.html',
-  directives: [SpinnerComponent]
+  directives: [SpinnerComponent, DeckClassBlockComponent]
 })
 export class DeckImportFormComponent implements OnInit {
+  @Input()
+  creating:boolean;
   @Output()
   updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
 

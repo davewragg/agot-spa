@@ -22,14 +22,13 @@
                                  (selectDeck)="onExistingDeckUpdate($event)"></agot-existing-deck-selector>
 
     <div class="form-group">
-      <!--TODO validity-->
       <button type="button" (click)="onExistingDeckSelect()" class="btn btn-success" [disabled]="!existingDeck">
         {{ creating ? 'Add Player' : 'Update' }}
       </button>
     </div>
   </div>
   <div *ngSwitchWhen="deckSelectionType.IMPORT">
-    <agot-deck-import-form (updateDeck)="onImportedDeckSelect($event)"></agot-deck-import-form>
+    <agot-deck-import-form (updateDeck)="onImportedDeckSelect($event)" [creating]="creating"></agot-deck-import-form>
   </div>
   <div *ngSwitchWhen="deckSelectionType.NEW">
     <agot-deck-edit-form (updateDeck)="onNewDeckSelect($event)"

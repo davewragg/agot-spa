@@ -12,7 +12,7 @@ import {Stats} from '../models/stats.model';
       <img class="card-img" src="/assets/img/icon{{ deckClass.faction.factionId }}.png"
          alt="{{ deckClass.faction.name }}">
       <div class="card-footer text-muted small">
-        {{ deckClass.title }}
+        {{ deckClass.title || deckClass.name }}
         <p *ngIf="stats">
           P{{ stats.played }}
           W{{ stats.won }}

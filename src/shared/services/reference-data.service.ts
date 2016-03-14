@@ -51,7 +51,7 @@ export class ReferenceDataService {
       }, {
         factionId: 7,
         name: 'Nights Watch',
-        thronesDbCode: 'nightswatch',
+        thronesDbCode: 'thenightswatch',
         thronesDbId: 6
       }, {
         factionId: 8,
