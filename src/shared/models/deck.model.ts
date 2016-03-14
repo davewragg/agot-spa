@@ -12,9 +12,4 @@ export class Deck {
   creatorId:number;
   // legacy
   secondFactionId:number;
-
-  getTitle() {
-     //cover legacy decks
-    return this.title || this.fallbackTitle;
-  }
 }

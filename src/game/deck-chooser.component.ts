@@ -12,7 +12,7 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
       <option value="">--{{ isLoading ? 'Loading decks' : 'Choose deck' }}--</option>
       <option *ngFor="#deck of decks; #i = index"
        [style.backgroundImage]="deck.factionId && ('url(/assets/img/agenda' + deck.factionId + '.png)')"
-      value="{{ i }}">{{ deck.getTitle() }}</option>
+      value="{{ i }}">{{ deck.title || deck.fallbackTitle }}</option>
     </select>
   `,
   directives: [<any>SpinnerComponent],

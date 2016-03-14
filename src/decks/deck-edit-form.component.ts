@@ -80,7 +80,7 @@ export class DeckEditFormComponent implements OnInit {
     let factionId = this.deck.factionId || '';
     let agendaId = this.deck.agendaId || '';
     let secondFactionId = this.deck.secondFactionId || '';
-    let title = this.deck.getTitle() || '';
+    let title = this.deck.title || this.deck.fallbackTitle || '';
     let thronesDbLink = this.deck.thronesDbLink || '';
     this.deckForm = this._formBuilder.group({
       factionId: [factionId, Validators.required],
