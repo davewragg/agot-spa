@@ -15,7 +15,9 @@ import {Control} from 'angular2/common';
 })
 export class DeckEditFormComponent implements OnInit {
   @Input()
-  deck:Deck = new Deck();
+  creating:boolean;
+  @Input()
+  deck:Deck;
   @Output()
   updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
 
@@ -50,6 +52,9 @@ export class DeckEditFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.creating || this.deck.deckId) {
+      this.deck = new Deck();
+    }
     this.populateForm();
   }
 

@@ -12,6 +12,8 @@ import {DeckEditFormComponent} from '../decks/deck-edit-form.component';
 })
 export class DeckSelectorComponent implements OnInit {
   @Input()
+  creating:boolean;
+  @Input()
   playerId:number;
   @Input()
   existingDeck:Deck;

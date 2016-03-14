@@ -1,11 +1,13 @@
 <!--my decks selector-->
 <div *ngIf="!showAllDecks">
   <agot-deck-chooser [decks]="myDecks" [isLoading]="isLoadingMyDecks"
+                     [existingDeck]="existingDeck"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <!--all decks selector-->
 <div *ngIf="showAllDecks">
   <agot-deck-chooser [decks]="allDecks" [isLoading]="isLoadingAllDecks"
+                     [existingDeck]="existingDeck"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <div class="form-group btn-group" data-toggle="buttons">

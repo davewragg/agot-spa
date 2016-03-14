@@ -12,6 +12,8 @@ import {DeckChooserComponent} from './deck-chooser.component';
 export class ExistingDeckSelectorComponent implements OnInit, OnChanges {
   @Input()
   playerId:number;
+  @Input()
+  existingDeck:Deck;
   @Output()
   selectDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
 

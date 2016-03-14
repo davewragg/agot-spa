@@ -1,20 +1,12 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
+import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {Deck} from '../shared/models/deck.model';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-deck-chooser',
   moduleId: module.id,
-  template: `
-    <agot-spinner [isRunning]="isLoading"></agot-spinner>
-    <select class="form-control icon-menu" [disabled]="isLoading"
-      (change)="onDeckChange(deckSelect.value)" #deckSelect>
-      <option value="">--{{ isLoading ? 'Loading decks' : 'Choose deck' }}--</option>
-      <option *ngFor="#deck of decks; #i = index"
-       [style.backgroundImage]="deck.factionId && ('url(/assets/img/agenda' + deck.factionId + '.png)')"
-      value="{{ i }}">{{ deck.title || deck.fallbackTitle }}</option>
-    </select>
-  `,
+  templateUrl: './deck-chooser.component.html',
   directives: [<any>SpinnerComponent],
   styles: [
     `select.icon-menu option {
@@ -24,20 +16,36 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
     }`
   ]
 })
-export class DeckChooserComponent {
+export class DeckChooserComponent implements OnInit {
   @Input()
   isLoading:boolean;
+  @Input()
+  existingDeck:Deck;
   @Input()
   decks:Deck[];
   @Output()
   selectDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
 
+  deckChooserForm:ControlGroup;
 
-  onDeckChange(deckIndex:string) {
-    if (!deckIndex) {
+  constructor(private _formBuilder:FormBuilder) {}
+
+  ngOnInit() {
+    this.populateForm();
+  }
+
+  onDeckChange(deckId:string) {
+    if (!deckId) {
       return;
     }
-    const deck = this.decks[+deckIndex];
+    const deck = this.decks.find((deck) => deck.deckId === +deckId);
     this.selectDeck.emit(deck);
   }
+
+  private populateForm() {
+    let deckId = (this.existingDeck && this.existingDeck.deckId) || '';
+    this.deckChooserForm = this._formBuilder.group({
+      deckId: [deckId, Validators.required],
+    });
+  };
 }

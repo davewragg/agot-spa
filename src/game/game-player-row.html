@@ -14,7 +14,7 @@
     <li class="list-group-item">{{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondaryFaction?.name || 'No Agenda'
       }}
     </li>
-    <li *ngIf="!gamePlayer.deck.deckId">New deck</li>
+    <li *ngIf="!gamePlayer.deck.deckId" class="list-group-item">*New deck*</li>
   </ul>
   <div class="card-block edit-buttons" *ngIf="editing">
     <agot-deck-selector [existingDeck]="gamePlayer.deck"
