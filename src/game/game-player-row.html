@@ -9,12 +9,13 @@
     <h4 class="card-title player-title">{{ gamePlayer.player?.name }}</h4>
   </div>
   <ul class="list-group list-group-flush" *ngIf="!editing">
-    <li class="list-group-item font-weight-bold">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}</li>
-    <li class="list-group-item font-weight-bold">{{ gamePlayer.deck.faction?.name }}</li>
-    <li class="list-group-item">{{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondaryFaction?.name || 'No Agenda'
-      }}
+    <li class="list-group-item font-weight-bold">
+      {{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}<span *ngIf="!gamePlayer.deck.deckId">*</span>
     </li>
-    <li *ngIf="!gamePlayer.deck.deckId" class="list-group-item">*New deck*</li>
+    <li class="list-group-item">
+      <span font-weight-bold>{{ gamePlayer.deck.faction?.name }}</span> /
+      {{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondaryFaction?.name || 'No Agenda' }}
+    </li>
   </ul>
   <div class="card-block edit-buttons" *ngIf="editing">
     <agot-deck-selector [existingDeck]="gamePlayer.deck"
