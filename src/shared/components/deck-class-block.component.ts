@@ -10,7 +10,7 @@ import {Stats} from '../models/stats.model';
     [style.backgroundImage]="deckClass.agenda?.agendaId && ('url(/assets/img/agenda' + deckClass.agenda?.agendaId + '.png)')">
       <div class="card-header {{ headerClass }}">{{ title }}</div>
       <img class="card-img" src="/assets/img/icon{{ deckClass.faction.factionId }}.png"
-         alt="{{ deckClass.faction.factionName }}">
+         alt="{{ deckClass.faction.name }}">
       <div class="card-footer text-muted small">
         {{ deckClass.title }}
         <p *ngIf="stats">

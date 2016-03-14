@@ -20,7 +20,7 @@ export class DeckClass {
   }
 
   static getDeckClassTitle(faction:Faction, agenda?:Agenda):string {
-    return `${faction && faction.factionName}, ${(agenda && agenda.title) || 'No Agenda'}`;
+    return `${faction && faction.name}, ${(agenda && agenda.title) || 'No Agenda'}`;
   };
 
   constructor(faction:Faction, agenda?:Agenda) {

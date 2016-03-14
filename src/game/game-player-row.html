@@ -3,17 +3,15 @@
      [style.backgroundImage]="gamePlayer.deck?.agendaId && ('url(/assets/img/agenda' + gamePlayer.deck?.agendaId + '.png)')">
   <div class="card-header">
     <img class="card-image-top" src="/assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
-         alt="{{ gamePlayer.faction?.factionName }}">
-    <!--TODO faction name-->
+         alt="{{ gamePlayer.faction?.name }}">
   </div>
-  <!--TODO game player name-->
   <div class="card-block player-header">
-    <h4 class="card-title player-title">{{ gamePlayer.player?.name || gamePlayer.playerId }}</h4>
+    <h4 class="card-title player-title">{{ gamePlayer.player?.name }}</h4>
   </div>
   <ul class="list-group list-group-flush" *ngIf="!editing">
     <li class="list-group-item font-weight-bold">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}</li>
-    <li class="list-group-item font-weight-bold">{{ gamePlayer.deck.faction?.factionName }}</li>
-    <li class="list-group-item">{{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondaryFaction?.factionName || 'No Agenda'
+    <li class="list-group-item font-weight-bold">{{ gamePlayer.deck.faction?.name }}</li>
+    <li class="list-group-item">{{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondaryFaction?.name || 'No Agenda'
       }}
     </li>
     <li *ngIf="!gamePlayer.deck.deckId">New deck</li>

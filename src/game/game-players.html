@@ -28,8 +28,7 @@
     <label class="btn btn-primary" *ngFor="#gamePlayer of gamePlayers" [class.active]="gamePlayer.isWinner">
       <input type="radio" name="isWinner" value="true"
              autocomplete="off" [checked]="gamePlayer.isWinner"
-             (change)="onWinnerChange(gamePlayer)"> {{ gamePlayer.player?.name || gamePlayer.playerId }}
-      <!--TODO game player name-->
+             (change)="onWinnerChange(gamePlayer)"> {{ gamePlayer.player?.name }}
     </label>
 
     <label class="btn btn-primary-outline">
