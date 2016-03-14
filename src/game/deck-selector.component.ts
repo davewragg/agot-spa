@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
 import {Deck} from '../shared/models/deck.model';
 import {DeckService} from '../shared/services/deck.service';
 import {ExistingDeckSelectorComponent} from './existing-deck-selector.component';
@@ -10,18 +10,23 @@ import {DeckEditFormComponent} from '../decks/deck-edit-form.component';
   templateUrl: './deck-selector.component.html',
   directives: [ExistingDeckSelectorComponent, DeckEditFormComponent]
 })
-export class DeckSelectorComponent {
+export class DeckSelectorComponent implements OnInit {
   @Input()
   playerId:number;
+  @Input()
+  existingDeck:Deck;
   @Output()
   updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
 
-  existingDeck:Deck;
-
-  deckSelection:DeckSelectionType = DeckSelectionType.EXISTING;
+  deckSelection:DeckSelectionType;
   deckSelectionType = DeckSelectionType;
 
   constructor(private deckService:DeckService) {
+  }
+
+  ngOnInit() {
+    this.deckSelection = this.existingDeck && !this.existingDeck.deckId ?
+      DeckSelectionType.NEW : DeckSelectionType.EXISTING;
   }
 
   onDeckSelectTypeChange(deckSelectionType:number) {

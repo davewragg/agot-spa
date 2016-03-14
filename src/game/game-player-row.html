@@ -17,8 +17,8 @@
     <li *ngIf="!gamePlayer.deck.deckId">New deck</li>
   </ul>
   <div class="card-block edit-buttons" *ngIf="editing">
-    change deck
-    <!--TODO deck selector-->
+    <agot-deck-selector [existingDeck]="gamePlayer.deck"
+                        (updateDeck)="onUpdateDeck($event)" [playerId]="gamePlayer.playerId"></agot-deck-selector>
   </div>
   <div class="card-block edit-buttons" *ngIf="!readOnly">
     <button type="button" class="btn btn-info" (click)="toggleEditing()">{{ editing ? 'Cancel' : 'Change deck' }}

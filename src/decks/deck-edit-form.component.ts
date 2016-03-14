@@ -70,6 +70,7 @@ export class DeckEditFormComponent implements OnInit {
 
     // TODO update or create?
     Object.assign(this.deck, updatedDeck);
+    this.populateDeck(this.deck);
     console.log(this.deck);
     this.updateDeck.emit(this.deck);
     // reset form
@@ -101,6 +102,21 @@ export class DeckEditFormComponent implements OnInit {
       const deckClassTitle = DeckClass.getDeckClassTitle(faction, agenda);
       const defaultTitle = `New ${deckClassTitle} deck`;
       title.updateValue(defaultTitle);
+    }
+  }
+
+  private populateDeck(gamePlayer:Deck) {
+    // FIXME new properties default to strings
+    gamePlayer.faction = this._referenceDataService.getFaction(+gamePlayer.factionId);
+    if (gamePlayer.agendaId) {
+      gamePlayer.agenda = this._referenceDataService.getAgenda(+gamePlayer.agendaId);
+    } else {
+      gamePlayer.agenda = null;
+    }
+    if (gamePlayer.secondFactionId) {
+      gamePlayer.secondaryFaction = this._referenceDataService.getFaction(+gamePlayer.secondFactionId);
+    } else {
+      gamePlayer.secondaryFaction = null;
     }
   }
 }
