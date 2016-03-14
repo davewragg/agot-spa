@@ -1,0 +1,33 @@
+<form [ngFormModel]="deckForm" (ngSubmit)="onSubmit()" class="form">
+  <div class="form-group">
+    <select class="form-control" ngControl="factionId" (change)="onDeckClassChange()">
+      <option value="">Main Faction</option>
+      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" ngControl="agendaId" (change)="onDeckClassChange()">
+      <option value="">Agenda</option>
+      <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">Title</label>
+    <input type="text" class="form-control" ngControl="title">
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">ThronesDB Link</label>
+    <input type="url" class="form-control" ngControl="thronesDbLink">
+  </div>
+  <!--<div class="form-group">-->
+    <!--<select class="form-control" ngControl="secondFactionId" [disabled]="agendaId.value" #secondFactionId>-->
+      <!--<option value="">Secondary Faction</option>-->
+      <!--<option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.name }}</option>-->
+    <!--</select>-->
+  <!--</div>-->
+  <div class="form-group">
+    <button type="submit" class="btn btn-success" [disabled]="!deckForm.valid">
+      {{ creating ? 'Add Player' : 'Update' }}
+    </button>
+  </div>
+</form>

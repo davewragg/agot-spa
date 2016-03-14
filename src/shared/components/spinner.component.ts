@@ -2,6 +2,7 @@
  https://manuel-rauber.com/2016/01/05/angular-2-spinner-component/
  */
 import {Component, Input, OnDestroy} from 'angular2/core';
+import Timer = NodeJS.Timer;
 
 @Component({
   selector: 'agot-spinner',
@@ -30,7 +31,7 @@ export class SpinnerComponent implements OnDestroy {
     }, this.delay);
   }
 
-  private currentTimeout:number;
+  private currentTimeout:Timer;
   private isDelayedRunning:boolean = false;
 
   ngOnDestroy():any {

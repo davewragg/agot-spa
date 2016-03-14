@@ -6,8 +6,8 @@ import {Faction} from '../models/faction.model';
   moduleId: module.id,
   template: `
     <img class="faction-badge" src="/assets/img/icon{{ faction.factionId }}.png"
-         alt="{{ faction.factionName }}">
-    {{ faction.factionName }}
+         alt="{{ faction.name }}">
+    {{ faction.name }}
   `,
   styles: [`
    .faction-badge {

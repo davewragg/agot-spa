@@ -5,16 +5,13 @@
   </tr>
   <tr *ngFor="#game of games">
     <td>
-      <div>
-        <a [routerLink]="['/GameDetails', {id: game.gameId}]">{{ game.deckType.title }}</a>
-        ({{ game.coreSetCount }})
+      <div class="small text-muted">
+        <a [routerLink]="['/GameDetails', {id: game.gameId}]">
+          <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
+            {{ game.date | amTimeAgo }}
+          </time>
+        </a>
       </div>
-
-      <small class="text-muted">
-        <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
-          {{ game.date | amTimeAgo }}
-        </time>
-      </small>
     </td>
     <td class="card-deck-wrapper">
       <div class="card-deck">
@@ -25,13 +22,13 @@
           </h6>
           <div class="card-block">
             <p class="card-text">
-              <agot-faction-badge [faction]="gamePlayer.faction"></agot-faction-badge>
+              <agot-faction-badge [faction]="gamePlayer.deck.faction"></agot-faction-badge>
             </p>
-            <p class="card-text" *ngIf="gamePlayer.secondaryFaction">
-              <agot-faction-badge [faction]="gamePlayer.secondaryFaction"></agot-faction-badge>
+            <p class="card-text" *ngIf="gamePlayer.deck.secondaryFaction">
+              <agot-faction-badge [faction]="gamePlayer.deck.secondaryFaction"></agot-faction-badge>
             </p>
-            <p class="card-text" *ngIf="gamePlayer.agenda">
-              <agot-agenda-badge [agenda]="gamePlayer.agenda"></agot-agenda-badge>
+            <p class="card-text" *ngIf="gamePlayer.deck.agenda">
+              <agot-agenda-badge [agenda]="gamePlayer.deck.agenda"></agot-agenda-badge>
             </p>
           </div>
         </div>

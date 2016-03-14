@@ -5,13 +5,14 @@ import {Game} from '../shared/models/game.model';
 import {GameFormComponent} from './game-form.component';
 import {ViewGameComponent} from './view-game.component';
 import {NotificationService} from '../shared/services/notification.service';
+import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-game-details',
   moduleId: module.id,
   viewProviders: [GameService],
   templateUrl: './game-details.html',
-  directives: [GameFormComponent, ViewGameComponent]
+  directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
 })
 export class GameDetailsComponent implements OnInit {
   game:Game;
@@ -20,6 +21,8 @@ export class GameDetailsComponent implements OnInit {
 
   editing:boolean = false;
   formDisabled:boolean = false;
+  isLoading:boolean;
+  loadError:any = null;
 
   constructor(params:RouteParams,
               private gameService:GameService,
@@ -32,20 +35,24 @@ export class GameDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.gameIdParam) {
-      this.gameService.getGame(this.gameIdParam)
-        .subscribe((game) => this.game = game);
+      this.loadGame();
     } else {
-      this.game = GameService.createNewGame();
+      this.game = new Game();
     }
   }
 
   onSubmit(game:Game) {
     this.formDisabled = true;
-    //const winner = game.gamePlayers.find((player) => player.isWinner).player.name;
-    //console.log(winner);
+    const creating = !game.gameId;
 
     console.log('details submit', game);
+    // TODO if creating, redirect to /game/id on submit?
     this.gameService.updateGame(game).subscribe((game:Game) => {
+      if (creating) {
+        // TODO skip reload
+        this.router.navigate(['/GameDetails', {id: game.gameId}]);
+        return;
+      }
       this.game = game;
       this.formDisabled = false;
       this.editing = false;
@@ -78,5 +85,15 @@ export class GameDetailsComponent implements OnInit {
       console.error(error);
       this.notificationService.error('Whoops', error.message || error._body || error);
     });
+  }
+
+  private loadGame() {
+    this.isLoading = true;
+    this.gameService.getGame(this.gameIdParam)
+      .subscribe(
+        (game) => this.game = game,
+        (error) => this.loadError = error,
+        () => this.isLoading = false
+      );
   }
 }

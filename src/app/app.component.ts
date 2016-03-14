@@ -18,11 +18,18 @@ import {GameDetailsComponent} from '../game/game-details.component';
 import {AllRankingsComponent} from '../home/components/all-rankings.component';
 import {PlayersComponent} from '../players/players.component';
 import {PlayerDetailsComponent} from '../players/player-details.component';
+import {DeckService} from '../shared/services/deck.service';
 
 @Component({
   selector: 'agot-app',
   viewProviders: [NameListService],
-  providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, ToasterService, NotificationService, DataService, ReferenceDataService],
+  providers: [ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
+    ToasterService,
+    NotificationService,
+    DataService,
+    ReferenceDataService,
+    DeckService],
   moduleId: module.id,
   templateUrl: './app.html',
   encapsulation: ViewEncapsulation.None,

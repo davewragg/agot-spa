@@ -82,7 +82,7 @@ export class PlayerService {
       return game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.playerId === playerId);
     }
 
-    function getMyResult(game, me):Result {
+    function getMyResult(game:Game, me:GamePlayer):Result {
       const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
       return me.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW;
     }
@@ -93,18 +93,18 @@ export class PlayerService {
       updatePlayerStats(me, stats.as, result);
     }
 
-    function updatePlayerStats(player:GamePlayer, stats:PlayerStatsSet, result) {
-      if (!player.secondFactionId) {
-        const deckClassId = DeckClass.getDeckClassId(player.factionId, player.agendaId);
+    function updatePlayerStats(player:GamePlayer, stats:PlayerStatsSet, result:Result) {
+      if (!player.deck.secondFactionId) {
+        const deckClassId = DeckClass.getDeckClassId(player.deck.factionId, player.deck.agendaId);
         updateStatsFor(deckClassId, stats.deckClass, result);
       }
 
-      updateStatsFor(player.agendaId, stats.agendas, result);
-      updateStatsFor(player.factionId, stats.factions, result);
-      updateStatsFor(player.secondFactionId, stats.factions, result);
+      updateStatsFor(player.deck.agendaId, stats.agendas, result);
+      updateStatsFor(player.deck.factionId, stats.factions, result);
+      updateStatsFor(player.deck.secondFactionId, stats.factions, result);
     }
 
-    function updateStatsFor(keyId, statsMap:Map<number, Stats>, result:Result) {
+    function updateStatsFor(keyId:number | string, statsMap:Map<number | string, Stats>, result:Result) {
       if (keyId) {
         const keyStats = statsMap.get(keyId) || new Stats();
         addResultFor(keyStats, result);
@@ -146,10 +146,12 @@ export class PlayerService {
       }
       const currentStats:Stats = lastEntry[1];
       const newStats:Stats = entry[1];
-      if (currentStats[field] === newStats[field]) {
+      const currentStat:number = currentStats[field];
+      const newStat:number = newStats[field];
+      if (currentStat === newStat) {
         return currentStats.played > newStats.played ? lastEntry : entry;
       }
-      return currentStats[field] > newStats[field] ? lastEntry : entry;
+      return currentStat > newStat ? lastEntry : entry;
     });
     if (winningEntry && winningEntry[1][field] > 0) {
       const deckClass = this._referenceDataService.getDeckClass(winningEntry[0]);
@@ -175,4 +177,3 @@ export class PlayerService {
     return allValuesCopy;
   }
 }
-

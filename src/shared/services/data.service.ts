@@ -21,12 +21,22 @@ export class DataService {
   private baseUrl = '//paulhoughton.org/agot';
 
   private static _serialiseGame(game:Game):string {
+    // TODO if deck has id, strip everything else
+    // TODO remove non-primitives
     return JSON.stringify(game);
   }
 
   private static _getContentHeaders() {
     const headers = new Headers({'Content-Type': 'application/json'});
     return {headers: headers};
+  }
+
+  private static handleResponse(response:Response):any {
+    const json = response.json();
+    if (json.error) {
+      throw new Error(json.error);
+    }
+    return json.payload;
   }
 
   constructor(private http:Http) {
@@ -70,14 +80,14 @@ export class DataService {
 
   getGame(gameId:number):Observable<Game> {
     return this.http.get(this.baseUrl + '/api/games/get/' + gameId)
-      .map((res:Response) => res.json().payload);
+      .map(DataService.handleResponse);
   }
 
   updateGame(game:Game):Observable<Game> {
     return this.http.put(this.baseUrl + '/api/games/update',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map((response:Response) => response.json());
+      .map(DataService.handleResponse);
     // TODO update cache? PBR covered?
   }
 
@@ -85,14 +95,14 @@ export class DataService {
     return this.http.post(this.baseUrl + '/api/games/create',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map((response:Response) => response.json());
+      .map(DataService.handleResponse);
     // TODO check for response id
     // TODO insert into cache
   }
 
   deleteGame(gameId:number):Observable<any> {
     return this.http.delete(this.baseUrl + '/api/games/delete/' + gameId)
-      .map((response:Response) => response.json());
+      .map(DataService.handleResponse);
   }
 
   private _getGameIndex():Observable<GameIndex> {
@@ -106,7 +116,7 @@ export class DataService {
   private getFromWeb():Observable<GameIndex> {
     return this.http.get(this.baseUrl + '/api/games/getall')
       .timeout(this.REMOTE_TIMEOUT, new Error('timed out web'))
-      .map((res:Response) => res.json().payload);
+      .map(DataService.handleResponse);
   }
 
   private getFromJson():Observable<GameIndex> {

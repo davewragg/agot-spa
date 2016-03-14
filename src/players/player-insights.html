@@ -38,7 +38,7 @@
     <code *ngIf="playerInsights.neverPlayedFactions.length">In this period
       {{ player?.name || 'Player' }} has not played as
       <span *ngFor="#faction of playerInsights.neverPlayedFactions; #i = index">
-        {{ faction.factionName }}{{ i < playerInsights.neverPlayedFactions.length -2 ? ',' :
+        {{ faction.name }}{{ i < playerInsights.neverPlayedFactions.length -2 ? ',' :
         i === playerInsights.neverPlayedFactions.length -2 ? ' or' : '' }}
       </span>
     </code>

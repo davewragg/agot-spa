@@ -18,29 +18,83 @@ export class ReferenceDataService {
 
   getFactions():Faction[] {
     return [
-      {factionId: 1, factionName: 'Greyjoy'},
-      {factionId: 2, factionName: 'Targaryen'},
-      {factionId: 3, factionName: 'Baratheon'},
-      {factionId: 4, factionName: 'Stark'},
-      {factionId: 5, factionName: 'Martell'},
-      {factionId: 6, factionName: 'Lannister'},
-      {factionId: 7, factionName: 'Nights Watch'},
-      {factionId: 8, factionName: 'Tyrell'},
+      {
+        factionId: 1,
+        name: 'Greyjoy',
+        thronesDbCode: 'greyjoy',
+        thronesDbId: 3
+      }, {
+        factionId: 2,
+        name: 'Targaryen',
+        thronesDbCode: 'targaryen',
+        thronesDbId: 8
+      }, {
+        factionId: 3,
+        name: 'Baratheon',
+        thronesDbCode: 'baratheon',
+        thronesDbId: 2
+      }, {
+        factionId: 4,
+        name: 'Stark',
+        thronesDbCode: 'stark',
+        thronesDbId: 7
+      }, {
+        factionId: 5,
+        name: 'Martell',
+        thronesDbCode: 'martell',
+        thronesDbId: 5
+      }, {
+        factionId: 6,
+        name: 'Lannister',
+        thronesDbCode: 'lannister',
+        thronesDbId: 4
+      }, {
+        factionId: 7,
+        name: 'Nights Watch',
+        thronesDbCode: 'nightswatch',
+        thronesDbId: 6
+      }, {
+        factionId: 8,
+        name: 'Tyrell',
+        thronesDbCode: 'tyrell',
+        thronesDbId: 9
+      }
     ];
   }
 
   getAgendas():Agenda[] {
     return [
-      {agendaId: 1, title: 'Banner of the Kraken'},
-      {agendaId: 2, title: 'Banner of the Dragon'},
-      {agendaId: 3, title: 'Banner of the Stag'},
-      {agendaId: 4, title: 'Banner of the Wolf'},
-      {agendaId: 5, title: 'Banner of the Sun'},
-      {agendaId: 6, title: 'Banner of the Lion'},
-      {agendaId: 7, title: 'Banner of the Watch'},
-      {agendaId: 8, title: 'Banner of the Rose'},
-      {agendaId: 9, title: 'Fealty'},
-      {agendaId: 10, title: 'The Lord of the Crossing'},
+      {
+        agendaId: 1, title: 'Banner of the Kraken', thronesDbCode: '01199'
+      }, {
+        agendaId: 2,
+        title: 'Banner of the Dragon',
+        thronesDbCode: '01204'
+      }, {
+        agendaId: 3, title: 'Banner of the Stag', thronesDbCode: '01198'
+      }, {
+        agendaId: 4,
+        title: 'Banner of the Wolf',
+        thronesDbCode: '01203'
+      }, {
+        agendaId: 5, title: 'Banner of the Sun', thronesDbCode: '01201'
+      }, {
+        agendaId: 6,
+        title: 'Banner of the Lion',
+        thronesDbCode: '01200'
+      }, {
+        agendaId: 7, title: 'Banner of the Watch', thronesDbCode: '01202'
+      }, {
+        agendaId: 8,
+        title: 'Banner of the Rose',
+        thronesDbCode: '01205'
+      }, {
+        agendaId: 9, title: 'Fealty', thronesDbCode: '01207'
+      }, {
+        agendaId: 10,
+        title: 'The Lord of the Crossing',
+        thronesDbCode: '02060'
+      }
     ];
   }
 

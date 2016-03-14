@@ -1,0 +1,11 @@
+<form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form form-inline">
+  <div class="form-group">
+    <select class="form-control" ngControl="playerId" (change)="onPlayerSelectChange(playerId.value)" #playerId>
+      <option value="">Player</option>
+      <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
+    </select>
+  </div>
+
+  <agot-deck-selector *ngIf="gamePlayer?.playerId" [creating]="true" (updateDeck)="onUpdateDeck($event)"
+                      [playerId]="gamePlayer.playerId"></agot-deck-selector>
+</form>
