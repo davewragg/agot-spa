@@ -94,6 +94,6 @@ export class GameFormComponent implements OnInit {
 
   private convertDateString() {
     // have to remove the time and timezone to populate the control correctly
-    return this.game.date.slice(0, 10);
+    return this.game.date.slice(0, 19);
   };
 }
