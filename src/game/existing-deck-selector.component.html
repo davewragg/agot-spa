@@ -1,11 +1,11 @@
 <div class="btn-group" data-toggle="buttons">
   <label class="btn btn-secondary-outline" [class.active]="!showAllDecks">
     <input type="radio" name="showAllDecks" value="false" autocomplete="off"
-           (change)="setShowAllDecks(false)"> Player's decks ({{ myDecks?.length }})
+           (change)="setShowAllDecks(false)"> Player decks ({{ myDecks?.length }})
   </label>
   <label class="btn btn-secondary-outline" [class.active]="showAllDecks">
     <input type="radio" name="showAllDecks" value="true" autocomplete="off"
-           (change)="setShowAllDecks(true)"> Everyone's decks ({{ allDecks?.length }})
+           (change)="setShowAllDecks(true)"> All ({{ allDecks?.length }})
   </label>
 </div>
 <!--my decks selector-->

@@ -1,33 +1,36 @@
-<p class="text-muted">You can import a <b>published</b> ThronesDB deck below.</p>
+<div class="row">
+  <div class="col-md-6">
+    <p class="text-muted">You can import a <b>published</b> ThronesDB deck below.</p>
 
-<form [ngFormModel]="importForm" (ngSubmit)="onSubmit()" class="form">
-  <div class="form-group">
-    <label class="form-control-label">ThronesDB deck id</label>
-    <input type="text" pattern="[0-9]+" class="form-control" ngControl="thronesDbId" placeholder="e.g. 2570">
+    <form [ngFormModel]="importForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-group">
+        <label class="form-control-label">ThronesDB deck id</label>
+        <input type="text" pattern="[0-9]+" class="form-control" ngControl="thronesDbId" placeholder="e.g. 2570">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!importForm.valid || isImporting">
+          Import
+        </button>
+      </div>
+    </form>
   </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-success" [disabled]="!importForm.valid || isImporting">
-      Import
-    </button>
-  </div>
-</form>
-<agot-spinner [isRunning]="isImporting"></agot-spinner>
+  <div class="col-md-6">
+    <agot-spinner [isRunning]="isImporting"></agot-spinner>
 
-<div class="alert alert-danger" *ngIf="importError">
-  {{ importError | json }}
+    <div class="alert alert-danger" *ngIf="importError">
+      {{ importError | json }}
+    </div>
+
+    <div *ngIf="importedDeck">
+      <agot-deck-class-block [deckClass]="importedDeck"
+                             class="card"
+                             title="Does this look right?"
+                             footerText="{{ importedDeck.thronesDbLink }} v{{ importedDeck.thronesDbVersion }}"></agot-deck-class-block>
+      <div class="form-group">
+        <button type="button" class="btn btn-success" (click)="onDeckSelect()">
+          {{ creating ? 'Add Player' : 'Update' }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div *ngIf="importedDeck">
-  <agot-deck-class-block [deckClass]="importedDeck"
-                         class="card"
-                         title="Does this look right?"
-                         footerText="{{ importedDeck.thronesDbLink }} v{{ importedDeck.thronesDbVersion }}"></agot-deck-class-block>
-  <div class="form-group">
-    <button type="button" class="btn btn-success" (click)="onDeckSelect()">
-      {{ creating ? 'Add Player' : 'Update' }}
-    </button>
-  </div>
-</div>
-
-
-

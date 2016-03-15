@@ -30,6 +30,6 @@
   </div>
   <div *ngSwitchWhen="deckSelectionType.NEW" class="col-md-12">
     <agot-deck-edit-form (updateDeck)="onNewDeckSelect($event)"
-                         [deck]="existingDeck" [creating]="creating"></agot-deck-edit-form>
+                         [deck]="editDeck" [creating]="creating"></agot-deck-edit-form>
   </div>
 </div>

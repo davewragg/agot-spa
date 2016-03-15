@@ -37,6 +37,7 @@ export class DeckImportFormComponent implements OnInit {
 
     console.log(thronesDbId);
     this.isImporting = true;
+    this.importError = null;
     this.thronesDbService.importAndConvertThronesDbDeck(thronesDbId).subscribe(
       (deck:Deck) => {
         if (!deck) {
