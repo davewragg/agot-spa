@@ -18,7 +18,8 @@ export class SpinnerComponent implements OnDestroy {
   public set isRunning(value:boolean) {
     if (!value) {
       this.cancelTimeout();
-      return this.isDelayedRunning = false;
+      this.isDelayedRunning = false;
+      return;
     }
 
     if (this.currentTimeout) {
