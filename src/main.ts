@@ -5,6 +5,7 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import 'rxjs/subject/BehaviorSubject';
 import {AppComponent} from './app/app.component';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }

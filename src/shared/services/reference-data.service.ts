@@ -3,10 +3,29 @@ import {DeckType} from '../models/deck-type.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
 import {DeckClass} from '../models/deck-class.model';
+import {BehaviorSubject} from 'rxjs/Rx';
+import {DataService} from './data.service';
 
 @Injectable()
 export class ReferenceDataService {
-  //constructor() {}
+  private _factions$:BehaviorSubject<Faction[]> = new BehaviorSubject([]);
+  private _agendas$:BehaviorSubject<Agenda[]> = new BehaviorSubject([]);
+  private _factions:Faction[];
+  private _agendas:Agenda[];
+
+  constructor(private dataService:DataService) {
+    this.loadInitialData();
+  }
+
+  get factions() {
+    console.log('returning factions');
+    return this._factions$.asObservable();
+  }
+
+  get agendas() {
+    console.log('returning agendas');
+    return this._agendas$.asObservable();
+  }
 
   getDeckTypes():DeckType[] {
     return [
@@ -16,94 +35,13 @@ export class ReferenceDataService {
     ];
   }
 
-  getFactions():Faction[] {
-    return [
-      {
-        factionId: 1,
-        name: 'Greyjoy',
-        thronesDbCode: 'greyjoy',
-        thronesDbId: 3
-      }, {
-        factionId: 2,
-        name: 'Targaryen',
-        thronesDbCode: 'targaryen',
-        thronesDbId: 8
-      }, {
-        factionId: 3,
-        name: 'Baratheon',
-        thronesDbCode: 'baratheon',
-        thronesDbId: 2
-      }, {
-        factionId: 4,
-        name: 'Stark',
-        thronesDbCode: 'stark',
-        thronesDbId: 7
-      }, {
-        factionId: 5,
-        name: 'Martell',
-        thronesDbCode: 'martell',
-        thronesDbId: 5
-      }, {
-        factionId: 6,
-        name: 'Lannister',
-        thronesDbCode: 'lannister',
-        thronesDbId: 4
-      }, {
-        factionId: 7,
-        name: 'Nights Watch',
-        thronesDbCode: 'thenightswatch',
-        thronesDbId: 6
-      }, {
-        factionId: 8,
-        name: 'Tyrell',
-        thronesDbCode: 'tyrell',
-        thronesDbId: 9
-      }
-    ];
-  }
-
-  getAgendas():Agenda[] {
-    return [
-      {
-        agendaId: 1, title: 'Banner of the Kraken', thronesDbCode: '01199'
-      }, {
-        agendaId: 2,
-        title: 'Banner of the Dragon',
-        thronesDbCode: '01204'
-      }, {
-        agendaId: 3, title: 'Banner of the Stag', thronesDbCode: '01198'
-      }, {
-        agendaId: 4,
-        title: 'Banner of the Wolf',
-        thronesDbCode: '01203'
-      }, {
-        agendaId: 5, title: 'Banner of the Sun', thronesDbCode: '01201'
-      }, {
-        agendaId: 6,
-        title: 'Banner of the Lion',
-        thronesDbCode: '01200'
-      }, {
-        agendaId: 7, title: 'Banner of the Watch', thronesDbCode: '01202'
-      }, {
-        agendaId: 8,
-        title: 'Banner of the Rose',
-        thronesDbCode: '01205'
-      }, {
-        agendaId: 9, title: 'Fealty', thronesDbCode: '01027'
-      }, {
-        agendaId: 10,
-        title: 'The Lord of the Crossing',
-        thronesDbCode: '02060'
-      }
-    ];
-  }
-
   getFaction(factionId:number):Faction {
     return this.getFactionBy('factionId', factionId);
   }
 
   getFactionBy(field:string, value:number | string):Faction {
-    return this.getFactions().find((faction) => faction[field] === value);
+    // TODO guard against early calls
+    return this._factions.find((faction) => faction[field] === value);
   }
 
   getAgenda(agendaId:number):Agenda {
@@ -111,11 +49,29 @@ export class ReferenceDataService {
   }
 
   getAgendaBy(field:string, value:number | string):Agenda {
-    return this.getAgendas().find((agenda) => agenda[field] === value);
+    // TODO guard against early calls
+    return this._agendas.find((agenda) => agenda[field] === value);
   }
 
   getDeckClass(deckClassId:number):DeckClass {
     const ids = DeckClass.getFactionAndAgendaId(deckClassId);
     return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
+  }
+
+  private loadInitialData() {
+    this.dataService.getReferenceData('factions').subscribe(
+      (factions:Faction[]) => {
+        this._factions$.next(factions);
+        this._factions = factions;
+      },
+      (err) => console.error(err)
+    );
+    this.dataService.getReferenceData('agendas').subscribe(
+      (agendas:Agenda[]) => {
+        this._agendas$.next(agendas);
+        this._agendas = agendas;
+      },
+      (err) => console.error(err)
+    );
   }
 }

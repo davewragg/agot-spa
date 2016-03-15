@@ -155,6 +155,15 @@ export class DataService {
       .map(DataService.handleResponse);
   }
 
+  /*
+   @param refDataType: factions / agendas / players / decks
+   */
+  getReferenceData(refDataType:string):Observable<any> {
+    console.log('getReferenceData called', refDataType);
+    return this.http.get(this.baseUrl + `/api/${refDataType}/getall`)
+      .map(DataService.handleResponse);
+  }
+
   private _getGameIndex():Observable<GameIndex> {
     console.log('_getgameindex called');
     return this.http.get(this.baseUrl + '/api/games/getall')

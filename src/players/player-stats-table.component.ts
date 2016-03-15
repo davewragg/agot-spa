@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from 'angular2/core';
+import {Component, Input} from 'angular2/core';
 import {ReferenceDataService} from '../shared/services/reference-data.service';
 import {PlayerService} from '../shared/services/player.service';
 import {Faction} from '../shared/models/faction.model';
@@ -19,21 +19,17 @@ import {PlayerStatsSet} from '../shared/models/player-stats-set.model';
   directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
     PlayerLinkComponent, ColourRangeDirective]
 })
-export class PlayerStatsTableComponent implements OnInit {
+export class PlayerStatsTableComponent {
   @Input()
   title:string;
   @Input()
   playerStatsSet:PlayerStatsSet;
 
   players:Player[];
-  agendas:Agenda[];
-  factions:Faction[];
 
   constructor(private _referenceDataService:ReferenceDataService, private _playerService:PlayerService) {
     // TODO probably async
     this.players = this._playerService.getPlayers();
-    this.factions = this._referenceDataService.getFactions();
-    this.agendas = this._referenceDataService.getAgendas();
   }
 
   getFaction(factionId:number):Faction {
@@ -50,9 +46,5 @@ export class PlayerStatsTableComponent implements OnInit {
 
   getDeckClass(deckClassId:number):DeckClass {
     return this._referenceDataService.getDeckClass(deckClassId);
-  }
-
-  ngOnInit() {
-    // TODO?
   }
 }

@@ -1,17 +1,13 @@
 import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
-import {Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {Deck} from '../models/deck.model';
+import {DataService} from './data.service';
 
 @Injectable()
 export class DeckService {
   private data:Observable<Deck[]>;
 
-  //private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
-  private baseUrl = '//paulhoughton.org/agot';
-
-  constructor(private http:Http) {
+  constructor(private dataService:DataService) {
   }
 
   getDecksFor(playerId:number):Observable<Deck[]> {
@@ -36,8 +32,7 @@ export class DeckService {
 
   private _getDecks():Observable<Deck[]> {
     console.log('_getdecks called');
-    return this.http.get(this.baseUrl + '/api/decks/getall')
-      .map((res:Response) => res.json().payload)
+    return this.dataService.getReferenceData('decks')
       .map((deckObjects:any[]) => deckObjects.map((deckObj:any) => Object.assign(new Deck(), deckObj)))
       .share();
   }

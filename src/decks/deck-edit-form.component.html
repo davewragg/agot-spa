@@ -3,14 +3,14 @@
     <label class="form-control-label">Faction</label>
     <select class="form-control" ngControl="factionId" (change)="onDeckClassChange()">
       <option value="">--Select faction---</option>
-      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.name }}</option>
+      <option *ngFor="#faction of factions | async" [value]="faction.factionId">{{ faction.name }}</option>
     </select>
   </div>
   <div class="form-group">
     <label class="form-control-label">Agenda</label>
     <select class="form-control" ngControl="agendaId" (change)="onDeckClassChange()">
       <option value="">--Select agenda---</option>
-      <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
+      <option *ngFor="#agenda of agendas | async" [value]="agenda.agendaId">{{ agenda.title }}</option>
     </select>
   </div>
   <div class="form-group">

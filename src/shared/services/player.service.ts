@@ -18,7 +18,12 @@ import {DeckClassStats} from '../models/deck-class-stats.model';
 
 @Injectable()
 export class PlayerService {
+  private _factions:Faction[];
+  private _agendas:Agenda[];
+
   constructor(private _dataService:DataService, private _referenceDataService:ReferenceDataService) {
+    _referenceDataService.factions.subscribe((factions) => this._factions = factions);
+    _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
   }
 
   getPlayers():Player[] {
@@ -157,11 +162,11 @@ export class PlayerService {
   }
 
   private filterOutPlayedFactions(factionsMap:Map<number, Stats>):Faction[] {
-    return <Faction[]>this.filterPlayed(this._referenceDataService.getFactions(), factionsMap, 'factionId');
+    return <Faction[]>this.filterPlayed(this._factions, factionsMap, 'factionId');
   }
 
   private filterOutPlayedAgendas(agendasMap:Map<number, Stats>):Agenda[] {
-    return <Agenda[]>this.filterPlayed(this._referenceDataService.getAgendas(), agendasMap, 'agendaId');
+    return <Agenda[]>this.filterPlayed(this._agendas, agendasMap, 'agendaId');
   }
 
   private filterPlayed(allValues:Array<any>, playedValuesMap:Map<number, Stats>, idField:string) {

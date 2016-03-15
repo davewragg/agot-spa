@@ -7,6 +7,7 @@ import {Faction} from '../shared/models/faction.model';
 import {Deck} from '../shared/models/deck.model';
 import {DeckClass} from '../shared/models/deck-class.model';
 import {Control} from 'angular2/common';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-deck-edit-form',
@@ -23,8 +24,8 @@ export class DeckEditFormComponent implements OnInit {
 
   deckForm:ControlGroup;
 
-  agendas:Agenda[];
-  factions:Faction[];
+  agendas:Observable<Agenda[]>;
+  factions:Observable<Faction[]>;
 
   // TODO move to service
   private static validateDeck(deck:Deck):string {
@@ -47,8 +48,8 @@ export class DeckEditFormComponent implements OnInit {
               private _referenceDataService:ReferenceDataService,
               private _notificationService:NotificationService) {
     // TODO probably async
-    this.factions = this._referenceDataService.getFactions();
-    this.agendas = this._referenceDataService.getAgendas();
+    this.factions = this._referenceDataService.factions;
+    this.agendas = this._referenceDataService.agendas;
   }
 
   ngOnInit() {
