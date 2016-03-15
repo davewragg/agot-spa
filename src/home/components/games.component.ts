@@ -46,7 +46,7 @@ export class GamesComponent implements OnInit {
           this.games = games;
         },
         (err) => {
-          this.loadingError = err._body || err;
+          this.loadingError = err._body || err.message || err;
           this.isLoading = false;
         },
         () => {

@@ -8,10 +8,11 @@ import {FilterCriteria} from '../models/filter-criteria.model';
 import {DateRangeType} from '../models/date-range-type.model';
 import * as moment from 'moment/moment';
 import {Headers} from 'angular2/http';
+import {URLSearchParams} from 'angular2/http';
 
 @Injectable()
 export class DataService {
-  private REMOTE_TIMEOUT = 30000;
+  private REMOTE_TIMEOUT = 45000;
   private data:Observable<GameIndex>;
 
   private today:string;
@@ -19,6 +20,25 @@ export class DataService {
 
   //private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
   private baseUrl = '//paulhoughton.org/agot';
+
+  private static convertFilterCriteriaToSearchParams(filterCriteria:FilterCriteria) {
+    const params:URLSearchParams = new URLSearchParams();
+    params.set('startDate', filterCriteria.fromDate);
+    params.set('endDate', filterCriteria.toDate);
+    if (filterCriteria.playerIds) {
+      filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId + ''));
+    }
+    if (filterCriteria.factionIds) {
+      filterCriteria.factionIds.forEach((factionId) => params.append('factionIds', factionId + ''));
+    }
+    if (filterCriteria.agendaIds) {
+      filterCriteria.agendaIds.forEach((agendaId) => params.append('agendaIds', agendaId + ''));
+    }
+    if (filterCriteria.deckIds) {
+      filterCriteria.deckIds.forEach((deckId) => params.append('deckIds', deckId + ''));
+    }
+    return params;
+  }
 
   private static _serialiseGame(game:Game):string {
     // TODO if deck has id, strip everything else
@@ -56,17 +76,22 @@ export class DataService {
       .map((gameIndex:GameIndex) => gameIndex.allResults.games);
   }
 
-  getGames(filterCriteria?:FilterCriteria) {
+  getFilteredGames(filterCriteria:FilterCriteria) {
+    const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
+    return this.http.get(this.baseUrl + '/api/games/searchgames', {
+        search: params
+      })
+      .map(DataService.handleResponse);
+  }
+
+  getGames(filterCriteria:FilterCriteria) {
     const criteria:FilterCriteria = this.setDatesFromRangeType(filterCriteria);
-    return this.getAllGames().map(filterGames);
+    return this.getFilteredGames(criteria).map(sortGames);
+    // TODO move to service eventually
+    function sortGames(games:Game[]) {
+      return games.sort(gameSorter);
 
-    function filterGames(games:Game[]) {
-      return games.filter((game:Game) => {
-        return (!criteria.fromDate || game.date >= criteria.fromDate) &&
-          (!criteria.toDate || game.date <= criteria.toDate);
-      }).sort(sortGames);
-
-      function sortGames(game1:Game, game2:Game) {
+      function gameSorter(game1:Game, game2:Game) {
         if (game1.date > game2.date) {
           return criteria.ascending ? -1 : 1;
         }

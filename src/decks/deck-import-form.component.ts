@@ -45,9 +45,9 @@ export class DeckImportFormComponent implements OnInit {
           this.importedDeck = deck;
         }
       },
-      (error:Error) => {
+      (error) => {
         console.error(error);
-        this.importError = error.message || error;
+        this.importError = error._body || error.message || error;
         this.isImporting = false;
       },
       () => this.isImporting = false
