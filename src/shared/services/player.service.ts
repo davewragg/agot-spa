@@ -37,10 +37,10 @@ export class PlayerService {
   }
 
   getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<PlayerStats> {
+    criteria.playerIds = [playerId];
     return this._dataService.getGames(criteria)
       .map((games:Game[]):PlayerStats => {
         return games
-          .filter(filterMyGames)
           .reduce(buildStatsFromGames, new PlayerStats());
       }).do((playerStats:PlayerStats) => {
         if (playerStats.games.length === 0) {
@@ -72,10 +72,6 @@ export class PlayerService {
           updatePlayerStats(gamePlayer, stats.vs, result);
         }
       }
-    }
-
-    function filterMyGames(game:Game) {
-      return !!getMe(game);
     }
 
     function getMe(game:Game) {
