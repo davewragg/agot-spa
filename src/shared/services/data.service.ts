@@ -9,6 +9,7 @@ import {DateRangeType} from '../models/date-range-type.model';
 import * as moment from 'moment/moment';
 import {Headers} from 'angular2/http';
 import {URLSearchParams} from 'angular2/http';
+import * as _ from 'lodash';
 
 @Injectable()
 export class DataService {
@@ -52,8 +53,14 @@ export class DataService {
 
   private static _serialiseGame(game:Game):string {
     // TODO if deck has id, strip everything else
+    const gameCopy:any = _.cloneDeep(game);
+    gameCopy.gamePlayers.forEach((player:any) => {
+      if (player.deck.deckId) {
+        player.deck = {deckId: player.deck.deckId};
+      }
+    });
     // TODO remove non-primitives
-    return JSON.stringify(game);
+    return JSON.stringify(gameCopy);
   }
 
   private static _getContentHeaders() {
@@ -64,7 +71,7 @@ export class DataService {
   private static handleResponse(response:Response):any {
     const json = response.json();
     if (json.error) {
-      throw new Error(json.error);
+      throw new Error(<string>json.error.Message);
     }
     return json.payload;
   }

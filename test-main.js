@@ -23,6 +23,7 @@ System.config({
   defaultJSExtensions: true,
   paths: {
     'angular2/*': 'node_modules/angular2/*.js',
+    'lodash': 'node_modules/lodash/index.js',
     'rxjs/*': 'node_modules/rxjs/*.js'
   }
 });

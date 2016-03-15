@@ -33,6 +33,7 @@ module.exports = function(config) {
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
       { pattern: 'dist/dev/**/*.js', included: false, watched: true },
       { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false }, // PhantomJS2 (and possibly others) might require it
+      { pattern: 'node_modules/lodash/**/*.js', included: false, watched: false },
 
       'test-main.js'
     ],
@@ -87,7 +88,7 @@ module.exports = function(config) {
         flags: ['--no-sandbox']
       }
     },
-    
+
     coverageReporter: {
       dir: 'coverage/',
       reporters: [
@@ -99,7 +100,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false, 
+    singleRun: false,
 
     // Passing command line arguments to tests
     client: {
