@@ -23,14 +23,14 @@ export class DataService {
 
   private static setAllTime(criteria:FilterCriteria) {
     return DataService.setDates(criteria, null, null);
-  };
+  }
 
   private static setDates(criteria:FilterCriteria, fromDate?:string, toDate?:string) {
     return Object.assign(criteria, {
       fromDate: fromDate,
       toDate: toDate,
     });
-  };
+  }
 
   private static convertFilterCriteriaToSearchParams(filterCriteria:FilterCriteria) {
     const params:URLSearchParams = new URLSearchParams();
@@ -77,6 +77,7 @@ export class DataService {
   }
 
   constructor(private http:Http) {
+    // TODO strip time from these
     this.today = moment().add(1, 'days').toISOString();
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();
   }
@@ -173,5 +174,5 @@ export class DataService {
 
   private setAWeekAgo(criteria:FilterCriteria) {
     return DataService.setDates(criteria, this.aWeekAgo, this.today);
-  };
+  }
 }
