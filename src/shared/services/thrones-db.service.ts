@@ -20,6 +20,7 @@ export class ThronesDbService {
   }
 
   getThronesDbDeck(deckId:number):Observable<ThronesDbDeck> {
+    console.log('getThronesDbDeck called', deckId);
     return this.http.get(this.baseUrl + '/api/public/decklist/' + deckId)
       .map(ThronesDbService.handleResponse);
   }

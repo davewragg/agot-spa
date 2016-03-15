@@ -12,7 +12,6 @@ import {URLSearchParams} from 'angular2/http';
 
 @Injectable()
 export class DataService {
-  private REMOTE_TIMEOUT = 45000;
   private data:Observable<GameIndex>;
 
   private today:string;
@@ -20,6 +19,17 @@ export class DataService {
 
   //private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
   private baseUrl = '//paulhoughton.org/agot';
+
+  private static setAllTime(criteria:FilterCriteria) {
+    return DataService.setDates(criteria, null, null);
+  };
+
+  private static setDates(criteria:FilterCriteria, fromDate?:string, toDate?:string) {
+    return Object.assign(criteria, {
+      fromDate: fromDate,
+      toDate: toDate,
+    });
+  };
 
   private static convertFilterCriteriaToSearchParams(filterCriteria:FilterCriteria) {
     const params:URLSearchParams = new URLSearchParams();
@@ -65,6 +75,7 @@ export class DataService {
   }
 
   getGameIndex():Observable<GameIndex> {
+    console.log('getgameindex called');
     if (!this.data) {
       this.data = this._getGameIndex();
     }
@@ -72,11 +83,13 @@ export class DataService {
   }
 
   getAllGames() {
+    console.log('getallgames called');
     return this.getGameIndex()
       .map((gameIndex:GameIndex) => gameIndex.allResults.games);
   }
 
   getFilteredGames(filterCriteria:FilterCriteria) {
+    console.log('getfilteredgames called');
     const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
     return this.http.get(this.baseUrl + '/api/games/searchgames', {
         search: params
@@ -87,7 +100,7 @@ export class DataService {
   getGames(filterCriteria:FilterCriteria) {
     const criteria:FilterCriteria = this.setDatesFromRangeType(filterCriteria);
     return this.getFilteredGames(criteria).map(sortGames);
-    // TODO move to service eventually
+    // TODO move to service when available
     function sortGames(games:Game[]) {
       return games.sort(gameSorter);
 
@@ -104,11 +117,13 @@ export class DataService {
   }
 
   getGame(gameId:number):Observable<Game> {
+    console.log('getgame called', gameId);
     return this.http.get(this.baseUrl + '/api/games/get/' + gameId)
       .map(DataService.handleResponse);
   }
 
   updateGame(game:Game):Observable<Game> {
+    console.log('updategame called', game);
     return this.http.put(this.baseUrl + '/api/games/update',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
@@ -117,6 +132,7 @@ export class DataService {
   }
 
   createGame(game:Game):Observable<Game> {
+    console.log('creategame called', game);
     return this.http.post(this.baseUrl + '/api/games/create',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
@@ -126,27 +142,15 @@ export class DataService {
   }
 
   deleteGame(gameId:number):Observable<any> {
+    console.log('deletegame called', gameId);
     return this.http.delete(this.baseUrl + '/api/games/delete/' + gameId)
       .map(DataService.handleResponse);
   }
 
   private _getGameIndex():Observable<GameIndex> {
-    return this.getFromWeb()
-      .catch((error) => {
-        console.warn(error);
-        return this.getFromJson();
-      });
-  }
-
-  private getFromWeb():Observable<GameIndex> {
+    console.log('_getgameindex called');
     return this.http.get(this.baseUrl + '/api/games/getall')
-      .timeout(this.REMOTE_TIMEOUT, new Error('timed out web'))
-      .map(DataService.handleResponse);
-  }
-
-  private getFromJson():Observable<GameIndex> {
-    return this.http.get('/assets/data/GetAll.json')
-      .map((res:Response) => res.json());
+      .map(DataService.handleResponse).share();
   }
 
   private setDatesFromRangeType(criteria:FilterCriteria) {
@@ -155,23 +159,12 @@ export class DataService {
     if (range === DateRangeType.THIS_WEEK) {
       this.setAWeekAgo(updatedCriteria);
     } else if (range === DateRangeType.ALL_TIME) {
-      this.setAllTime(updatedCriteria);
+      DataService.setAllTime(updatedCriteria);
     }
     return updatedCriteria;
   }
 
   private setAWeekAgo(criteria:FilterCriteria) {
-    return this.setDates(criteria, this.aWeekAgo, this.today);
-  };
-
-  private setAllTime(criteria:FilterCriteria) {
-    return this.setDates(criteria, null, null);
-  };
-
-  private setDates(criteria:FilterCriteria, fromDate?:string, toDate?:string) {
-    return Object.assign(criteria, {
-      fromDate: fromDate,
-      toDate: toDate,
-    });
+    return DataService.setDates(criteria, this.aWeekAgo, this.today);
   };
 }
