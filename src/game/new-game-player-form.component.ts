@@ -5,6 +5,7 @@ import {Player} from '../shared/models/player.model';
 import {GamePlayer} from '../shared/models/game-player.model';
 import {Deck} from '../shared/models/deck.model';
 import {DeckSelectorComponent} from './deck-selector.component';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-new-game-player-form',
@@ -20,12 +21,11 @@ export class NewGamePlayerFormComponent implements OnInit {
 
   gamePlayerForm:ControlGroup;
 
-  players:Player[];
+  players:Observable<Player[]>;
 
   constructor(private _formBuilder:FormBuilder,
               private _playerService:PlayerService) {
-    // TODO probably async
-    this.players = this._playerService.getPlayers();
+    this.players = this._playerService.players;
   }
 
   ngOnInit() {
@@ -47,14 +47,17 @@ export class NewGamePlayerFormComponent implements OnInit {
   }
 
   onSubmit() {
-    // FIXME newPlayer properties default to strings
+    // newPlayer properties default to strings
     const updatedPlayer:GamePlayer = this.gamePlayerForm.value;
 
-    // TODO update or create?
     Object.assign(this.gamePlayer, updatedPlayer);
-    this.populatePlayer(this.gamePlayer);
-    console.log(this.gamePlayer);
-    this.updatePlayer.emit(this.gamePlayer);
+    this.getPlayer(this.gamePlayer).subscribe((player) => {
+      this.gamePlayer.player = player;
+      console.log(this.gamePlayer);
+      this.updatePlayer.emit(this.gamePlayer);
+    });
+    // TODO handle loading errors
+
     // reset form
     //this.gamePlayerForm.reset
   }
@@ -66,7 +69,8 @@ export class NewGamePlayerFormComponent implements OnInit {
     });
   };
 
-  private populatePlayer(gamePlayer:GamePlayer) {
-    gamePlayer.player = this.players.find((player) => player.playerId === +gamePlayer.playerId);
+  private getPlayer(gamePlayer:GamePlayer):Observable<Player> {
+    const playerId = +gamePlayer.playerId;
+    return this._playerService.getPlayer(playerId);
   }
 }

@@ -3,7 +3,7 @@
     <div class="form-group col-md-4 col-xs-12">
       <select class="form-control" ngControl="playerId" (change)="onPlayerSelectChange(playerId.value)" #playerId>
         <option value="">Player</option>
-        <option *ngFor="#player of players" [value]="player.playerId">{{ player.name }}</option>
+        <option *ngFor="#player of players | async" [value]="player.playerId">{{ player.name }}</option>
       </select>
     </div>
 

@@ -15,30 +15,28 @@ import {PlayerInsights} from '../models/player-insights.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
 import {DeckClassStats} from '../models/deck-class-stats.model';
+import {BehaviorSubject} from 'rxjs/Rx';
 
 @Injectable()
 export class PlayerService {
   private _factions:Faction[];
   private _agendas:Agenda[];
 
+  private _players$:BehaviorSubject<Player[]> = new BehaviorSubject([]);
+
   constructor(private _dataService:DataService, private _referenceDataService:ReferenceDataService) {
     _referenceDataService.factions.subscribe((factions) => this._factions = factions);
     _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
+    this.loadInitialData();
   }
 
-  getPlayers():Player[] {
-    // TODO async
-    return [
-      {playerId: 1, name: 'Fonz'},
-      {playerId: 2, name: 'Dan'},
-      {playerId: 3, name: 'Dave'},
-      {playerId: 4, name: 'James'},
-    ];
+  get players() {
+    console.log('returning players');
+    return this._players$.asObservable();
   }
 
-  getPlayer(playerId:number):Player {
-    // TODO async
-    return this.getPlayers().find((player:Player) => player.playerId === playerId);
+  getPlayer(playerId:number):Observable<Player> {
+    return this._players$.map((players:Player[]) => players.find((player:Player) => player.playerId === playerId));
   }
 
   getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<PlayerStats> {
@@ -176,5 +174,14 @@ export class PlayerService {
     });
 
     return allValuesCopy;
+  }
+
+  private loadInitialData() {
+    this._dataService.getReferenceData('players').subscribe(
+      (players:Player[]) => {
+        this._players$.next(players);
+      },
+      (err) => console.error(err)
+    );
   }
 }

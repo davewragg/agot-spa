@@ -36,13 +36,21 @@ export class PlayerDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.playerIdParam) {
-      this.player = this._playerService.getPlayer(this.playerIdParam);
+      // TODO forkJoin for merged loading state
+      this.loadPlayer(this.playerIdParam);
       this.loadStats(this.defaultFiltering);
     }
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
     this.loadStats(criteria);
+  }
+
+  private loadPlayer(playerId:number) {
+    this._playerService.getPlayer(this.playerIdParam)
+      .subscribe((player) => {
+        this.player = player;
+      });
   }
 
   private loadStats(criteria?:FilterCriteria) {

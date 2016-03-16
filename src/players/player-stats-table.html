@@ -15,7 +15,7 @@
   </tr>
   <tr *ngFor="#entry of playerStatsSet?.players?.entries()">
     <td>
-      <agot-player-link [player]="getPlayer(entry[0])"></agot-player-link>
+      <agot-player-link [player]="getPlayer(entry[0]) | async"></agot-player-link>
     </td>
     <td>{{ entry[1].played }}</td>
     <td>{{ entry[1].won }}</td>

@@ -10,7 +10,9 @@ import {DataService} from './data.service';
 export class ReferenceDataService {
   private _factions$:BehaviorSubject<Faction[]> = new BehaviorSubject([]);
   private _agendas$:BehaviorSubject<Agenda[]> = new BehaviorSubject([]);
+  // TODO legacy
   private _factions:Faction[];
+  // TODO legacy
   private _agendas:Agenda[];
 
   constructor(private dataService:DataService) {
@@ -41,6 +43,7 @@ export class ReferenceDataService {
 
   getFactionBy(field:string, value:number | string):Faction {
     // TODO guard against early calls
+    console.warn('returning legacy faction');
     return this._factions.find((faction) => faction[field] === value);
   }
 
@@ -50,6 +53,7 @@ export class ReferenceDataService {
 
   getAgendaBy(field:string, value:number | string):Agenda {
     // TODO guard against early calls
+    console.warn('returning legacy agenda');
     return this._agendas.find((agenda) => agenda[field] === value);
   }
 
@@ -62,6 +66,7 @@ export class ReferenceDataService {
     this.dataService.getReferenceData('factions').subscribe(
       (factions:Faction[]) => {
         this._factions$.next(factions);
+        // TODO legacy
         this._factions = factions;
       },
       (err) => console.error(err)
@@ -69,6 +74,7 @@ export class ReferenceDataService {
     this.dataService.getReferenceData('agendas').subscribe(
       (agendas:Agenda[]) => {
         this._agendas$.next(agendas);
+        // TODO legacy
         this._agendas = agendas;
       },
       (err) => console.error(err)

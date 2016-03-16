@@ -3,6 +3,7 @@ import {Component, OnInit} from 'angular2/core';
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {PlayerLinkComponent} from '../shared/components/player-link.component';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-all-players',
@@ -12,8 +13,7 @@ import {PlayerLinkComponent} from '../shared/components/player-link.component';
   directives: [PlayerLinkComponent]
 })
 export class PlayersComponent implements OnInit {
-  players:Player[];
-  loadingError:any = null;
+  players:Observable<Player[]>;
 
   constructor(private _playerService:PlayerService) {
   }
@@ -23,18 +23,6 @@ export class PlayersComponent implements OnInit {
   }
 
   loadPlayers() {
-    // TODO async
-    this.players = this._playerService.getPlayers();
-      //.subscribe(
-      //  (data) => {
-      //    this.loadingError = null;
-      //    this.allResults = data.allResults;
-      //    this.seasons = data.seasons;
-      //  },
-      //  (err) => {
-      //    this.loadingError = err._body || err;
-      //  },
-      //  () => console.log('done')
-      //);
+    this.players = this._playerService.players;
   }
 }

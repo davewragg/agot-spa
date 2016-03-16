@@ -11,6 +11,7 @@ import {ColourRangeDirective} from '../shared/directives/colour-range.directive'
 import {DeckClass} from '../shared/models/deck-class.model';
 import {DeckClassBadgeComponent} from '../shared/components/deck-class-badge.component';
 import {PlayerStatsSet} from '../shared/models/player-stats-set.model';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-player-stats-table',
@@ -25,11 +26,7 @@ export class PlayerStatsTableComponent {
   @Input()
   playerStatsSet:PlayerStatsSet;
 
-  players:Player[];
-
   constructor(private _referenceDataService:ReferenceDataService, private _playerService:PlayerService) {
-    // TODO probably async
-    this.players = this._playerService.getPlayers();
   }
 
   getFaction(factionId:number):Faction {
@@ -40,8 +37,8 @@ export class PlayerStatsTableComponent {
     return this._referenceDataService.getAgenda(agendaId);
   }
 
-  getPlayer(playerId:number):Player {
-    return this.players.find((player) => player.playerId === playerId);
+  getPlayer(playerId:number):Observable<Player> {
+    return this._playerService.getPlayer(playerId);
   }
 
   getDeckClass(deckClassId:number):DeckClass {
