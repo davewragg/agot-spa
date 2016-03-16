@@ -18,8 +18,8 @@ export class DataService {
   private today:string;
   private aWeekAgo:string;
 
-  //private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
-  private baseUrl = '//paulhoughton.org/agot';
+  private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
+  //private baseUrl = '//paulhoughton.org/agot';
 
   private static setAllTime(criteria:FilterCriteria) {
     return DataService.setDates(criteria, null, null);
