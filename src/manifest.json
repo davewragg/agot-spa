@@ -40,7 +40,7 @@
       "density": 4
     }
   ],
-  "background_color": "#ffffff",
+  "background_color": "#000000",
   "display": "standalone",
   "start_url": "./",
   "theme_color": "#000000"
