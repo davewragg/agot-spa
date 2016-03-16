@@ -52,13 +52,14 @@ export class DataService {
   }
 
   private static _serialiseGame(game:Game):string {
-    // TODO if deck has id, strip everything else
     const gameCopy:any = _.cloneDeep(game);
-    gameCopy.gamePlayers.forEach((player:any) => {
-      if (player.deck.deckId) {
-        player.deck = {deckId: player.deck.deckId};
-      }
-    });
+    // if deck has id, strip everything else
+    // TODO re-enable once service fixed
+    //gameCopy.gamePlayers.forEach((player:any) => {
+    //  if (player.deck.deckId) {
+    //    player.deck = {deckId: player.deck.deckId};
+    //  }
+    //});
     // TODO remove non-primitives
     return JSON.stringify(gameCopy);
   }
