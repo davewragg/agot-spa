@@ -20,5 +20,4 @@ export class HomeComponent {
       rangeSelection: DateRangeType.THIS_WEEK
     };
   }
-
 }

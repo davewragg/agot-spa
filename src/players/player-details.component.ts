@@ -24,20 +24,17 @@ export class PlayerDetailsComponent implements OnInit {
 
   isLoading:boolean;
 
-  defaultFiltering:FilterCriteria;
+  initialFiltering:FilterCriteria;
 
   constructor(params:RouteParams,
               private _playerService:PlayerService) {
     this.playerIdParam = <number>+params.get('id');
-    this.defaultFiltering = <FilterCriteria>{
-      ascending: true,
-      rangeSelection: DateRangeType.ALL_TIME
-    };
+    this.setInitialFiltering(params);
   }
 
   ngOnInit() {
     if (this.playerIdParam) {
-      this.loadPlayerAndStats(this.defaultFiltering);
+      this.loadPlayerAndStats(this.initialFiltering);
     }
   }
 
@@ -68,5 +65,12 @@ export class PlayerDetailsComponent implements OnInit {
   private stopLoading() {
     console.log('done loadstats');
     this.isLoading = false;
+  }
+
+  private setInitialFiltering(params:RouteParams) {
+    this.initialFiltering = Object.assign(<FilterCriteria>{
+      ascending: true,
+      rangeSelection: DateRangeType.ALL_TIME
+    }, FilterCriteria.deserialise(params));
   }
 }

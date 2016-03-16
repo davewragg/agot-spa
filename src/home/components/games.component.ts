@@ -6,6 +6,7 @@ import {GamesTableComponent} from './games-table.component';
 import {DateRangeComponent} from './date-range.component';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
 import {SpinnerComponent} from '../../shared/components/spinner.component';
+import {RouteParams} from 'angular2/router';
 
 @Component({
   selector: 'agot-games',
@@ -18,7 +19,7 @@ export class GamesComponent implements OnInit {
   @Input()
   title:string;
   @Input()
-  defaultFiltering:FilterCriteria;
+  initialFiltering:FilterCriteria;
   @Input()
   hideFilters:boolean = false;
 
@@ -26,11 +27,12 @@ export class GamesComponent implements OnInit {
   loadingError:any = null;
   isLoading:boolean;
 
-  constructor(private _gameService:GameService) {
+  constructor(params:RouteParams, private _gameService:GameService) {
+    this.setInitialFiltering(params);
   }
 
   ngOnInit() {
-    this.loadGames(this.defaultFiltering);
+    this.loadGames(this.initialFiltering);
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
@@ -54,5 +56,9 @@ export class GamesComponent implements OnInit {
           this.isLoading = false;
         }
       );
+  }
+
+  private setInitialFiltering(params:RouteParams) {
+    this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }
