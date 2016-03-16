@@ -17,7 +17,7 @@ export class SeedConfig {
   DEBUG                = argv['debug']                       || false;
   DOCS_PORT            = argv['docs-port']                   || 4003;
   COVERAGE_PORT        = argv['coverage-port']               || 4004;
-  APP_BASE             = argv['base']                        || '/';
+  APP_BASE             = argv['base']                        || '/agot/';
 
   ENABLE_HOT_LOADING   = argv['hot-loader'];
   HOT_LOADER_PORT      = 5578;
