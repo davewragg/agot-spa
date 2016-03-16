@@ -4,13 +4,14 @@ import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {PlayerLinkComponent} from '../shared/components/player-link.component';
 import {Observable} from 'rxjs/Observable';
+import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-all-players',
   moduleId: module.id,
   viewProviders: [PlayerService],
   templateUrl: './players.html',
-  directives: [PlayerLinkComponent]
+  directives: [PlayerLinkComponent, SpinnerComponent]
 })
 export class PlayersComponent implements OnInit {
   players:Observable<Player[]>;
