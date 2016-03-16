@@ -8,6 +8,7 @@ import {FilterCriteria} from '../shared/models/filter-criteria.model';
 import {DateRangeType} from '../shared/models/date-range-type.model';
 import {DateRangeComponent} from '../home/components/date-range.component';
 import {SpinnerComponent} from '../shared/components/spinner.component';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-player-details',
@@ -36,34 +37,32 @@ export class PlayerDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.playerIdParam) {
-      // TODO forkJoin for merged loading state
-      this.loadPlayer(this.playerIdParam);
-      this.loadStats(this.defaultFiltering);
+      this.loadPlayerAndStats(this.defaultFiltering);
     }
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
-    this.loadStats(criteria);
+    this.loadPlayerAndStats(criteria);
   }
 
-  private loadPlayer(playerId:number) {
-    this._playerService.getPlayer(this.playerIdParam)
-      .subscribe((player) => {
-        this.player = player;
-      });
-  }
-
-  private loadStats(criteria?:FilterCriteria) {
+  private loadPlayerAndStats(criteria?:FilterCriteria) {
     this.isLoading = true;
-    this._playerService.getPlayerStats(this.playerIdParam, criteria)
-      .subscribe((stats) => {
-          this.playerStats = stats;
-        },
-        (error) => {
-          console.error(error);
-          this.stopLoading();
-        },
-        () => this.stopLoading());
+    Observable.combineLatest(
+      this._playerService.getPlayer(this.playerIdParam),
+      this._playerService.getPlayerStats(this.playerIdParam, criteria)
+    ).subscribe(
+      ([player, stats]:[Player, PlayerStats]) => {
+        console.log(player, stats);
+        this.player = player;
+        this.playerStats = stats;
+        // .combineLatest may not trigger done()
+        this.stopLoading();
+      },
+      (error) => {
+        console.error(error);
+        this.stopLoading();
+      },
+      () => this.stopLoading());
   }
 
   private stopLoading() {
