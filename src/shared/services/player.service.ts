@@ -153,7 +153,7 @@ export class PlayerService {
       return currentStat > newStat ? lastEntry : entry;
     });
     if (winningEntry && winningEntry[1][field] > 0) {
-      const deckClass = this._referenceDataService.getDeckClass(winningEntry[0]);
+      const deckClass = this.getDeckClass(winningEntry[0]);
       return new DeckClassStats(deckClass, winningEntry[1]);
     }
     return null;
@@ -183,5 +183,21 @@ export class PlayerService {
       },
       (err) => console.error(err)
     );
+  }
+
+  // TODO legacy sticking plaster
+  private getFaction(factionId:number):Faction {
+    return this._factions.find((faction) => faction.factionId === factionId);
+  }
+
+  // TODO legacy sticking plaster
+  private getAgenda(agendaId:number):Agenda {
+    return this._agendas.find((agenda) => agenda.agendaId === agendaId);
+  }
+
+  // TODO legacy sticking plaster
+  private getDeckClass(deckClassId:number):DeckClass {
+    const ids = DeckClass.getFactionAndAgendaId(deckClassId);
+    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
   }
 }

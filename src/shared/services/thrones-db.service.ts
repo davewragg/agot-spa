@@ -26,17 +26,22 @@ export class ThronesDbService {
   }
 
   importAndConvertThronesDbDeck(deckId:number):Observable<Deck> {
-    return this.getThronesDbDeck(deckId).map((thronesDeck:ThronesDbDeck) => {
+    return Observable.combineLatest(
+      this.referenceDataService.factions,
+      this.referenceDataService.agendas,
+      this.getThronesDbDeck(deckId)
+    )
+    .map(([factions, agendas, thronesDeck]:[Faction[], Agenda[], ThronesDbDeck]) => {
       const deck = new Deck();
       deck.title = thronesDeck.name;
       deck.thronesDbId = thronesDeck.id;
       deck.thronesDbVersion = thronesDeck.version;
       deck.thronesDbLink = this.thronesDbLinkBase + thronesDeck.id;
       // faction
-      deck.faction = this.convertFaction(thronesDeck.faction_code);
+      deck.faction = this.convertFaction(factions, thronesDeck.faction_code);
       deck.factionId = deck.faction.factionId;
       // agenda
-      deck.agenda = this.convertAgenda(thronesDeck.agenda_code);
+      deck.agenda = this.convertAgenda(agendas, thronesDeck.agenda_code);
       if (!deck.agenda) {
         console.warn(`No agenda for ${thronesDeck.agenda_code}`);
       } else {
@@ -47,12 +52,12 @@ export class ThronesDbService {
     });
   }
 
-  private convertFaction(thronesFactionCode:string):Faction {
-    return this.referenceDataService.getFactionBy('thronesDbCode', thronesFactionCode);
+  private convertFaction(factions:Faction[], thronesFactionCode:string):Faction {
+    return factions.find((faction) => faction['thronesDbCode'] === thronesFactionCode);
   }
 
-  private convertAgenda(thronesAgendaCode:string):Agenda {
-    return this.referenceDataService.getAgendaBy('thronesDbCode', thronesAgendaCode);
+  private convertAgenda(agendas:Agenda[], thronesAgendaCode:string):Agenda {
+    return agendas.find((agenda) => agenda['thronesDbCode'] === thronesAgendaCode);
   }
 }
 

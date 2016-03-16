@@ -7,6 +7,22 @@ import {DataService} from './data.service';
 export class DeckService {
   private data:Observable<Deck[]>;
 
+  static validateDeck(deck:Deck):string {
+    // validate agenda XOR secondary faction
+    if (+deck.agendaId && deck.secondFactionId) {
+      return 'pick one';
+    }
+    // validate banner is not the same as main faction
+    if (+deck.agendaId === +deck.factionId) {
+      return 'invalid banner';
+    }
+    // validate faction 1 != faction 2
+    if (+deck.factionId === +deck.secondFactionId) {
+      return 'invalid second faction';
+    }
+    return null;
+  }
+
   constructor(private dataService:DataService) {
   }
 

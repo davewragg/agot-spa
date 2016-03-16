@@ -8,6 +8,7 @@ import {Deck} from '../shared/models/deck.model';
 import {DeckClass} from '../shared/models/deck-class.model';
 import {Control} from 'angular2/common';
 import {Observable} from 'rxjs/Observable';
+import {DeckService} from '../shared/services/deck.service';
 
 @Component({
   selector: 'agot-deck-edit-form',
@@ -27,29 +28,18 @@ export class DeckEditFormComponent implements OnInit {
   agendas:Observable<Agenda[]>;
   factions:Observable<Faction[]>;
 
-  // TODO move to service
-  private static validateDeck(deck:Deck):string {
-    // validate agenda XOR secondary faction
-    if (+deck.agendaId && deck.secondFactionId) {
-      return 'pick one';
-    }
-    // validate banner is not the same as main faction
-    if (+deck.agendaId === +deck.factionId) {
-      return 'invalid banner';
-    }
-    // validate faction 1 != faction 2
-    if (+deck.factionId === +deck.secondFactionId) {
-      return 'invalid second faction';
-    }
-    return null;
-  }
+  // TODO legacy sticking plaster
+  private _factions:Faction[];
+  private _agendas:Agenda[];
 
   constructor(private _formBuilder:FormBuilder,
               private _referenceDataService:ReferenceDataService,
               private _notificationService:NotificationService) {
-    // TODO probably async
     this.factions = this._referenceDataService.factions;
     this.agendas = this._referenceDataService.agendas;
+    // TODO legacy sticking plaster
+    this.factions.subscribe((factions) => this._factions = factions);
+    this.agendas.subscribe((agendas) => this._agendas = agendas);
   }
 
   ngOnInit() {
@@ -67,8 +57,7 @@ export class DeckEditFormComponent implements OnInit {
   onSubmit() {
     // form properties default to strings
     const updatedDeck:Deck = this.deckForm.value;
-    //TODO proper validation here
-    const error = DeckEditFormComponent.validateDeck(updatedDeck);
+    const error = DeckService.validateDeck(updatedDeck);
     if (error) {
       this._notificationService.warn('Nope', error);
       console.warn(error);
@@ -101,26 +90,36 @@ export class DeckEditFormComponent implements OnInit {
     if (!title.value || !title.touched) {
       const factionId:number = +this.deckForm.controls['factionId'].value;
       const agendaId:number = +this.deckForm.controls['agendaId'].value;
-      const faction = this._referenceDataService.getFaction(factionId);
-      const agenda = this._referenceDataService.getAgenda(agendaId);
+      const faction = this.getFaction(factionId);
+      const agenda = this.getAgenda(agendaId);
       const deckClassTitle = DeckClass.getDeckClassTitle(faction, agenda);
       const defaultTitle = `New ${deckClassTitle} deck`;
-      title.updateValue(defaultTitle);
+      title.updateValue(defaultTitle, {});// TODO check {}
     }
   }
 
   private populateDeck(gamePlayer:Deck) {
     // form properties default to strings
-    gamePlayer.faction = this._referenceDataService.getFaction(+gamePlayer.factionId);
+    gamePlayer.faction = this.getFaction(+gamePlayer.factionId);
     if (gamePlayer.agendaId) {
-      gamePlayer.agenda = this._referenceDataService.getAgenda(+gamePlayer.agendaId);
+      gamePlayer.agenda = this.getAgenda(+gamePlayer.agendaId);
     } else {
       gamePlayer.agenda = null;
     }
     if (gamePlayer.secondFactionId) {
-      gamePlayer.secondaryFaction = this._referenceDataService.getFaction(+gamePlayer.secondFactionId);
+      gamePlayer.secondaryFaction = this.getFaction(+gamePlayer.secondFactionId);
     } else {
       gamePlayer.secondaryFaction = null;
     }
+  }
+
+  // TODO legacy sticking plaster
+  private getFaction(factionId:number | string) {
+    return this._factions.find((faction) => faction.factionId === +factionId);
+  }
+
+  // TODO legacy sticking plaster
+  private getAgenda(agendaId:number | string) {
+    return this._agendas.find((agenda) => agenda.agendaId === +agendaId);
   }
 }

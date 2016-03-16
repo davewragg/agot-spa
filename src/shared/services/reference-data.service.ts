@@ -5,15 +5,12 @@ import {Agenda} from '../models/agenda.model';
 import {DeckClass} from '../models/deck-class.model';
 import {BehaviorSubject} from 'rxjs/Rx';
 import {DataService} from './data.service';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ReferenceDataService {
   private _factions$:BehaviorSubject<Faction[]> = new BehaviorSubject([]);
   private _agendas$:BehaviorSubject<Agenda[]> = new BehaviorSubject([]);
-  // TODO legacy
-  private _factions:Faction[];
-  // TODO legacy
-  private _agendas:Agenda[];
 
   constructor(private dataService:DataService) {
     this.loadInitialData();
@@ -37,45 +34,42 @@ export class ReferenceDataService {
     ];
   }
 
-  getFaction(factionId:number):Faction {
+  getFaction(factionId:number):Observable<Faction> {
     return this.getFactionBy('factionId', factionId);
   }
 
-  getFactionBy(field:string, value:number | string):Faction {
-    // TODO guard against early calls
-    console.warn('returning legacy faction');
-    return this._factions.find((faction) => faction[field] === value);
+  getFactionBy(field:string, value:number | string):Observable<Faction> {
+    return this._factions$.map((factions:Faction[]) => factions.find((faction:Faction) => faction[field] === value));
   }
 
-  getAgenda(agendaId:number):Agenda {
+  getAgenda(agendaId:number):Observable<Agenda> {
     return this.getAgendaBy('agendaId', agendaId);
   }
 
-  getAgendaBy(field:string, value:number | string):Agenda {
-    // TODO guard against early calls
-    console.warn('returning legacy agenda');
-    return this._agendas.find((agenda) => agenda[field] === value);
+  getAgendaBy(field:string, value:number | string):Observable<Agenda> {
+    return this._agendas$.map((agendas:Agenda[]) => agendas.find((agenda:Agenda) => agenda[field] === value));
   }
 
-  getDeckClass(deckClassId:number):DeckClass {
+  getDeckClass(deckClassId:number):Observable<DeckClass> {
     const ids = DeckClass.getFactionAndAgendaId(deckClassId);
-    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
+    return Observable.combineLatest(
+      this.getFaction(ids.factionId),
+      this.getAgenda(ids.agendaId)
+    ).map(([faction, agenda]:[Faction, Agenda]) => {
+      return new DeckClass(faction, agenda);
+    });
   }
 
   private loadInitialData() {
     this.dataService.getReferenceData('factions').subscribe(
       (factions:Faction[]) => {
         this._factions$.next(factions);
-        // TODO legacy
-        this._factions = factions;
       },
       (err) => console.error(err)
     );
     this.dataService.getReferenceData('agendas').subscribe(
       (agendas:Agenda[]) => {
         this._agendas$.next(agendas);
-        // TODO legacy
-        this._agendas = agendas;
       },
       (err) => console.error(err)
     );
