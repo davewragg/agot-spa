@@ -18,9 +18,6 @@ export class FilterCriteria {
   static deserialise(routeParams:RouteParams):FilterCriteria {
     const criteria = new FilterCriteria();
     Object.assign(criteria, routeParams.params);
-    if (criteria.fromDate || criteria.toDate) {
-      criteria.rangeSelection = DateRangeType.CUSTOM;
-    }
     return criteria;
   }
 }

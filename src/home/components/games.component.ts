@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from 'angular2/core';
+import {Router, RouteParams} from 'angular2/router';
 
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
@@ -6,7 +7,6 @@ import {GamesTableComponent} from './games-table.component';
 import {DateRangeComponent} from './date-range.component';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
 import {SpinnerComponent} from '../../shared/components/spinner.component';
-import {RouteParams} from 'angular2/router';
 
 @Component({
   selector: 'agot-games',
@@ -27,7 +27,9 @@ export class GamesComponent implements OnInit {
   loadingError:any = null;
   isLoading:boolean;
 
-  constructor(params:RouteParams, private _gameService:GameService) {
+  constructor(params:RouteParams,
+              private _router:Router,
+              private _gameService:GameService) {
     this.setInitialFiltering(params);
   }
 
@@ -36,7 +38,8 @@ export class GamesComponent implements OnInit {
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
-    this.loadGames(criteria);
+    //this.loadGames(criteria);
+    this._router.navigate(['Games', FilterCriteria.serialise(criteria)]);
   }
 
   loadGames(criteria?:FilterCriteria) {

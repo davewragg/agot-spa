@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {PlayerStats} from '../shared/models/player-stats.model';
@@ -27,6 +27,7 @@ export class PlayerDetailsComponent implements OnInit {
   initialFiltering:FilterCriteria;
 
   constructor(params:RouteParams,
+              private _router:Router,
               private _playerService:PlayerService) {
     this.playerIdParam = <number>+params.get('id');
     this.setInitialFiltering(params);
@@ -39,7 +40,8 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
-    this.loadPlayerAndStats(criteria);
+    //this.loadPlayerAndStats(criteria);
+    this._router.navigate(['PlayerDetails', FilterCriteria.serialise(criteria)]);
   }
 
   private loadPlayerAndStats(criteria?:FilterCriteria) {
