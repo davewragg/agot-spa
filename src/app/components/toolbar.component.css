@@ -16,10 +16,10 @@ h1 {
 }
 
 .header-icon {
-  background: url(/assets/img/icon2.png);
+  background: url(./assets/img/header.png);
   float: right;
-  height: 2.5em;
-  margin-top: .5em;
-  width: 2.5em;
+  height: 2.2em;
+  margin-top: .4em;
+  width: 2.2em;
   background-size: cover;
 }

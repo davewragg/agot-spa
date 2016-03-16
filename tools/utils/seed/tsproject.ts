@@ -1,10 +1,10 @@
 import * as gulpLoadPlugins from 'gulp-load-plugins';
 const plugins = <any>gulpLoadPlugins();
 
-var _tsProject;
+let _tsProject: any;
 
 export function makeTsProject() {
-  if(!_tsProject) {
+  if (!_tsProject) {
     _tsProject = plugins.typescript.createProject('tsconfig.json', {
       typescript: require('typescript')
     });

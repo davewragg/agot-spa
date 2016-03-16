@@ -1,5 +1,5 @@
 :host {
-  border-color: #E1E1E1;
+  border-color: #e1e1e1;
   border-style: solid;
   border-width: 0 0 1px;
   display: block;
@@ -9,7 +9,7 @@
 }
 
 nav a {
-  color: #8F8F8F;
+  color: #8f8f8f;
   font-size: 14px;
   font-weight: 500;
   line-height: 48px;
@@ -19,6 +19,7 @@ nav a {
 }
 
 nav a.router-link-active {
-  color: #106CC8;
+  color: #b30001;
+  color: var(--primary-colour);
   font-weight: bold;
 }

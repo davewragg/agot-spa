@@ -45,7 +45,7 @@ export class GameFormComponent implements OnInit {
 
   onSubmit() {
     if (!this.validateGame()) {
-      return false;
+      return;
     }
     const updatedGame = this.deserialiseFormToGame();
     this.update.emit(updatedGame);
@@ -76,8 +76,6 @@ export class GameFormComponent implements OnInit {
   private serialiseGameToForm() {
     this.gameForm = this._FormBuilder.group({
       date: [this.convertDateString(), Validators.required],
-      coreSetCount: [this.game.coreSetCount, Validators.required],
-      deckTypeId: [this.game.deckTypeId, Validators.required],
     });
     // clone players to new array
     this.gamePlayers = this.game.gamePlayers.map((gamePlayer) => Object.assign({}, gamePlayer));
@@ -88,20 +86,14 @@ export class GameFormComponent implements OnInit {
     // FIXME form values are strings
     const game = Object.assign({}, this.game, this.gameForm.value);
 
-    // deckTypeId from form is a string
-    game.deckType = this.deckTypes.find((deckType) => deckType.deckTypeId === +game.deckTypeId);
-
     // set updated players back to game
     this.game.gamePlayers = this.gamePlayers;
 
-    // set date format to correct string
-    // set deck from deckId? vice versa?
-    // set other?
     return game;
   };
 
   private convertDateString() {
     // have to remove the time and timezone to populate the control correctly
-    return this.game.date.slice(0, 10);
+    return this.game.date.slice(0, 16);
   };
 }

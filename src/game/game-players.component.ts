@@ -1,14 +1,14 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {NotificationService} from '../shared/services/notification.service';
 import {GamePlayer} from '../shared/models/game-player.model';
-import {GamePlayerFormComponent} from './game-player-form.component';
+import {NewGamePlayerFormComponent} from './new-game-player-form.component';
 import {GamePlayerRowComponent} from './game-player-row.component';
 
 @Component({
   selector: 'agot-game-players',
   moduleId: module.id,
   templateUrl: './game-players.html',
-  directives: [GamePlayerRowComponent, GamePlayerFormComponent]
+  directives: [GamePlayerRowComponent, NewGamePlayerFormComponent]
 })
 export class GamePlayersComponent {
   @Input()
@@ -46,7 +46,10 @@ export class GamePlayersComponent {
     console.log(newPlayer);
     //TODO proper validation here
     if (!newPlayer || !this.validateNewPlayer(newPlayer)) {
-      return false;
+      return;
+    }
+    if (this.gamePlayers.length < 1) {
+      newPlayer.isWinner = true;
     }
     this.gamePlayers.push(newPlayer);
     this.resetForm();

@@ -1,0 +1,39 @@
+<form [ngFormModel]="deckForm" (ngSubmit)="onSubmit()" class="form" [class.form-inline]="creating">
+  <div class="form-group">
+    <select class="form-control" ngControl="factionId">
+      <option value="">Main Faction</option>
+      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" ngControl="agendaId" [disabled]="secondFactionId.value" #agendaId>
+      <option value="">Agenda</option>
+      <option *ngFor="#agenda of agendas" [value]="agenda.agendaId">{{ agenda.title }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" ngControl="secondFactionId" [disabled]="agendaId.value" #secondFactionId>
+      <option value="">Secondary Faction</option>
+      <option *ngFor="#faction of factions" [value]="faction.factionId">{{ faction.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">Title</label>
+    <input type="text" ngControl="title">
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">Core set count</label>
+    <input type="number" ngControl="coreSetCount" min="1" max="3" class="form-control">
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">Deck type</label>
+    <select ngControl="deckTypeId" class="form-control">
+      <option *ngFor="#deckType of deckTypes" [value]="deckType.deckTypeId">{{ deckType.title }}</option>
+    </select>
+  </div>
+  <!--<div class="form-group">-->
+    <!--<button type="submit" class="btn btn-success" [disabled]="!gamePlayerForm.valid">-->
+      <!--{{ creating ? 'Add Player' : 'Update' }}-->
+    <!--</button>-->
+  <!--</div>-->
+</form>

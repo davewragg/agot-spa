@@ -19,7 +19,7 @@
 
 <div class="card card-block" *ngIf="!readOnly">
   <h5 class="card-title">Add player</h5>
-  <agot-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-game-player-form>
+  <agot-new-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-new-game-player-form>
 </div>
 
 <div class="card card-block" *ngIf="!readOnly">
@@ -28,7 +28,7 @@
     <label class="btn btn-primary" *ngFor="#gamePlayer of gamePlayers" [class.active]="gamePlayer.isWinner">
       <input type="radio" name="isWinner" value="true"
              autocomplete="off" [checked]="gamePlayer.isWinner"
-             (change)="onWinnerChange(gamePlayer)"> {{ gamePlayer.player.name }}
+             (change)="onWinnerChange(gamePlayer)"> {{ gamePlayer.player?.name }}
     </label>
 
     <label class="btn btn-primary-outline">

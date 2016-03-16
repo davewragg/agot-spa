@@ -14,40 +14,50 @@ import {PlayerStatsSet} from '../models/player-stats-set.model';
 import {PlayerInsights} from '../models/player-insights.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
+import {DeckClassStats} from '../models/deck-class-stats.model';
+import {BehaviorSubject} from 'rxjs/Rx';
 
 @Injectable()
 export class PlayerService {
+  private _factions:Faction[];
+  private _agendas:Agenda[];
+
+  private _players$:BehaviorSubject<Player[]> = new BehaviorSubject([]);
+
   constructor(private _dataService:DataService, private _referenceDataService:ReferenceDataService) {
+    _referenceDataService.factions.subscribe((factions) => this._factions = factions);
+    _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
+    this.loadInitialData();
   }
 
-  getPlayers():Player[] {
-    // TODO async
-    return [
-      {playerId: 1, name: 'Fonz'},
-      {playerId: 2, name: 'Dan'},
-      {playerId: 3, name: 'Dave'},
-      {playerId: 4, name: 'James'},
-    ];
+  get players() {
+    console.log('returning players');
+    return this._players$.asObservable();
   }
 
-  getPlayer(playerId:number):Player {
-    // TODO async
-    return this.getPlayers().find((player:Player) => player.playerId === playerId);
+  getPlayer(playerId:number):Observable<Player> {
+    return this._players$.map((players:Player[]) => players.find((player:Player) => player.playerId === playerId));
   }
 
   getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<PlayerStats> {
+    criteria.playerIds = [playerId];
     return this._dataService.getGames(criteria)
       .map((games:Game[]):PlayerStats => {
         return games
-          .filter(filterMyGames)
           .reduce(buildStatsFromGames, new PlayerStats());
       }).do((playerStats:PlayerStats) => {
+        if (playerStats.games.length === 0) {
+          return playerStats;
+        }
         return playerStats.sort();
       }).do((playerStats:PlayerStats) => {
+        if (playerStats.games.length === 0) {
+          return playerStats;
+        }
         return this.buildPlayerInsights(playerStats);
       });
 
-    function buildStatsFromGames(stats:PlayerStats, game:Game):any {
+    function buildStatsFromGames(stats:PlayerStats, game:Game):PlayerStats {
       stats.games.push(game);
 
       var me = getMe(game);
@@ -67,40 +77,33 @@ export class PlayerService {
       }
     }
 
-    function filterMyGames(game:Game) {
-      return !!game.gamePlayers.find(
-        (gamePlayer:GamePlayer) => gamePlayer.playerId === playerId
-      );
-    }
-
     function getMe(game:Game) {
       return game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.playerId === playerId);
     }
 
-    function getMyResult(game, me):Result {
+    function getMyResult(game:Game, me:GamePlayer):Result {
       const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
       return me.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW;
     }
 
     function updateMyStats(me:GamePlayer, stats:PlayerStats, result:Result) {
-      const overallStats = stats.overall;
-      addResultFor(overallStats, result);
+      addResultFor(stats.overall, result);
 
       updatePlayerStats(me, stats.as, result);
     }
 
-    function updatePlayerStats(player:GamePlayer, stats:PlayerStatsSet, result) {
-      if (!player.secondFactionId) {
-        const deckClassId = DeckClass.getDeckClassId(player.factionId, player.agendaId);
+    function updatePlayerStats(player:GamePlayer, stats:PlayerStatsSet, result:Result) {
+      if (!player.deck.secondFactionId) {
+        const deckClassId = DeckClass.getDeckClassId(player.deck.factionId, player.deck.agendaId);
         updateStatsFor(deckClassId, stats.deckClass, result);
       }
 
-      updateStatsFor(player.agendaId, stats.agendas, result);
-      updateStatsFor(player.factionId, stats.factions, result);
-      updateStatsFor(player.secondFactionId, stats.factions, result);
+      updateStatsFor(player.deck.agendaId, stats.agendas, result);
+      updateStatsFor(player.deck.factionId, stats.factions, result);
+      updateStatsFor(player.deck.secondFactionId, stats.factions, result);
     }
 
-    function updateStatsFor(keyId, statsMap:Map<number, Stats>, result:Result) {
+    function updateStatsFor(keyId:number | string, statsMap:Map<number | string, Stats>, result:Result) {
       if (keyId) {
         const keyStats = statsMap.get(keyId) || new Stats();
         addResultFor(keyStats, result);
@@ -134,7 +137,7 @@ export class PlayerService {
     return playerStats;
   }
 
-  private findTopDeckClassBy(deckMap:Map<number, Stats>, field:string):DeckClass {
+  private findTopDeckClassBy(deckMap:Map<number, Stats>, field:string):DeckClassStats {
     const entries:[number, Stats][] = Array.from(deckMap.entries());
     const winningEntry:[number, Stats] = entries.reduce((lastEntry:[number, Stats], entry:[number, Stats]) => {
       if (!lastEntry) {
@@ -142,20 +145,26 @@ export class PlayerService {
       }
       const currentStats:Stats = lastEntry[1];
       const newStats:Stats = entry[1];
-      if (currentStats[field] === newStats[field]) {
+      const currentStat:number = currentStats[field];
+      const newStat:number = newStats[field];
+      if (currentStat === newStat) {
         return currentStats.played > newStats.played ? lastEntry : entry;
       }
-      return currentStats[field] > newStats[field] ? lastEntry : entry;
+      return currentStat > newStat ? lastEntry : entry;
     });
-    return winningEntry && winningEntry[1][field] > 0 ? this._referenceDataService.getDeckClass(winningEntry[0]) : null;
+    if (winningEntry && winningEntry[1][field] > 0) {
+      const deckClass = this.getDeckClass(winningEntry[0]);
+      return new DeckClassStats(deckClass, winningEntry[1]);
+    }
+    return null;
   }
 
   private filterOutPlayedFactions(factionsMap:Map<number, Stats>):Faction[] {
-    return <Faction[]>this.filterPlayed(this._referenceDataService.getFactions(), factionsMap, 'factionId');
+    return <Faction[]>this.filterPlayed(this._factions, factionsMap, 'factionId');
   }
 
   private filterOutPlayedAgendas(agendasMap:Map<number, Stats>):Agenda[] {
-    return <Agenda[]>this.filterPlayed(this._referenceDataService.getAgendas(), agendasMap, 'agendaId');
+    return <Agenda[]>this.filterPlayed(this._agendas, agendasMap, 'agendaId');
   }
 
   private filterPlayed(allValues:Array<any>, playedValuesMap:Map<number, Stats>, idField:string) {
@@ -166,5 +175,29 @@ export class PlayerService {
 
     return allValuesCopy;
   }
-}
 
+  private loadInitialData() {
+    this._dataService.getReferenceData('players').subscribe(
+      (players:Player[]) => {
+        this._players$.next(players);
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  // TODO legacy sticking plaster
+  private getFaction(factionId:number):Faction {
+    return this._factions.find((faction) => faction.factionId === factionId);
+  }
+
+  // TODO legacy sticking plaster
+  private getAgenda(agendaId:number):Agenda {
+    return this._agendas.find((agenda) => agenda.agendaId === agendaId);
+  }
+
+  // TODO legacy sticking plaster
+  private getDeckClass(deckClassId:number):DeckClass {
+    const ids = DeckClass.getFactionAndAgendaId(deckClassId);
+    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
+  }
+}

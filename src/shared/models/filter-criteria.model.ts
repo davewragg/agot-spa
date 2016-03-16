@@ -5,4 +5,8 @@ export interface FilterCriteria {
   toDate?: string; //iso
   ascending: boolean;
   rangeSelection?: DateRangeType;
+  playerIds?: number[];
+  factionIds?: number[];
+  agendaIds?: number[];
+  deckIds?: number[];
 }

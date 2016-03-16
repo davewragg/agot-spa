@@ -1,13 +1,14 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {GamePlayer} from '../shared/models/game-player.model';
-import {GamePlayerFormComponent} from './game-player-form.component';
+import {DeckSelectorComponent} from './deck-selector.component';
+import {Deck} from '../shared/models/deck.model';
 
 @Component({
   selector: 'agot-game-player-row',
   moduleId: module.id,
   templateUrl: './game-player-row.html',
   styleUrls: ['./game-player-row.css'],
-  directives: [GamePlayerFormComponent]
+  directives: [DeckSelectorComponent]
 })
 export class GamePlayerRowComponent {
   @Input()
@@ -21,7 +22,8 @@ export class GamePlayerRowComponent {
 
   editing:boolean = false;
 
-  onPlayerUpdate() {
+  onUpdateDeck(updatedDeck:Deck) {
+    this.gamePlayer.deck = updatedDeck;
     this.updatePlayer.emit(this.gamePlayer);
     this.editing = false;
   }

@@ -3,10 +3,28 @@ import {DeckType} from '../models/deck-type.model';
 import {Faction} from '../models/faction.model';
 import {Agenda} from '../models/agenda.model';
 import {DeckClass} from '../models/deck-class.model';
+import {BehaviorSubject} from 'rxjs/Rx';
+import {DataService} from './data.service';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ReferenceDataService {
-  //constructor() {}
+  private _factions$:BehaviorSubject<Faction[]> = new BehaviorSubject([]);
+  private _agendas$:BehaviorSubject<Agenda[]> = new BehaviorSubject([]);
+
+  constructor(private dataService:DataService) {
+    this.loadInitialData();
+  }
+
+  get factions() {
+    console.log('returning factions');
+    return this._factions$.asObservable();
+  }
+
+  get agendas() {
+    console.log('returning agendas');
+    return this._agendas$.asObservable();
+  }
 
   getDeckTypes():DeckType[] {
     return [
@@ -16,44 +34,44 @@ export class ReferenceDataService {
     ];
   }
 
-  getFactions():Faction[] {
-    return [
-      {factionId: 1, factionName: 'Greyjoy'},
-      {factionId: 2, factionName: 'Targaryen'},
-      {factionId: 3, factionName: 'Baratheon'},
-      {factionId: 4, factionName: 'Stark'},
-      {factionId: 5, factionName: 'Martell'},
-      {factionId: 6, factionName: 'Lannister'},
-      {factionId: 7, factionName: 'Nights Watch'},
-      {factionId: 8, factionName: 'Tyrell'},
-    ];
+  getFaction(factionId:number):Observable<Faction> {
+    return this.getFactionBy('factionId', factionId);
   }
 
-  getAgendas():Agenda[] {
-    return [
-      {agendaId: 1, title: 'Banner of the Kraken'},
-      {agendaId: 2, title: 'Banner of the Dragon'},
-      {agendaId: 3, title: 'Banner of the Stag'},
-      {agendaId: 4, title: 'Banner of the Wolf'},
-      {agendaId: 5, title: 'Banner of the Sun'},
-      {agendaId: 6, title: 'Banner of the Lion'},
-      {agendaId: 7, title: 'Banner of the Watch'},
-      {agendaId: 8, title: 'Banner of the Rose'},
-      {agendaId: 9, title: 'Fealty'},
-      {agendaId: 10, title: 'The Lord of the Crossing'},
-    ];
+  getFactionBy(field:string, value:number | string):Observable<Faction> {
+    return this._factions$.map((factions:Faction[]) => factions.find((faction:Faction) => faction[field] === value));
   }
 
-  getFaction(factionId:number):Faction {
-    return this.getFactions().find((faction) => faction.factionId === factionId);
+  getAgenda(agendaId:number):Observable<Agenda> {
+    return this.getAgendaBy('agendaId', agendaId);
   }
 
-  getAgenda(agendaId:number):Agenda {
-    return this.getAgendas().find((agenda) => agenda.agendaId === agendaId);
+  getAgendaBy(field:string, value:number | string):Observable<Agenda> {
+    return this._agendas$.map((agendas:Agenda[]) => agendas.find((agenda:Agenda) => agenda[field] === value));
   }
 
-  getDeckClass(deckClassId:number):DeckClass {
+  getDeckClass(deckClassId:number):Observable<DeckClass> {
     const ids = DeckClass.getFactionAndAgendaId(deckClassId);
-    return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
+    return Observable.combineLatest(
+      this.getFaction(ids.factionId),
+      this.getAgenda(ids.agendaId)
+    ).map(([faction, agenda]:[Faction, Agenda]) => {
+      return new DeckClass(faction, agenda);
+    });
+  }
+
+  private loadInitialData() {
+    this.dataService.getReferenceData('factions').subscribe(
+      (factions:Faction[]) => {
+        this._factions$.next(factions);
+      },
+      (err) => console.error(err)
+    );
+    this.dataService.getReferenceData('agendas').subscribe(
+      (agendas:Agenda[]) => {
+        this._agendas$.next(agendas);
+      },
+      (err) => console.error(err)
+    );
   }
 }

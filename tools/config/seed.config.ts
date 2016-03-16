@@ -17,14 +17,14 @@ export class SeedConfig {
   DEBUG                = argv['debug']                       || false;
   DOCS_PORT            = argv['docs-port']                   || 4003;
   COVERAGE_PORT        = argv['coverage-port']               || 4004;
-  APP_BASE             = argv['base']                        || '/';
+  APP_BASE             = argv['base']                        || '/agot/';
 
   ENABLE_HOT_LOADING   = argv['hot-loader'];
   HOT_LOADER_PORT      = 5578;
 
   BOOTSTRAP_MODULE     = this.ENABLE_HOT_LOADING ? 'hot_loader_main' : 'main';
 
-  APP_TITLE            = 'AGOT Tracker';
+  APP_TITLE            = 'My Angular2 App';
 
   APP_SRC              = 'src';
   ASSETS_SRC           = `${this.APP_SRC}/assets`;
@@ -62,9 +62,7 @@ export class SeedConfig {
     { src: 'rxjs/bundles/Rx.js', inject: 'libs' },
     { src: 'angular2/bundles/angular2.js', inject: 'libs' },
     { src: 'angular2/bundles/router.js', inject: 'libs' },
-    { src: 'angular2/bundles/http.js', inject: 'libs' },
-    { src: 'bootstrap/dist/css/bootstrap.css', inject: true },
-    { src: 'angular2-toaster/lib/toaster.css', inject: true },
+    { src: 'angular2/bundles/http.js', inject: 'libs' }
   ]);
 
   PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencies([
@@ -72,14 +70,12 @@ export class SeedConfig {
     { src: 'reflect-metadata/Reflect.js', inject: 'shims' },
     { src: 'es6-shim/es6-shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.js', inject: 'shims' },
-    { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
-    { src: 'bootstrap/dist/css/bootstrap.min.css', inject: true },
-    { src: 'angular2-toaster/lib/toaster.css', inject: true },
+    { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' }
   ]);
 
   // Declare local files that needs to be injected
   APP_ASSETS: InjectableDependency[] = [
-    { src: `${this.ASSETS_SRC}/main.css`, inject: true }
+    { src: `${this.ASSETS_SRC}/main.css`, inject: true, vendor: false }
   ];
 
 
@@ -91,6 +87,7 @@ export class SeedConfig {
   // SystemsJS Configuration.
   protected SYSTEM_CONFIG_DEV = {
     defaultJSExtensions: true,
+    packageConfigPaths: [`${this.APP_BASE}node_modules/*/package.json`],
     paths: {
       [this.BOOTSTRAP_MODULE]: `${this.APP_BASE}${this.BOOTSTRAP_MODULE}`,
       'angular2/*': `${this.APP_BASE}angular2/*`,
@@ -112,6 +109,27 @@ export class SeedConfig {
       '*': 'node_modules/*'
     }
   };
+
+  // ----------------
+  // Autoprefixer configuration.
+  BROWSER_LIST = [
+    'ie >= 10',
+    'ie_mob >= 10',
+    'ff >= 30',
+    'chrome >= 34',
+    'safari >= 7',
+    'opera >= 23',
+    'ios >= 7',
+    'android >= 4.4',
+    'bb >= 10'
+  ];
+  getEnvDependencies() {
+    if (this.ENV === 'prod') {
+      return this.PROD_DEPENDENCIES;
+    } else {
+      return this.DEV_DEPENDENCIES;
+    }
+  }
 }
 
 
@@ -120,7 +138,7 @@ export class SeedConfig {
 // --------------
 // Utils.
 
-function normalizeDependencies(deps: InjectableDependency[]) {
+export function normalizeDependencies(deps: InjectableDependency[]) {
   deps
     .filter((d:InjectableDependency) => !/\*/.test(d.src)) // Skip globs
     .forEach((d:InjectableDependency) => d.src = require.resolve(d.src));

@@ -1,15 +1,14 @@
 <h2>Players</h2>
 <div class="card-deck-wrapper">
   <div class="card-deck">
-    <div *ngFor="#player of players" class="card text-xs-center">
+    <div *ngFor="#player of players | async" class="card text-xs-center">
       <div class="card-header">
         <h4><agot-player-link [player]="player"></agot-player-link></h4>
       </div>
-      <img class="card-img-bottom" src="/assets/img/icon{{ player.playerId + 1 }}.png">
+      <img class="card-img-bottom" src="./assets/img/icon{{ player.playerId + 1 }}.png">
       <div class="card-footer text-muted small">
         (faction not indicative)
       </div>
     </div>
   </div>
 </div>
-

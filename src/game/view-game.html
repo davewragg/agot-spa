@@ -3,19 +3,10 @@
     <div class="col-sm-4 form-group">
       <label class="form-control-label">Date</label>
       <span class="form-control-static font-weight-bold">
-        <time title="{{ game.date | amDateFormat: 'LLLL' }}">
-          <!--datetime="{{ game.date }}"-->
-          {{ game.date | amDateFormat: "D MMMM YYYY" }}
+        <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
+          {{ game.date | amDateFormat: "D MMMM YYYY HH:mm" }}
         </time>
       </span>
-    </div>
-    <div class="col-sm-4 form-group">
-      <label class="form-control-label">Core set count</label>
-      <span class="form-control-static font-weight-bold">{{ game.coreSetCount }}</span>
-    </div>
-    <div class="col-sm-4 form-group">
-      <label class="form-control-label">Deck type</label>
-      <span class="form-control-static font-weight-bold">{{ game.deckType.title }}</span>
     </div>
   </div>
 </fieldset>
@@ -32,5 +23,5 @@
     <button type="button" class="btn btn-sm btn-secondary" (click)="deleting = false">Whoops</button>
   </div>
 
-  <a [routerLink]="['/Home']" class="btn btn-primary-outline">&laquo; Back to list</a>
+  <a [routerLink]="['/Games']" class="btn btn-primary-outline">&laquo; Back </a>
 </div>

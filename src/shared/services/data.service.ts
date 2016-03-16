@@ -7,7 +7,9 @@ import {Game} from '../models/game.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DateRangeType} from '../models/date-range-type.model';
 import * as moment from 'moment/moment';
-
+import {Headers} from 'angular2/http';
+import {URLSearchParams} from 'angular2/http';
+import * as _ from 'lodash';
 
 @Injectable()
 export class DataService {
@@ -16,17 +18,72 @@ export class DataService {
   private today:string;
   private aWeekAgo:string;
 
+  //private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
+  private baseUrl = '//paulhoughton.org/agot';
+
+  private static setAllTime(criteria:FilterCriteria) {
+    return DataService.setDates(criteria, null, null);
+  }
+
+  private static setDates(criteria:FilterCriteria, fromDate?:string, toDate?:string) {
+    return Object.assign(criteria, {
+      fromDate: fromDate,
+      toDate: toDate,
+    });
+  }
+
+  private static convertFilterCriteriaToSearchParams(filterCriteria:FilterCriteria) {
+    const params:URLSearchParams = new URLSearchParams();
+    params.set('startDate', filterCriteria.fromDate);
+    params.set('endDate', filterCriteria.toDate);
+    if (filterCriteria.playerIds) {
+      filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId + ''));
+    }
+    if (filterCriteria.factionIds) {
+      filterCriteria.factionIds.forEach((factionId) => params.append('factionIds', factionId + ''));
+    }
+    if (filterCriteria.agendaIds) {
+      filterCriteria.agendaIds.forEach((agendaId) => params.append('agendaIds', agendaId + ''));
+    }
+    if (filterCriteria.deckIds) {
+      filterCriteria.deckIds.forEach((deckId) => params.append('deckIds', deckId + ''));
+    }
+    return params;
+  }
 
   private static _serialiseGame(game:Game):string {
-    return JSON.stringify(game);
+    // TODO if deck has id, strip everything else
+    const gameCopy:any = _.cloneDeep(game);
+    gameCopy.gamePlayers.forEach((player:any) => {
+      if (player.deck.deckId) {
+        player.deck = {deckId: player.deck.deckId};
+      }
+    });
+    // TODO remove non-primitives
+    return JSON.stringify(gameCopy);
+  }
+
+  private static _getContentHeaders() {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return {headers: headers};
+  }
+
+  private static handleResponse(response:Response):any {
+    const json = response.json();
+    if (json.error) {
+      throw new Error(<string>json.error.Message);
+    }
+    return json.payload;
   }
 
   constructor(private http:Http) {
+    // TODO strip time from these
     this.today = moment().add(1, 'days').toISOString();
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();
   }
 
   getGameIndex():Observable<GameIndex> {
+    console.log('getgameindex called');
     if (!this.data) {
       this.data = this._getGameIndex();
     }
@@ -34,21 +91,28 @@ export class DataService {
   }
 
   getAllGames() {
+    console.log('getallgames called');
     return this.getGameIndex()
       .map((gameIndex:GameIndex) => gameIndex.allResults.games);
   }
 
-  getGames(filterCriteria?:FilterCriteria) {
-    const criteria = this.setDatesFromRangeType(filterCriteria);
-    return this.getAllGames().map(filterGames);
+  getFilteredGames(filterCriteria:FilterCriteria) {
+    console.log('getfilteredgames called');
+    const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
+    return this.http.get(this.baseUrl + '/api/games/searchgames', {
+        search: params
+      })
+      .map(DataService.handleResponse);
+  }
 
-    function filterGames(games:Game[]) {
-      return games.filter((game:Game) => {
-        return (!criteria.fromDate || game.date >= criteria.fromDate) &&
-          (!criteria.toDate || game.date <= criteria.toDate);
-      }).sort(sortGames);
+  getGames(filterCriteria:FilterCriteria) {
+    const criteria:FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+    return this.getFilteredGames(criteria).map(sortGames);
+    // TODO move to service when available
+    function sortGames(games:Game[]) {
+      return games.sort(gameSorter);
 
-      function sortGames(game1:Game, game2:Game) {
+      function gameSorter(game1:Game, game2:Game) {
         if (game1.date > game2.date) {
           return criteria.ascending ? -1 : 1;
         }
@@ -60,36 +124,51 @@ export class DataService {
     }
   }
 
+  getGame(gameId:number):Observable<Game> {
+    console.log('getgame called', gameId);
+    return this.http.get(this.baseUrl + '/api/games/get/' + gameId)
+      .map(DataService.handleResponse);
+  }
+
   updateGame(game:Game):Observable<Game> {
-    return this.http.put('/agot/Games/Update', DataService._serialiseGame(game))
-      .map((response:Response) => response.json());
+    console.log('updategame called', game);
+    return this.http.put(this.baseUrl + '/api/games/update',
+      DataService._serialiseGame(game),
+      DataService._getContentHeaders())
+      .map(DataService.handleResponse);
     // TODO update cache? PBR covered?
   }
 
   createGame(game:Game):Observable<Game> {
-    return this.http.post('/agot/Games/Create', DataService._serialiseGame(game))
-      .map((response:Response) => response.json());
+    console.log('creategame called', game);
+    return this.http.post(this.baseUrl + '/api/games/create',
+      DataService._serialiseGame(game),
+      DataService._getContentHeaders())
+      .map(DataService.handleResponse);
     // TODO check for response id
     // TODO insert into cache
   }
 
   deleteGame(gameId:number):Observable<any> {
-    return this.http.delete('/agot/Games/Delete/' + gameId)
-      .map((response:Response) => response.json());
+    console.log('deletegame called', gameId);
+    return this.http.delete(this.baseUrl + '/api/games/delete/' + gameId)
+      .map(DataService.handleResponse);
+  }
+
+  /*
+   @param refDataType: factions / agendas / players / decks
+   */
+  getReferenceData(refDataType:string):Observable<any> {
+    console.log('getReferenceData called', refDataType);
+    return this.http.get(this.baseUrl + `/api/${refDataType}/getall`)
+      .map(DataService.handleResponse);
   }
 
   private _getGameIndex():Observable<GameIndex> {
-    return this.getFromJson()
-      .map((res:Response) => res.json());
+    console.log('_getgameindex called');
+    return this.http.get(this.baseUrl + '/api/games/getall')
+      .map(DataService.handleResponse).share();
   }
-
-  private getFromJson():Observable<Response> {
-    return this.http.get('/assets/data/GetAll.json');
-  }
-
-  //private getFromWeb():Observable<Response> {
-  //  return this.http.get('/agot/Games/GetAll');
-  //}
 
   private setDatesFromRangeType(criteria:FilterCriteria) {
     const updatedCriteria = Object.assign({}, criteria);
@@ -97,24 +176,12 @@ export class DataService {
     if (range === DateRangeType.THIS_WEEK) {
       this.setAWeekAgo(updatedCriteria);
     } else if (range === DateRangeType.ALL_TIME) {
-      this.setAllTime(updatedCriteria);
+      DataService.setAllTime(updatedCriteria);
     }
     return updatedCriteria;
   }
 
   private setAWeekAgo(criteria:FilterCriteria) {
-    return this.setDates(criteria, this.aWeekAgo, this.today);
-  };
-
-  private setAllTime(criteria:FilterCriteria) {
-    return this.setDates(criteria, null, null);
-  };
-
-  private setDates(criteria, fromDate?:string, toDate?:string) {
-    return Object.assign(criteria, {
-      fromDate: fromDate,
-      toDate: toDate,
-    });
-  };
-
+    return DataService.setDates(criteria, this.aWeekAgo, this.today);
+  }
 }

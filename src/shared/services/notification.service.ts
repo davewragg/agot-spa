@@ -6,24 +6,23 @@ export class NotificationService {
   constructor(private toasterService:ToasterService) {
   }
 
-  success(...rest) {
-    this.toasterService.pop('success', ...rest);
+  success(title?:string, body?:string) {
+    this.toasterService.pop('success', title, body);
   }
 
-  warn(...rest) {
-    this.toasterService.pop('warning', ...rest);
+  warn(title?:string, body?:string) {
+    this.toasterService.pop('warning', title, body);
   }
 
-  error(...rest) {
-    this.toasterService.pop('error', ...rest);
+  error(title?:string, body?:string) {
+    this.toasterService.pop('error', title, body);
   }
 
-  info(...rest) {
-    this.toasterService.pop('info', ...rest);
+  info(title?:string, body?:string) {
+    this.toasterService.pop('info', title, body);
   }
 
-  wait(...rest) {
-    this.toasterService.pop('wait', ...rest);
+  wait(title?:string, body?:string) {
+    this.toasterService.pop('wait', title, body);
   }
-
 }

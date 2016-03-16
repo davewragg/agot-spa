@@ -9,7 +9,6 @@ import {DateRangeType} from '../shared/models/date-range-type.model';
   selector: 'agot-home',
   moduleId: module.id,
   templateUrl: './home.html',
-  //styleUrls: ['./home.cmp.css'],
   directives: [GamesComponent, AllRankingsComponent, ROUTER_DIRECTIVES]
 })
 export class HomeComponent {
