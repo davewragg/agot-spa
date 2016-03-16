@@ -47,7 +47,7 @@
         <tr *ngFor="#ranking of rankings.rankedFactions; #i = index"
             [class.table-warning]="i == 0">
           <td class="col-xs-1 text-xs-right">{{ i + 1 }}.</td>
-          <td class="col-xs-2 text-xs-right"><img class="icon" src="/assets/img/icon{{ ranking.playerId }}.png"
+          <td class="col-xs-2 text-xs-right"><img class="icon" src="./assets/img/icon{{ ranking.playerId }}.png"
                                                   alt="{{ ranking.playerName }}"></td>
           <td class="col-xs-7">
             {{ ranking.playerName }}
@@ -73,7 +73,7 @@
             {{ ranking.playerName }}
           </td>
           <td class="col-xs-2 text-xs-right">
-            <img class="icon" src="/assets/img/agenda{{ ranking.playerId }}.png" alt="{{ ranking.playerName }}">
+            <img class="icon" src="./assets/img/agenda{{ ranking.playerId }}.png" alt="{{ ranking.playerName }}">
           </td>
           <td class="text-muted text-xs-right col-xs-1">{{ ranking.eloRating }}</td>
         </tr>

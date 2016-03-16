@@ -1,8 +1,8 @@
 <div [class.table-active]="editing"
      class="text-xs-center faction-body faction-{{ gamePlayer.deck?.secondFactionId }}"
-     [style.backgroundImage]="gamePlayer.deck?.agendaId && ('url(/assets/img/agenda' + gamePlayer.deck?.agendaId + '.png)')">
+     [style.backgroundImage]="gamePlayer.deck?.agendaId && ('url(./assets/img/agenda' + gamePlayer.deck?.agendaId + '.png)')">
   <div class="card-header">
-    <img class="card-image-top" src="/assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
+    <img class="card-image-top" src="./assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
          alt="{{ gamePlayer.faction?.name }}">
   </div>
   <div class="card-block player-header">

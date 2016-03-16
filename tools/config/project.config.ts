@@ -6,6 +6,8 @@ export class ProjectConfig extends SeedConfig {
 
   constructor() {
     super();
+    // has to be set in seed.config.ts :(
+    //this.APP_BASE = '/agot/';
     this.APP_TITLE = 'AGOT Tracker';
     let additional_deps:Array<any> = [
       {src: 'bootstrap/dist/css/bootstrap.min.css', inject: true, vendor: true},

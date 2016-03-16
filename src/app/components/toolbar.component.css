@@ -16,7 +16,7 @@ h1 {
 }
 
 .header-icon {
-  background: url(/assets/img/header.png);
+  background: url(./assets/img/header.png);
   float: right;
   height: 2.2em;
   margin-top: .4em;
