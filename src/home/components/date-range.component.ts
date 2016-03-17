@@ -32,7 +32,7 @@ export class DateRangeComponent implements OnInit {
   }
 
   constructor(private _seasonService:SeasonService) {
-    _seasonService.getAllSeasons().subscribe((seasons:Season[]) => {
+    _seasonService.seasons.subscribe((seasons:Season[]) => {
       this.seasons = seasons.reverse();
     });
     this.today = moment().add(1, 'days').toISOString();
