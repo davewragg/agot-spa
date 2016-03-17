@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Game} from '../../shared/models/game.model';
@@ -13,6 +13,7 @@ import {DateFormatPipe} from '../../shared/pipes/date-format-pipe';
   moduleId: module.id,
   templateUrl: './games-table.html',
   pipes: [TimeAgoPipe, DateFormatPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [ROUTER_DIRECTIVES, PlayerLinkComponent, FactionBadgeComponent, AgendaBadgeComponent]
 })
 export class GamesTableComponent {
