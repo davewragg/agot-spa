@@ -24,7 +24,6 @@ export class DeckImportFormComponent implements OnInit {
 
   constructor(private _formBuilder:FormBuilder,
               private thronesDbService:ThronesDbService) {
-    // TODO probably async
   }
 
   ngOnInit() {

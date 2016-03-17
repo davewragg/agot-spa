@@ -1,20 +1,15 @@
 import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
-import {Response} from 'angular2/http';
+import {Http, Response, Headers, URLSearchParams} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
-import {GameIndex} from '../models/game-index.model';
 import {Game} from '../models/game.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DateRangeType} from '../models/date-range-type.model';
+import {SetOfResults} from '../models/set-of-results.model';
 import * as moment from 'moment/moment';
-import {Headers} from 'angular2/http';
-import {URLSearchParams} from 'angular2/http';
 import * as _ from 'lodash';
 
 @Injectable()
 export class DataService {
-  private data:Observable<GameIndex>;
-
   private today:string;
   private aWeekAgo:string;
 
@@ -52,6 +47,7 @@ export class DataService {
   }
 
   private static _serialiseGame(game:Game):string {
+    //noinspection TypeScriptUnresolvedFunction
     const gameCopy:any = _.cloneDeep(game);
     // if deck has id, strip everything else
     // TODO re-enable once service fixed
@@ -83,18 +79,14 @@ export class DataService {
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();
   }
 
-  getGameIndex():Observable<GameIndex> {
-    console.log('getgameindex called');
-    if (!this.data) {
-      this.data = this._getGameIndex();
-    }
-    return this.data;
-  }
-
-  getAllGames() {
-    console.log('getallgames called');
-    return this.getGameIndex()
-      .map((gameIndex:GameIndex) => gameIndex.allResults.games);
+  getRankings(filterCriteria:FilterCriteria):Observable<SetOfResults> {
+    console.log('getRankings called');
+    const criteria:FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+    const params = DataService.convertFilterCriteriaToSearchParams(criteria);
+    return this.http.get(this.baseUrl + 'api/rankings/get', {
+        search: params
+      })
+      .map(DataService.handleResponse);
   }
 
   getFilteredGames(filterCriteria:FilterCriteria) {
@@ -163,12 +155,6 @@ export class DataService {
     console.log('getReferenceData called', refDataType);
     return this.http.get(this.baseUrl + `api/${refDataType}/getall`)
       .map(DataService.handleResponse);
-  }
-
-  private _getGameIndex():Observable<GameIndex> {
-    console.log('_getgameindex called');
-    return this.http.get(this.baseUrl + 'api/games/getall')
-      .map(DataService.handleResponse).share();
   }
 
   private setDatesFromRangeType(criteria:FilterCriteria) {

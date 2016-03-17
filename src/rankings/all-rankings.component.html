@@ -1,0 +1,16 @@
+<section>
+  <h2>{{ title || 'Rankings' }}</h2>
+
+  <agot-date-range [showSort]="false" [criteria]="initialFiltering"
+                   [hidden]="hideFilters"
+                   (rangeChange)="onDateRangeChange($event)"></agot-date-range>
+
+  <agot-spinner [isRunning]="isLoading"></agot-spinner>
+
+  <div *ngIf="loadingError" class="alert alert-danger">
+    Well, shit. {{ loadingError | json }}
+    <button type="button" (click)="loadGames(defaultFiltering)">Try again</button>
+  </div>
+
+  <agot-rankings [rankings]="results"></agot-rankings>
+</section>

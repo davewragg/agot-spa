@@ -1,6 +1,6 @@
 <a class="btn btn-primary" [routerLink]="['/NewGameDetails']">Create new game</a>
 
-<agot-all-rankings [hideSeasons]="true"></agot-all-rankings>
+<agot-all-rankings [initialFiltering]="filterCriteria" [hideFilters]="true" title="Latest rankings"></agot-all-rankings>
 <div class="text-sm-right"><a class="btn btn-primary-outline" [routerLink]="['/AllRankings']">More...</a></div>
 
 <agot-games [initialFiltering]="filterCriteria" [hideFilters]="true" title="Latest games"></agot-games>

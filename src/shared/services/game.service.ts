@@ -11,11 +11,7 @@ export class GameService {
   }
 
   getGames(filterCriteria?:FilterCriteria):Observable<Game[]> {
-    if (filterCriteria) {
-      return this.dataService.getGames(filterCriteria);
-    } else {
-      return this.dataService.getAllGames();
-    }
+    return this.dataService.getGames(filterCriteria);
   }
 
   getGame(gameId:number):Observable<Game> {
