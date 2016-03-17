@@ -47,19 +47,12 @@ export class NewGamePlayerFormComponent implements OnInit {
   }
 
   onSubmit() {
-    // newPlayer properties default to strings
-    const updatedPlayer:GamePlayer = this.gamePlayerForm.value;
-
-    Object.assign(this.gamePlayer, updatedPlayer);
     this.getPlayer(this.gamePlayer).subscribe((player) => {
       this.gamePlayer.player = player;
       console.log(this.gamePlayer);
       this.updatePlayer.emit(this.gamePlayer);
+      // TODO handle player loading errors
     });
-    // TODO handle loading errors
-
-    // reset form
-    //this.gamePlayerForm.reset
   }
 
   private populateForm() {
