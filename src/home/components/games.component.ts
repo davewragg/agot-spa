@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from 'angular2/core';
+import {Router, RouteParams} from 'angular2/router';
 
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
@@ -18,7 +19,7 @@ export class GamesComponent implements OnInit {
   @Input()
   title:string;
   @Input()
-  defaultFiltering:FilterCriteria;
+  initialFiltering:FilterCriteria;
   @Input()
   hideFilters:boolean = false;
 
@@ -26,15 +27,19 @@ export class GamesComponent implements OnInit {
   loadingError:any = null;
   isLoading:boolean;
 
-  constructor(private _gameService:GameService) {
+  constructor(params:RouteParams,
+              private _router:Router,
+              private _gameService:GameService) {
+    this.setInitialFiltering(params);
   }
 
   ngOnInit() {
-    this.loadGames(this.defaultFiltering);
+    this.loadGames(this.initialFiltering);
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
-    this.loadGames(criteria);
+    //this.loadGames(criteria);
+    this._router.navigate(['Games', FilterCriteria.serialise(criteria)]);
   }
 
   loadGames(criteria?:FilterCriteria) {
@@ -54,5 +59,9 @@ export class GamesComponent implements OnInit {
           this.isLoading = false;
         }
       );
+  }
+
+  private setInitialFiltering(params:RouteParams) {
+    this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }

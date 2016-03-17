@@ -1,25 +1,20 @@
 import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
-import {Response} from 'angular2/http';
+import {Http, Response, Headers, URLSearchParams} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
-import {GameIndex} from '../models/game-index.model';
 import {Game} from '../models/game.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DateRangeType} from '../models/date-range-type.model';
+import {SetOfResults} from '../models/set-of-results.model';
 import * as moment from 'moment/moment';
-import {Headers} from 'angular2/http';
-import {URLSearchParams} from 'angular2/http';
 import * as _ from 'lodash';
 
 @Injectable()
 export class DataService {
-  private data:Observable<GameIndex>;
-
   private today:string;
   private aWeekAgo:string;
 
-  //private baseUrl = '<%= ENV %>' === 'prod' ? '' : '//paulhoughton.org/agot';
-  private baseUrl = '//paulhoughton.org/agot';
+  private baseUrl = '<%= ENV %>' === 'prod' ? '<%= APP_BASE %>' : '//paulhoughton.org<%= APP_BASE %>';
+  //private baseUrl = '//paulhoughton.org/agot/';
 
   private static setAllTime(criteria:FilterCriteria) {
     return DataService.setDates(criteria, null, null);
@@ -52,13 +47,15 @@ export class DataService {
   }
 
   private static _serialiseGame(game:Game):string {
-    // TODO if deck has id, strip everything else
+    //noinspection TypeScriptUnresolvedFunction
     const gameCopy:any = _.cloneDeep(game);
-    gameCopy.gamePlayers.forEach((player:any) => {
-      if (player.deck.deckId) {
-        player.deck = {deckId: player.deck.deckId};
-      }
-    });
+    // if deck has id, strip everything else
+    // TODO re-enable once service fixed
+    //gameCopy.gamePlayers.forEach((player:any) => {
+    //  if (player.deck.deckId) {
+    //    player.deck = {deckId: player.deck.deckId};
+    //  }
+    //});
     // TODO remove non-primitives
     return JSON.stringify(gameCopy);
   }
@@ -82,24 +79,20 @@ export class DataService {
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();
   }
 
-  getGameIndex():Observable<GameIndex> {
-    console.log('getgameindex called');
-    if (!this.data) {
-      this.data = this._getGameIndex();
-    }
-    return this.data;
-  }
-
-  getAllGames() {
-    console.log('getallgames called');
-    return this.getGameIndex()
-      .map((gameIndex:GameIndex) => gameIndex.allResults.games);
+  getRankings(filterCriteria:FilterCriteria):Observable<SetOfResults> {
+    console.log('getRankings called');
+    const criteria:FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+    const params = DataService.convertFilterCriteriaToSearchParams(criteria);
+    return this.http.get(this.baseUrl + 'api/rankings/get', {
+        search: params
+      })
+      .map(DataService.handleResponse);
   }
 
   getFilteredGames(filterCriteria:FilterCriteria) {
     console.log('getfilteredgames called');
     const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
-    return this.http.get(this.baseUrl + '/api/games/searchgames', {
+    return this.http.get(this.baseUrl + 'api/games/searchgames', {
         search: params
       })
       .map(DataService.handleResponse);
@@ -126,13 +119,13 @@ export class DataService {
 
   getGame(gameId:number):Observable<Game> {
     console.log('getgame called', gameId);
-    return this.http.get(this.baseUrl + '/api/games/get/' + gameId)
+    return this.http.get(this.baseUrl + 'api/games/get/' + gameId)
       .map(DataService.handleResponse);
   }
 
   updateGame(game:Game):Observable<Game> {
     console.log('updategame called', game);
-    return this.http.put(this.baseUrl + '/api/games/update',
+    return this.http.put(this.baseUrl + 'api/games/update',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse);
@@ -141,7 +134,7 @@ export class DataService {
 
   createGame(game:Game):Observable<Game> {
     console.log('creategame called', game);
-    return this.http.post(this.baseUrl + '/api/games/create',
+    return this.http.post(this.baseUrl + 'api/games/create',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse);
@@ -151,7 +144,7 @@ export class DataService {
 
   deleteGame(gameId:number):Observable<any> {
     console.log('deletegame called', gameId);
-    return this.http.delete(this.baseUrl + '/api/games/delete/' + gameId)
+    return this.http.delete(this.baseUrl + 'api/games/delete/' + gameId)
       .map(DataService.handleResponse);
   }
 
@@ -160,14 +153,8 @@ export class DataService {
    */
   getReferenceData(refDataType:string):Observable<any> {
     console.log('getReferenceData called', refDataType);
-    return this.http.get(this.baseUrl + `/api/${refDataType}/getall`)
+    return this.http.get(this.baseUrl + `api/${refDataType}/getall`)
       .map(DataService.handleResponse);
-  }
-
-  private _getGameIndex():Observable<GameIndex> {
-    console.log('_getgameindex called');
-    return this.http.get(this.baseUrl + '/api/games/getall')
-      .map(DataService.handleResponse).share();
   }
 
   private setDatesFromRangeType(criteria:FilterCriteria) {

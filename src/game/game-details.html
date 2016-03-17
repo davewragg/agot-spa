@@ -1,5 +1,3 @@
-<agot-spinner [isRunning]="isLoading"></agot-spinner>
-
 <div *ngIf="game">
   <h2>{{ editing ?
     game.gameId ? 'Edit' : 'Create'
@@ -10,6 +8,8 @@
 
   <agot-view-game *ngIf="!editing" [game]="game" (edit)="onEdit()" (deleteGame)="onDelete()"></agot-view-game>
 </div>
+
+<agot-spinner [isRunning]="isLoading"></agot-spinner>
 
 <h3 *ngIf="!isLoading && !game" class="alert alert-danger">Game not found</h3>
 <h3 *ngIf="loadError" class="alert alert-danger">Diaster {{ loadError | json }}</h3>

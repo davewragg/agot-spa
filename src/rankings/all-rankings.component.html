@@ -1,7 +1,7 @@
 <section>
-  <h2>{{ title || 'Games' }}</h2>
+  <h2>{{ title || 'Rankings' }}</h2>
 
-  <agot-date-range [showSort]="true" [criteria]="initialFiltering"
+  <agot-date-range [showSort]="false" [criteria]="initialFiltering"
                    [hidden]="hideFilters"
                    (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
@@ -12,5 +12,5 @@
     <button type="button" (click)="loadGames(defaultFiltering)">Try again</button>
   </div>
 
-  <agot-games-table [games]="games"></agot-games-table>
+  <agot-rankings [rankings]="results"></agot-rankings>
 </section>

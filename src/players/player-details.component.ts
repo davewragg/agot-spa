@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {PlayerStats} from '../shared/models/player-stats.model';
@@ -24,25 +24,24 @@ export class PlayerDetailsComponent implements OnInit {
 
   isLoading:boolean;
 
-  defaultFiltering:FilterCriteria;
+  initialFiltering:FilterCriteria;
 
   constructor(params:RouteParams,
+              private _router:Router,
               private _playerService:PlayerService) {
     this.playerIdParam = <number>+params.get('id');
-    this.defaultFiltering = <FilterCriteria>{
-      ascending: true,
-      rangeSelection: DateRangeType.ALL_TIME
-    };
+    this.setInitialFiltering(params);
   }
 
   ngOnInit() {
     if (this.playerIdParam) {
-      this.loadPlayerAndStats(this.defaultFiltering);
+      this.loadPlayerAndStats(this.initialFiltering);
     }
   }
 
   onDateRangeChange(criteria:FilterCriteria) {
-    this.loadPlayerAndStats(criteria);
+    //this.loadPlayerAndStats(criteria);
+    this._router.navigate(['PlayerDetails', FilterCriteria.serialise(criteria)]);
   }
 
   private loadPlayerAndStats(criteria?:FilterCriteria) {
@@ -68,5 +67,12 @@ export class PlayerDetailsComponent implements OnInit {
   private stopLoading() {
     console.log('done loadstats');
     this.isLoading = false;
+  }
+
+  private setInitialFiltering(params:RouteParams) {
+    this.initialFiltering = Object.assign(<FilterCriteria>{
+      ascending: true,
+      rangeSelection: DateRangeType.ALL_TIME
+    }, FilterCriteria.deserialise(params));
   }
 }

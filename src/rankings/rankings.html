@@ -1,12 +1,5 @@
 <section *ngIf="rankings" class="card">
-  <div class="card-header">
-    <h4>{{ name }} rankings
-      <span class="pull-xs-right">
-        <button type="button" class="btn-sm btn btn-primary-outline" (click)="expanded = !expanded">...</button>
-      </span>
-    </h4>
-  </div>
-  <div [hidden]="!expanded" class="row">
+  <div class="row">
 
     <div class="col-lg-4">
       <table class="table table-striped">
@@ -17,7 +10,7 @@
         </thead>
         <tbody>
         <tr *ngFor="#ranking of rankings.rankedPlayers; #i = index"
-            [class.table-warning]="i == 0">
+            [class.table-warning]="i === 0">
           <td class="text-xs-right col-xs-1 col-sm-2">{{ i + 1 }}.</td>
           <td class="col-xs-7 col-sm-4">
             <agot-player-link [player]="ranking"></agot-player-link>

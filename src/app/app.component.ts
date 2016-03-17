@@ -15,7 +15,7 @@ import {FooterComponent} from './components/footer.component';
 import {HomeComponent} from '../home/home.component';
 import {GamesComponent} from '../home/components/games.component';
 import {GameDetailsComponent} from '../game/game-details.component';
-import {AllRankingsComponent} from '../home/components/all-rankings.component';
+import {AllRankingsComponent} from '../rankings/all-rankings.component';
 import {PlayersComponent} from '../players/players.component';
 import {PlayerDetailsComponent} from '../players/player-details.component';
 import {DeckService} from '../shared/services/deck.service';
