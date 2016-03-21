@@ -154,6 +154,7 @@ export class DataService {
   getReferenceData(refDataType:string):Observable<any> {
     console.log('getReferenceData called', refDataType);
     return this.http.get(this.baseUrl + `api/${refDataType}/getall`)
+      .cache()
       .map(DataService.handleResponse);
   }
 
