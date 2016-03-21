@@ -22,7 +22,6 @@ export class PlayersComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    console.log('ISLOADINGTRYE', this.isLoading);
     this.loadPlayers();
   }
 

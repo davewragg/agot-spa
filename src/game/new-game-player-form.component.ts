@@ -6,12 +6,13 @@ import {GamePlayer} from '../shared/models/game-player.model';
 import {Deck} from '../shared/models/deck.model';
 import {DeckSelectorComponent} from './deck-selector.component';
 import {Observable} from 'rxjs/Observable';
+import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-new-game-player-form',
   moduleId: module.id,
   templateUrl: './new-game-player-form.html',
-  directives: [DeckSelectorComponent],
+  directives: [DeckSelectorComponent, SpinnerComponent],
 })
 export class NewGamePlayerFormComponent implements OnInit {
   @Output()
@@ -22,10 +23,18 @@ export class NewGamePlayerFormComponent implements OnInit {
   gamePlayerForm:ControlGroup;
 
   players:Observable<Player[]>;
+  isLoading:boolean;
 
   constructor(private _formBuilder:FormBuilder,
               private _playerService:PlayerService) {
+    this.isLoading = true;
     this.players = this._playerService.players;
+    // TODO this is some dreadful shit here
+    this.players.skip(1).subscribe(
+      () => this.isLoading = false,
+      () => this.isLoading = false,
+      () => this.isLoading = false
+    );
   }
 
   ngOnInit() {
@@ -47,11 +56,13 @@ export class NewGamePlayerFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = true;
     this.getPlayer(this.gamePlayer).subscribe((player) => {
       this.gamePlayer.player = player;
       console.log(this.gamePlayer);
       this.updatePlayer.emit(this.gamePlayer);
       // TODO handle player loading errors
+      this.isLoading = false;
     });
   }
 

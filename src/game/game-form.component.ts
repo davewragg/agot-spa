@@ -33,7 +33,6 @@ export class GameFormComponent implements OnInit {
   constructor(private _FormBuilder:FormBuilder,
               private _referenceDataService:ReferenceDataService,
               private notificationService:NotificationService) {
-    // TODO probably async
     this.deckTypes = this._referenceDataService.getDeckTypes();
   }
 
