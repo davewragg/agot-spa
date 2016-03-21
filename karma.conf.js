@@ -88,7 +88,7 @@ module.exports = function(config) {
         flags: ['--no-sandbox']
       }
     },
-
+    
     coverageReporter: {
       dir: 'coverage/',
       reporters: [
@@ -100,7 +100,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: false, 
 
     // Passing command line arguments to tests
     client: {
