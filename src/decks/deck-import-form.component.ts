@@ -44,10 +44,12 @@ export class DeckImportFormComponent implements OnInit {
         } else {
           this.importedDeck = deck;
         }
+        // may not trigger complete?
+        this.isImporting = false;
       },
       (error) => {
         console.error(error);
-        this.importError = error._body || error.message || error;
+        this.importError = `Couldn't load deck. Please check the id and try again.`;
         this.isImporting = false;
       },
       () => this.isImporting = false

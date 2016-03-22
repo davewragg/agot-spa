@@ -1,5 +1,5 @@
 <h2>Players</h2>
-<!--<agot-spinner [isRunning]=""></agot-spinner>-->
+<agot-spinner [isRunning]="isLoading"></agot-spinner>
 <div class="card-deck-wrapper">
   <div class="card-deck">
     <div *ngFor="#player of players | async" class="card text-xs-center">

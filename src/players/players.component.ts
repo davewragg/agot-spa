@@ -15,15 +15,22 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 })
 export class PlayersComponent implements OnInit {
   players:Observable<Player[]>;
+  isLoading:boolean;
 
   constructor(private _playerService:PlayerService) {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.loadPlayers();
   }
 
   loadPlayers() {
     this.players = this._playerService.players;
+    this.players.skip(1).subscribe(
+      () => this.isLoading = false,
+      () => this.isLoading = false,
+      () => this.isLoading = false
+    );
   }
 }

@@ -20,6 +20,7 @@ import {PlayersComponent} from '../players/players.component';
 import {PlayerDetailsComponent} from '../players/player-details.component';
 import {DeckService} from '../shared/services/deck.service';
 import {ThronesDbService} from '../shared/services/thrones-db.service';
+import {PlayerService} from '../shared/services/player.service';
 
 @Component({
   selector: 'agot-app',
@@ -30,6 +31,7 @@ import {ThronesDbService} from '../shared/services/thrones-db.service';
     NotificationService,
     DataService,
     ReferenceDataService,
+    PlayerService,
     DeckService,
     ThronesDbService],
   moduleId: module.id,

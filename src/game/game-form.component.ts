@@ -6,15 +6,13 @@ import {GamePlayersComponent} from './game-players.component';
 import {Game} from '../shared/models/game.model';
 import {DeckType} from '../shared/models/deck-type.model';
 import {GamePlayer} from '../shared/models/game-player.model';
-import {PlayerService} from '../shared/services/player.service';
 
 @Component({
   selector: 'agot-game-form',
   moduleId: module.id,
   templateUrl: './game-form.html',
   styleUrls: ['./game-form.css'],
-  directives: [GamePlayersComponent],
-  viewProviders: [PlayerService]
+  directives: [GamePlayersComponent]
 })
 export class GameFormComponent implements OnInit {
   @Input()
@@ -35,7 +33,6 @@ export class GameFormComponent implements OnInit {
   constructor(private _FormBuilder:FormBuilder,
               private _referenceDataService:ReferenceDataService,
               private notificationService:NotificationService) {
-    // TODO probably async
     this.deckTypes = this._referenceDataService.getDeckTypes();
   }
 
