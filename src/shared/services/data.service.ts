@@ -125,7 +125,7 @@ export class DataService {
 
   updateGame(game:Game):Observable<Game> {
     console.log('updategame called', game);
-    return this.http.put(this.baseUrl + 'api/games/update',
+    return this.http.put(this.baseUrl + 'api/games/edit',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse);
