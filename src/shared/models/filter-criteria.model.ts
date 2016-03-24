@@ -18,6 +18,8 @@ export class FilterCriteria {
   static deserialise(routeParams:RouteParams):FilterCriteria {
     const criteria = new FilterCriteria();
     Object.assign(criteria, routeParams.params);
+    // param strings
+    criteria.rangeSelection = +criteria.rangeSelection;
     return criteria;
   }
 }
