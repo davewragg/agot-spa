@@ -50,12 +50,11 @@ export class DataService {
     //noinspection TypeScriptUnresolvedFunction
     const gameCopy:any = _.cloneDeep(game);
     // if deck has id, strip everything else
-    // TODO re-enable once service fixed
-    //gameCopy.gamePlayers.forEach((player:any) => {
-    //  if (player.deck.deckId) {
-    //    player.deck = {deckId: player.deck.deckId};
-    //  }
-    //});
+    gameCopy.gamePlayers.forEach((player:any) => {
+     if (player.deck.deckId) {
+       player.deck = {deckId: player.deck.deckId};
+     }
+    });
     // TODO remove non-primitives
     return JSON.stringify(gameCopy);
   }
