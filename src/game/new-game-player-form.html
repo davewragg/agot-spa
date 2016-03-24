@@ -1,4 +1,3 @@
-<agot-spinner [isRunning]="isLoading"></agot-spinner>
 <form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form">
   <div class="container row">
     <div class="form-group col-md-4 col-xs-12">
@@ -13,5 +12,6 @@
                         class="col-md-8"
                         [playerId]="gamePlayer.playerId"></agot-deck-selector>
   </div>
+  <agot-spinner [isRunning]="isLoading"></agot-spinner>
 </form>
 

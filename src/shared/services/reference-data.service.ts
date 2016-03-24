@@ -6,11 +6,13 @@ import {DeckClass} from '../models/deck-class.model';
 import {BehaviorSubject} from 'rxjs/Rx';
 import {DataService} from './data.service';
 import {Observable} from 'rxjs/Observable';
+import {Venue} from '../models/venue.model';
 
 @Injectable()
 export class ReferenceDataService {
   private _factions$:BehaviorSubject<Faction[]> = new BehaviorSubject([]);
   private _agendas$:BehaviorSubject<Agenda[]> = new BehaviorSubject([]);
+  private _venues$:BehaviorSubject<Venue[]> = new BehaviorSubject([]);
 
   constructor(private dataService:DataService) {
     this.loadInitialData();
@@ -24,6 +26,11 @@ export class ReferenceDataService {
   get agendas() {
     console.log('returning agendas');
     return this._agendas$.asObservable();
+  }
+
+  get venues() {
+    console.log('returning venues');
+    return this._venues$.asObservable();
   }
 
   getDeckTypes():DeckType[] {
@@ -70,6 +77,12 @@ export class ReferenceDataService {
     this.dataService.getReferenceData('agendas').subscribe(
       (agendas:Agenda[]) => {
         this._agendas$.next(agendas);
+      },
+      (err) => console.error(err)
+    );
+    this.dataService.getReferenceData('venues').subscribe(
+      (venues:Venue[]) => {
+        this._venues$.next(venues);
       },
       (err) => console.error(err)
     );
