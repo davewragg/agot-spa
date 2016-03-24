@@ -41,6 +41,10 @@ export class ReferenceDataService {
     ];
   }
 
+  getVenue(venueId:number):Observable<Venue> {
+    return this._venues$.map((venues:Venue[]) => venues.find((venue:Venue) => venue.venueId === venueId));
+  }
+
   getFaction(factionId:number):Observable<Faction> {
     return this.getFactionBy('factionId', factionId);
   }

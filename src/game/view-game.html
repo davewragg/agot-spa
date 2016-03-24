@@ -1,11 +1,17 @@
 <fieldset class="card card-block">
   <div class="row">
-    <div class="col-sm-4 form-group">
+    <div class="col-sm-6 form-group">
       <label class="form-control-label">Date</label>
       <span class="form-control-static font-weight-bold">
         <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
           {{ game.date | amDateFormat: "D MMMM YYYY HH:mm" }}
         </time>
+      </span>
+    </div>
+    <div class="col-sm-6 form-group" *ngIf="game.venueId">
+      <label class="form-control-label">Venue</label>
+      <span class="form-control-static font-weight-bold">
+        {{ getVenueName(game.venueId) | async }}
       </span>
     </div>
   </div>
