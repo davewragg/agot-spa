@@ -15,6 +15,7 @@ export class ProjectConfig extends SeedConfig {
       {src: 'angular2-toaster/lib/toaster.css', inject: true, vendor: true},
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
+      {src: 'autotrack/autotrack.js', inject: 'libs'},
     ];
 
     const seedDependencies = this.NPM_DEPENDENCIES;
