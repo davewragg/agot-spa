@@ -4,16 +4,22 @@
     <td colspan="3" class="alert alert-warning">No games? WTF</td>
   </tr>
   <tr *ngFor="#game of games">
-    <td>
-      <div class="small text-muted">
+    <td class="small text-muted col-xs-2">
+      <p>
+        <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
+          {{ game.date | amTimeAgo }}
+        </time>
+      </p>
+      <p>
+        {{ getVenueName(game.venueId) | async }}
+      </p>
+      <p>
         <a [routerLink]="['/GameDetails', {id: game.gameId}]">
-          <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
-            {{ game.date | amTimeAgo }}
-          </time>
+          [View]
         </a>
-      </div>
+      </p>
     </td>
-    <td class="card-deck-wrapper">
+    <td class="card-deck-wrapper col-xs-10">
       <div class="card-deck">
         <div class="card text-xs-center" *ngFor="#gamePlayer of game.gamePlayers">
           <h6 class="card-header font-weight-bold">
