@@ -16,5 +16,5 @@ export class Deck {
   creatorId:number;
   // legacy
   secondFactionId:number;
-  secondaryFaction:Faction;
+  secondFaction:Faction;
 }
