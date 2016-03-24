@@ -38,6 +38,9 @@
       <div class="double-bounce2"></div>
     </div>
   </agot-app>
+  <div class="small" style="background-color: #f0f0f0">
+    <div class="small text-xs-right text-muted"><%= VERSION %> <%= ENV %>&nbsp;</div>
+  </div>
 
   <script>
   // function.name (all IE)
@@ -87,6 +90,13 @@
     });
   </script>
   <% } %>
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-75528335-1', 'auto');
+    ga('require', 'autotrack');
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </body>
 </html>

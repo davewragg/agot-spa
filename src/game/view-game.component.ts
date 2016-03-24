@@ -3,6 +3,9 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {Game} from '../shared/models/game.model';
 import {GamePlayersComponent} from './game-players.component';
 import {DateFormatPipe} from '../shared/pipes/date-format-pipe';
+import {ReferenceDataService} from '../shared/services/reference-data.service';
+import {Observable} from 'rxjs/Observable';
+import {Venue} from '../shared/models/venue.model';
 
 @Component({
   selector: 'agot-view-game',
@@ -20,6 +23,19 @@ export class ViewGameComponent {
   deleteGame:EventEmitter<Game> = new EventEmitter<Game>();
 
   deleting:boolean = false;
+
+  constructor(private _referenceDataService:ReferenceDataService) {
+  }
+
+  getVenue(venueId:number):Observable<Venue> {
+    return this._referenceDataService.getVenue(venueId);
+  }
+
+  getVenueName(venueId:number):Observable<string> {
+    return this.getVenue(venueId).map((venue:Venue) => {
+      return venue && venue.name;
+    });
+  }
 
   onEdit() {
     this.edit.emit(this.game);

@@ -107,9 +107,9 @@ export class DeckEditFormComponent implements OnInit {
       gamePlayer.agenda = null;
     }
     if (gamePlayer.secondFactionId) {
-      gamePlayer.secondaryFaction = this.getFaction(+gamePlayer.secondFactionId);
+      gamePlayer.secondFaction = this.getFaction(+gamePlayer.secondFactionId);
     } else {
-      gamePlayer.secondaryFaction = null;
+      gamePlayer.secondFaction = null;
     }
   }
 
