@@ -39,7 +39,7 @@ export class GameFormComponent implements OnInit {
               private notificationService:NotificationService) {
     this.isLoading = true;
     this.venues = this._referenceDataService.venues;
-    this.venues.filter((x) => !!x && x.length).subscribe(
+    this.venues.filter((x) => !!x && !!x.length).subscribe(
       () => this.isLoading = false,
       () => this.isLoading = false,
       () => this.isLoading = false
