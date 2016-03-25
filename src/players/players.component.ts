@@ -1,5 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
-
+import {Component} from 'angular2/core';
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {PlayerLinkComponent} from '../shared/components/player-link.component';
@@ -13,21 +12,18 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
   templateUrl: './players.html',
   directives: [PlayerLinkComponent, SpinnerComponent]
 })
-export class PlayersComponent implements OnInit {
+export class PlayersComponent {
   players:Observable<Player[]>;
   isLoading:boolean;
 
   constructor(private _playerService:PlayerService) {
-  }
-
-  ngOnInit() {
-    this.isLoading = true;
     this.loadPlayers();
   }
 
   loadPlayers() {
+    this.isLoading = true;
     this.players = this._playerService.players;
-    this.players.skip(1).subscribe(
+    this.players.filter((x) => !!x && x.length).subscribe(
       () => this.isLoading = false,
       () => this.isLoading = false,
       () => this.isLoading = false
