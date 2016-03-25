@@ -29,7 +29,7 @@ export class NewGamePlayerFormComponent implements OnInit {
               private _playerService:PlayerService) {
     this.isLoading = true;
     this.players = this._playerService.players;
-    this.players.filter((x) => !!x && x.length).subscribe(
+    this.players.filter((x) => !!x && !!x.length).subscribe(
       () => this.isLoading = false,
       () => this.isLoading = false,
       () => this.isLoading = false
