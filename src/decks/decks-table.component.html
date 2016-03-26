@@ -1,0 +1,35 @@
+<table *ngIf="decks" class="table table-striped">
+  <tbody>
+  <tr *ngIf="!decks.length">
+    <td colspan="3" class="alert alert-warning">No decks? WTF</td>
+  </tr>
+  <tr *ngFor="#deck of decks">
+    <td class="col-xs-3 col-sm-2 col-lg-1">
+      <agot-deck-class-badge [deckClass]="deck"></agot-deck-class-badge>
+    </td>
+    <td class="col-xs-9 col-sm-10 col-lg-11">
+      <article>
+        <div>
+          <small class="pull-xs-right"></small>
+          <a [routerLink]="['Deck', {id: deck.deckId}]">
+            {{ deck.title || deck.fallbackTitle }}
+          </a>
+        </div>
+        <div class="text-muted">
+          <small class="pull-xs-right">
+            Created
+            <time [attr.datetime]="deck.dateCreated" title="{{ deck.dateCreated | amDateFormat: 'LLLL' }}">
+              {{ deck.dateCreated | amTimeAgo }}
+            </time>
+            <span *ngIf="deck.dateCreated !== deck.dateModified"><br>
+            Modified <time [attr.datetime]="deck.dateModified" title="{{ deck.dateModified | amDateFormat: 'LLLL' }}">
+                {{ deck.dateModified | amTimeAgo }}
+              </time></span>
+          </small>
+          <agot-player-link class="small" [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
+        </div>
+      </article>
+    </td>
+  </tr>
+  </tbody>
+</table>
