@@ -19,6 +19,7 @@ import {DeckService} from '../shared/services/deck.service';
 import {ThronesDbService} from '../shared/services/thrones-db.service';
 import {PlayerService} from '../shared/services/player.service';
 import {DecksComponent} from '../decks/decks.component';
+import {DeckDetailsComponent} from '../decks/deck-details.component';
 
 @Component({
   selector: 'agot-app',
@@ -44,7 +45,7 @@ import {DecksComponent} from '../decks/decks.component';
   {path: '/games/:id', component: GameDetailsComponent, name: 'GameDetails'},
   {path: '/rankings', component: AllRankingsComponent, name: 'AllRankings'},
   {path: '/decks', component: DecksComponent, name: 'Decks'},
-  {path: '/decks/:id', component: DecksComponent, name: 'Deck'},
+  {path: '/decks/:id', component: DeckDetailsComponent, name: 'DeckDetails'},
   {path: '/players', component: PlayersComponent, name: 'Players'},
   {path: '/players/:id', component: PlayerDetailsComponent, name: 'PlayerDetails'},
 ])

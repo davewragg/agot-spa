@@ -19,6 +19,8 @@ export class DeckEditFormComponent implements OnInit {
   @Input()
   creating:boolean;
   @Input()
+  editing:boolean;
+  @Input()
   deck:Deck;
   @Output()
   updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
@@ -44,7 +46,7 @@ export class DeckEditFormComponent implements OnInit {
 
   ngOnInit() {
     // TODO can't edit imported/saved decks when creating game
-    if (this.creating || this.deck.deckId) {
+    if (this.creating || (this.deck.deckId && !this.editing)) {
       this.deck = new Deck();
     }
     this.populateForm();

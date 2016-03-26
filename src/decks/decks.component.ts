@@ -8,7 +8,6 @@ import {DecksTableComponent} from './decks-table.component';
 @Component({
   selector: 'agot-decks',
   moduleId: module.id,
-  viewProviders: [DeckService],
   templateUrl: './decks.component.html',
   directives: [ROUTER_DIRECTIVES, DecksTableComponent, SpinnerComponent]
 })

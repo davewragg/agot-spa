@@ -11,11 +11,11 @@
       <article>
         <div>
           <small class="pull-xs-right"></small>
-          <a [routerLink]="['Deck', {id: deck.deckId}]">
+          <a [routerLink]="['DeckDetails', {id: deck.deckId}]">
             {{ deck.title || deck.fallbackTitle }}
           </a>
-          <a *ngIf="deck.thronesDbLink" [href]="deck.thronesDbLink" rel="noopener" target="_blank"
-             [title]="deck.thronesDbLink">TDB</a>
+          <a class="small" *ngIf="deck.thronesDbLink" [href]="deck.thronesDbLink" rel="noopener" target="_blank"
+             [title]="deck.thronesDbLink">[TDB]</a>
         </div>
         <div class="text-muted">
           <small class="pull-xs-right">
@@ -28,7 +28,7 @@
                 {{ deck.dateModified | amTimeAgo }}
               </time></span>
           </small>
-          <agot-player-link class="small" [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
+          <agot-player-link *ngIf="!!deck.creatorId" class="small" [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
         </div>
       </article>
     </td>

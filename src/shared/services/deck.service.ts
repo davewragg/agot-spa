@@ -38,6 +38,10 @@ export class DeckService {
     });
   }
 
+  getDeck(deckId:number):Observable<Deck> {
+    return this.getDeckBy('deckId', deckId);
+  }
+
   getDecks():Observable<Deck[]> {
     console.log('getdecks called');
     if (!this.data) {

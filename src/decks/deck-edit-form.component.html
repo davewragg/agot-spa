@@ -29,6 +29,14 @@
       <button type="submit" class="btn btn-success" [disabled]="!deckForm.valid">
         {{ creating ? 'Add Player' : 'Update' }}
       </button>
+      <!--TODO cancel button if editing-->
+      <button *ngIf="editing" type="button" class="btn" (click)="onCancel()" [hidden]="cancelling">Cancel</button>
+
+      <div [hidden]="!cancelling" class="card card-block alert-warning">
+        <p class="card-text">Woah, abandon changes?</p>
+        <button type="button" class="btn btn-sm btn-danger" (click)="onCancel(true)">Yep</button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="cancelling = false">Whoops</button>
+      </div>
     </div>
   </div>
 </form>
