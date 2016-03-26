@@ -1,4 +1,5 @@
 import {Component, Input} from 'angular2/core';
+import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {DeckService} from '../shared/services/deck.service';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 import {Deck} from '../shared/models/deck.model';
@@ -9,7 +10,7 @@ import {DecksTableComponent} from './decks-table.component';
   moduleId: module.id,
   viewProviders: [DeckService],
   templateUrl: './decks.component.html',
-  directives: [DecksTableComponent, SpinnerComponent]
+  directives: [ROUTER_DIRECTIVES, DecksTableComponent, SpinnerComponent]
 })
 export class DecksComponent {
   @Input()

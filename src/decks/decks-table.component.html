@@ -14,6 +14,8 @@
           <a [routerLink]="['Deck', {id: deck.deckId}]">
             {{ deck.title || deck.fallbackTitle }}
           </a>
+          <a *ngIf="deck.thronesDbLink" [href]="deck.thronesDbLink" rel="noopener" target="_blank"
+             [title]="deck.thronesDbLink">TDB</a>
         </div>
         <div class="text-muted">
           <small class="pull-xs-right">
