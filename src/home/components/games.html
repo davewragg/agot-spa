@@ -1,5 +1,5 @@
 <section>
-  <h2>{{ title || 'Games' }}</h2>
+  <h2 [hidden]="isLoading">{{ title || 'Games' }}</h2>
 
   <agot-date-range [showSort]="true" [criteria]="initialFiltering"
                    [hidden]="hideFilters"
