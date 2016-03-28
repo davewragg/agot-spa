@@ -7,7 +7,8 @@
   <agot-deck-edit-form [deck]="deck" *ngIf="editing" [disabled]="formDisabled"
                        [editing]="!!deck.deckId" [creating]="!deck.deckId"
                        (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
-
+  <agot-deck-class-block *ngIf="!editing"
+    [deckClass]="deck"></agot-deck-class-block>
   <!--<agot-view-deck *ngIf="!editing" [deck]="deck" (edit)="onEdit()" (deleteDeck)="onDelete()"></agot-view-deck>-->
   <div [hidden]="editing">
 

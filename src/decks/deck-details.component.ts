@@ -9,13 +9,20 @@ import {GameService} from '../shared/services/game.service';
 import {Observable} from 'rxjs/Observable';
 import {FilterCriteria} from '../shared/models/filter-criteria.model';
 import {GamesTableComponent} from '../home/components/games-table.component';
+import {DeckClassBlockComponent} from '../shared/components/deck-class-block.component';
 
 @Component({
   selector: 'agot-deck-details',
   moduleId: module.id,
   viewProviders: [GameService],
   templateUrl: './deck-details.component.html',
-  directives: [SpinnerComponent, DeckEditFormComponent, GamesTableComponent, ROUTER_DIRECTIVES]
+  directives: [
+    SpinnerComponent,
+    DeckEditFormComponent,
+    GamesTableComponent,
+    DeckClassBlockComponent,
+    ROUTER_DIRECTIVES
+  ]
 })
 export class DeckDetailsComponent implements OnInit {
   deck:Deck;
