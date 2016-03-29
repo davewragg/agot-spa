@@ -2,6 +2,7 @@ import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {Deck} from '../models/deck.model';
 import {DataService} from './data.service';
+import {FilterCriteria} from '../models/filter-criteria.model';
 
 @Injectable()
 export class DeckService {
@@ -54,12 +55,19 @@ export class DeckService {
     this.data = null;
   }
 
-  getDecks():Observable<Deck[]> {
-    console.log('getdecks called');
+  getDecks(criteria?:FilterCriteria):Observable<Deck[]> {
+    console.log('getdecks called', criteria);
     if (!this.data) {
       this.data = this._getDecks();
     }
-    return this.data;
+    if (!criteria || !criteria.playerIds.length) {
+      return this.data;
+    }
+    return this.data.map((decks:Deck[]) => {
+      return decks.filter((deck:Deck) => {
+        return criteria.playerIds.indexOf(deck.creatorId) > -1;
+      });
+    });
   }
 
   private _getDecks():Observable<Deck[]> {

@@ -6,10 +6,10 @@ export class FilterCriteria {
   toDate:string; //iso
   ascending:boolean = true;
   rangeSelection:DateRangeType = DateRangeType.ALL_TIME;
-  playerIds:number[];
-  factionIds:number[];
-  agendaIds:number[];
-  deckIds:number[];
+  playerIds:number[] = [];
+  factionIds:number[] = [];
+  agendaIds:number[] = [];
+  deckIds:number[] = [];
 
   static serialise(criteria:FilterCriteria):any {
     return Object.assign({}, criteria);

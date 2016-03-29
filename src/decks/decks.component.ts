@@ -4,12 +4,14 @@ import {DeckService} from '../shared/services/deck.service';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 import {Deck} from '../shared/models/deck.model';
 import {DecksTableComponent} from './decks-table.component';
+import {FilterCriteria} from '../shared/models/filter-criteria.model';
+import {PlayerFilterComponent} from '../shared/components/player-filter.component';
 
 @Component({
   selector: 'agot-decks',
   moduleId: module.id,
   templateUrl: './decks.component.html',
-  directives: [ROUTER_DIRECTIVES, DecksTableComponent, SpinnerComponent]
+  directives: [ROUTER_DIRECTIVES, DecksTableComponent, SpinnerComponent, PlayerFilterComponent]
 })
 export class DecksComponent {
   @Input()
@@ -24,9 +26,14 @@ export class DecksComponent {
     this.loadDecks();
   }
 
-  loadDecks() {
+  onPlayerFilterChange(criteria:FilterCriteria) {
+    console.log(criteria);
+    this.loadDecks(criteria);
+  }
+
+  loadDecks(criteria?:FilterCriteria) {
     this.isLoading = true;
-    this._deckService.getDecks()
+    this._deckService.getDecks(criteria)
       .subscribe(
         (decks:Deck[]) => {
           this.loadingError = null;
