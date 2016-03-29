@@ -32,6 +32,8 @@ export class DeckEditFormComponent implements OnInit {
   agendas:Observable<Agenda[]>;
   factions:Observable<Faction[]>;
 
+  showMore:boolean = false;
+
   // TODO legacy sticking plaster
   private _factions:Faction[];
   private _agendas:Agenda[];
@@ -47,6 +49,7 @@ export class DeckEditFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showMore = this.editing;
     // TODO can't edit imported/saved decks when creating game
     if (this.creating || (this.deck.deckId && !this.editing)) {
       this.deck = new Deck();
@@ -84,12 +87,14 @@ export class DeckEditFormComponent implements OnInit {
     let secondFactionId = this.deck.secondFactionId || '';
     let title = this.deck.title || this.deck.fallbackTitle || '';
     let thronesDbLink = this.deck.thronesDbLink || '';
+    let thronesDbVersion = this.deck.thronesDbVersion || '';
     this.deckForm = this._formBuilder.group({
       factionId: [factionId, Validators.required],
       agendaId: [agendaId],
       secondFactionId: [secondFactionId],
       title: [title, Validators.required],
       thronesDbLink: [thronesDbLink],
+      thronesDbVersion: [thronesDbVersion],
     });
   };
 
