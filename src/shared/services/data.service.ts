@@ -50,13 +50,14 @@ export class DataService {
   private static _serialiseGame(game:Game):string {
     //noinspection TypeScriptUnresolvedFunction
     const gameCopy:any = _.cloneDeep(game);
-    // if deck has id, strip everything else
-    // gameCopy.gamePlayers.forEach((player:any) => {
-    //  if (player.deck.deckId) {
-    //    player.deck = {deckId: player.deck.deckId};
-    //  }
-    // });
-    // TODO remove non-primitives
+    gameCopy.gamePlayers.forEach((player:any) => {
+      delete player.player;
+      if (player.deckId) {
+        delete player.deck;
+      } else {
+        player.deck = DataService._serialiseDeck(player.deck);
+      }
+    });
     return JSON.stringify(gameCopy);
   }
 
@@ -65,6 +66,7 @@ export class DataService {
     const deckCopy:any = _.omit(_.cloneDeep(deck), [
       'faction', 'agenda', 'secondFaction', 'fallbackTitle', 'dateCreated', 'dateModified'
     ]);
+    // TODO remove second faction if agenda specified?
     return JSON.stringify(deckCopy);
   }
 

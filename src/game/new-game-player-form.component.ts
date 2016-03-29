@@ -45,12 +45,14 @@ export class NewGamePlayerFormComponent implements OnInit {
     // new gamePlayer? player from Players
     this.gamePlayer.playerId = +playerId;
     this.gamePlayer.deck = null;
+    this.gamePlayer.deckId = null;
     console.log(this.gamePlayer);
   }
 
   onUpdateDeck(deck:Deck) {
     console.log(deck);
     this.gamePlayer.deck = deck;
+    this.gamePlayer.deckId = deck.deckId;
     this.onSubmit();
   }
 
