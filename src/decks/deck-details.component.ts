@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import {FilterCriteria} from '../shared/models/filter-criteria.model';
 import {GamesTableComponent} from '../home/components/games-table.component';
 import {ViewDeckComponent} from './view-deck.component';
+import {NotificationService} from '../shared/services/notification.service';
 
 @Component({
   selector: 'agot-deck-details',
@@ -38,6 +39,7 @@ export class DeckDetailsComponent implements OnInit {
   constructor(params:RouteParams,
               private deckService:DeckService,
               private gameService:GameService,
+              private notificationService:NotificationService,
               private router:Router) {
     this.deckIdParam = <number>+params.get('id');
     this.editParam = !!params.get('edit');
@@ -58,22 +60,22 @@ export class DeckDetailsComponent implements OnInit {
     const creating = !deck.deckId;
 
     console.log('details submit', deck, creating);
-    // this.deckService.updateDeck(deck).subscribe((deck:Deck) => {
-    //     if (creating) {
-    //       // TODO skip reload
-    //       this.router.navigate(['/DeckDetails', {id: deck.deckId}]);
-    //       return;
-    //     }
-    //     this.deck = deck;
-    //     this.formDisabled = false;
-    //     this.editing = false;
-    //   }, (error) => {
-    //     this.formDisabled = false;
-    //     console.error(error);
-    //     this.notificationService.error('Whoops', error.message || error._body || error);
-    //     this.isLoading = false;
-    //   }, () => this.isLoading = false
-    // );
+    this.deckService.updateDeck(deck).subscribe((deck:Deck) => {
+        if (creating) {
+          // TODO skip reload
+          this.router.navigate(['/DeckDetails', {id: deck.deckId}]);
+          return;
+        }
+        this.deck = deck;
+        this.formDisabled = false;
+        this.editing = false;
+      }, (error) => {
+        this.formDisabled = false;
+        console.error(error);
+        this.notificationService.error('Whoops', error.message || error._body || error);
+        this.isLoading = false;
+      }, () => this.isLoading = false
+    );
   }
 
   onCancel() {

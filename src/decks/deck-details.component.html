@@ -10,14 +10,12 @@
                        (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
 
   <agot-view-deck *ngIf="!editing" [deck]="deck"></agot-view-deck>
-  <!--<agot-view-deck *ngIf="!editing" [deck]="deck" (edit)="onEdit()" (deleteDeck)="onDelete()"></agot-view-deck>-->
-  <div [hidden]="editing">
 
+  <div [hidden]="editing">
     <div>
       <button *ngIf="!deck.thronesDbId" type="button" class="btn btn-success-outline" (click)="onEdit()">Edit</button>
       <a [routerLink]="['/Decks']" class="btn btn-primary-outline">&laquo; Back </a>
     </div>
-
   </div>
 </div>
 

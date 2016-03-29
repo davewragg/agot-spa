@@ -5,6 +5,7 @@ import {Game} from '../models/game.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DateRangeType} from '../models/date-range-type.model';
 import {SetOfResults} from '../models/set-of-results.model';
+import {Deck} from '../models/deck.model';
 import * as moment from 'moment/moment';
 import * as _ from 'lodash';
 
@@ -57,6 +58,14 @@ export class DataService {
     // });
     // TODO remove non-primitives
     return JSON.stringify(gameCopy);
+  }
+
+  private static _serialiseDeck(deck:Deck):string {
+    //noinspection TypeScriptUnresolvedFunction
+    const deckCopy:any = _.omit(_.cloneDeep(deck), [
+      'faction', 'agenda', 'secondFaction', 'fallbackTitle', 'dateCreated', 'dateModified'
+    ]);
+    return JSON.stringify(deckCopy);
   }
 
   private static _getContentHeaders() {
@@ -154,6 +163,14 @@ export class DataService {
     console.log('getReferenceData called', refDataType);
     return this.http.get(this.baseUrl + `api/${refDataType}/getall`)
       .cache()
+      .map(DataService.handleResponse);
+  }
+
+  updateDeck(deck:Deck):Observable<Deck> {
+    console.log('updatedeck called', deck);
+    return this.http.put(this.baseUrl + 'api/decks/edit',
+      DataService._serialiseDeck(deck),
+      DataService._getContentHeaders())
       .map(DataService.handleResponse);
   }
 

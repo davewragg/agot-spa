@@ -42,6 +42,16 @@ export class DeckService {
     return this.getDeckBy('deckId', deckId);
   }
 
+  updateDeck(deck:Deck):Observable<Deck> {
+    return this.dataService.updateDeck(deck);
+  }
+
+  invalidate() {
+    console.log('invalidate decks cache');
+    // this.data = this._getDecks();
+    this.data = null;
+  }
+
   getDecks():Observable<Deck[]> {
     console.log('getdecks called');
     if (!this.data) {
