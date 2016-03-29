@@ -24,7 +24,6 @@ export class GamePlayerRowComponent {
 
   onUpdateDeck(updatedDeck:Deck) {
     this.gamePlayer.deck = updatedDeck;
-    this.gamePlayer.deckId = updatedDeck.deckId;
     this.updatePlayer.emit(this.gamePlayer);
     this.editing = false;
   }
