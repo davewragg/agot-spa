@@ -12,15 +12,7 @@
   <div [hidden]="editing">
 
     <div>
-      <button type="button" class="btn btn-success-outline" (click)="onEdit()">Edit</button>
-<!--      <button type="button" class="btn btn-danger-outline" (click)="onDelete()" [hidden]="deleting">Delete</button>
-
-      <div [hidden]="!deleting" class="card card-block alert-warning">
-        <p class="card-text">Serious delete deck?</p>
-        <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(true)">Yep</button>
-        <button type="button" class="btn btn-sm btn-secondary" (click)="deleting = false">Whoops</button>
-      </div>-->
-
+      <button *ngIf="!deck.thronesDbId" type="button" class="btn btn-success-outline" (click)="onEdit()">Edit</button>
       <a [routerLink]="['/Decks']" class="btn btn-primary-outline">&laquo; Back </a>
     </div>
 
