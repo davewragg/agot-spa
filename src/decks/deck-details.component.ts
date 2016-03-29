@@ -88,6 +88,9 @@ export class DeckDetailsComponent implements OnInit {
   }
 
   onEdit() {
+    if (this.deck.thronesDbId) {
+      return;
+    }
     this.editing = true;
   }
 
@@ -101,6 +104,9 @@ export class DeckDetailsComponent implements OnInit {
       .subscribe(
         ([deck, games]) => {
           this.deck = deck;
+          if (deck.thronesDbId && this.editing) {
+            this.editing = false;
+          }
           this.deckGames = games;
         },
         (error) => this.loadError = error,

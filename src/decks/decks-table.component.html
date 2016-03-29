@@ -10,15 +10,15 @@
     <td class="col-xs-9 col-sm-10 col-lg-11">
       <article>
         <div>
-          <small class="pull-xs-right"></small>
+          <small *ngIf="deck.thronesDbId" class="pull-xs-right">[imported]</small>
           <a [routerLink]="['DeckDetails', {id: deck.deckId}]">
             {{ deck.title || deck.fallbackTitle }}
           </a>
           <a class="small" *ngIf="deck.thronesDbLink" [href]="deck.thronesDbLink" rel="noopener" target="_blank"
              [title]="deck.thronesDbLink">[TDB]</a>
         </div>
-        <div class="text-muted">
-          <small class="pull-xs-right">
+        <div class="small">
+          <span class="text-muted pull-xs-right">
             Created
             <time [attr.datetime]="deck.dateCreated" title="{{ deck.dateCreated | amDateFormat: 'LLLL' }}">
               {{ deck.dateCreated | amTimeAgo }}
@@ -27,8 +27,8 @@
             Modified <time [attr.datetime]="deck.dateModified" title="{{ deck.dateModified | amDateFormat: 'LLLL' }}">
                 {{ deck.dateModified | amTimeAgo }}
               </time></span>
-          </small>
-          <agot-player-link *ngIf="!!deck.creatorId" class="small" [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
+          </span>
+          by <agot-player-link *ngIf="!!deck.creatorId" [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
         </div>
       </article>
     </td>
