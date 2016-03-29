@@ -1,0 +1,28 @@
+<div *ngIf="deck" class="m-b-1">
+  <h2>{{ editing ?
+    deck.deckId ? 'Edit' : 'Create'
+    : 'View' }} Deck</h2>
+
+  <!--TODO if creating, select player-->
+  <agot-deck-edit-form [deck]="deck" *ngIf="editing" [disabled]="formDisabled"
+                       [editing]="!!deck.deckId" [creating]="!deck.deckId"
+                       (cancel)="onCancel()" [hidden]="formDisabled"
+                       (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
+
+  <agot-view-deck *ngIf="!editing" [deck]="deck"></agot-view-deck>
+
+  <div [hidden]="editing">
+    <div>
+      <button *ngIf="!deck.thronesDbId" type="button" class="btn btn-success-outline" (click)="onEdit()">Edit</button>
+      <a [routerLink]="['/Decks']" class="btn btn-primary-outline">&laquo; Back </a>
+    </div>
+  </div>
+</div>
+
+<agot-spinner [isRunning]="isLoadingDeck || isLoadingGames"></agot-spinner>
+
+<h3 *ngIf="!isLoadingDeck && !deck" class="alert alert-danger">Deck not found</h3>
+<h3 *ngIf="loadError" class="alert alert-danger">Disaster {{ loadError | json }}</h3>
+
+<h5 [hidden]="isLoadingGames">Games featuring this deck</h5>
+<agot-games-table [games]="deckGames"></agot-games-table>

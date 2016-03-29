@@ -1,0 +1,20 @@
+<h2>Decks</h2>
+<!--TODO create new-->
+<!--<a class="btn btn-primary" [routerLink]="['/NewGameDetails']">Create new deck</a>-->
+<!--TODO import-->
+<!--<a class="btn btn-primary" [routerLink]="['/NewGameDetails']">Import new deck</a>-->
+
+<!--TODO filter by players component-->
+<!--<form (ngSubmit)="onExecute()" class="form">
+  <div class="btn-group" data-toggle="buttons">
+    <label *ngFor=""
+      class="btn btn-secondary" [class.active]="true">
+      <input type="radio" name="sortDir" (change)="onSortChange(false)"
+             [checked]="!criteria.ascending"
+             value="false" autocomplete="off"> Oldest first
+    </label>
+  </div>
+</form>-->
+
+<agot-spinner [isRunning]="isLoading"></agot-spinner>
+<agot-decks-table [decks]="decks"></agot-decks-table>

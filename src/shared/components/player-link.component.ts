@@ -5,7 +5,7 @@ import {Player} from '../models/player.model';
 @Component({
   selector: 'agot-player-link',
   moduleId: module.id,
-  template: `<a [routerLink]="['/PlayerDetails', {id: player.playerId}]">{{ player.name || player.playerName }}</a>`,
+  template: `<a [routerLink]="['/PlayerDetails', {id: player?.playerId}]">{{ player?.name || player?.playerName }}</a>`,
   directives: [ROUTER_DIRECTIVES]
 })
 export class PlayerLinkComponent {
