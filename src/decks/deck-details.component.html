@@ -19,10 +19,10 @@
   </div>
 </div>
 
-<agot-spinner [isRunning]="isLoading"></agot-spinner>
+<agot-spinner [isRunning]="isLoadingDeck || isLoadingGames"></agot-spinner>
 
-<h3 *ngIf="!isLoading && !deck" class="alert alert-danger">Deck not found</h3>
+<h3 *ngIf="!isLoadingDeck && !deck" class="alert alert-danger">Deck not found</h3>
 <h3 *ngIf="loadError" class="alert alert-danger">Disaster {{ loadError | json }}</h3>
 
-<h5 [hidden]="isLoading">Games featuring this deck</h5>
+<h5 [hidden]="isLoadingGames">Games featuring this deck</h5>
 <agot-games-table [games]="deckGames"></agot-games-table>

@@ -6,7 +6,6 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 import {DeckEditFormComponent} from './deck-edit-form.component';
 import {Game} from '../shared/models/game.model';
 import {GameService} from '../shared/services/game.service';
-import {Observable} from 'rxjs/Observable';
 import {FilterCriteria} from '../shared/models/filter-criteria.model';
 import {GamesTableComponent} from '../home/components/games-table.component';
 import {ViewDeckComponent} from './view-deck.component';
@@ -33,7 +32,8 @@ export class DeckDetailsComponent implements OnInit {
 
   editing:boolean = false;
   formDisabled:boolean = false;
-  isLoading:boolean;
+  isLoadingDeck:boolean;
+  isLoadingGames:boolean;
   loadError:any = null;
 
   constructor(params:RouteParams,
@@ -48,7 +48,8 @@ export class DeckDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.deckIdParam) {
-      this.loadDeckAndGames();
+      this.loadDeck();
+      this.loadDeckGames();
     } else {
       this.deck = new Deck();
     }
@@ -56,7 +57,7 @@ export class DeckDetailsComponent implements OnInit {
 
   onSubmit(deck:Deck) {
     this.formDisabled = true;
-    this.isLoading = true;
+    this.isLoadingDeck = true;
     const creating = !deck.deckId;
 
     console.log('details submit', deck, creating);
@@ -73,8 +74,8 @@ export class DeckDetailsComponent implements OnInit {
         this.formDisabled = false;
         console.error(error);
         this.notificationService.error('Whoops', error.message || error._body || error);
-        this.isLoading = false;
-      }, () => this.isLoading = false
+        this.isLoadingDeck = false;
+      }, () => this.isLoadingDeck = false
     );
   }
 
@@ -94,23 +95,28 @@ export class DeckDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  private loadDeckAndGames() {
-    // TODO split this into 2 separate load states
-    this.isLoading = true;
-    return Observable.combineLatest(
-      this.deckService.getDeck(this.deckIdParam),
-      this.gameService.getGames(<FilterCriteria>{deckIds: [this.deckIdParam]})
-      )
+  private loadDeck() {
+    this.isLoadingDeck = true;
+    return this.deckService.getDeck(this.deckIdParam)
       .subscribe(
-        ([deck, games]) => {
+        (deck) => {
           this.deck = deck;
           if (deck.thronesDbId && this.editing) {
             this.editing = false;
           }
-          this.deckGames = games;
         },
         (error) => this.loadError = error,
-        () => this.isLoading = false
+        () => this.isLoadingDeck = false
+      );
+  }
+
+  private loadDeckGames() {
+    this.isLoadingGames = true;
+    return this.gameService.getGames(<FilterCriteria>{deckIds: [this.deckIdParam]})
+      .subscribe(
+        (games) => this.deckGames = games,
+        (error) => this.loadError = error,
+        () => this.isLoadingGames = false
       );
   }
 }
