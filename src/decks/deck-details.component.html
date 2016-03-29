@@ -1,4 +1,4 @@
-<div *ngIf="deck">
+<div *ngIf="deck" class="m-b-1">
   <h2>{{ editing ?
     deck.deckId ? 'Edit' : 'Create'
     : 'View' }} Deck</h2>
@@ -7,8 +7,7 @@
   <agot-deck-edit-form [deck]="deck" *ngIf="editing" [disabled]="formDisabled"
                        [editing]="!!deck.deckId" [creating]="!deck.deckId"
                        (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
-  <agot-deck-class-block *ngIf="!editing"
-    [deckClass]="deck"></agot-deck-class-block>
+  <agot-view-deck *ngIf="!editing" [deck]="deck"></agot-view-deck>
   <!--<agot-view-deck *ngIf="!editing" [deck]="deck" (edit)="onEdit()" (deleteDeck)="onDelete()"></agot-view-deck>-->
   <div [hidden]="editing">
 
@@ -33,5 +32,5 @@
 <h3 *ngIf="!isLoading && !deck" class="alert alert-danger">Deck not found</h3>
 <h3 *ngIf="loadError" class="alert alert-danger">Disaster {{ loadError | json }}</h3>
 
-<h4 [hidden]="isLoading">Games featuring this deck</h4>
+<h5 [hidden]="isLoading">Games featuring this deck</h5>
 <agot-games-table [games]="deckGames"></agot-games-table>
