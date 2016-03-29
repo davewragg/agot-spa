@@ -1,8 +1,10 @@
 <h2>Decks</h2>
-<!--TODO create new-->
-<!--<a class="btn btn-primary" [routerLink]="['/NewGameDetails']">Create new deck</a>-->
-<!--TODO import-->
-<!--<a class="btn btn-primary" [routerLink]="['/NewGameDetails']">Import new deck</a>-->
+<div class="m-b-1">
+  <!--TODO create new-->
+  <button type="button" [disabled]="true" class="btn btn-primary" [routerLink]="['/NewGameDetails']">Create new deck</button>
+  <!--TODO import-->
+  <button type="button" [disabled]="true" class="btn btn-primary" [routerLink]="['/NewGameDetails']">Import new deck</button>
+</div>
 
 <!--TODO filter by players component-->
 <!--<form (ngSubmit)="onExecute()" class="form">
