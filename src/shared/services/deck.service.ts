@@ -43,6 +43,8 @@ export class DeckService {
   }
 
   updateDeck(deck:Deck):Observable<Deck> {
+    // TODO update current decks instead?
+    this.invalidate();
     return this.dataService.updateDeck(deck);
   }
 

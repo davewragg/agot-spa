@@ -48,6 +48,11 @@ export class DataService {
   }
 
   private static _serialiseGame(game:Game):string {
+    const gameCopy = this._prepareGameData(game);
+    return JSON.stringify(gameCopy);
+  }
+
+  private static _prepareGameData(game:Game) {
     //noinspection TypeScriptUnresolvedFunction
     const gameCopy:any = _.cloneDeep(game);
     // if deck has id, strip everything else
@@ -56,18 +61,22 @@ export class DataService {
       if (player.deck.deckId) {
         player.deck = _.pick(player.deck, ['deckId']);
       } else {
-        player.deck = DataService._serialiseDeck(player.deck);
+        player.deck = DataService._prepareDeckData(player.deck);
       }
     });
-    return JSON.stringify(gameCopy);
+    return gameCopy;
   }
 
   private static _serialiseDeck(deck:Deck):string {
+    const deckCopy = this._prepareDeckData(deck);
+    return JSON.stringify(deckCopy);
+  }
+
+  private static _prepareDeckData(deck:Deck) {
     //noinspection TypeScriptUnresolvedFunction
-    const deckCopy:any = _.omit(_.cloneDeep(deck), [
+    return _.omit(_.cloneDeep(deck), [
       'faction', 'agenda', 'secondFaction', 'fallbackTitle', 'dateCreated', 'dateModified'
     ]);
-    return JSON.stringify(deckCopy);
   }
 
   private static _getContentHeaders() {
