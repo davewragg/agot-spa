@@ -24,6 +24,8 @@ export class DeckEditFormComponent implements OnInit {
   deck:Deck;
   @Output()
   updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
+  @Output()
+  cancel:EventEmitter<any> = new EventEmitter<any>();
 
   deckForm:ControlGroup;
 
@@ -54,6 +56,10 @@ export class DeckEditFormComponent implements OnInit {
 
   onDeckClassChange() {
     this.setDefaultTitle();
+  }
+
+  onCancel() {
+    this.cancel.emit(true);
   }
 
   onSubmit() {

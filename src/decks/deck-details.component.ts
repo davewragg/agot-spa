@@ -89,17 +89,6 @@ export class DeckDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  // onDelete() {
-  //   console.log('delete', this.deck);
-  //   this.deckService.deleteDeck(this.deck.deckId).subscribe((result) => {
-  //     this.deck = null;
-  //     this.notificationService.success('There', `I hope you're happy`);
-  //   }, (error) => {
-  //     console.error(error);
-  //     this.notificationService.error('Whoops', error.message || error._body || error);
-  //   });
-  // }
-
   private loadDeckAndGames() {
     // TODO split this into 2 separate load states
     this.isLoading = true;
