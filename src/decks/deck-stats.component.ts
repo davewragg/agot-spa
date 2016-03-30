@@ -2,7 +2,7 @@ import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
 import {CountComponent} from '../shared/components/count.component';
 import {GamesTableComponent} from '../home/components/games-table.component';
 import {DeckStats} from '../shared/models/deck-stats.model';
-import {PlayerStatsTableComponent} from '../players/player-stats-table.component';
+import {StatsTableComponent} from '../players/player-stats-table.component';
 import {Deck} from '../shared/models/deck.model';
 
 @Component({
@@ -10,7 +10,7 @@ import {Deck} from '../shared/models/deck.model';
   moduleId: module.id,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './deck-stats.component.html',
-  directives: [CountComponent, PlayerStatsTableComponent, GamesTableComponent]
+  directives: [CountComponent, StatsTableComponent, GamesTableComponent]
 })
 export class DeckStatsComponent {
   @Input()

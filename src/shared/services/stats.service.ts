@@ -10,7 +10,7 @@ import {Agenda} from '../models/agenda.model';
 import {PlayerStats} from '../models/player-stats.model';
 import {Result} from '../models/result.enum';
 import {GamePlayer} from '../models/game-player.model';
-import {PlayerStatsSet} from '../models/player-stats-set.model';
+import {StatsSet} from '../models/player-stats-set.model';
 import {DeckClass} from '../models/deck-class.model';
 import {Stats} from '../models/stats.model';
 import {PlayerInsights} from '../models/player-insights.model';
@@ -21,7 +21,7 @@ export class StatsService {
   private _factions:Faction[];
   private _agendas:Agenda[];
 
-  private static updateFactionAgendaStats(player:GamePlayer, stats:PlayerStatsSet, result:Result) {
+  private static updateFactionAgendaStats(player:GamePlayer, stats:StatsSet, result:Result) {
     if (!player.deck.secondFactionId) {
       const deckClassId = DeckClass.getDeckClassId(player.deck.factionId, player.deck.agendaId);
       StatsService.updateStatsFor(deckClassId, stats.deckClass, result);
