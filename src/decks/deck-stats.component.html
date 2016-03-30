@@ -1,0 +1,37 @@
+<div *ngIf="deckStats">
+  <div *ngIf="deckStats?.overall?.played < 1">
+    <div class="m-b-1">
+      <code>In this period, {{ deck?.title || 'deck' }} has not been played.</code>
+    </div>
+  </div>
+  <div *ngIf="deckStats?.overall?.played > 0">
+    <div class="m-b-1">
+      <code>{{ deck?.title || 'Deck' }} has been played
+        <agot-count [count]="deckStats?.overall?.played"></agot-count>,
+        won
+        <agot-count [count]="deckStats?.overall?.won"></agot-count>,
+        drawn
+        <agot-count [count]="deckStats?.overall?.drawn"></agot-count>,
+        and lost
+        <agot-count [count]="deckStats?.overall?.lost"></agot-count>.
+        Its win rate is {{ deckStats?.overall?.winPercentage }}%,
+        with a loss rate of {{ deckStats?.overall?.lossPercentage }}%.
+      </code>
+    </div>
+
+    <div class="row">
+      <agot-player-stats-table title="Played by" [playerStatsSet]="deckStats.as"
+                               class="col-lg-6 col-xs-12"></agot-player-stats-table>
+      <agot-player-stats-table title="Playing versus" [playerStatsSet]="deckStats.vs"
+                               class="col-lg-6 col-xs-12"></agot-player-stats-table>
+    </div>
+
+    <div class="m-b-1">
+      <button class="btn btn-success-outline" (click)="showGames = !showGames">Show/hide games</button>
+    </div>
+
+    <div class="m-b-1">
+      <agot-games-table *ngIf="showGames" [games]="deckStats?.games"></agot-games-table>
+    </div>
+  </div>
+</div>

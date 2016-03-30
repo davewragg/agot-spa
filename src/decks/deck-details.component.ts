@@ -4,12 +4,12 @@ import {DeckService} from '../shared/services/deck.service';
 import {Deck} from '../shared/models/deck.model';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 import {DeckEditFormComponent} from './deck-edit-form.component';
-import {Game} from '../shared/models/game.model';
 import {GameService} from '../shared/services/game.service';
-import {FilterCriteria} from '../shared/models/filter-criteria.model';
-import {GamesTableComponent} from '../home/components/games-table.component';
 import {ViewDeckComponent} from './view-deck.component';
 import {NotificationService} from '../shared/services/notification.service';
+import {StatsService} from '../shared/services/stats.service';
+import {DeckStats} from '../shared/models/deck-stats.model';
+import {DeckStatsComponent} from './deck-stats.component';
 
 @Component({
   selector: 'agot-deck-details',
@@ -17,28 +17,28 @@ import {NotificationService} from '../shared/services/notification.service';
   viewProviders: [GameService],
   templateUrl: './deck-details.component.html',
   directives: [
+    ROUTER_DIRECTIVES,
     SpinnerComponent,
     DeckEditFormComponent,
-    GamesTableComponent,
-    ViewDeckComponent,
-    ROUTER_DIRECTIVES // TODO remove?
+    DeckStatsComponent,
+    ViewDeckComponent
   ]
 })
 export class DeckDetailsComponent implements OnInit {
   deck:Deck;
   deckIdParam:number;
   editParam:boolean;
-  deckGames:Game[];
+  deckStats:DeckStats;
 
   editing:boolean = false;
   formDisabled:boolean = false;
   isLoadingDeck:boolean;
-  isLoadingGames:boolean;
+  isLoadingStats:boolean;
   loadError:any = null;
 
   constructor(params:RouteParams,
               private deckService:DeckService,
-              private gameService:GameService,
+              private statsService:StatsService,
               private notificationService:NotificationService,
               private router:Router) {
     this.deckIdParam = <number>+params.get('id');
@@ -49,7 +49,7 @@ export class DeckDetailsComponent implements OnInit {
   ngOnInit() {
     if (this.deckIdParam) {
       this.loadDeck();
-      this.loadDeckGames();
+      this.loadDeckStats();
     } else {
       this.deck = new Deck();
     }
@@ -110,13 +110,16 @@ export class DeckDetailsComponent implements OnInit {
       );
   }
 
-  private loadDeckGames() {
-    this.isLoadingGames = true;
-    return this.gameService.getGames(<FilterCriteria>{deckIds: [this.deckIdParam]})
+  private loadDeckStats() {
+    this.isLoadingStats = true;
+    return this.statsService.getDeckStats(this.deckIdParam)
       .subscribe(
-        (games) => this.deckGames = games,
+        (stats) => {
+          console.log(stats.vs.agendas.keys());
+          this.deckStats = stats;
+        },
         (error) => this.loadError = error,
-        () => this.isLoadingGames = false
+        () => this.isLoadingStats = false
       );
   }
 }

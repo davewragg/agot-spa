@@ -1,0 +1,16 @@
+import {Stats} from './stats.model';
+import {Game} from './game.model';
+import {PlayerStatsSet} from './player-stats-set.model';
+
+export class DeckStats {
+  games:Game[] = [];
+  overall:Stats = new Stats();
+  as:PlayerStatsSet = new PlayerStatsSet();
+  vs:PlayerStatsSet = new PlayerStatsSet();
+
+  sort(asc?:boolean, byLosing?:boolean) {
+    this.as.sort(asc, byLosing);
+    this.vs.sort(asc, byLosing);
+    return this;
+  }
+}

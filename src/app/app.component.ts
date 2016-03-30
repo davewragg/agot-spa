@@ -20,23 +20,35 @@ import {ThronesDbService} from '../shared/services/thrones-db.service';
 import {PlayerService} from '../shared/services/player.service';
 import {DecksComponent} from '../decks/decks.component';
 import {DeckDetailsComponent} from '../decks/deck-details.component';
+import {StatsService} from '../shared/services/stats.service';
+import {GameService} from '../shared/services/game.service';
 
 @Component({
   selector: 'agot-app',
   viewProviders: [NameListService],
-  providers: [ROUTER_PROVIDERS,
+  providers: [
+    ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
     ToasterService,
     NotificationService,
     DataService,
     ReferenceDataService,
     PlayerService,
+    GameService,
     DeckService,
-    ThronesDbService],
+    StatsService,
+    ThronesDbService
+  ],
   moduleId: module.id,
   templateUrl: './app.html',
   encapsulation: ViewEncapsulation.None,
-  directives: [ROUTER_DIRECTIVES, ToasterContainerComponent, ToolbarComponent, NavbarComponent, FooterComponent],
+  directives: [
+    ROUTER_DIRECTIVES,
+    ToasterContainerComponent,
+    ToolbarComponent,
+    NavbarComponent,
+    FooterComponent
+  ],
 })
 @RouteConfig([
   {path: '/', component: HomeComponent, name: 'Home', useAsDefault: true},
