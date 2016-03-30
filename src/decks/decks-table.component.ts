@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, Input} from 'angular2/core';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {TimeAgoPipe} from '../shared/pipes/time-ago-pipe';
 import {DateFormatPipe} from '../shared/pipes/date-format-pipe';
 import {PlayerLinkComponent} from '../shared/components/player-link.component';
@@ -10,6 +9,7 @@ import {Observable} from 'rxjs/Observable';
 import {Player} from '../shared/models/player.model';
 import {PlayerService} from '../shared/services/player.service';
 import {DeckClassBadgeComponent} from '../shared/components/deck-class-badge.component';
+import {DeckLinkComponent} from '../shared/components/deck-link.component';
 
 @Component({
   selector: 'agot-decks-table',
@@ -17,7 +17,8 @@ import {DeckClassBadgeComponent} from '../shared/components/deck-class-badge.com
   templateUrl: './decks-table.component.html',
   pipes: [TimeAgoPipe, DateFormatPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [ROUTER_DIRECTIVES,
+  directives: [
+    DeckLinkComponent,
     PlayerLinkComponent,
     FactionBadgeComponent,
     AgendaBadgeComponent,

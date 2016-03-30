@@ -1,12 +1,12 @@
 <div *ngIf="deckStats">
   <div *ngIf="deckStats?.overall?.played < 1">
     <div class="m-b-1">
-      <code>In this period, {{ deck?.title || 'deck' }} has not been played.</code>
+      <code>{{ deck?.title || 'This deck' }} has not been played.</code>
     </div>
   </div>
   <div *ngIf="deckStats?.overall?.played > 0">
     <div class="m-b-1">
-      <code>{{ deck?.title || 'Deck' }} has been played
+      <code>{{ deck?.title || 'This deck' }} has been played
         <agot-count [count]="deckStats?.overall?.played"></agot-count>,
         won
         <agot-count [count]="deckStats?.overall?.won"></agot-count>,

@@ -10,7 +10,8 @@
   </div>
   <ul class="list-group list-group-flush" *ngIf="!editing">
     <li class="list-group-item font-weight-bold">
-      {{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}<span *ngIf="!gamePlayer.deck.deckId">*</span>
+      <agot-deck-link [deck]="gamePlayer.deck" *ngIf="gamePlayer.deck.deckId"></agot-deck-link>
+      <span *ngIf="!gamePlayer.deck.deckId">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}*</span>
       <!--TODO fancy icon?-->
       <a *ngIf="gamePlayer.deck.thronesDbLink" [href]="gamePlayer.deck.thronesDbLink" rel="noopener" target="_blank"
          [title]="gamePlayer.deck.thronesDbLink">TDB</a>
