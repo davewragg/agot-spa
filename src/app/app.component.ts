@@ -22,6 +22,7 @@ import {DecksComponent} from '../decks/decks.component';
 import {DeckDetailsComponent} from '../decks/deck-details.component';
 import {StatsService} from '../shared/services/stats.service';
 import {GameService} from '../shared/services/game.service';
+import {SeasonService} from '../shared/services/season.service';
 
 @Component({
   selector: 'agot-app',
@@ -33,6 +34,7 @@ import {GameService} from '../shared/services/game.service';
     NotificationService,
     DataService,
     ReferenceDataService,
+    SeasonService,
     PlayerService,
     GameService,
     DeckService,

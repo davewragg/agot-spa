@@ -9,7 +9,6 @@ import * as moment from 'moment/moment';
   selector: 'agot-date-range',
   moduleId: module.id,
   templateUrl: './date-range.html',
-  viewProviders: [SeasonService],
 })
 export class DateRangeComponent implements OnInit {
   @Input()
