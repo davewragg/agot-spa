@@ -5,8 +5,11 @@ import {Game} from '../models/game.model';
 import {FilterCriteria} from '../models/filter-criteria.model';
 import {DateRangeType} from '../models/date-range-type.model';
 import {SetOfResults} from '../models/set-of-results.model';
+import {Deck} from '../models/deck.model';
 import * as moment from 'moment/moment';
 import * as _ from 'lodash';
+
+declare var Rollbar: any;
 
 @Injectable()
 export class DataService {
@@ -47,16 +50,35 @@ export class DataService {
   }
 
   private static _serialiseGame(game:Game):string {
+    const gameCopy = this._prepareGameData(game);
+    return JSON.stringify(gameCopy);
+  }
+
+  private static _prepareGameData(game:Game) {
     //noinspection TypeScriptUnresolvedFunction
     const gameCopy:any = _.cloneDeep(game);
     // if deck has id, strip everything else
-    // gameCopy.gamePlayers.forEach((player:any) => {
-    //  if (player.deck.deckId) {
-    //    player.deck = {deckId: player.deck.deckId};
-    //  }
-    // });
-    // TODO remove non-primitives
-    return JSON.stringify(gameCopy);
+    gameCopy.gamePlayers.forEach((player:any) => {
+      delete player.player;
+      if (player.deck.deckId) {
+        player.deck = _.pick(player.deck, ['deckId']);
+      } else {
+        player.deck = DataService._prepareDeckData(player.deck);
+      }
+    });
+    return gameCopy;
+  }
+
+  private static _serialiseDeck(deck:Deck):string {
+    const deckCopy = this._prepareDeckData(deck);
+    return JSON.stringify(deckCopy);
+  }
+
+  private static _prepareDeckData(deck:Deck) {
+    //noinspection TypeScriptUnresolvedFunction
+    return _.omit(_.cloneDeep(deck), [
+      'faction', 'agenda', 'secondFaction', 'fallbackTitle', 'dateCreated', 'dateModified'
+    ]);
   }
 
   private static _getContentHeaders() {
@@ -67,6 +89,7 @@ export class DataService {
   private static handleResponse(response:Response):any {
     const json = response.json();
     if (json.error) {
+      Rollbar.error(json.error.Message, json.error);
       throw new Error(<string>json.error.Message);
     }
     return json.payload;
@@ -128,7 +151,6 @@ export class DataService {
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse);
-    // TODO update cache? PBR covered?
   }
 
   createGame(game:Game):Observable<Game> {
@@ -137,8 +159,6 @@ export class DataService {
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse);
-    // TODO check for response id
-    // TODO insert into cache
   }
 
   deleteGame(gameId:number):Observable<any> {
@@ -154,6 +174,14 @@ export class DataService {
     console.log('getReferenceData called', refDataType);
     return this.http.get(this.baseUrl + `api/${refDataType}/getall`)
       .cache()
+      .map(DataService.handleResponse);
+  }
+
+  updateDeck(deck:Deck):Observable<Deck> {
+    console.log('updatedeck called', deck);
+    return this.http.put(this.baseUrl + 'api/decks/edit',
+      DataService._serialiseDeck(deck),
+      DataService._getContentHeaders())
       .map(DataService.handleResponse);
   }
 

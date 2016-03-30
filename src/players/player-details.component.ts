@@ -9,6 +9,7 @@ import {DateRangeType} from '../shared/models/date-range-type.model';
 import {DateRangeComponent} from '../home/components/date-range.component';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 import {Observable} from 'rxjs/Observable';
+import {StatsService} from '../shared/services/stats.service';
 
 @Component({
   selector: 'agot-player-details',
@@ -28,6 +29,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   constructor(params:RouteParams,
               private _router:Router,
+              private _statsService:StatsService,
               private _playerService:PlayerService) {
     this.playerIdParam = <number>+params.get('id');
     this.setInitialFiltering(params);
@@ -48,7 +50,7 @@ export class PlayerDetailsComponent implements OnInit {
     this.isLoading = true;
     Observable.combineLatest(
       this._playerService.getPlayer(this.playerIdParam),
-      this._playerService.getPlayerStats(this.playerIdParam, criteria)
+      this._statsService.getPlayerStats(this.playerIdParam, criteria)
     ).subscribe(
       ([player, stats]:[Player, PlayerStats]) => {
         console.log(player, stats);

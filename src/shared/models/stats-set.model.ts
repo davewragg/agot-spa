@@ -1,12 +1,12 @@
 import {Stats} from './stats.model';
 
-export class PlayerStatsSet {
+export class StatsSet {
   deckClass:Map<number, Stats> = new Map<number, Stats>();
   factions:Map<number, Stats> = new Map<number, Stats>();
   agendas:Map<number, Stats> = new Map<number, Stats>();
   players:Map<number, Stats> = new Map<number, Stats>();
 
-  sort(asc?:boolean, byLosing?:boolean):PlayerStatsSet {
+  sort(asc?:boolean, byLosing?:boolean):StatsSet {
     this.deckClass = this.sortMap(this.deckClass, asc, byLosing);
     this.factions = this.sortMap(this.factions, asc, byLosing);
     this.agendas = this.sortMap(this.agendas, asc, byLosing);

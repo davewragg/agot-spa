@@ -10,7 +10,6 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 @Component({
   selector: 'agot-game-details',
   moduleId: module.id,
-  viewProviders: [GameService],
   templateUrl: './game-details.html',
   directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
 })

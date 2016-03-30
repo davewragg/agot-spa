@@ -10,10 +10,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngIf="playerStatsSet?.players?.entries().length">
+  <tr *ngIf="statsSet?.players?.size">
     <th colspan="6" class="table-active">Players</th>
   </tr>
-  <tr *ngFor="#entry of playerStatsSet?.players?.entries()">
+  <tr *ngFor="#entry of statsSet?.players?.entries()">
     <td>
       <agot-player-link [player]="getPlayer(entry[0]) | async"></agot-player-link>
     </td>
@@ -23,10 +23,10 @@
     <td>{{ entry[1].lost }}</td>
     <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
-  <tr>
+  <tr *ngIf="statsSet?.deckClass?.size">
     <th colspan="6">Decks</th>
   </tr>
-  <tr *ngFor="#entry of playerStatsSet?.deckClass?.entries()">
+  <tr *ngFor="#entry of statsSet?.deckClass?.entries()">
     <td>
       <agot-deck-class-badge [deckClass]="getDeckClass(entry[0]) | async"></agot-deck-class-badge>
     </td>
@@ -36,10 +36,10 @@
     <td>{{ entry[1].lost }}</td>
     <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
-  <tr>
+  <tr *ngIf="statsSet?.factions?.size">
     <th colspan="6" class="table-active">Factions</th>
   </tr>
-  <tr *ngFor="#entry of playerStatsSet?.factions?.entries()">
+  <tr *ngFor="#entry of statsSet?.factions?.entries()">
     <td>
       <agot-faction-badge [faction]="getFaction(entry[0]) | async"></agot-faction-badge>
     </td>
@@ -49,10 +49,10 @@
     <td>{{ entry[1].lost }}</td>
     <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
-  <tr>
+  <tr *ngIf="statsSet?.agendas?.size">
     <th colspan="6" class="table-active">Agendas</th>
   </tr>
-  <tr *ngFor="#entry of playerStatsSet?.agendas?.entries()">
+  <tr *ngFor="#entry of statsSet?.agendas?.entries()">
     <td>
       <agot-agenda-badge [agenda]="getAgenda(entry[0]) | async"></agot-agenda-badge>
     </td>

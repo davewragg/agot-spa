@@ -14,6 +14,8 @@ export class Deck {
   thronesDbLink:string;
   thronesDbVersion:string;
   creatorId:number;
+  dateCreated:string;
+  dateModified:string;
   // legacy
   secondFactionId:number;
   secondFaction:Faction;

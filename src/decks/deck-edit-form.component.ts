@@ -19,14 +19,20 @@ export class DeckEditFormComponent implements OnInit {
   @Input()
   creating:boolean;
   @Input()
+  editing:boolean;
+  @Input()
   deck:Deck;
   @Output()
   updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
+  @Output()
+  cancel:EventEmitter<any> = new EventEmitter<any>();
 
   deckForm:ControlGroup;
 
   agendas:Observable<Agenda[]>;
   factions:Observable<Faction[]>;
+
+  showMore:boolean = false;
 
   // TODO legacy sticking plaster
   private _factions:Faction[];
@@ -43,8 +49,9 @@ export class DeckEditFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showMore = this.editing;
     // TODO can't edit imported/saved decks when creating game
-    if (this.creating || this.deck.deckId) {
+    if (this.creating || (this.deck.deckId && !this.editing)) {
       this.deck = new Deck();
     }
     this.populateForm();
@@ -52,6 +59,10 @@ export class DeckEditFormComponent implements OnInit {
 
   onDeckClassChange() {
     this.setDefaultTitle();
+  }
+
+  onCancel() {
+    this.cancel.emit(true);
   }
 
   onSubmit() {
@@ -76,12 +87,14 @@ export class DeckEditFormComponent implements OnInit {
     let secondFactionId = this.deck.secondFactionId || '';
     let title = this.deck.title || this.deck.fallbackTitle || '';
     let thronesDbLink = this.deck.thronesDbLink || '';
+    let thronesDbVersion = this.deck.thronesDbVersion || '';
     this.deckForm = this._formBuilder.group({
       factionId: [factionId, Validators.required],
       agendaId: [agendaId],
       secondFactionId: [secondFactionId],
       title: [title, Validators.required],
       thronesDbLink: [thronesDbLink],
+      thronesDbVersion: [thronesDbVersion],
     });
   };
 
