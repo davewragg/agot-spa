@@ -2,7 +2,7 @@ import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
 import {PlayerStats} from '../shared/models/player-stats.model';
 import {Player} from '../shared/models/player.model';
 import {CountComponent} from '../shared/components/count.component';
-import {StatsTableComponent} from './player-stats-table.component';
+import {StatsTableComponent} from './stats-table.component';
 import {PlayerInsightsComponent} from './player-insights.component';
 import {GamesTableComponent} from '../home/components/games-table.component';
 

@@ -10,13 +10,13 @@ import {PlayerLinkComponent} from '../shared/components/player-link.component';
 import {ColourRangeDirective} from '../shared/directives/colour-range.directive';
 import {DeckClass} from '../shared/models/deck-class.model';
 import {DeckClassBadgeComponent} from '../shared/components/deck-class-badge.component';
-import {StatsSet} from '../shared/models/player-stats-set.model';
+import {StatsSet} from '../shared/models/stats-set.model';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-stats-table',
   moduleId: module.id,
-  templateUrl: './player-stats-table.html',
+  templateUrl: './stats-table.component.html',
   directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
     PlayerLinkComponent, ColourRangeDirective]
 })

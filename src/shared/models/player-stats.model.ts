@@ -1,6 +1,6 @@
 import {Stats} from './stats.model';
 import {Game} from './game.model';
-import {StatsSet} from './player-stats-set.model';
+import {StatsSet} from './stats-set.model';
 import {PlayerInsights} from './player-insights.model';
 
 export class PlayerStats {
