@@ -87,6 +87,8 @@ export class DataService {
   private static handleResponse(response:Response):any {
     const json = response.json();
     if (json.error) {
+      //noinspection TypeScriptUnresolvedVariable
+      Rollbar.error(json.error.Message, json.error);
       throw new Error(<string>json.error.Message);
     }
     return json.payload;
@@ -148,7 +150,6 @@ export class DataService {
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse);
-    // TODO update cache? PBR covered?
   }
 
   createGame(game:Game):Observable<Game> {
@@ -157,8 +158,6 @@ export class DataService {
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse);
-    // TODO check for response id
-    // TODO insert into cache
   }
 
   deleteGame(gameId:number):Observable<any> {
