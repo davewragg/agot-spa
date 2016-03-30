@@ -9,6 +9,8 @@ import {Deck} from '../models/deck.model';
 import * as moment from 'moment/moment';
 import * as _ from 'lodash';
 
+declare var Rollbar: any;
+
 @Injectable()
 export class DataService {
   private today:string;
@@ -87,7 +89,6 @@ export class DataService {
   private static handleResponse(response:Response):any {
     const json = response.json();
     if (json.error) {
-      //noinspection TypeScriptUnresolvedVariable
       Rollbar.error(json.error.Message, json.error);
       throw new Error(<string>json.error.Message);
     }
