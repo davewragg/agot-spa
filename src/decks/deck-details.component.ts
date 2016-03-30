@@ -115,7 +115,6 @@ export class DeckDetailsComponent implements OnInit {
     return this.statsService.getDeckStats(this.deckIdParam)
       .subscribe(
         (stats) => {
-          console.log(stats.vs.agendas.keys());
           this.deckStats = stats;
         },
         (error) => this.loadError = error,

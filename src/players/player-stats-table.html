@@ -10,7 +10,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngIf="statsSet?.players?.entries().length">
+  <tr *ngIf="statsSet?.players?.size">
     <th colspan="6" class="table-active">Players</th>
   </tr>
   <tr *ngFor="#entry of statsSet?.players?.entries()">
@@ -23,7 +23,7 @@
     <td>{{ entry[1].lost }}</td>
     <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
-  <tr>
+  <tr *ngIf="statsSet?.deckClass?.size">
     <th colspan="6">Decks</th>
   </tr>
   <tr *ngFor="#entry of statsSet?.deckClass?.entries()">
@@ -36,7 +36,7 @@
     <td>{{ entry[1].lost }}</td>
     <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
-  <tr>
+  <tr *ngIf="statsSet?.factions?.size">
     <th colspan="6" class="table-active">Factions</th>
   </tr>
   <tr *ngFor="#entry of statsSet?.factions?.entries()">
@@ -49,7 +49,7 @@
     <td>{{ entry[1].lost }}</td>
     <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
-  <tr>
+  <tr *ngIf="statsSet?.agendas?.size">
     <th colspan="6" class="table-active">Agendas</th>
   </tr>
   <tr *ngFor="#entry of statsSet?.agendas?.entries()">
