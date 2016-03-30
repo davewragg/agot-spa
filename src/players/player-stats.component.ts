@@ -5,13 +5,20 @@ import {CountComponent} from '../shared/components/count.component';
 import {StatsTableComponent} from './stats-table.component';
 import {PlayerInsightsComponent} from './player-insights.component';
 import {GamesTableComponent} from '../home/components/games-table.component';
+import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
   selector: 'agot-player-stats',
   moduleId: module.id,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './player-stats.html',
-  directives: [CountComponent, StatsTableComponent, PlayerInsightsComponent, GamesTableComponent]
+  directives: [
+    ROUTER_DIRECTIVES,
+    CountComponent,
+    StatsTableComponent,
+    PlayerInsightsComponent,
+    GamesTableComponent
+  ]
 })
 export class PlayerStatsComponent {
   @Input()

@@ -23,6 +23,10 @@
     <agot-player-insights [player]="player"
                           [playerInsights]="playerStats.insights"></agot-player-insights>
 
+    <a [routerLink]="['/Decks', {playerIds:[player.playerId]}]" class="btn btn-success-outline m-b-1">
+      See all {{ player.name }}'s decks
+    </a>
+
     <div class="row">
       <agot-stats-table title="Playing as" [statsSet]="playerStats.as"
                         class="col-lg-6 col-xs-12"></agot-stats-table>
