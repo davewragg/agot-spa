@@ -1,5 +1,5 @@
-import {Component, Input} from 'angular2/core';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
+import {Component, Input, OnInit} from 'angular2/core';
+import {ROUTER_DIRECTIVES, RouteParams, Router} from 'angular2/router';
 import {DeckService} from '../shared/services/deck.service';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 import {Deck} from '../shared/models/deck.model';
@@ -13,22 +13,31 @@ import {PlayerFilterComponent} from '../shared/components/player-filter.componen
   templateUrl: './decks.component.html',
   directives: [ROUTER_DIRECTIVES, DecksTableComponent, SpinnerComponent, PlayerFilterComponent]
 })
-export class DecksComponent {
+export class DecksComponent implements OnInit {
   @Input()
   title:string;
+  @Input()
+  initialFiltering:FilterCriteria;
 
   decks:Deck[];
   loadingError:any = null;
 
   isLoading:boolean;
 
-  constructor(private _deckService:DeckService) {
-    this.loadDecks();
+  constructor(params:RouteParams,
+              private _router:Router,
+              private _deckService:DeckService) {
+    this.setInitialFiltering(params);
   }
 
+  ngOnInit() {
+    this.loadDecks(this.initialFiltering);
+  }
+
+
   onPlayerFilterChange(criteria:FilterCriteria) {
-    console.log(criteria);
-    this.loadDecks(criteria);
+    // this.loadDecks(criteria);
+    this._router.navigate(['Decks', FilterCriteria.serialise(criteria)]);
   }
 
   loadDecks(criteria?:FilterCriteria) {
@@ -48,5 +57,9 @@ export class DecksComponent {
           this.isLoading = false;
         }
       );
+  }
+
+  private setInitialFiltering(params:RouteParams) {
+    this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }

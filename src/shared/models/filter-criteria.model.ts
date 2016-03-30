@@ -20,6 +20,9 @@ export class FilterCriteria {
     Object.assign(criteria, routeParams.params);
     // param strings
     criteria.rangeSelection = +criteria.rangeSelection;
+    if (routeParams.get('playerIds')) {
+      criteria.playerIds = Array.from(routeParams.get('playerIds')).map((id) => +id);
+    }
     return criteria;
   }
 }

@@ -7,7 +7,7 @@
 </div>
 
 <!--TODO filter by players component-->
-<agot-player-filter (playerChange)="onPlayerFilterChange($event)"></agot-player-filter>
+<agot-player-filter [criteria]="initialFiltering" (playerChange)="onPlayerFilterChange($event)"></agot-player-filter>
 
 <agot-spinner [isRunning]="isLoading"></agot-spinner>
 <agot-decks-table [decks]="decks"></agot-decks-table>
