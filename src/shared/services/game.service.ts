@@ -8,11 +8,28 @@ import {FilterCriteria} from '../models/filter-criteria.model';
 @Injectable()
 export class GameService {
 
+  private _cache:Map<string, Observable<Game[]>> = new Map<string, Observable<Game[]>>();
+
   constructor(private dataService:DataService, private deckService:DeckService) {
   }
 
+  invalidate() {
+    console.log('!::invalidate game cache');
+    this._cache.clear();
+  }
+
   getGames(filterCriteria?:FilterCriteria):Observable<Game[]> {
-    return this.dataService.getGames(filterCriteria);
+    const key:string = filterCriteria ? JSON.stringify(filterCriteria) : 'ALL';
+    console.log('get games', key);
+    if (this._cache.has(key)) {
+      console.log('::cached');
+      return this._cache.get(key);
+    }
+    console.log('::not cached');
+    const games = this.dataService.getGames(filterCriteria).cache();
+    this._cache.set(key, games);
+    console.log('::cache size', this._cache.size);
+    return games;
   }
 
   getGame(gameId:number):Observable<Game> {
@@ -21,6 +38,7 @@ export class GameService {
 
   updateGame(game:Game):Observable<Game> {
     this.deckService.invalidate();
+    this.invalidate();
     if (game.gameId) {
       return this.dataService.updateGame(game);
     } else {
@@ -30,6 +48,7 @@ export class GameService {
 
   deleteGame(gameId:number):Observable<any> {
     this.deckService.invalidate();
+    this.invalidate();
     return this.dataService.deleteGame(gameId);
   }
 }
