@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {DataService} from './data.service';
 import {DeckService} from './deck.service';
 import {FilterCriteria} from '../models/filter-criteria.model';
-import {RankingService} from './ranking.service';
+import {CacheService} from './cache.service';
 
 @Injectable()
 export class GameService {
@@ -12,8 +12,8 @@ export class GameService {
   private _cache:Map<string, Observable<Game[]>> = new Map<string, Observable<Game[]>>();
 
   constructor(private dataService:DataService,
-              private deckService:DeckService,
-              private rankingService:RankingService) {
+              private cacheService:CacheService,
+              private deckService:DeckService) {
   }
 
   invalidate() {
@@ -40,8 +40,8 @@ export class GameService {
   }
 
   updateGame(game:Game):Observable<Game> {
+    this.cacheService.invalidate();
     this.deckService.invalidate();
-    this.rankingService.invalidate();
     this.invalidate();
     if (game.gameId) {
       return this.dataService.updateGame(game);
@@ -51,8 +51,8 @@ export class GameService {
   }
 
   deleteGame(gameId:number):Observable<any> {
+    this.cacheService.invalidate();
     this.deckService.invalidate();
-    this.rankingService.invalidate();
     this.invalidate();
     return this.dataService.deleteGame(gameId);
   }

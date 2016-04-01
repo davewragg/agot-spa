@@ -24,6 +24,7 @@ import {StatsService} from '../shared/services/stats.service';
 import {GameService} from '../shared/services/game.service';
 import {SeasonService} from '../shared/services/season.service';
 import {RankingService} from '../shared/services/ranking.service';
+import {CacheService} from '../shared/services/cache.service';
 
 @Component({
   selector: 'agot-app',
@@ -34,6 +35,7 @@ import {RankingService} from '../shared/services/ranking.service';
     ToasterService,
     NotificationService,
     DataService,
+    CacheService,
     ReferenceDataService,
     SeasonService,
     PlayerService,
