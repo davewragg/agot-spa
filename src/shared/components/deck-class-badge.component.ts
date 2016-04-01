@@ -11,7 +11,7 @@ import {DeckClass} from '../models/deck-class.model';
          alt="{{ deckClass.agenda.title }}">
     <img *ngIf="deckClass.secondFaction" class="faction-badge" src="./assets/img/faction{{ deckClass.secondFaction.factionId }}.png"
          alt="{{ deckClass.secondFaction.title }}">
-    <span class="small">{{ deckClass.name }}</span>
+    <span class="small">{{ deckClass.name || getName(deckClass) }}</span>
   `,
   styles: [`
    .faction-badge {
@@ -22,4 +22,8 @@ import {DeckClass} from '../models/deck-class.model';
 export class DeckClassBadgeComponent {
   @Input()
   deckClass:DeckClass;
+
+  getName(deckClass:DeckClass) {
+    return DeckClass.getName(deckClass);
+  }
 }
