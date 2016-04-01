@@ -23,6 +23,7 @@ import {DeckDetailsComponent} from '../decks/deck-details.component';
 import {StatsService} from '../shared/services/stats.service';
 import {GameService} from '../shared/services/game.service';
 import {SeasonService} from '../shared/services/season.service';
+import {RankingService} from '../shared/services/ranking.service';
 
 @Component({
   selector: 'agot-app',
@@ -38,6 +39,7 @@ import {SeasonService} from '../shared/services/season.service';
     PlayerService,
     GameService,
     DeckService,
+    RankingService,
     StatsService,
     ThronesDbService
   ],

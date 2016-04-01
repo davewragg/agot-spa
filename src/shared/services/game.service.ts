@@ -4,13 +4,16 @@ import {Observable} from 'rxjs/Observable';
 import {DataService} from './data.service';
 import {DeckService} from './deck.service';
 import {FilterCriteria} from '../models/filter-criteria.model';
+import {RankingService} from './ranking.service';
 
 @Injectable()
 export class GameService {
 
   private _cache:Map<string, Observable<Game[]>> = new Map<string, Observable<Game[]>>();
 
-  constructor(private dataService:DataService, private deckService:DeckService) {
+  constructor(private dataService:DataService,
+              private deckService:DeckService,
+              private rankingService:RankingService) {
   }
 
   invalidate() {
@@ -28,7 +31,7 @@ export class GameService {
     console.log('::not cached');
     const games = this.dataService.getGames(filterCriteria).cache();
     this._cache.set(key, games);
-    console.log('::cache size', this._cache.size);
+    console.log('::games cache size', this._cache.size);
     return games;
   }
 
@@ -38,6 +41,7 @@ export class GameService {
 
   updateGame(game:Game):Observable<Game> {
     this.deckService.invalidate();
+    this.rankingService.invalidate();
     this.invalidate();
     if (game.gameId) {
       return this.dataService.updateGame(game);
@@ -48,6 +52,7 @@ export class GameService {
 
   deleteGame(gameId:number):Observable<any> {
     this.deckService.invalidate();
+    this.rankingService.invalidate();
     this.invalidate();
     return this.dataService.deleteGame(gameId);
   }
