@@ -6,6 +6,7 @@ import {BehaviorSubject} from 'rxjs/Rx';
 
 @Injectable()
 export class PlayerService {
+  // TODO fix this giant mess
   private _players$:BehaviorSubject<Player[]> = new BehaviorSubject([]);
 
   constructor(private _dataService:DataService) {
