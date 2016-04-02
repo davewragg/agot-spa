@@ -19,7 +19,7 @@ export class PlayerFilterComponent implements OnInit {
   players:Observable<Player[]>;
 
   constructor(private playerService:PlayerService) {
-    this.players = playerService.players;
+    this.players = playerService.getPlayers();
   }
 
   ngOnInit() {

@@ -8,7 +8,6 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 @Component({
   selector: 'agot-all-players',
   moduleId: module.id,
-  viewProviders: [PlayerService],
   templateUrl: './players.html',
   directives: [PlayerLinkComponent, SpinnerComponent]
 })
@@ -22,7 +21,7 @@ export class PlayersComponent {
 
   loadPlayers() {
     this.isLoading = true;
-    this.players = this._playerService.players;
+    this.players = this._playerService.getPlayers();
     this.players.filter((x) => !!x && !!x.length).subscribe(
       () => this.isLoading = false,
       () => this.isLoading = false,

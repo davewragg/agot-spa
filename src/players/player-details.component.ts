@@ -14,7 +14,6 @@ import {StatsService} from '../shared/services/stats.service';
 @Component({
   selector: 'agot-player-details',
   moduleId: module.id,
-  viewProviders: [PlayerService],
   templateUrl: './player-details.html',
   directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent, SpinnerComponent]
 })
