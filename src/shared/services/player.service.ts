@@ -11,7 +11,6 @@ export class PlayerService {
   }
 
   getPlayers() {
-    console.log('returning players');
     if (!this._data) {
       this._data = this._getPlayers();
     }
@@ -23,6 +22,7 @@ export class PlayerService {
   }
 
   private _getPlayers():Observable<Player[]> {
+    console.log('_getPlayers called');
     return this._dataService.getReferenceData('players').cache();
   }
 }

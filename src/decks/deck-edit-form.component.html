@@ -3,14 +3,14 @@
     <div class="form-group">
       <label class="form-control-label">Faction</label>
       <select class="form-control" ngControl="factionId" (change)="onDeckClassChange()">
-        <option value="">--Select faction---</option>
+        <option value="">--{{ _factions?.length ? 'Select faction' : 'Loading factions' }}---</option>
         <option *ngFor="#faction of factions | async" [value]="faction.factionId">{{ faction.name }}</option>
       </select>
     </div>
     <div class="form-group">
       <label class="form-control-label">Agenda</label>
       <select class="form-control" ngControl="agendaId" (change)="onDeckClassChange()">
-        <option value="">--Select agenda---</option>
+        <option value="">--{{ _agendas?.length ? 'Select agenda' : 'Loading agendas' }}---</option>
         <option *ngFor="#agenda of agendas | async" [value]="agenda.agendaId">{{ agenda.title }}</option>
       </select>
     </div>
@@ -18,7 +18,7 @@
     <div class="form-group" [hidden]="!showMore" *ngIf="true">
       <label class="form-control-label">Second Faction</label>
       <select class="form-control" ngControl="secondFactionId" (change)="onDeckClassChange()">
-        <option value="">--Select second faction---</option>
+        <option value="">--{{ _factions?.length ? 'Select second faction' : 'Loading factions' }}---</option>
         <option *ngFor="#faction of factions | async" [value]="faction.factionId">{{ faction.name }}</option>
       </select>
     </div>
@@ -36,7 +36,7 @@
     <!--TODO workaround https://github.com/angular/angular/issues/6374-->
     <div class="form-group" [hidden]="!showMore" *ngIf="true">
       <label class="form-control-label">ThronesDB version</label>
-      <input type="text" class="form-control" ngControl="thronesDbVersion">
+      <input type="number" class="form-control" ngControl="thronesDbVersion" inputmode="numeric">
     </div>
   </div>
   <!--<div class="col-xs-2 col-xs-offset-10 text-xs-right">-->
