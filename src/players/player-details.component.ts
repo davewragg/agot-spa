@@ -71,8 +71,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   private setInitialFiltering(params:RouteParams) {
-    // TODO use proper constructor to aid caching
-    this.initialFiltering = Object.assign(<FilterCriteria>{
+    this.initialFiltering = Object.assign(new FilterCriteria(), {
       ascending: true,
       rangeSelection: DateRangeType.ALL_TIME
     }, FilterCriteria.deserialise(params));

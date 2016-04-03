@@ -68,8 +68,7 @@ export class StatsService {
 
   _getDeckStats(criteria:FilterCriteria):Observable<DeckStats> {
     const deckId = _.first(criteria.deckIds);
-    // TODO use proper constructor to aid caching
-    return this.gameService.getGames(<FilterCriteria>{deckIds: [deckId]})
+    return this.gameService.getGames(Object.assign(new FilterCriteria(), {deckIds: [deckId]}))
       .map((games:Game[]):DeckStats => {
         return games.reduce(buildStatsFromGames, new DeckStats());
       }).do((deckStats:DeckStats) => {
