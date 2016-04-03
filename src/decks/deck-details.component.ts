@@ -4,7 +4,6 @@ import {DeckService} from '../shared/services/deck.service';
 import {Deck} from '../shared/models/deck.model';
 import {SpinnerComponent} from '../shared/components/spinner.component';
 import {DeckEditFormComponent} from './deck-edit-form.component';
-import {GameService} from '../shared/services/game.service';
 import {ViewDeckComponent} from './view-deck.component';
 import {NotificationService} from '../shared/services/notification.service';
 import {StatsService} from '../shared/services/stats.service';
@@ -14,7 +13,6 @@ import {DeckStatsComponent} from './deck-stats.component';
 @Component({
   selector: 'agot-deck-details',
   moduleId: module.id,
-  viewProviders: [GameService],
   templateUrl: './deck-details.component.html',
   directives: [
     ROUTER_DIRECTIVES,

@@ -50,7 +50,7 @@ export class DeckEditFormComponent implements OnInit {
 
   ngOnInit() {
     this.showMore = this.editing;
-    // TODO can't edit imported/saved decks when creating game
+    // can't edit imported/saved decks when creating game
     if (this.creating || (this.deck.deckId && !this.editing)) {
       this.deck = new Deck();
     }

@@ -11,7 +11,6 @@ import {SpinnerComponent} from '../../shared/components/spinner.component';
 @Component({
   selector: 'agot-games',
   moduleId: module.id,
-  viewProviders: [GameService],
   templateUrl: './games.html',
   directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent]
 })

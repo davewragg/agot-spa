@@ -10,7 +10,6 @@ import {DateRangeComponent} from '../home/components/date-range.component';
 @Component({
   selector: 'agot-all-rankings',
   moduleId: module.id,
-  viewProviders: [RankingService],
   templateUrl: './all-rankings.component.html',
   directives: [RankingsComponent, SpinnerComponent, DateRangeComponent]
 })

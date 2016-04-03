@@ -11,7 +11,7 @@ export class DeckClass {
 
   static getDeckClassId(factionId:number, agendaId?:number):string {
     return `${factionId}${DeckClass.ID_SEPARATOR}${agendaId || '0'}`;
-  };
+  }
 
   static getFactionAndAgendaId(deckClassId:number) {
     const ids = ('' + deckClassId).split(DeckClass.ID_SEPARATOR);
@@ -23,7 +23,11 @@ export class DeckClass {
 
   static getDeckClassTitle(faction:Faction, agenda?:Agenda):string {
     return `${faction && faction.name} / ${(agenda && agenda.title) || 'No Agenda'}`;
-  };
+  }
+
+  static getName(deckClass:DeckClass) {
+    return DeckClass.getDeckClassTitle(deckClass.faction, deckClass.agenda);
+  }
 
   constructor(faction:Faction, agenda?:Agenda) {
     if (faction) {
@@ -41,6 +45,6 @@ export class DeckClass {
   }
 
   get name():string {
-    return DeckClass.getDeckClassTitle(this.faction, this.agenda);
+    return DeckClass.getName(this);
   }
 }

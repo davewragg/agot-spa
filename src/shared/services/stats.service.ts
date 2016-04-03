@@ -15,6 +15,8 @@ import {DeckClass} from '../models/deck-class.model';
 import {Stats} from '../models/stats.model';
 import {PlayerInsights} from '../models/player-insights.model';
 import {DeckClassStats} from '../models/deck-class-stats.model';
+import {CacheService} from './cache.service';
+import * as _ from 'lodash';
 
 @Injectable()
 export class StatsService {
@@ -51,12 +53,22 @@ export class StatsService {
     }
   }
 
-  constructor(private gameService:GameService, private _referenceDataService:ReferenceDataService) {
+  constructor(private gameService:GameService,
+              private _referenceDataService:ReferenceDataService,
+              private cacheService:CacheService) {
     _referenceDataService.factions.subscribe((factions) => this._factions = factions);
     _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
   }
 
-  getDeckStats(deckId:number):Observable<DeckStats> {
+  getDeckStats(deckId:number):Observable<PlayerStats> {
+    const criteria = new FilterCriteria();
+    criteria.deckIds = [deckId];
+    return this.cacheService.getFilteredData('deckStats', this._getDeckStats, criteria, this);
+  }
+
+  _getDeckStats(criteria:FilterCriteria):Observable<DeckStats> {
+    const deckId = _.first(criteria.deckIds);
+    // TODO use proper constructor to aid caching
     return this.gameService.getGames(<FilterCriteria>{deckIds: [deckId]})
       .map((games:Game[]):DeckStats => {
         return games.reduce(buildStatsFromGames, new DeckStats());
@@ -92,7 +104,13 @@ export class StatsService {
   }
 
   getPlayerStats(playerId:number, criteria:FilterCriteria):Observable<PlayerStats> {
-    criteria.playerIds = [playerId];
+    const criteriaCopy = _.cloneDeep(criteria);
+    criteriaCopy.playerIds = [playerId];
+    return this.cacheService.getFilteredData('playerStats', this._getPlayerStats, criteriaCopy, this);
+  }
+
+  _getPlayerStats(criteria:FilterCriteria):Observable<PlayerStats> {
+    const playerId = _.first(criteria.playerIds);
     return this.gameService.getGames(criteria)
       .map((games:Game[]):PlayerStats => {
         return games

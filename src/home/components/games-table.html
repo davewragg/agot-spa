@@ -25,15 +25,12 @@
           <h6 class="card-header font-weight-bold">
             <agot-player-link [player]="gamePlayer.player"></agot-player-link>
           </h6>
-          <div class="card-block">
+          <div class="card-block small">
             <p class="card-text">
-              <agot-faction-badge [faction]="gamePlayer.deck.faction"></agot-faction-badge>
+              <agot-deck-link [deck]="gamePlayer.deck"></agot-deck-link>
             </p>
-            <p class="card-text" *ngIf="gamePlayer.deck.secondFaction">
-              <agot-faction-badge [faction]="gamePlayer.deck.secondFaction"></agot-faction-badge>
-            </p>
-            <p class="card-text" *ngIf="gamePlayer.deck.agenda">
-              <agot-agenda-badge [agenda]="gamePlayer.deck.agenda"></agot-agenda-badge>
+            <p class="card-text">
+              <agot-deck-class-badge [deckClass]="gamePlayer.deck"></agot-deck-class-badge>
             </p>
             <div class="alert alert-warning" *ngIf="gamePlayer.isWinner">Winner</div>
           </div>

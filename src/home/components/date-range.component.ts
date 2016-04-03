@@ -40,6 +40,7 @@ export class DateRangeComponent implements OnInit {
 
   ngOnInit() {
     if (!this.criteria) {
+      // TODO use proper constructor to aid caching
       this.criteria = <FilterCriteria>{
         ascending: false,
         rangeSelection: DateRangeType.ALL_TIME

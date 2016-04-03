@@ -15,6 +15,7 @@ export class HomeComponent {
   filterCriteria:FilterCriteria;
 
   constructor() {
+    // TODO use proper constructor to aid caching
     this.filterCriteria = <FilterCriteria>{
       ascending: true,
       rangeSelection: DateRangeType.THIS_WEEK

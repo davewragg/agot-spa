@@ -14,7 +14,6 @@ import {StatsService} from '../shared/services/stats.service';
 @Component({
   selector: 'agot-player-details',
   moduleId: module.id,
-  viewProviders: [PlayerService],
   templateUrl: './player-details.html',
   directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent, SpinnerComponent]
 })
@@ -72,6 +71,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   private setInitialFiltering(params:RouteParams) {
+    // TODO use proper constructor to aid caching
     this.initialFiltering = Object.assign(<FilterCriteria>{
       ascending: true,
       rangeSelection: DateRangeType.ALL_TIME

@@ -1,4 +1,3 @@
-import {readFileSync} from 'fs';
 import {argv} from 'yargs';
 import {normalize, join} from 'path';
 import {InjectableDependency, Environments} from './seed.config.interfaces';
@@ -48,14 +47,15 @@ export class SeedConfig {
   VERSION_NPM          = '2.14.2';
   VERSION_NODE         = '4.0.0';
 
-  NG2LINT_RULES        = customRules();
+  CODELYZER_RULES      = customRules();
 
   NPM_DEPENDENCIES: InjectableDependency[] = [
-    { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims' },
+    { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
     { src: 'reflect-metadata/Reflect.js', inject: 'shims' },
-    { src: 'es6-shim/es6-shim.js', inject: 'shims' },
-    { src: 'systemjs/dist/system.src.js', inject: 'shims' },
-    { src: 'angular2/bundles/angular2-polyfills.js', inject: 'shims' },
+    { src: 'es6-shim/es6-shim.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
+    { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
+    { src: 'zone.js/dist/zone.js', inject: 'shims' },
+    // { src: 'angular2/bundles/angular2-polyfills.js', inject: 'shims' },
     { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
     { src: 'angular2/bundles/angular2.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
     { src: 'angular2/bundles/router.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
@@ -186,12 +186,12 @@ export function normalizeDependencies(deps: InjectableDependency[]) {
 }
 
 function appVersion(): number|string {
-  var pkg = JSON.parse(readFileSync('package.json').toString());
+  var pkg = require('../../package.json');
   return pkg.version;
 }
 
 function customRules(): string[] {
-  var lintConf = JSON.parse(readFileSync('tslint.json').toString());
+  var lintConf = require('../../tslint.json');
   return lintConf.rulesDirectory;
 }
 
