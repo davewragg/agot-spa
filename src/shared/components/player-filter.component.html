@@ -1,5 +1,7 @@
 <form (ngSubmit)="onExecute()" class="form">
   <div class="btn-group" data-toggle="buttons">
+    <button class="btn btn-secondary btn-secondary-outline label-button" type="button"> Players
+    </button>
     <label *ngFor="#player of players | async"
            class="btn btn-secondary" [class.active]="criteria.playerIds.includes(player.playerId)">
       <input type="checkbox" name="playerIds" (change)="onPlayerChange($event)"

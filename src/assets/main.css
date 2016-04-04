@@ -53,3 +53,7 @@ a {
       -webkit-transform: scale(1.0);
     }
 }
+
+.label-button {
+  margin-bottom: .5rem;
+}

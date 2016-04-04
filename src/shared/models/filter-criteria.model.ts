@@ -1,5 +1,6 @@
 import {DateRangeType} from './date-range-type.model';
 import {RouteParams} from 'angular2/router';
+import * as _ from 'lodash';
 
 export class FilterCriteria {
   fromDate:string; //iso
@@ -17,7 +18,9 @@ export class FilterCriteria {
 
   static deserialise(routeParams:RouteParams):FilterCriteria {
     const criteria = new FilterCriteria();
-    Object.assign(criteria, routeParams.params);
+    Object.assign(criteria, _.pick(routeParams.params, [
+      'fromDate', 'toDate', 'ascending', 'rangeSelection'
+    ]));
     // param strings
     criteria.rangeSelection = +criteria.rangeSelection;
     if (routeParams.get('playerIds')) {

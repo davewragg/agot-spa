@@ -1,0 +1,14 @@
+<form (ngSubmit)="onExecute()" class="form">
+  <div class="btn-group btn-group-sm" data-toggle="buttons">
+    <button class="btn btn-secondary btn-secondary-outline label-button" type="button" (click)="toggle()"> Agendas
+    </button>
+    <label *ngFor="#agenda of agendas | async" [hidden]="!expanded"
+           class="btn btn-secondary btn-sm" [class.active]="criteria.agendaIds.includes(agenda.agendaId)">
+      <input type="checkbox" name="agendaIds" (change)="onAgendaChange($event)"
+             [checked]="criteria.agendaIds.includes(agenda.agendaId)"
+             [value]="agenda.agendaId"> {{ agenda.title }}
+    </label>
+    <button [hidden]="!expanded" class="btn btn-secondary btn-sm" type="button" (click)="onClear()"> All
+    </button>
+  </div>
+</form>

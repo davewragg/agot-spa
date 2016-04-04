@@ -2,32 +2,32 @@ import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
 import {ReferenceDataService} from '../services/reference-data.service';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
 import {Observable} from 'rxjs/Observable';
-import {Faction} from '../models/faction.model';
+import {Agenda} from '../models/agenda.model';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'agot-faction-filter',
+  selector: 'agot-agenda-filter',
   moduleId: module.id,
-  templateUrl: './faction-filter.component.html',
+  templateUrl: './agenda-filter.component.html',
 })
-export class FactionFilterComponent implements OnInit {
+export class AgendaFilterComponent implements OnInit {
   @Input()
   criteria:FilterCriteria;
   @Output()
-  factionChange:EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
+  agendaChange:EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
-  factions:Observable<Faction[]>;
+  agendas:Observable<Agenda[]>;
   expanded:boolean = false;
 
   constructor(private referenceDataService:ReferenceDataService) {
-    this.factions = referenceDataService.factions;
+    this.agendas = referenceDataService.agendas;
   }
 
   ngOnInit() {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
-      this.expanded = !!this.criteria.factionIds.length;
+      this.expanded = !!this.criteria.agendaIds.length;
     }
   }
 
@@ -35,26 +35,26 @@ export class FactionFilterComponent implements OnInit {
     this.expanded = !this.expanded;
   }
 
-  onFactionChange($event:any) {
+  onAgendaChange($event:any) {
     //.debounceTime(400).distinctUntilChanged()
     const checked = $event.target.checked;
-    const factionId = +$event.target.value;
-    if (checked && !_.includes(this.criteria.factionIds, factionId)) {
-      this.criteria.factionIds.push(factionId);
+    const agendaId = +$event.target.value;
+    if (checked && !_.includes(this.criteria.agendaIds, agendaId)) {
+      this.criteria.agendaIds.push(agendaId);
     } else if (!checked) {
-      _.pull(this.criteria.factionIds, factionId);
+      _.pull(this.criteria.agendaIds, agendaId);
     }
-    console.log(factionId);
+    console.log(agendaId);
     this.onExecute();
   }
 
   onClear() {
-    this.criteria.factionIds.length = 0;
+    this.criteria.agendaIds.length = 0;
     this.onExecute();
   }
 
   onExecute() {
     //.debounceTime(400).distinctUntilChanged()
-    this.factionChange.emit(this.criteria);
+    this.agendaChange.emit(this.criteria);
   }
 }

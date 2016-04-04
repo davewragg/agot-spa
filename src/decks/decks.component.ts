@@ -7,6 +7,7 @@ import {DecksTableComponent} from './decks-table.component';
 import {FilterCriteria} from '../shared/models/filter-criteria.model';
 import {PlayerFilterComponent} from '../shared/components/player-filter.component';
 import {FactionFilterComponent} from '../shared/components/faction-filter.component';
+import {AgendaFilterComponent} from '../shared/components/agenda-filter.component';
 
 @Component({
   selector: 'agot-decks',
@@ -18,6 +19,7 @@ import {FactionFilterComponent} from '../shared/components/faction-filter.compon
     SpinnerComponent,
     PlayerFilterComponent,
     FactionFilterComponent,
+    AgendaFilterComponent,
   ]
 })
 export class DecksComponent implements OnInit {
