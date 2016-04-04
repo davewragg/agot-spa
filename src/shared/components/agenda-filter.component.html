@@ -8,7 +8,7 @@
              [checked]="criteria.agendaIds.includes(agenda.agendaId)"
              [value]="agenda.agendaId"> {{ agenda.title }}
     </label>
-    <button [hidden]="!expanded" class="btn btn-secondary btn-sm" type="button" (click)="onClear()"> All
+    <button class="btn btn-secondary btn-sm btn-secondary-outline label-button" type="button" (click)="onClear()"> All
     </button>
   </div>
 </form>

@@ -8,7 +8,7 @@
              [checked]="criteria.factionIds.includes(faction.factionId)"
              [value]="faction.factionId"> {{ faction.name }}
     </label>
-    <button [hidden]="!expanded" class="btn btn-secondary" type="button" (click)="onClear()"> All
+    <button class="btn btn-secondary btn-secondary-outline label-button" type="button" (click)="onClear()"> All
     </button>
   </div>
 </form>
