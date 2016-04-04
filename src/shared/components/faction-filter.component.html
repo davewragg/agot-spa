@@ -1,0 +1,12 @@
+<form (ngSubmit)="onExecute()" class="form">
+  <div class="btn-group" data-toggle="buttons">
+    <label *ngFor="#faction of factions | async"
+           class="btn btn-secondary" [class.active]="criteria.factionIds.includes(faction.factionId)">
+      <input type="checkbox" name="factionIds" (change)="onFactionChange($event)"
+             [checked]="criteria.factionIds.includes(faction.factionId)"
+             [value]="faction.factionId"> {{ faction.name }}
+    </label>
+    <button class="btn btn-secondary" type="button" (click)="onClear()"> All
+    </button>
+  </div>
+</form>

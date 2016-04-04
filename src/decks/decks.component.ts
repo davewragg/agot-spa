@@ -6,12 +6,19 @@ import {Deck} from '../shared/models/deck.model';
 import {DecksTableComponent} from './decks-table.component';
 import {FilterCriteria} from '../shared/models/filter-criteria.model';
 import {PlayerFilterComponent} from '../shared/components/player-filter.component';
+import {FactionFilterComponent} from '../shared/components/faction-filter.component';
 
 @Component({
   selector: 'agot-decks',
   moduleId: module.id,
   templateUrl: './decks.component.html',
-  directives: [ROUTER_DIRECTIVES, DecksTableComponent, SpinnerComponent, PlayerFilterComponent]
+  directives: [
+    ROUTER_DIRECTIVES,
+    DecksTableComponent,
+    SpinnerComponent,
+    PlayerFilterComponent,
+    FactionFilterComponent,
+  ]
 })
 export class DecksComponent implements OnInit {
   @Input()
@@ -35,7 +42,7 @@ export class DecksComponent implements OnInit {
   }
 
 
-  onPlayerFilterChange(criteria:FilterCriteria) {
+  onFilterChange(criteria:FilterCriteria) {
     // this.loadDecks(criteria);
     this._router.navigate(['Decks', FilterCriteria.serialise(criteria)]);
   }
