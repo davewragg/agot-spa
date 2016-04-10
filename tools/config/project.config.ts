@@ -11,7 +11,6 @@ export class ProjectConfig extends SeedConfig {
     //this.APP_BASE = '/agot/';
     this.APP_TITLE = 'AGOT Tracker';
     let additional_deps: InjectableDependency[] = [
-      {src: 'bootstrap/dist/css/bootstrap.min.css', inject: true, vendor: true},
       {src: 'angular2-toaster/lib/toaster.css', inject: true, vendor: true},
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
