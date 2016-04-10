@@ -12,8 +12,7 @@ import {DeckStatsComponent} from './deck-stats.component';
 
 @Component({
   selector: 'agot-deck-details',
-  moduleId: module.id,
-  templateUrl: './deck-details.component.html',
+  templateUrl: './decks/deck-details.component.html',
   directives: [
     ROUTER_DIRECTIVES,
     SpinnerComponent,

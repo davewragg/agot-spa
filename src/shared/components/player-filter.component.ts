@@ -7,8 +7,7 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'agot-player-filter',
-  moduleId: module.id,
-  templateUrl: './player-filter.component.html',
+  templateUrl: './shared/components/player-filter.component.html',
 })
 export class PlayerFilterComponent implements OnInit {
   @Input()

@@ -9,9 +9,8 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
   selector: 'agot-player-stats',
-  moduleId: module.id,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './player-stats.html',
+  templateUrl: './players/player-stats.html',
   directives: [
     ROUTER_DIRECTIVES,
     CountComponent,

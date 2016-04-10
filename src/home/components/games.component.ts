@@ -10,8 +10,7 @@ import {SpinnerComponent} from '../../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-games',
-  moduleId: module.id,
-  templateUrl: './games.html',
+  templateUrl: './home/components/games.html',
   directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent]
 })
 export class GamesComponent implements OnInit {

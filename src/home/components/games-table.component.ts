@@ -12,8 +12,7 @@ import {DeckClassBadgeComponent} from '../../shared/components/deck-class-badge.
 
 @Component({
   selector: 'agot-games-table',
-  moduleId: module.id,
-  templateUrl: './games-table.html',
+  templateUrl: './home/components/games-table.html',
   pipes: [TimeAgoPipe, DateFormatPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [

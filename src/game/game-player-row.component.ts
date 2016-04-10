@@ -6,9 +6,8 @@ import {DeckLinkComponent} from '../shared/components/deck-link.component';
 
 @Component({
   selector: 'agot-game-player-row',
-  moduleId: module.id,
-  templateUrl: './game-player-row.html',
-  styleUrls: ['./game-player-row.css'],
+  templateUrl: './game/game-player-row.html',
+  styleUrls: ['./game/game-player-row.css'],
   directives: [DeckSelectorComponent, DeckLinkComponent]
 })
 export class GamePlayerRowComponent {

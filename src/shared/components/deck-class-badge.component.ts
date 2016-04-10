@@ -3,7 +3,6 @@ import {DeckClass} from '../models/deck-class.model';
 
 @Component({
   selector: 'agot-deck-class-badge',
-  moduleId: module.id,
   template: `
     <img class="faction-badge" src="./assets/img/icon{{ deckClass.faction.factionId }}.png"
          alt="{{ deckClass.faction.name }}">

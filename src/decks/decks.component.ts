@@ -11,8 +11,7 @@ import {AgendaFilterComponent} from '../shared/components/agenda-filter.componen
 
 @Component({
   selector: 'agot-decks',
-  moduleId: module.id,
-  templateUrl: './decks.component.html',
+  templateUrl: './decks/decks.component.html',
   directives: [
     ROUTER_DIRECTIVES,
     DecksTableComponent,

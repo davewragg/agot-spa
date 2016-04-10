@@ -5,8 +5,7 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-deck-chooser',
-  moduleId: module.id,
-  templateUrl: './deck-chooser.component.html',
+  templateUrl: './game/deck-chooser.component.html',
   directives: [<any>SpinnerComponent],
   styles: [
     `select.icon-menu option {

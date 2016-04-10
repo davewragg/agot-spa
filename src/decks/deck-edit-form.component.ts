@@ -12,8 +12,7 @@ import {DeckService} from '../shared/services/deck.service';
 
 @Component({
   selector: 'agot-deck-edit-form',
-  moduleId: module.id,
-  templateUrl: './deck-edit-form.component.html'
+  templateUrl: './decks/deck-edit-form.component.html'
 })
 export class DeckEditFormComponent implements OnInit {
   @Input()

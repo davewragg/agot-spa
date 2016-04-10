@@ -15,8 +15,7 @@ import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-stats-table',
-  moduleId: module.id,
-  templateUrl: './stats-table.component.html',
+  templateUrl: './players/stats-table.component.html',
   directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
     PlayerLinkComponent, ColourRangeDirective]
 })

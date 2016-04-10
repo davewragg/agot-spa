@@ -7,9 +7,8 @@ import {Deck} from '../shared/models/deck.model';
 
 @Component({
   selector: 'agot-deck-stats',
-  moduleId: module.id,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './deck-stats.component.html',
+  templateUrl: './decks/deck-stats.component.html',
   directives: [CountComponent, StatsTableComponent, GamesTableComponent]
 })
 export class DeckStatsComponent {

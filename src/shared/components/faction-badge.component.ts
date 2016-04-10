@@ -3,7 +3,6 @@ import {Faction} from '../models/faction.model';
 
 @Component({
   selector: 'agot-faction-badge',
-  moduleId: module.id,
   template: `
     <img class="faction-badge" src="./assets/img/icon{{ faction.factionId }}.png"
          alt="{{ faction.name }}">

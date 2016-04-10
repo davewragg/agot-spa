@@ -7,8 +7,7 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-all-players',
-  moduleId: module.id,
-  templateUrl: './players.html',
+  templateUrl: './players/players.html',
   directives: [PlayerLinkComponent, SpinnerComponent]
 })
 export class PlayersComponent {

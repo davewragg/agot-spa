@@ -4,7 +4,6 @@ import {Deck} from '../models/deck.model';
 
 @Component({
   selector: 'agot-deck-link',
-  moduleId: module.id,
   template: `<a [routerLink]="['/DeckDetails', {id: deck?.deckId}]">{{ deck?.title || deck?.fallbackTitle || 'Deck' }}</a>`,
   directives: [ROUTER_DIRECTIVES]
 })

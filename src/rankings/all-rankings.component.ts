@@ -9,8 +9,7 @@ import {DateRangeComponent} from '../home/components/date-range.component';
 
 @Component({
   selector: 'agot-all-rankings',
-  moduleId: module.id,
-  templateUrl: './all-rankings.component.html',
+  templateUrl: './rankings/all-rankings.component.html',
   directives: [RankingsComponent, SpinnerComponent, DateRangeComponent]
 })
 export class AllRankingsComponent implements OnInit {

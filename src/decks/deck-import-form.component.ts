@@ -7,8 +7,7 @@ import {DeckClassBlockComponent} from '../shared/components/deck-class-block.com
 
 @Component({
   selector: 'agot-deck-import-form',
-  moduleId: module.id,
-  templateUrl: './deck-import-form.component.html',
+  templateUrl: './decks/deck-import-form.component.html',
   directives: [SpinnerComponent, DeckClassBlockComponent]
 })
 export class DeckImportFormComponent implements OnInit {

@@ -45,8 +45,7 @@ import {CacheService} from '../shared/services/cache.service';
     StatsService,
     ThronesDbService
   ],
-  moduleId: module.id,
-  templateUrl: './app.html',
+  templateUrl: './app/app.html',
   encapsulation: ViewEncapsulation.None,
   directives: [
     ROUTER_DIRECTIVES,

@@ -8,8 +8,7 @@ import {AgendaBadgeComponent} from './agenda-badge.component';
 
 @Component({
   selector: 'agot-agenda-filter',
-  moduleId: module.id,
-  templateUrl: './agenda-filter.component.html',
+  templateUrl: './shared/components/agenda-filter.component.html',
   directives: [AgendaBadgeComponent]
 })
 export class AgendaFilterComponent implements OnInit {

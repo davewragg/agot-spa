@@ -4,7 +4,6 @@ import {Stats} from '../models/stats.model';
 
 @Component({
   selector: 'agot-deck-class-block',
-  moduleId: module.id,
   template: `
     <div *ngIf="deckClass" class="text-xs-center deck-class-block"
     [style.backgroundImage]="deckClass.agenda?.agendaId && ('url(./assets/img/agenda' + deckClass.agenda?.agendaId + '.png)')">
