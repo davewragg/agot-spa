@@ -4,7 +4,7 @@ import {GamesTableComponent} from '../home/components/games-table.component';
 import {DeckStats} from '../shared/models/deck-stats.model';
 import {StatsTableComponent} from '../players/stats-table.component';
 import {Deck} from '../shared/models/deck.model';
-import {PlayedStatsChart} from '../shared/components/PlayedStatsChart';
+import {PlayedStatsChart} from '../shared/components/played-stats-chart';
 
 @Component({
   selector: 'agot-deck-stats',
