@@ -12,5 +12,7 @@
     <button type="button" (click)="loadGames(defaultFiltering)">Try again</button>
   </div>
 
+  <agot-game-timeline-chart *ngIf="!isLoading && !loadingError && games?.length" [games]="games"></agot-game-timeline-chart>
+
   <agot-games-table [games]="games"></agot-games-table>
 </section>

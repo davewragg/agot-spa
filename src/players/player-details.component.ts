@@ -41,7 +41,8 @@ export class PlayerDetailsComponent implements OnInit {
 
   onDateRangeChange(criteria:FilterCriteria) {
     //this.loadPlayerAndStats(criteria);
-    this._router.navigate(['PlayerDetails', FilterCriteria.serialise(criteria)]);
+    const routeConfig = Object.assign({id: this.player.playerId}, FilterCriteria.serialise(criteria));
+    this._router.navigate(['PlayerDetails', routeConfig]);
   }
 
   private loadPlayerAndStats(criteria?:FilterCriteria) {
