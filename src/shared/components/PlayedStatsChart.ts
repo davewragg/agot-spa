@@ -6,7 +6,9 @@ import {Stats} from '../models/stats.model';
   selector: 'agot-played-stats-chart',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <chart [options]="options"></chart>
+    <div class="row">
+      <chart class="col-xs-12" [options]="options"></chart>
+    </div>
   `,
   directives: [CHART_DIRECTIVES]
 })
@@ -21,11 +23,16 @@ export class PlayedStatsChart implements OnInit {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
+        plotShadow: true,
+        type: 'pie',
+        spacing: [0, 0, 0, 0],
+        style: {
+          fontFamily: 'Tahoma, Roboto, "Helvetica Neue", sans-serif',
+          fontSize: '14px'
+        }
       },
       title: {
-        text: 'Results breakdown'
+        text: null
       },
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage}%</b>'

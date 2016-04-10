@@ -5,6 +5,8 @@
     </div>
   </div>
   <div *ngIf="deckStats?.overall?.played > 0">
+    <agot-played-stats-chart class="col-xs-12" [stats]="deckStats.overall"></agot-played-stats-chart>
+
     <div class="m-b-1">
       <code>{{ deck?.title || 'This deck' }} has been played
         <agot-count [count]="deckStats?.overall?.played"></agot-count>,
@@ -17,12 +19,6 @@
         Its win rate is {{ deckStats?.overall?.winPercentage }}%,
         with a loss rate of {{ deckStats?.overall?.lossPercentage }}%.
       </code>
-    </div>
-
-    <div class="row">
-      <div>
-        <agot-played-stats-chart class="col-xs-12" [stats]="deckStats.overall"></agot-played-stats-chart>
-      </div>
     </div>
 
     <div class="row">
