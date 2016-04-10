@@ -3,7 +3,6 @@ import {Agenda} from '../models/Agenda.model';
 
 @Component({
   selector: 'agot-agenda-badge',
-  moduleId: module.id,
   template: `
     <img class="agenda-badge" src="./assets/img/agenda{{ agenda.agendaId }}.png" alt="{{ agenda.title }}">
     <small class="text-muted">{{ agenda.title }}</small>

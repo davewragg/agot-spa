@@ -9,8 +9,7 @@ import {Venue} from '../shared/models/venue.model';
 
 @Component({
   selector: 'agot-view-game',
-  moduleId: module.id,
-  templateUrl: './view-game.html',
+  templateUrl: './game/view-game.html',
   directives: [GamePlayersComponent, ROUTER_DIRECTIVES],
   pipes: [DateFormatPipe]
 })

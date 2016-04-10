@@ -5,8 +5,7 @@ import {DeckChooserComponent} from './deck-chooser.component';
 
 @Component({
   selector: 'agot-existing-deck-selector',
-  moduleId: module.id,
-  templateUrl: './existing-deck-selector.component.html',
+  templateUrl: './game/existing-deck-selector.component.html',
   directives: [DeckChooserComponent]
 })
 export class ExistingDeckSelectorComponent implements OnInit, OnChanges {

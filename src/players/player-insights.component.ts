@@ -5,8 +5,7 @@ import {DeckClassBlockComponent} from '../shared/components/deck-class-block.com
 
 @Component({
   selector: 'agot-player-insights',
-  moduleId: module.id,
-  templateUrl: './player-insights.html',
+  templateUrl: './players/player-insights.html',
   directives: [DeckClassBlockComponent]
 })
 export class PlayerInsightsComponent implements OnInit {

@@ -4,7 +4,6 @@ import {Player} from '../models/player.model';
 
 @Component({
   selector: 'agot-player-link',
-  moduleId: module.id,
   template: `<a [routerLink]="['/PlayerDetails', {id: player?.playerId}]">{{ player?.name || player?.playerName || 'Player' }}</a>`,
   directives: [ROUTER_DIRECTIVES]
 })

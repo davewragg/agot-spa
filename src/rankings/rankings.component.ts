@@ -6,9 +6,8 @@ import {PlayerLinkComponent} from '../shared/components/player-link.component';
 
 @Component({
   selector: 'agot-rankings',
-  moduleId: module.id,
-  templateUrl: './rankings.html',
-  styleUrls: ['./rankings.css'],
+  templateUrl: './rankings/rankings.html',
+  styleUrls: ['./rankings/rankings.css'],
   directives: [PlayerLinkComponent],
   pipes: [ReversePipe],
 })

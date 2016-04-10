@@ -6,9 +6,8 @@ import Timer = NodeJS.Timer;
 
 @Component({
   selector: 'agot-spinner',
-  moduleId: module.id,
-  templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.css'],
+  templateUrl: './shared/components/spinner.component.html',
+  styleUrls: ['./shared/components/spinner.component.css'],
 })
 export class SpinnerComponent implements OnDestroy {
   @Input()

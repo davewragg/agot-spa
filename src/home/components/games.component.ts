@@ -1,18 +1,17 @@
 import {Component, OnInit, Input} from 'angular2/core';
 import {Router, RouteParams} from 'angular2/router';
-
 import {Game} from '../../shared/models/game.model';
 import {GameService} from '../../shared/services/game.service';
 import {GamesTableComponent} from './games-table.component';
 import {DateRangeComponent} from './date-range.component';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
 import {SpinnerComponent} from '../../shared/components/spinner.component';
+import {GameTimelineChart} from '../../shared/components/game-timeline-chart';
 
 @Component({
   selector: 'agot-games',
-  moduleId: module.id,
-  templateUrl: './games.html',
-  directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent]
+  templateUrl: './home/components/games.html',
+  directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent, GameTimelineChart]
 })
 export class GamesComponent implements OnInit {
   @Input()

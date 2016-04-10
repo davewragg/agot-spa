@@ -60,14 +60,21 @@ export class DeckService {
     if (!this.data) {
       this.data = this._getDecks();
     }
-    if (!criteria || !criteria.playerIds.length) {
+    if (!criteria) {
       return this.data;
     }
     return this.data.map((decks:Deck[]) => {
-      return decks.filter((deck:Deck) => {
-        return criteria.playerIds.indexOf(deck.creatorId) > -1;
-      });
+      return decks.filter(filterDecks);
     });
+
+    function filterDecks(deck:Deck) {
+      return (criteria.playerIds.length ?
+        criteria.playerIds.indexOf(deck.creatorId) > -1 : true) &&
+        (criteria.factionIds.length ?
+        criteria.factionIds.indexOf(deck.factionId) > -1 || criteria.factionIds.indexOf(deck.secondFactionId) > -1 : true) &&
+        (criteria.agendaIds.length ?
+        criteria.agendaIds.indexOf(deck.agendaId) > -1 : true);
+    }
   }
 
   private _getDecks():Observable<Deck[]> {

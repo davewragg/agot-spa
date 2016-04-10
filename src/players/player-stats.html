@@ -5,6 +5,8 @@
     </div>
   </div>
   <div *ngIf="playerStats?.overall?.played > 0">
+    <agot-played-stats-chart class="col-xs-12" [stats]="playerStats.overall"></agot-played-stats-chart>
+
     <div class="m-b-1">
       <code>In this period
         {{ player?.name || 'Player' }} has played
@@ -33,6 +35,8 @@
       <agot-stats-table title="Playing versus" [statsSet]="playerStats.vs"
                         class="col-lg-6 col-xs-12"></agot-stats-table>
     </div>
+
+    <agot-game-timeline-chart *ngIf="playerStats?.games?.length" [games]="playerStats?.games"></agot-game-timeline-chart>
 
     <div class="m-b-1">
       <button class="btn btn-success-outline" (click)="showGames = !showGames">{{ showGames ? 'Hide' : 'Show' }} games</button>

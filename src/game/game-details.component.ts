@@ -9,8 +9,7 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-game-details',
-  moduleId: module.id,
-  templateUrl: './game-details.html',
+  templateUrl: './game/game-details.html',
   directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
 })
 export class GameDetailsComponent implements OnInit {

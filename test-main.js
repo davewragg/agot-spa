@@ -74,5 +74,5 @@ function onlySpecFiles(path) {
 function file2moduleName(filePath) {
   return filePath.replace(/\\/g, '/')
     .replace(/^\/base\//, '')
-    .replace(/\.js/, '');
+    .replace(/\.js$/, '');
 }

@@ -13,8 +13,7 @@ import {DeckLinkComponent} from '../shared/components/deck-link.component';
 
 @Component({
   selector: 'agot-decks-table',
-  moduleId: module.id,
-  templateUrl: './decks-table.component.html',
+  templateUrl: './decks/decks-table.component.html',
   pipes: [TimeAgoPipe, DateFormatPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [

@@ -9,8 +9,7 @@ import {PlayerLinkComponent} from '../shared/components/player-link.component';
 
 @Component({
   selector: 'agot-view-deck',
-  moduleId: module.id,
-  templateUrl: './view-deck.component.html',
+  templateUrl: './decks/view-deck.component.html',
   styles: [`
     .deck-block {
       background-repeat: no-repeat;

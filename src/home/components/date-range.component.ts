@@ -7,8 +7,7 @@ import * as moment from 'moment/moment';
 
 @Component({
   selector: 'agot-date-range',
-  moduleId: module.id,
-  templateUrl: './date-range.html',
+  templateUrl: './home/components/date-range.html',
 })
 export class DateRangeComponent implements OnInit {
   @Input()

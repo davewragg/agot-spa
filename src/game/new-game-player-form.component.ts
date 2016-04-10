@@ -10,8 +10,7 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-new-game-player-form',
-  moduleId: module.id,
-  templateUrl: './new-game-player-form.html',
+  templateUrl: './game/new-game-player-form.html',
   directives: [DeckSelectorComponent, SpinnerComponent],
 })
 export class NewGamePlayerFormComponent implements OnInit {

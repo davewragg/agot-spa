@@ -7,8 +7,7 @@ import {DateRangeType} from '../shared/models/date-range-type.model';
 
 @Component({
   selector: 'agot-home',
-  moduleId: module.id,
-  templateUrl: './home.html',
+  templateUrl: './home/home.html',
   directives: [GamesComponent, AllRankingsComponent, ROUTER_DIRECTIVES]
 })
 export class HomeComponent {

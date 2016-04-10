@@ -13,8 +13,7 @@ import {StatsService} from '../shared/services/stats.service';
 
 @Component({
   selector: 'agot-player-details',
-  moduleId: module.id,
-  templateUrl: './player-details.html',
+  templateUrl: './players/player-details.html',
   directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent, SpinnerComponent]
 })
 export class PlayerDetailsComponent implements OnInit {
@@ -42,7 +41,8 @@ export class PlayerDetailsComponent implements OnInit {
 
   onDateRangeChange(criteria:FilterCriteria) {
     //this.loadPlayerAndStats(criteria);
-    this._router.navigate(['PlayerDetails', FilterCriteria.serialise(criteria)]);
+    const routeConfig = Object.assign({id: this.player.playerId}, FilterCriteria.serialise(criteria));
+    this._router.navigate(['PlayerDetails', routeConfig]);
   }
 
   private loadPlayerAndStats(criteria?:FilterCriteria) {
