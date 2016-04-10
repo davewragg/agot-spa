@@ -20,6 +20,12 @@
     </div>
 
     <div class="row">
+      <div>
+        <agot-played-stats-chart class="col-xs-12" [stats]="deckStats.overall"></agot-played-stats-chart>
+      </div>
+    </div>
+
+    <div class="row">
       <agot-stats-table title="Played by" [statsSet]="deckStats.as"
                         class="col-lg-6 col-xs-12"></agot-stats-table>
       <agot-stats-table title="Playing versus" [statsSet]="deckStats.vs"

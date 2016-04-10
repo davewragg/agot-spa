@@ -4,12 +4,13 @@ import {GamesTableComponent} from '../home/components/games-table.component';
 import {DeckStats} from '../shared/models/deck-stats.model';
 import {StatsTableComponent} from '../players/stats-table.component';
 import {Deck} from '../shared/models/deck.model';
+import {PlayedStatsChart} from '../shared/components/PlayedStatsChart';
 
 @Component({
   selector: 'agot-deck-stats',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './decks/deck-stats.component.html',
-  directives: [CountComponent, StatsTableComponent, GamesTableComponent]
+  directives: [CountComponent, StatsTableComponent, GamesTableComponent, PlayedStatsChart]
 })
 export class DeckStatsComponent {
   @Input()
