@@ -30,7 +30,7 @@ export class GameTimelineChart implements OnInit {
         return [Date.UTC(year, month, date), games.length];
       }).sortBy('0')
       .value();
-    console.log(series);
+    // console.log(series);
 
     this.options = {
       chart: {},
