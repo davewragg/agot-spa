@@ -9,7 +9,7 @@ import {Deck} from '../models/deck.model';
 import * as moment from 'moment/moment';
 import * as _ from 'lodash';
 
-declare var Rollbar: any;
+declare var Rollbar:any;
 
 @Injectable()
 export class DataService {
@@ -158,9 +158,11 @@ export class DataService {
   /*
    @param refDataType: factions / agendas / players / decks
    */
-  getReferenceData(refDataType:string):Observable<any> {
+  getReferenceData(refDataType:string, additionalParams?:string):Observable<any> {
     console.log('getReferenceData called', refDataType);
-    return this.http.get(this.baseUrl + `api/${refDataType}/getall`)
+    return this.http.get(this.baseUrl + `api/${refDataType}/getall`, {
+        search: additionalParams
+      })
       .cache()
       .map(DataService.handleResponse);
   }
