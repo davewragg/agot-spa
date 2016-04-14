@@ -9,7 +9,7 @@ import {Deck} from '../models/deck.model';
 import * as moment from 'moment/moment';
 import * as _ from 'lodash';
 
-declare var Rollbar: any;
+declare var Rollbar:any;
 
 @Injectable()
 export class DataService {
@@ -34,6 +34,8 @@ export class DataService {
     const params:URLSearchParams = new URLSearchParams();
     params.set('startDate', filterCriteria.fromDate);
     params.set('endDate', filterCriteria.toDate);
+    // yes I know this is backwards but it's a quick fix here
+    params.set('sortBy', filterCriteria.ascending ? 'desc' : 'asc');
     if (filterCriteria.playerIds) {
       filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId + ''));
     }
@@ -122,21 +124,7 @@ export class DataService {
 
   getGames(filterCriteria:FilterCriteria) {
     const criteria:FilterCriteria = this.setDatesFromRangeType(filterCriteria);
-    return this.getFilteredGames(criteria).map(sortGames);
-    // TODO move to service when available
-    function sortGames(games:Game[]) {
-      return games.sort(gameSorter);
-
-      function gameSorter(game1:Game, game2:Game) {
-        if (game1.date > game2.date) {
-          return criteria.ascending ? -1 : 1;
-        }
-        if (game1.date < game2.date) {
-          return criteria.ascending ? 1 : -1;
-        }
-        return 0;
-      }
-    }
+    return this.getFilteredGames(criteria);
   }
 
   getGame(gameId:number):Observable<Game> {
@@ -170,9 +158,11 @@ export class DataService {
   /*
    @param refDataType: factions / agendas / players / decks
    */
-  getReferenceData(refDataType:string):Observable<any> {
+  getReferenceData(refDataType:string, additionalParams?:string):Observable<any> {
     console.log('getReferenceData called', refDataType);
-    return this.http.get(this.baseUrl + `api/${refDataType}/getall`)
+    return this.http.get(this.baseUrl + `api/${refDataType}/getall`, {
+        search: additionalParams
+      })
       .cache()
       .map(DataService.handleResponse);
   }

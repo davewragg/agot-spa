@@ -9,7 +9,7 @@
 
   <div *ngIf="loadingError" class="alert alert-danger">
     Well, shit. {{ loadingError | json }}
-    <button type="button" (click)="loadGames(defaultFiltering)">Try again</button>
+    <button type="button" (click)="loadRankings(initialFiltering)">Try again</button>
   </div>
 
   <agot-rankings [rankings]="results"></agot-rankings>

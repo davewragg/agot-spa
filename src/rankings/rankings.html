@@ -2,7 +2,7 @@
   <div class="row">
 
     <div class="col-lg-4">
-      <table class="table table-striped">
+      <table class="table">
         <thead>
         <tr>
           <th colspan="5">Players</th>
@@ -18,7 +18,7 @@
           <td class="text-muted small text-xs-right col-xs-2 col-sm-3">{{ ranking.eloRating }}</td>
           <td class="text-xs-right col-xs-2 col-sm-3">
             <div class="player__results">
-                <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
+                <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId]"
                       class="player-result player-result--{{ result | lowercase }}" title="{{ result }}">
                   {{ result }}
                 </span>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="col-lg-4">
-      <table class="table table-striped">
+      <table class="table">
         <thead>
         <tr>
           <th colspan="5">Factions</th>
@@ -52,7 +52,7 @@
     </div>
 
     <div class="col-lg-4">
-      <table class="table table-striped">
+      <table class="table">
         <thead>
         <tr>
           <th colspan="5">Agendas</th>

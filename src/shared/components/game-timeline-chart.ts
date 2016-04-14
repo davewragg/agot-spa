@@ -24,13 +24,13 @@ export class GameTimelineChart implements OnInit {
       return game.date.substr(0, 10);
     }).toPairs()
       .map(([dateKey, games]:[string, Game[]]) => {
-        const year = dateKey.substr(0, 4);
+        const year = +dateKey.substr(0, 4);
         const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
-        const date = dateKey.substr(8, 2);
+        const date = +dateKey.substr(8, 2);
         return [Date.UTC(year, month, date), games.length];
       }).sortBy('0')
       .value();
-    console.log(series);
+    // console.log(series);
 
     this.options = {
       chart: {},

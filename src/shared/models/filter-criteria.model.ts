@@ -13,7 +13,7 @@ export class FilterCriteria {
   deckIds:number[] = [];
 
   static serialise(criteria:FilterCriteria):any {
-    return Object.assign({}, criteria);
+    return _.cloneDeep(criteria);
   }
 
   static deserialise(routeParams:RouteParams):FilterCriteria {
