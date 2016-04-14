@@ -99,6 +99,7 @@
   <script>
   System.import('<%= BOOTSTRAP_MODULE %>')
     .catch(function (e) {
+      console.error(e, 'Disaster');
       Rollbar.error(e, function(err, data) {
         if (err) {
           console.log('Error while reporting error to Rollbar: ', e);
@@ -106,7 +107,6 @@
           console.log('Error successfully reported to Rollbar. UUID:', data.result.uuid);
         }
       });
-      console.error(e, 'Disaster');
     });
   </script>
   <% } %>
