@@ -9,7 +9,7 @@
 
   <div *ngIf="loadingError" class="alert alert-danger">
     Well, shit. {{ loadingError | json }}
-    <button type="button" (click)="loadGames(defaultFiltering)">Try again</button>
+    <button type="button" (click)="loadGames(initialFiltering)">Try again</button>
   </div>
 
   <agot-game-timeline-chart *ngIf="!isLoading && !loadingError && games?.length" [games]="games"></agot-game-timeline-chart>
