@@ -18,7 +18,7 @@
           <td class="text-muted small text-xs-right col-xs-2 col-sm-3">{{ ranking.eloRating }}</td>
           <td class="text-xs-right col-xs-2 col-sm-3">
             <div class="player__results">
-                <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId] | reverse"
+                <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId]"
                       class="player-result player-result--{{ result | lowercase }}" title="{{ result }}">
                   {{ result }}
                 </span>
