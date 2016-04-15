@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnInit} from 'angular2/core';
+import {Observable} from 'rxjs/Observable';
 import {SeasonService} from '../../shared/services/season.service';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
 import {Season} from '../../shared/models/season.model';
@@ -18,7 +19,7 @@ export class DateRangeComponent implements OnInit {
   rangeChange:EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
   dateRangeType = DateRangeType;
-  seasons:Season[];
+  seasons:Observable<Season[]>;
 
   today:string;
   aWeekAgo:string;
@@ -30,9 +31,7 @@ export class DateRangeComponent implements OnInit {
   }
 
   constructor(private _seasonService:SeasonService) {
-    _seasonService.seasons.subscribe((seasons:Season[]) => {
-      this.seasons = seasons.reverse();
-    });
+    this.seasons = _seasonService.seasons;
     this.today = moment().add(1, 'days').toISOString();
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();
   }
