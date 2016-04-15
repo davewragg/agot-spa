@@ -12,6 +12,7 @@
     <li class="list-group-item font-weight-bold">
       <agot-deck-link [deck]="gamePlayer.deck" *ngIf="gamePlayer.deck.deckId"></agot-deck-link>
       <span *ngIf="!gamePlayer.deck.deckId">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}*</span>
+      <span *ngIf="gamePlayer.thronesDbVersion">({{ gamePlayer.thronesDbVersion }})</span>
       <!--TODO fancy icon?-->
       <a *ngIf="gamePlayer.deck.thronesDbLink" [href]="gamePlayer.deck.thronesDbLink" rel="noopener" target="_blank"
          [title]="gamePlayer.deck.thronesDbLink">TDB</a>
@@ -22,7 +23,7 @@
     </li>
   </ul>
   <div class="card-block edit-buttons" *ngIf="editing">
-    <agot-deck-selector [existingDeck]="gamePlayer.deck"
+    <agot-deck-selector [existingDeck]="gamePlayer.deck" [deckVersion]="gamePlayer.thronesDbVersion"
                         (updateDeck)="onUpdateDeck($event)" [playerId]="gamePlayer.playerId"></agot-deck-selector>
   </div>
   <div class="card-block edit-buttons" *ngIf="!readOnly">

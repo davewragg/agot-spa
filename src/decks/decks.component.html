@@ -1,10 +1,12 @@
 <h2>Decks</h2>
+<!--
 <div class="m-b-1">
-  <!--TODO create new-->
+  &lt;!&ndash;TODO create new&ndash;&gt;
   <button type="button" [disabled]="true" class="btn btn-primary" [routerLink]="['/NewGameDetails']">Create new deck</button>
-  <!--TODO import-->
+  &lt;!&ndash;TODO import&ndash;&gt;
   <button type="button" [disabled]="true" class="btn btn-primary" [routerLink]="['/NewGameDetails']">Import new deck</button>
 </div>
+-->
 
 <agot-player-filter [criteria]="initialFiltering" (playerChange)="onFilterChange($event)"></agot-player-filter>
 <agot-faction-filter [criteria]="initialFiltering" (factionChange)="onFilterChange($event)"></agot-faction-filter>

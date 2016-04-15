@@ -28,6 +28,7 @@
           <div class="card-block small">
             <p class="card-text">
               <agot-deck-link [deck]="gamePlayer.deck"></agot-deck-link>
+              <span *ngIf="gamePlayer.thronesDbVersion">({{ gamePlayer.thronesDbVersion }})</span>
             </p>
             <p class="card-text">
               <agot-deck-class-badge [deckClass]="gamePlayer.deck"></agot-deck-class-badge>

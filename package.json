@@ -1,6 +1,6 @@
 {
   "name": "agot-webassets",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "SPA for AGOT game tracker",
   "repository": {
     "url": "http://paulhoughton.org/agot"

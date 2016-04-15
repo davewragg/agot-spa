@@ -3,7 +3,6 @@ import {FormBuilder, ControlGroup, Validators} from 'angular2/common';
 import {PlayerService} from '../shared/services/player.service';
 import {Player} from '../shared/models/player.model';
 import {GamePlayer} from '../shared/models/game-player.model';
-import {Deck} from '../shared/models/deck.model';
 import {DeckSelectorComponent} from './deck-selector.component';
 import {Observable} from 'rxjs/Observable';
 import {SpinnerComponent} from '../shared/components/spinner.component';
@@ -47,9 +46,10 @@ export class NewGamePlayerFormComponent implements OnInit {
     console.log(this.gamePlayer);
   }
 
-  onUpdateDeck(deck:Deck) {
+  onUpdateDeck({deck, version}) {
     console.log(deck);
     this.gamePlayer.deck = deck;
+    this.gamePlayer.thronesDbVersion = version;
     this.onSubmit();
   }
 

@@ -7,4 +7,6 @@ export interface GamePlayer {
   playerId: number;
   isWinner: boolean;
   deck:Deck;
+  deckId:number;
+  thronesDbVersion:number;
 }

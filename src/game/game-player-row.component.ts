@@ -1,7 +1,6 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {GamePlayer} from '../shared/models/game-player.model';
 import {DeckSelectorComponent} from './deck-selector.component';
-import {Deck} from '../shared/models/deck.model';
 import {DeckLinkComponent} from '../shared/components/deck-link.component';
 
 @Component({
@@ -22,8 +21,9 @@ export class GamePlayerRowComponent {
 
   editing:boolean = false;
 
-  onUpdateDeck(updatedDeck:Deck) {
-    this.gamePlayer.deck = updatedDeck;
+  onUpdateDeck({deck, version}) {
+    this.gamePlayer.deck = deck;
+    this.gamePlayer.thronesDbVersion = version;
     this.updatePlayer.emit(this.gamePlayer);
     this.editing = false;
   }
