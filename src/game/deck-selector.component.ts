@@ -18,8 +18,10 @@ export class DeckSelectorComponent implements OnInit {
   playerId:number;
   @Input()
   existingDeck:Deck;
+  @Input()
+  deckVersion:number;
   @Output()
-  updateDeck:EventEmitter<Deck> = new EventEmitter<Deck>();
+  updateDeck:EventEmitter<{deck:Deck, version:number}> = new EventEmitter<{deck:Deck, version:number}>();
 
   deckSelection:DeckSelectionType;
   deckSelectionType = DeckSelectionType;
@@ -44,7 +46,7 @@ export class DeckSelectorComponent implements OnInit {
   }
 
   onExistingDeckSelect() {
-    this.updateDeck.emit(this.existingDeck);
+    this.updateDeck.emit({deck: this.existingDeck, version: this.deckVersion});
   }
 
   onImportedDeckSelect(deck:Deck) {
@@ -65,7 +67,7 @@ export class DeckSelectorComponent implements OnInit {
     this.existingDeck = null;
     // TODO relocate somewhere more appropriate?
     deck.creatorId = this.playerId;
-    this.updateDeck.emit(deck);
+    this.updateDeck.emit({deck: deck, version: this.deckVersion});
   }
 
   private setInitialSelectionType() {
