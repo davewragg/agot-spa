@@ -35,7 +35,6 @@ export class ThronesDbService {
       const deck = new Deck();
       deck.title = thronesDeck.name;
       deck.thronesDbId = thronesDeck.id;
-      deck.thronesDbVersion = thronesDeck.version;
       deck.thronesDbLink = this.thronesDbLinkBase + thronesDeck.id;
       // faction
       deck.faction = this.convertFaction(factions, thronesDeck.faction_code);

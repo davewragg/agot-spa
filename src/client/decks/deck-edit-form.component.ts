@@ -86,14 +86,12 @@ export class DeckEditFormComponent implements OnInit {
     let secondFactionId = this.deck.secondFactionId || '';
     let title = this.deck.title || this.deck.fallbackTitle || '';
     let thronesDbLink = this.deck.thronesDbLink || '';
-    // let thronesDbVersion = this.deck.thronesDbVersion || '';
     this.deckForm = this._formBuilder.group({
       factionId: [factionId, Validators.required],
       agendaId: [agendaId],
       secondFactionId: [secondFactionId],
       title: [title, Validators.required],
       thronesDbLink: [thronesDbLink],
-      // thronesDbVersion: [thronesDbVersion],
     });
   };
 

@@ -25,7 +25,7 @@
       <agot-deck-class-block [deckClass]="importedDeck"
                              class="card"
                              title="Does this look right?"
-                             footerText="{{ importedDeck.thronesDbLink }} v{{ importedDeck.thronesDbVersion }}"></agot-deck-class-block>
+                             footerText="{{ importedDeck.thronesDbLink }}"></agot-deck-class-block>
       <div class="form-group">
         <button type="button" class="btn btn-success" (click)="onDeckSelect()">
           {{ creating ? 'Add Player' : 'Update' }}

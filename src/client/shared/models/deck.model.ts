@@ -12,7 +12,6 @@ export class Deck {
   fallbackTitle:string;
   thronesDbId:number;
   thronesDbLink:string;
-  thronesDbVersion:string;
   creatorId:number;
   dateCreated:string;
   dateModified:string;
