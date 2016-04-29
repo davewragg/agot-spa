@@ -9,7 +9,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="#ranking of rankings.rankedPlayers; #i = index"
+        <tr *ngFor="let ranking of rankings.rankedPlayers; let i = index"
             [class.table-warning]="i === 0">
           <td class="text-xs-right col-xs-1 col-sm-2">{{ i + 1 }}.</td>
           <td class="col-xs-7 col-sm-4">
@@ -18,7 +18,7 @@
           <td class="text-muted small text-xs-right col-xs-2 col-sm-3">{{ ranking.eloRating }}</td>
           <td class="text-xs-right col-xs-2 col-sm-3">
             <div class="player__results">
-                <span *ngFor="#result of rankings.playerWinLossRecord[ranking.playerId]"
+                <span *ngFor="let result of rankings.playerWinLossRecord[ranking.playerId]"
                       class="player-result player-result--{{ result | lowercase }}" title="{{ result }}">
                   {{ result }}
                 </span>
@@ -37,7 +37,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="#ranking of rankings.rankedFactions; #i = index"
+        <tr *ngFor="let ranking of rankings.rankedFactions; let i = index"
             [class.table-warning]="i == 0">
           <td class="col-xs-1 text-xs-right">{{ i + 1 }}.</td>
           <td class="col-xs-2 text-xs-right"><img class="icon" src="./assets/img/icon{{ ranking.playerId }}.png"
@@ -59,7 +59,7 @@
         </tr>
         </thead>
         <tbody class="small">
-        <tr *ngFor="#ranking of rankings.rankedAgendas; #i = index"
+        <tr *ngFor="let ranking of rankings.rankedAgendas; let i = index"
             [class.table-warning]="i == 0">
           <td class="col-xs-1 text-xs-right">{{ i + 1 }}.</td>
           <td class="col-xs-7">

@@ -19,7 +19,7 @@
                (change)="onSetRange(dateRangeType.THIS_WEEK)"
                value="this week" autocomplete="off"> This week
       </label>
-      <label class="btn btn-secondary" *ngFor="#season of seasons | async" [class.active]="criteria.rangeSelection === season.name">
+      <label class="btn btn-secondary" *ngFor="let season of seasons | async" [class.active]="criteria.rangeSelection === season.name">
         <input type="radio" name="selectRange"
                value="{{ season.name }}" (change)="onSetSeason(season)"
                autocomplete="off"> {{ season.name }}

@@ -2,7 +2,7 @@
   <div class="btn-group" data-toggle="buttons">
     <button class="btn btn-secondary btn-secondary-outline label-button" type="button"> Players
     </button>
-    <label *ngFor="#player of players | async"
+    <label *ngFor="let player of players | async"
            class="btn btn-secondary" [class.active]="criteria.playerIds.includes(player.playerId)">
       <input type="checkbox" name="playerIds" (change)="onPlayerChange($event)"
              [checked]="criteria.playerIds.includes(player.playerId)"

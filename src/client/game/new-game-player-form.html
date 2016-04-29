@@ -4,7 +4,7 @@
       <select class="form-control"
               ngControl="playerId" (change)="onPlayerSelectChange($event.target.value)">
         <option value="">--{{ isLoading ? 'Loading players' : 'Select player' }}--</option>
-        <option *ngFor="#player of players | async" [value]="player.playerId">{{ player.name }}</option>
+        <option *ngFor="let player of players | async" [value]="player.playerId">{{ player.name }}</option>
       </select>
     </div>
 

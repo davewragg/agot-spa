@@ -2,7 +2,7 @@
   <div class="btn-group" data-toggle="buttons">
     <button class="btn btn-secondary btn-secondary-outline label-button" type="button" (click)="toggle()"> Agendas
     </button>
-    <label *ngFor="#agenda of agendas | async" [hidden]="!expanded"
+    <label *ngFor="let agenda of agendas | async" [hidden]="!expanded"
            class="btn btn-secondary btn-sm" [class.active]="criteria.agendaIds.includes(agenda.agendaId)">
       <input type="checkbox" name="agendaIds" (change)="onAgendaChange($event)"
              [checked]="criteria.agendaIds.includes(agenda.agendaId)"

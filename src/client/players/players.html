@@ -2,7 +2,7 @@
 <agot-spinner [isRunning]="isLoading"></agot-spinner>
 <div class="card-deck-wrapper">
   <div class="card-deck">
-    <div *ngFor="#player of players | async" class="card text-xs-center">
+    <div *ngFor="let player of players | async" class="card text-xs-center">
       <div class="card-header">
         <h4><agot-player-link [player]="player"></agot-player-link></h4>
       </div>

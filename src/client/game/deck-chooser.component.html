@@ -3,7 +3,7 @@
   <select class="form-control icon-menu" [disabled]="isLoading" ngControl="deckId"
           (change)="onDeckChange($event.target.value)">
     <option value="">--{{ isLoading ? 'Loading decks' : 'Choose deck' }}--</option>
-    <option *ngFor="#deck of decks" value="{{ deck.deckId }}">
+    <option *ngFor="let deck of decks" value="{{ deck.deckId }}">
       {{ deck.title || deck.fallbackTitle }}
     </option>
   </select>

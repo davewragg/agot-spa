@@ -9,7 +9,7 @@
         <label class="form-control-label">Venue</label>
         <select class="form-control" ngControl="venueId">
           <option value="">--{{ isLoading ? 'Loading venues' : 'Select venue' }}--</option>
-          <option *ngFor="#venue of venues | async" [value]="venue.venueId">{{ venue.name }}</option>
+          <option *ngFor="let venue of venues | async" [value]="venue.venueId">{{ venue.name }}</option>
         </select>
       </div>
     </div>

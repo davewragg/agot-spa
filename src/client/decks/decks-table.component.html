@@ -3,7 +3,7 @@
   <tr *ngIf="!decks.length">
     <td colspan="3" class="alert alert-warning">No decks? WTF</td>
   </tr>
-  <tr *ngFor="#deck of decks">
+  <tr *ngFor="let deck of decks">
     <td class="col-xs-3 col-sm-2 col-lg-1">
       <agot-deck-class-badge [deckClass]="deck"></agot-deck-class-badge>
     </td>

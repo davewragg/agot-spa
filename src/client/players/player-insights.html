@@ -37,7 +37,7 @@
     </code>
     <code *ngIf="playerInsights.neverPlayedFactions.length">In this period
       {{ player?.name || 'Player' }} has not played as
-      <span *ngFor="#faction of playerInsights.neverPlayedFactions; #i = index">
+      <span *ngFor="let faction of playerInsights.neverPlayedFactions; let i = index">
         {{ faction.name }}{{ i < playerInsights.neverPlayedFactions.length -2 ? ',' :
         i === playerInsights.neverPlayedFactions.length -2 ? ' or' : '' }}
       </span>
@@ -49,7 +49,7 @@
     </code>
     <code *ngIf="playerInsights.neverPlayedAgendas.length">In this period
       {{ player?.name || 'Player' }} has not played as
-      <span *ngFor="#agenda of playerInsights.neverPlayedAgendas; #i = index">
+      <span *ngFor="let agenda of playerInsights.neverPlayedAgendas; let i = index">
         {{ agenda.title }}{{ i < playerInsights.neverPlayedAgendas.length -2 ? ',' :
         i === playerInsights.neverPlayedAgendas.length -2 ? ' or' : '' }}
       </span>
