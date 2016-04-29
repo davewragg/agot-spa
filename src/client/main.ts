@@ -1,13 +1,13 @@
 import {provide, enableProdMode} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
-import {APP_BASE_HREF} from 'angular2/router';
+import {APP_BASE_HREF} from 'angular2/platform/common';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/cache';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/combineLatest';
-import 'rxjs/subject/BehaviorSubject';
+import 'rxjs/BehaviorSubject';
 import {AppComponent} from './app/app.component';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
