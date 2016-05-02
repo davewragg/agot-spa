@@ -23,6 +23,24 @@ export class StatsService {
   private _factions:Faction[];
   private _agendas:Agenda[];
 
+  static getResultForPlayer(game:Game, playerId:number):Result {
+    const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
+    return !winner ? Result.DREW : winner.playerId === playerId ? Result.WON : Result.LOST;
+  }
+
+  static getResultForDeck(game:Game, deckId:number):Result[] {
+    const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
+    const results:Result[] = [];
+    game.gamePlayers.forEach((gamePlayer:GamePlayer) => {
+      if (gamePlayer.deck.deckId === deckId) {
+        results.push(gamePlayer.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW);
+      } else {
+        results.push(!!winner ? winner.deck.deckId === deckId ? Result.WON : Result.LOST : Result.DREW);
+      }
+    });
+    return results;
+  }
+
   private static updateFactionAgendaStats(player:GamePlayer, stats:StatsSet, result:Result) {
     if (!player.deck.secondFactionId) {
       const deckClassId = DeckClass.getDeckClassId(player.deck.factionId, player.deck.agendaId);
@@ -68,7 +86,7 @@ export class StatsService {
 
   _getDeckStats(criteria:FilterCriteria):Observable<DeckStats> {
     const deckId = _.first(criteria.deckIds);
-    return this.gameService.getGames(Object.assign(new FilterCriteria(), {deckIds: [deckId], asc:false}))
+    return this.gameService.getGames(Object.assign(new FilterCriteria(), {deckIds: [deckId], asc: false}))
       .map((games:Game[]):DeckStats => {
         return games.reduce(buildStatsFromGames, new DeckStats());
       }).do((deckStats:DeckStats) => {
@@ -130,7 +148,7 @@ export class StatsService {
       stats.games.push(game);
 
       var me = getMe(game);
-      const result:Result = getMyResult(game, me);
+      const result:Result = StatsService.getResultForPlayer(game, me.playerId);
 
       updateMyStats(me, stats, result);
 
@@ -148,11 +166,6 @@ export class StatsService {
 
     function getMe(game:Game) {
       return game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.playerId === playerId);
-    }
-
-    function getMyResult(game:Game, me:GamePlayer):Result {
-      const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
-      return me.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW;
     }
 
     function updateMyStats(me:GamePlayer, stats:PlayerStats, result:Result) {

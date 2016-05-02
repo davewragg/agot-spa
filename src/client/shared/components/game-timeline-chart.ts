@@ -17,20 +17,15 @@ export class GameTimelineChart implements OnInit {
   @Input()
   games:Game[];
 
+  @Input()
+  playerId:number;
+  @Input()
+  deckId:number;
+
   private options:any = {};
 
   ngOnInit() {
-    const series = _.chain(this.games).groupBy((game:Game) => {
-      return game.date.substr(0, 10);
-    }).toPairs()
-      .map(([dateKey, games]:[string, Game[]]) => {
-        const year = +dateKey.substr(0, 4);
-        const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
-        const date = +dateKey.substr(8, 2);
-        return [Date.UTC(year, month, date), games.length];
-      }).sortBy('0')
-      .value();
-    // console.log(series);
+    const series = this.getDataSeries();
 
     this.options = {
       chart: {},
@@ -44,6 +39,9 @@ export class GameTimelineChart implements OnInit {
         title: {
           text: 'Games'
         },
+        stackLabels: {
+          enabled: true
+        },
         min: 0,
         allowDecimals: false,
         crosshair: true
@@ -53,14 +51,40 @@ export class GameTimelineChart implements OnInit {
           borderWidth: 1,
           borderColor: '#530001',
           color: '#d30001',
+        },
+        column: {
+          stacking: 'normal',
+          dataLabels: {
+            enabled: true,
+            color: 'white',
+            style: {
+              textShadow: '0 0 3px black'
+            }
+          }
         }
       },
-      series: [{
-        type: 'column',
-        name: 'Games',
-        pointRange: 24 * 3600 * 1000,
-        data: series
-      }]
+      series: series
     };
+  }
+
+  private getDataSeries() {
+    // const results = new Map();
+    const series = _.chain(this.games).groupBy((game:Game) => {
+      return game.date.substr(0, 10);
+    }).toPairs()
+      .map(([dateKey, games]:[string, Game[]]) => {
+        const year = +dateKey.substr(0, 4);
+        const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
+        const date = +dateKey.substr(8, 2);
+        return [Date.UTC(year, month, date), games.length];
+      }).sortBy('0')
+      .value();
+    // console.log(series);
+    return [series].map((dataSeries) => ({
+      type: 'column',
+      name: 'Games',
+      pointRange: 24 * 3600 * 1000,
+      data: dataSeries
+    }));
   }
 }
