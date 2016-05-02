@@ -31,7 +31,7 @@
     <agot-game-timeline-chart *ngIf="deckStats?.games?.length" [games]="deckStats?.games"></agot-game-timeline-chart>
 
     <div class="m-b-1">
-      <button class="btn btn-success-outline" (click)="showGames = !showGames">{{ showGames ? 'Hide' : 'Show' }} games</button>
+      <button type="button" class="btn btn-success-outline" (click)="showGames = !showGames">{{ showGames ? 'Hide' : 'Show' }} games</button>
     </div>
 
     <div class="m-b-1">
