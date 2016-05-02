@@ -6,7 +6,7 @@ import * as moment from 'moment/moment';
 // under systemjs, moment is actually exported as the default export, so we account for that
 const momentConstructor:(value?:any) => moment.Moment = (<any>moment).default || moment;
 
-@Pipe({name: 'amCalendar', pure: false})
+@Pipe({name: 'amCalendar', pure: true})
 export class CalendarPipe implements PipeTransform, OnDestroy {
 
   /**
@@ -60,7 +60,7 @@ export class CalendarPipe implements PipeTransform, OnDestroy {
     CalendarPipe._midnight.subscribe(() => this._cdRef.markForCheck());
   }
 
-  transform(value:Date | moment.Moment, args?:any[]):any {
+  transform(value:Date | moment.Moment, ...args:any[]):any {
     return momentConstructor(value).calendar();
   }
 
