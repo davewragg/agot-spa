@@ -34,8 +34,6 @@ export class StatsService {
     game.gamePlayers.forEach((gamePlayer:GamePlayer) => {
       if (gamePlayer.deck.deckId === deckId) {
         results.push(gamePlayer.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW);
-      } else {
-        results.push(!!winner ? winner.deck.deckId === deckId ? Result.WON : Result.LOST : Result.DREW);
       }
     });
     return results;

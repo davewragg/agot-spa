@@ -26,12 +26,12 @@ export class GameTimelineChart implements OnInit {
 
   private options:any = {};
 
-  private labels = {
+  private labels:any = {
     [Result.WON]: 'Won',
     [Result.DREW]: 'Drew',
     [Result.LOST]: 'Lost'
   };
-  private colours = {
+  private colours:any = {
     [Result.WON]: '#356921',
     [Result.DREW]: '#666',
     [Result.LOST]: '#b30001'
@@ -76,33 +76,80 @@ export class GameTimelineChart implements OnInit {
     };
   }
 
-  private getDataSeries() {
+  private getDataSeries():any[] {
     const sortedGames = this.getSortedGames();
 
     if (!this.playerId && !this.deckId) {
-      return {
-        type: 'column',
-        name: 'Games',
-        borderWidth: 1,
-        borderColor: '#530001',
-        color: '#d30001',
-        pointRange: 24 * 3600 * 1000,
-        data: sortedGames.map(([dateKey, games]:[string, Game[]]) => {
-          return [dateKey, games.length];
-        })
-      };
+      return this.getGameOnlyDataSeries(sortedGames);
     }
 
-    if (this.playerId) {
-      const results = {
-        [Result.WON]: [],
-        [Result.DREW]: [],
-        [Result.LOST]: []
+    const results = this.getDeckPlayerResults(sortedGames);
+
+    return Object.keys(results).map((key) => {
+      return {
+        type: 'column',
+        name: this.labels[key],
+        borderWidth: 1,
+        borderColor: '#530001',
+        color: this.colours[key],
+        pointRange: 24 * 3600 * 1000,
+        data: results[key]
       };
-      sortedGames.forEach(([dateKey, games]:[string, Game[]]) => {
-        const resultsForDay:Map<Result, number> = new Map();
-        games.forEach((game) => {
-          const result = StatsService.getResultForPlayer(game, this.playerId);
+    });
+  }
+
+  private getGameOnlyDataSeries(sortedGames:[number, Game[]][]) {
+    return [{
+      type: 'column',
+      name: 'Games',
+      borderWidth: 1,
+      borderColor: '#530001',
+      color: '#d30001',
+      pointRange: 24 * 3600 * 1000,
+      data: sortedGames.map(([dateKey, games]:[number, Game[]]) => {
+        return [dateKey, games.length];
+      })
+    }];
+  }
+
+  private getDeckPlayerResults(sortedGames:[number, Game[]][]) {
+    const results:any = {
+      [Result.WON]: [],
+      [Result.DREW]: [],
+      [Result.LOST]: []
+    };
+    sortedGames.forEach(([dateKey, games]:[number, Game[]]) => {
+      const resultsForDay = this.playerId ?
+        getDayResultsForPlayer(games, this.playerId) :
+        getDayResultsForDeck(games, this.deckId);
+      Object.keys(results).forEach((key) => {
+        const dayResults = resultsForDay.get(+key);
+        if (dayResults) {
+          results[key].push([dateKey, dayResults]);
+        }
+      });
+    });
+    return results;
+
+    function getDayResultsForPlayer(games, playerId):Map<Result, number> {
+      const resultsForDay:Map<Result, number> = new Map<Result, number>();
+      games.forEach((game) => {
+        const result = StatsService.getResultForPlayer(game, playerId);
+        if (resultsForDay.has(result)) {
+          const currentValue = resultsForDay.get(result);
+          resultsForDay.set(result, currentValue + 1);
+        } else {
+          resultsForDay.set(result, 1);
+        }
+      });
+      return resultsForDay;
+    }
+
+    function getDayResultsForDeck(games, deckId):Map<Result, number> {
+      const resultsForDay:Map<Result, number> = new Map<Result, number>();
+      games.forEach((game) => {
+        const results = StatsService.getResultForDeck(game, deckId);
+        results.forEach((result) => {
           if (resultsForDay.has(result)) {
             const currentValue = resultsForDay.get(result);
             resultsForDay.set(result, currentValue + 1);
@@ -110,37 +157,12 @@ export class GameTimelineChart implements OnInit {
             resultsForDay.set(result, 1);
           }
         });
-        Object.keys(results).forEach((key) => {
-          const dayResults = resultsForDay.get(+key);
-          if (dayResults) {
-            results[key].push([dateKey, dayResults]);
-          }
-        });
       });
-
-      return Object.keys(results).map((key) => {
-        return {
-          type: 'column',
-          name: this.labels[key],
-          borderWidth: 1,
-          borderColor: '#530001',
-          color: this.colours[key],
-          pointRange: 24 * 3600 * 1000,
-          data: results[key]
-        };
-      });
+      return resultsForDay;
     }
-
-    // console.log(series);
-    // return [series].map((dataSeries) => ({
-    //   type: 'column',
-    //   name: 'Games',
-    //   pointRange: 24 * 3600 * 1000,
-    //   data: dataSeries
-    // }));
   }
 
-  private getSortedGames() {
+  private getSortedGames():[number, Game[]] {
     return _.chain(this.games).groupBy((game:Game) => {
       return game.date.substr(0, 10);
     }).toPairs()
