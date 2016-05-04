@@ -76,6 +76,78 @@ export class StatsService {
     _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
   }
 
+  getTimelineSortedGames(games:Game[]):any[] {
+    return _.chain(games).groupBy((game:Game):string => {
+      return game.date.substr(0, 10);
+    }).toPairs()
+      .map(([dateKey, games]:[string, Game[]]) => {
+        const year = +dateKey.substr(0, 4);
+        const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
+        const date = +dateKey.substr(8, 2);
+        const dateInMillis = Date.UTC(year, month, date);
+        return [dateInMillis, games];
+      }).sortBy('0')
+      .value();
+  }
+
+  getGamesPlayedData(sortedGames:[number, Game[]][]) {
+    return sortedGames.map(([dateKey, games]:[number, Game[]]) => {
+      //noinspection TypeScriptUnresolvedVariable
+      return [dateKey, games.length];
+    });
+  }
+
+  getDeckOrPlayerResultsData(sortedGames:[number, Game[]][], playerId:number, deckId:number) {
+    const results:any = {
+      [Result.WON]: [],
+      [Result.DREW]: [],
+      [Result.LOST]: []
+    };
+    sortedGames.forEach(([dateKey, games]:[number, Game[]]) => {
+      //noinspection TypeScriptValidateTypes
+      const resultsForDay = playerId ?
+        getDayResultsForPlayer(games, playerId) :
+        getDayResultsForDeck(games, deckId);
+      Object.keys(results).forEach((key) => {
+        const dayResults = resultsForDay.get(+key);
+        if (dayResults) {
+          results[key].push([dateKey, dayResults]);
+        }
+      });
+    });
+    return results;
+
+    function getDayResultsForPlayer(games:Game[], playerId:number):Map<Result, number> {
+      const resultsForDay:Map<Result, number> = new Map<Result, number>();
+      games.forEach((game) => {
+        const result = StatsService.getResultForPlayer(game, playerId);
+        if (resultsForDay.has(result)) {
+          const currentValue = resultsForDay.get(result);
+          resultsForDay.set(result, currentValue + 1);
+        } else {
+          resultsForDay.set(result, 1);
+        }
+      });
+      return resultsForDay;
+    }
+
+    function getDayResultsForDeck(games:Game[], deckId:number):Map<Result, number> {
+      const resultsForDay:Map<Result, number> = new Map<Result, number>();
+      games.forEach((game) => {
+        const results = StatsService.getResultForDeck(game, deckId);
+        results.forEach((result) => {
+          if (resultsForDay.has(result)) {
+            const currentValue = resultsForDay.get(result);
+            resultsForDay.set(result, currentValue + 1);
+          } else {
+            resultsForDay.set(result, 1);
+          }
+        });
+      });
+      return resultsForDay;
+    }
+  }
+
   getDeckStats(deckId:number):Observable<PlayerStats> {
     const criteria = new FilterCriteria();
     criteria.deckIds = [deckId];

@@ -3,7 +3,6 @@ import {CHART_DIRECTIVES} from 'angular2-highcharts/index';
 import {Game} from '../models/game.model';
 import {Result} from '../models/result.enum';
 import {StatsService} from '../services/stats.service';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'agot-game-timeline-chart',
@@ -36,6 +35,9 @@ export class GameTimelineChartComponent implements OnInit {
     [Result.DREW]: '#666',
     [Result.LOST]: '#b30001'
   };
+
+  constructor(private _statsService:StatsService) {
+  }
 
   ngOnInit() {
     const series = this.getDataSeries();
@@ -77,13 +79,16 @@ export class GameTimelineChartComponent implements OnInit {
   }
 
   private getDataSeries():any[] {
-    const sortedGames:[number, Game[]][] = this.getSortedGames(this.games);
+    const sortedGames:[number, Game[]][] = this._statsService.getTimelineSortedGames(this.games);
 
     if (!this.playerId && !this.deckId) {
       return this.getGameOnlyDataSeries(sortedGames);
     }
+    return this.getDeckOrPlayerDataSeries(sortedGames);
+  }
 
-    const results = this.getDeckPlayerResults(sortedGames);
+  private getDeckOrPlayerDataSeries(sortedGames:[number, Game[]][]) {
+    const results = this._statsService.getDeckOrPlayerResultsData(sortedGames, this.playerId, this.deckId);
 
     return Object.keys(results).map((key) => {
       return {
@@ -106,75 +111,7 @@ export class GameTimelineChartComponent implements OnInit {
       borderColor: '#5a3d0b',
       color: '#8a6d3b',
       pointRange: 24 * 3600 * 1000,
-      data: sortedGames.map(([dateKey, games]:[number, Game[]]) => {
-        //noinspection TypeScriptUnresolvedVariable
-        return [dateKey, games.length];
-      })
+      data: this._statsService.getGamesPlayedData(sortedGames)
     }];
-  }
-
-  private getDeckPlayerResults(sortedGames:[number, Game[]][]) {
-    const results:any = {
-      [Result.WON]: [],
-      [Result.DREW]: [],
-      [Result.LOST]: []
-    };
-    sortedGames.forEach(([dateKey, games]:[number, Game[]]) => {
-      //noinspection TypeScriptValidateTypes
-      const resultsForDay = this.playerId ?
-        getDayResultsForPlayer(games, this.playerId) :
-        getDayResultsForDeck(games, this.deckId);
-      Object.keys(results).forEach((key) => {
-        const dayResults = resultsForDay.get(+key);
-        if (dayResults) {
-          results[key].push([dateKey, dayResults]);
-        }
-      });
-    });
-    return results;
-
-    function getDayResultsForPlayer(games:Game[], playerId:number):Map<Result, number> {
-      const resultsForDay:Map<Result, number> = new Map<Result, number>();
-      games.forEach((game) => {
-        const result = StatsService.getResultForPlayer(game, playerId);
-        if (resultsForDay.has(result)) {
-          const currentValue = resultsForDay.get(result);
-          resultsForDay.set(result, currentValue + 1);
-        } else {
-          resultsForDay.set(result, 1);
-        }
-      });
-      return resultsForDay;
-    }
-
-    function getDayResultsForDeck(games:Game[], deckId:number):Map<Result, number> {
-      const resultsForDay:Map<Result, number> = new Map<Result, number>();
-      games.forEach((game) => {
-        const results = StatsService.getResultForDeck(game, deckId);
-        results.forEach((result) => {
-          if (resultsForDay.has(result)) {
-            const currentValue = resultsForDay.get(result);
-            resultsForDay.set(result, currentValue + 1);
-          } else {
-            resultsForDay.set(result, 1);
-          }
-        });
-      });
-      return resultsForDay;
-    }
-  }
-
-  private getSortedGames(games:Game[]):any[] {
-    return _.chain(games).groupBy((game:Game):string => {
-      return game.date.substr(0, 10);
-    }).toPairs()
-      .map(([dateKey, games]:[string, Game[]]) => {
-        const year = +dateKey.substr(0, 4);
-        const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
-        const date = +dateKey.substr(8, 2);
-        const dateInMillis = Date.UTC(year, month, date);
-        return [dateInMillis, games];
-      }).sortBy('0')
-      .value();
   }
 }
