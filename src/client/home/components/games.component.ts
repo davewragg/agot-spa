@@ -6,12 +6,12 @@ import {GamesTableComponent} from './games-table.component';
 import {DateRangeComponent} from './date-range.component';
 import {FilterCriteria} from '../../shared/models/filter-criteria.model';
 import {SpinnerComponent} from '../../shared/components/spinner.component';
-import {GameTimelineChart} from '../../shared/components/game-timeline-chart';
+import {GameTimelineChartComponent} from '../../shared/components/game-timeline-chart';
 
 @Component({
   selector: 'agot-games',
   templateUrl: 'home/components/games.html',
-  directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent, GameTimelineChart]
+  directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent, GameTimelineChartComponent]
 })
 export class GamesComponent implements OnInit {
   @Input()

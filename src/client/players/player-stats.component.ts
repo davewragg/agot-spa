@@ -6,7 +6,7 @@ import {StatsTableComponent} from './stats-table.component';
 import {PlayerInsightsComponent} from './player-insights.component';
 import {GamesTableComponent} from '../home/components/games-table.component';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
-import {GameTimelineChart} from '../shared/components/game-timeline-chart';
+import {GameTimelineChartComponent} from '../shared/components/game-timeline-chart';
 import {PlayedStatsChart} from '../shared/components/played-stats-chart';
 
 @Component({
@@ -20,7 +20,7 @@ import {PlayedStatsChart} from '../shared/components/played-stats-chart';
     PlayerInsightsComponent,
     GamesTableComponent,
     PlayedStatsChart,
-    GameTimelineChart
+    GameTimelineChartComponent
   ]
 })
 export class PlayerStatsComponent {

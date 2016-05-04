@@ -1,7 +1,8 @@
 import {Component, Input, ChangeDetectionStrategy, OnInit} from 'angular2/core';
 import {CHART_DIRECTIVES} from 'angular2-highcharts/index';
 import {Game} from '../models/game.model';
-import * as _ from 'lodash';
+import {Result} from '../models/result.enum';
+import {StatsService} from '../services/stats.service';
 
 @Component({
   selector: 'agot-game-timeline-chart',
@@ -13,24 +14,34 @@ import * as _ from 'lodash';
   `,
   directives: [CHART_DIRECTIVES]
 })
-export class GameTimelineChart implements OnInit {
+export class GameTimelineChartComponent implements OnInit {
   @Input()
   games:Game[];
 
+  @Input()
+  playerId:number;
+  @Input()
+  deckId:number;
+
   private options:any = {};
 
+  private labels:any = {
+    [Result.WON]: 'Won',
+    [Result.DREW]: 'Drew',
+    [Result.LOST]: 'Lost'
+  };
+  private colours:any = {
+    [Result.WON]: '#356921',
+    [Result.DREW]: '#666',
+    [Result.LOST]: '#b30001'
+  };
+
+  constructor(private _statsService:StatsService) {
+  }
+
   ngOnInit() {
-    const series = _.chain(this.games).groupBy((game:Game) => {
-      return game.date.substr(0, 10);
-    }).toPairs()
-      .map(([dateKey, games]:[string, Game[]]) => {
-        const year = +dateKey.substr(0, 4);
-        const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
-        const date = +dateKey.substr(8, 2);
-        return [Date.UTC(year, month, date), games.length];
-      }).sortBy('0')
-      .value();
-    // console.log(series);
+    const series = this.getDataSeries();
+    console.log(series);
 
     this.options = {
       chart: {},
@@ -44,23 +55,63 @@ export class GameTimelineChart implements OnInit {
         title: {
           text: 'Games'
         },
+        // stackLabels: {
+        //   enabled: true
+        // },
         min: 0,
         allowDecimals: false,
         crosshair: true
       },
       plotOptions: {
-        series: {
-          borderWidth: 1,
-          borderColor: '#530001',
-          color: '#d30001',
+        column: {
+          stacking: 'normal',
+          dataLabels: {
+            enabled: true,
+            color: 'white',
+            style: {
+              textShadow: '0 0 3px black'
+            }
+          }
         }
       },
-      series: [{
-        type: 'column',
-        name: 'Games',
-        pointRange: 24 * 3600 * 1000,
-        data: series
-      }]
+      series: series
     };
+  }
+
+  private getDataSeries():any[] {
+    const sortedGames:[number, Game[]][] = this._statsService.getTimelineSortedGames(this.games);
+
+    if (!this.playerId && !this.deckId) {
+      return this.getGameOnlyDataSeries(sortedGames);
+    }
+    return this.getDeckOrPlayerDataSeries(sortedGames);
+  }
+
+  private getDeckOrPlayerDataSeries(sortedGames:[number, Game[]][]) {
+    const results = this._statsService.getDeckOrPlayerResultsData(sortedGames, this.playerId, this.deckId);
+
+    return Object.keys(results).map((key) => {
+      return {
+        type: 'column',
+        name: this.labels[key],
+        borderWidth: 1,
+        borderColor: '#530001',
+        color: this.colours[key],
+        pointRange: 24 * 3600 * 1000,
+        data: results[key]
+      };
+    });
+  }
+
+  private getGameOnlyDataSeries(sortedGames:[number, Game[]][]) {
+    return [{
+      type: 'column',
+      name: 'Games',
+      borderWidth: 1,
+      borderColor: '#5a3d0b',
+      color: '#8a6d3b',
+      pointRange: 24 * 3600 * 1000,
+      data: this._statsService.getGamesPlayedData(sortedGames)
+    }];
   }
 }

@@ -23,6 +23,22 @@ export class StatsService {
   private _factions:Faction[];
   private _agendas:Agenda[];
 
+  static getResultForPlayer(game:Game, playerId:number):Result {
+    const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
+    return !winner ? Result.DREW : winner.playerId === playerId ? Result.WON : Result.LOST;
+  }
+
+  static getResultForDeck(game:Game, deckId:number):Result[] {
+    const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
+    const results:Result[] = [];
+    game.gamePlayers.forEach((gamePlayer:GamePlayer) => {
+      if (gamePlayer.deck.deckId === deckId) {
+        results.push(gamePlayer.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW);
+      }
+    });
+    return results;
+  }
+
   private static updateFactionAgendaStats(player:GamePlayer, stats:StatsSet, result:Result) {
     if (!player.deck.secondFactionId) {
       const deckClassId = DeckClass.getDeckClassId(player.deck.factionId, player.deck.agendaId);
@@ -60,6 +76,78 @@ export class StatsService {
     _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
   }
 
+  getTimelineSortedGames(games:Game[]):any[] {
+    return _.chain(games).groupBy((game:Game):string => {
+      return game.date.substr(0, 10);
+    }).toPairs()
+      .map(([dateKey, games]:[string, Game[]]) => {
+        const year = +dateKey.substr(0, 4);
+        const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
+        const date = +dateKey.substr(8, 2);
+        const dateInMillis = Date.UTC(year, month, date);
+        return [dateInMillis, games];
+      }).sortBy('0')
+      .value();
+  }
+
+  getGamesPlayedData(sortedGames:[number, Game[]][]) {
+    return sortedGames.map(([dateKey, games]:[number, Game[]]) => {
+      //noinspection TypeScriptUnresolvedVariable
+      return [dateKey, games.length];
+    });
+  }
+
+  getDeckOrPlayerResultsData(sortedGames:[number, Game[]][], playerId:number, deckId:number) {
+    const results:any = {
+      [Result.WON]: [],
+      [Result.DREW]: [],
+      [Result.LOST]: []
+    };
+    sortedGames.forEach(([dateKey, games]:[number, Game[]]) => {
+      //noinspection TypeScriptValidateTypes
+      const resultsForDay = playerId ?
+        getDayResultsForPlayer(games, playerId) :
+        getDayResultsForDeck(games, deckId);
+      Object.keys(results).forEach((key) => {
+        const dayResults = resultsForDay.get(+key);
+        if (dayResults) {
+          results[key].push([dateKey, dayResults]);
+        }
+      });
+    });
+    return results;
+
+    function getDayResultsForPlayer(games:Game[], playerId:number):Map<Result, number> {
+      const resultsForDay:Map<Result, number> = new Map<Result, number>();
+      games.forEach((game) => {
+        const result = StatsService.getResultForPlayer(game, playerId);
+        if (resultsForDay.has(result)) {
+          const currentValue = resultsForDay.get(result);
+          resultsForDay.set(result, currentValue + 1);
+        } else {
+          resultsForDay.set(result, 1);
+        }
+      });
+      return resultsForDay;
+    }
+
+    function getDayResultsForDeck(games:Game[], deckId:number):Map<Result, number> {
+      const resultsForDay:Map<Result, number> = new Map<Result, number>();
+      games.forEach((game) => {
+        const results = StatsService.getResultForDeck(game, deckId);
+        results.forEach((result) => {
+          if (resultsForDay.has(result)) {
+            const currentValue = resultsForDay.get(result);
+            resultsForDay.set(result, currentValue + 1);
+          } else {
+            resultsForDay.set(result, 1);
+          }
+        });
+      });
+      return resultsForDay;
+    }
+  }
+
   getDeckStats(deckId:number):Observable<PlayerStats> {
     const criteria = new FilterCriteria();
     criteria.deckIds = [deckId];
@@ -68,7 +156,7 @@ export class StatsService {
 
   _getDeckStats(criteria:FilterCriteria):Observable<DeckStats> {
     const deckId = _.first(criteria.deckIds);
-    return this.gameService.getGames(Object.assign(new FilterCriteria(), {deckIds: [deckId], asc:false}))
+    return this.gameService.getGames(Object.assign(new FilterCriteria(), {deckIds: [deckId], asc: false}))
       .map((games:Game[]):DeckStats => {
         return games.reduce(buildStatsFromGames, new DeckStats());
       }).do((deckStats:DeckStats) => {
@@ -130,7 +218,7 @@ export class StatsService {
       stats.games.push(game);
 
       var me = getMe(game);
-      const result:Result = getMyResult(game, me);
+      const result:Result = StatsService.getResultForPlayer(game, me.playerId);
 
       updateMyStats(me, stats, result);
 
@@ -148,11 +236,6 @@ export class StatsService {
 
     function getMe(game:Game) {
       return game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.playerId === playerId);
-    }
-
-    function getMyResult(game:Game, me:GamePlayer):Result {
-      const winner:GamePlayer = game.gamePlayers.find((gamePlayer:GamePlayer) => gamePlayer.isWinner);
-      return me.isWinner ? Result.WON : !!winner ? Result.LOST : Result.DREW;
     }
 
     function updateMyStats(me:GamePlayer, stats:PlayerStats, result:Result) {
