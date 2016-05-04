@@ -36,7 +36,7 @@
                         class="col-lg-6 col-xs-12"></agot-stats-table>
     </div>
 
-    <agot-game-timeline-chart *ngIf="playerStats?.games?.length" [games]="playerStats?.games" [playerId]="player.playerId"></agot-game-timeline-chart>
+    <agot-game-timeline-chart *ngIf="playerStats?.games?.length && player.playerId" [games]="playerStats?.games" [playerId]="player.playerId"></agot-game-timeline-chart>
 
     <div class="m-b-1">
       <button type="button" class="btn btn-success-outline" (click)="showGames = !showGames">{{ showGames ? 'Hide' : 'Show' }} games</button>

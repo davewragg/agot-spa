@@ -15,7 +15,7 @@ import * as _ from 'lodash';
   `,
   directives: [CHART_DIRECTIVES]
 })
-export class GameTimelineChart implements OnInit {
+export class GameTimelineChartComponent implements OnInit {
   @Input()
   games:Game[];
 
@@ -103,8 +103,8 @@ export class GameTimelineChart implements OnInit {
       type: 'column',
       name: 'Games',
       borderWidth: 1,
-      borderColor: '#530001',
-      color: '#d30001',
+      borderColor: '#5a3d0b',
+      color: '#8a6d3b',
       pointRange: 24 * 3600 * 1000,
       data: sortedGames.map(([dateKey, games]) => {
         return [dateKey, games.length];
@@ -131,7 +131,7 @@ export class GameTimelineChart implements OnInit {
     });
     return results;
 
-    function getDayResultsForPlayer(games, playerId):Map<Result, number> {
+    function getDayResultsForPlayer(games:Game[], playerId:number):Map<Result, number> {
       const resultsForDay:Map<Result, number> = new Map<Result, number>();
       games.forEach((game) => {
         const result = StatsService.getResultForPlayer(game, playerId);
@@ -145,7 +145,7 @@ export class GameTimelineChart implements OnInit {
       return resultsForDay;
     }
 
-    function getDayResultsForDeck(games, deckId):Map<Result, number> {
+    function getDayResultsForDeck(games:Game[], deckId:number):Map<Result, number> {
       const resultsForDay:Map<Result, number> = new Map<Result, number>();
       games.forEach((game) => {
         const results = StatsService.getResultForDeck(game, deckId);
@@ -162,7 +162,7 @@ export class GameTimelineChart implements OnInit {
     }
   }
 
-  private getSortedGames():[number, Game[]] {
+  private getSortedGames():[number, Game[]][] {
     return _.chain(this.games).groupBy((game:Game) => {
       return game.date.substr(0, 10);
     }).toPairs()
