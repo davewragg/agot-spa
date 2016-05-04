@@ -7,7 +7,7 @@ import {PlayerInsightsComponent} from './player-insights.component';
 import {GamesTableComponent} from '../home/components/games-table.component';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {GameTimelineChartComponent} from '../shared/components/game-timeline-chart';
-import {PlayedStatsChart} from '../shared/components/played-stats-chart';
+import {PlayedStatsChartComponent} from '../shared/components/played-stats-chart';
 
 @Component({
   selector: 'agot-player-stats',
@@ -19,7 +19,7 @@ import {PlayedStatsChart} from '../shared/components/played-stats-chart';
     StatsTableComponent,
     PlayerInsightsComponent,
     GamesTableComponent,
-    PlayedStatsChart,
+    PlayedStatsChartComponent,
     GameTimelineChartComponent
   ]
 })

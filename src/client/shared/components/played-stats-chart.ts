@@ -12,7 +12,7 @@ import {Stats} from '../models/stats.model';
   `,
   directives: [CHART_DIRECTIVES]
 })
-export class PlayedStatsChart implements OnInit {
+export class PlayedStatsChartComponent implements OnInit {
   @Input()
   stats:Stats;
 
