@@ -33,5 +33,9 @@ export class ProjectConfig extends SeedConfig {
     this.SYSTEM_BUILDER_CONFIG.paths['lodash'] = `node_modules/lodash/index.js`;
 
     this.CSS_PROD_BUNDLE = 'main.css';
+
+    this.BROWSER_LIST = [
+      '> 5%'
+    ];
   }
 }
