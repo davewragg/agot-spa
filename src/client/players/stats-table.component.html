@@ -1,0 +1,66 @@
+<table class="table table-striped">
+  <thead class="thead-inverse">
+  <tr>
+    <th>{{ title }}</th>
+    <th>P</th>
+    <th>W</th>
+    <th>D</th>
+    <th>L</th>
+    <th>W%</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngIf="statsSet?.players?.size">
+    <th colspan="6" class="table-active">Players</th>
+  </tr>
+  <tr *ngFor="let entry of statsSet?.players?.entries()">
+    <td>
+      <agot-player-link [player]="getPlayer(entry[0]) | async"></agot-player-link>
+    </td>
+    <td>{{ entry[1].played }}</td>
+    <td>{{ entry[1].won }}</td>
+    <td>{{ entry[1].drawn }}</td>
+    <td>{{ entry[1].lost }}</td>
+    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+  </tr>
+  <tr *ngIf="statsSet?.deckClass?.size">
+    <th colspan="6">Decks</th>
+  </tr>
+  <tr *ngFor="let entry of statsSet?.deckClass?.entries()">
+    <td>
+      <agot-deck-class-badge [deckClass]="getDeckClass(entry[0]) | async"></agot-deck-class-badge>
+    </td>
+    <td>{{ entry[1].played }}</td>
+    <td>{{ entry[1].won }}</td>
+    <td>{{ entry[1].drawn }}</td>
+    <td>{{ entry[1].lost }}</td>
+    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+  </tr>
+  <tr *ngIf="statsSet?.factions?.size">
+    <th colspan="6" class="table-active">Factions</th>
+  </tr>
+  <tr *ngFor="let entry of statsSet?.factions?.entries()">
+    <td>
+      <agot-faction-badge [faction]="getFaction(entry[0]) | async"></agot-faction-badge>
+    </td>
+    <td>{{ entry[1].played }}</td>
+    <td>{{ entry[1].won }}</td>
+    <td>{{ entry[1].drawn }}</td>
+    <td>{{ entry[1].lost }}</td>
+    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+  </tr>
+  <tr *ngIf="statsSet?.agendas?.size">
+    <th colspan="6" class="table-active">Agendas</th>
+  </tr>
+  <tr *ngFor="let entry of statsSet?.agendas?.entries()">
+    <td>
+      <agot-agenda-badge [agenda]="getAgenda(entry[0]) | async"></agot-agenda-badge>
+    </td>
+    <td>{{ entry[1].played }}</td>
+    <td>{{ entry[1].won }}</td>
+    <td>{{ entry[1].drawn }}</td>
+    <td>{{ entry[1].lost }}</td>
+    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+  </tr>
+  </tbody>
+</table>

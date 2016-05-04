@@ -24,8 +24,9 @@ export class SeedConfig {
 
   APP_TITLE            = 'My Angular2 App';
 
-  APP_SRC              = 'src';
+  APP_SRC              = 'src/client';
   ASSETS_SRC           = `${this.APP_SRC}/assets`;
+  CSS_SRC              = `${this.APP_SRC}/css`;
 
   TOOLS_DIR            = 'tools';
   SEED_TASKS_DIR       = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'seed');
@@ -37,7 +38,6 @@ export class SeedConfig {
   APP_DEST             = `${this.DIST_DIR}/${this.ENV}`;
   CSS_DEST             = `${this.APP_DEST}/css`;
   JS_DEST              = `${this.APP_DEST}/js`;
-  APP_ROOT             = this.ENV === 'dev' ? `${this.APP_BASE}${this.APP_DEST}/` : `${this.APP_BASE}`;
   VERSION              = appVersion();
 
   CSS_PROD_BUNDLE      = 'all.css';
@@ -52,7 +52,7 @@ export class SeedConfig {
   NPM_DEPENDENCIES: InjectableDependency[] = [
     { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
     { src: 'reflect-metadata/Reflect.js', inject: 'shims' },
-    { src: 'es6-shim/es6-shim.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
+    { src: 'es6-shim/es6-shim.js', inject: 'shims' },
     { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
     { src: 'zone.js/dist/zone.js', inject: 'shims' },
     // { src: 'angular2/bundles/angular2-polyfills.js', inject: 'shims' },
@@ -64,63 +64,28 @@ export class SeedConfig {
 
   // Declare local files that needs to be injected
   APP_ASSETS: InjectableDependency[] = [
-    { src: `${this.ASSETS_SRC}/main.css`, inject: true, vendor: false }
+    { src: `${this.CSS_SRC}/main.css`, inject: true, vendor: false }
   ];
-
-
-  get PROD_DEPENDENCIES(): InjectableDependency[] {
-    console.warn('The property "PROD_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-    return normalizeDependencies(this.NPM_DEPENDENCIES.filter(filterDependency.bind(null, ENVIRONMENTS.PRODUCTION)))
-      .concat(this.APP_ASSETS.filter(filterDependency.bind(null, ENVIRONMENTS.PRODUCTION)));
-  }
-
-  get DEV_DEPENDENCIES(): InjectableDependency[] {
-    console.warn('The property "DEV_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-    return normalizeDependencies(this.NPM_DEPENDENCIES.filter(filterDependency.bind(null, ENVIRONMENTS.DEVELOPMENT)))
-      .concat(this.APP_ASSETS.filter(filterDependency.bind(null, ENVIRONMENTS.DEVELOPMENT)));
-  }
-
-  set DEV_DEPENDENCIES(val: InjectableDependency[]) {
-    console.warn('The property "DEV_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-  }
-
-  set PROD_DEPENDENCIES(val: InjectableDependency[]) {
-    console.warn('The property "PROD_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-  }
-
-  get DEV_NPM_DEPENDENCIES(): InjectableDependency[] {
-    console.warn('The property "DEV_NPM_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-    return normalizeDependencies(this.NPM_DEPENDENCIES.filter(filterDependency.bind(null, ENVIRONMENTS.DEVELOPMENT)));
-  }
-  get PROD_NPM_DEPENDENCIES(): InjectableDependency[] {
-    console.warn('The property "PROD_NPM_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-    return normalizeDependencies(this.NPM_DEPENDENCIES.filter(filterDependency.bind(null, ENVIRONMENTS.PRODUCTION)));
-  }
-  set DEV_NPM_DEPENDENCIES(value: InjectableDependency[]) {
-    console.warn('The property "DEV_NPM_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-    const notDev = this.NPM_DEPENDENCIES.filter(d => !filterDependency(ENVIRONMENTS.DEVELOPMENT, d));
-    this.NPM_DEPENDENCIES = notDev.concat(value);
-  }
-  set PROD_NPM_DEPENDENCIES(value: InjectableDependency[]) {
-    console.warn('The property "PROD_NPM_DEPENDENCIES" is deprecated. Consider using "DEPENDENCIES" instead.');
-    const notProd = this.NPM_DEPENDENCIES.filter(d => !filterDependency(ENVIRONMENTS.PRODUCTION, d));
-    this.NPM_DEPENDENCIES = notProd.concat(value);
-  }
 
   get DEPENDENCIES(): InjectableDependency[] {
     return normalizeDependencies(this.NPM_DEPENDENCIES.filter(filterDependency.bind(null, this.ENV)))
       .concat(this.APP_ASSETS.filter(filterDependency.bind(null, this.ENV)));
   }
 
+
   // ----------------
   // SystemsJS Configuration.
   protected SYSTEM_CONFIG_DEV = {
     defaultJSExtensions: true,
-    packageConfigPaths: [`${this.APP_BASE}node_modules/*/package.json`],
+    packageConfigPaths: [
+      `${this.APP_BASE}node_modules/*/package.json`,
+      `${this.APP_BASE}node_modules/**/package.json`
+    ],
     paths: {
       [this.BOOTSTRAP_MODULE]: `${this.APP_BASE}${this.BOOTSTRAP_MODULE}`,
       'angular2/*': `${this.APP_BASE}angular2/*`,
       'rxjs/*': `${this.APP_BASE}rxjs/*`,
+      'app/*': `/app/*`,
       '*': `${this.APP_BASE}node_modules/*`
     },
     packages: {
@@ -153,14 +118,22 @@ export class SeedConfig {
     'android >= 4.4',
     'bb >= 10'
   ];
-  getEnvDependencies() {
-    console.warn('The "getEnvDependencies" method is deprecated. Consider using "DEPENDENCIES" instead.');
-    if (this.ENV === 'prod') {
-      return this.PROD_DEPENDENCIES;
-    } else {
-      return this.DEV_DEPENDENCIES;
+
+  // ----------------
+  // Browser Sync configuration.
+  BROWSER_SYNC_CONFIG: any = {
+    middleware: [require('connect-history-api-fallback')({index: `${this.APP_BASE}index.html`})],
+    port: this.PORT,
+    startPath: this.APP_BASE,
+    server: {
+      baseDir: `${this.DIST_DIR}/empty/`,
+      routes: {
+        [`${this.APP_BASE}${this.APP_DEST}`]: this.APP_DEST,
+        [`${this.APP_BASE}node_modules`]: 'node_modules',
+        [`${this.APP_BASE.replace(/\/$/,'')}`]: this.APP_DEST
+      }
     }
-  }
+  };
 }
 
 
@@ -199,7 +172,8 @@ function customRules(): string[] {
 function getEnvironment() {
   let base:string[] = argv['_'];
   let prodKeyword = !!base.filter(o => o.indexOf(ENVIRONMENTS.PRODUCTION) >= 0).pop();
-  if (base && prodKeyword || argv['env'] === ENVIRONMENTS.PRODUCTION) {
+  let env = (argv['env'] || '').toLowerCase();
+  if ((base && prodKeyword) || env === ENVIRONMENTS.PRODUCTION) {
     return ENVIRONMENTS.PRODUCTION;
   } else {
     return ENVIRONMENTS.DEVELOPMENT;

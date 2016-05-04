@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmit()" [ngFormModel]="gameForm" [hidden]="disabled" class="form">
+  <fieldset class="card card-block">
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <label class="form-control-label">Date</label>
+        <input type="datetime-local" ngControl="date" class="form-control form-control-sm">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label class="form-control-label">Venue</label>
+        <select class="form-control" ngControl="venueId">
+          <option value="">--{{ isLoading ? 'Loading venues' : 'Select venue' }}--</option>
+          <option *ngFor="let venue of venues | async" [value]="venue.venueId">{{ venue.name }}</option>
+        </select>
+      </div>
+    </div>
+    <agot-spinner [isRunning]="isLoading"></agot-spinner>
+  </fieldset>
+
+  <agot-game-players [gamePlayers]="gamePlayers" [readOnly]="false"
+                     (playerChange)="onPlayerChange($event)"></agot-game-players>
+
+  <div class="form-group">
+    <button type="submit" [disabled]="!gameForm.valid"
+            class="btn btn-primary">{{ game.gameId ? 'Save' : 'Create' }}
+    </button>
+
+    <button type="button" class="btn" (click)="onCancel()" [hidden]="cancelling">Cancel</button>
+
+    <div [hidden]="!cancelling" class="card card-block alert-warning">
+      <p class="card-text">Woah, abandon changes?</p>
+      <button type="button" class="btn btn-sm btn-danger" (click)="onCancel(true)">Yep</button>
+      <button type="button" class="btn btn-sm btn-secondary" (click)="cancelling = false">Whoops</button>
+    </div>
+
+    <!--<code>valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}</code>-->
+  </div>
+
+  <div [hidden]="gameForm.valid || gameForm.pristine" class="alert alert-danger">
+    Fix the issues, you dunce
+  </div>
+</form>

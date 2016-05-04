@@ -1,0 +1,42 @@
+.icon {
+  height: 2.4em;
+}
+
+/* this bit borrowed from the guardian */
+
+.player__results {
+  min-width: 1.875rem;
+  font-size: 0;
+  white-space: nowrap;
+}
+
+.player-result {
+  display: inline-block;
+  top: 0;
+  vertical-align: middle;
+  -webkit-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  margin-left: 0.125rem;
+  height: 1rem;
+  width: 0.4rem;
+  cursor: help;
+}
+
+.player-result:first-child {
+  margin-left: 0;
+}
+
+.player-result--win {
+  background-color: #356921;
+  margin-top: -0.375rem;
+}
+
+.player-result--draw {
+  background-color: #666;
+  height: 0.4rem;
+}
+
+.player-result--lose {
+  background-color: #b30001;
+  margin-top: 0.375rem;
+}
