@@ -77,7 +77,7 @@ export class GameTimelineChartComponent implements OnInit {
   }
 
   private getDataSeries():any[] {
-    const sortedGames = this.getSortedGames();
+    const sortedGames:[number, Game[]][] = this.getSortedGames(this.games);
 
     if (!this.playerId && !this.deckId) {
       return this.getGameOnlyDataSeries(sortedGames);
@@ -98,7 +98,7 @@ export class GameTimelineChartComponent implements OnInit {
     });
   }
 
-  private getGameOnlyDataSeries(sortedGames) {
+  private getGameOnlyDataSeries(sortedGames:[number, Game[]][]) {
     return [{
       type: 'column',
       name: 'Games',
@@ -106,7 +106,8 @@ export class GameTimelineChartComponent implements OnInit {
       borderColor: '#5a3d0b',
       color: '#8a6d3b',
       pointRange: 24 * 3600 * 1000,
-      data: sortedGames.map(([dateKey, games]) => {
+      data: sortedGames.map(([dateKey, games]:[number, Game[]]) => {
+        //noinspection TypeScriptUnresolvedVariable
         return [dateKey, games.length];
       })
     }];
@@ -119,6 +120,7 @@ export class GameTimelineChartComponent implements OnInit {
       [Result.LOST]: []
     };
     sortedGames.forEach(([dateKey, games]:[number, Game[]]) => {
+      //noinspection TypeScriptValidateTypes
       const resultsForDay = this.playerId ?
         getDayResultsForPlayer(games, this.playerId) :
         getDayResultsForDeck(games, this.deckId);
@@ -162,8 +164,8 @@ export class GameTimelineChartComponent implements OnInit {
     }
   }
 
-  private getSortedGames():[number, Game[]][] {
-    return _.chain(this.games).groupBy((game:Game) => {
+  private getSortedGames(games:Game[]):any[] {
+    return _.chain(games).groupBy((game:Game):string => {
       return game.date.substr(0, 10);
     }).toPairs()
       .map(([dateKey, games]:[string, Game[]]) => {
