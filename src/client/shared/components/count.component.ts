@@ -1,5 +1,5 @@
 import {Input, Component} from 'angular2/core';
-import {NgPluralize} from './ng2-pluralize';
+import {NgPluralizeComponent} from './ng2-pluralize';
 
 @Component({
   selector: 'agot-count',
@@ -8,7 +8,7 @@ import {NgPluralize} from './ng2-pluralize';
                   'one': 'once',
                   '2': 'twice',
                   'other': '{} times'}"></ng-pluralize>`,
-  directives: [NgPluralize]
+  directives: [NgPluralizeComponent]
 })
 export class CountComponent {
   @Input()

@@ -9,7 +9,7 @@ import {Input, Component, ChangeDetectionStrategy, OnChanges} from 'angular2/cor
   template: `<span>{{content}}</span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgPluralize implements OnChanges {
+export class NgPluralizeComponent implements OnChanges {
   @Input()
   count:number;
   @Input()

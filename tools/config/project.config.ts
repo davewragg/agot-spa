@@ -10,7 +10,7 @@ export class ProjectConfig extends SeedConfig {
     // has to be set in seed.config.ts :(
     //this.APP_BASE = '/agot/';
     this.APP_TITLE = 'AGOT Tracker';
-    let additional_deps: InjectableDependency[] = [
+    let additional_deps:InjectableDependency[] = [
       {src: 'angular2-toaster/lib/toaster.css', inject: true, vendor: true},
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
@@ -27,11 +27,19 @@ export class ProjectConfig extends SeedConfig {
     //   // { src: `${this.ASSETS_SRC}/main.css`, inject: true }, // the old css file
     //   { src: `${this.ASSETS_SRC}/main.scss`, inject: true }, // renamed SASS file
     // ];
+    this.APP_ASSETS = [
+      {src: `${this.CSS_SRC}/main.scss`, inject: true, vendor: false}
+    ];
+
     // Dev
     this.SYSTEM_CONFIG.paths['lodash'] = `${this.APP_BASE}node_modules/lodash/index`;
     // Prod
     this.SYSTEM_BUILDER_CONFIG.paths['lodash'] = `node_modules/lodash/index.js`;
 
     this.CSS_PROD_BUNDLE = 'main.css';
+
+    this.BROWSER_LIST = [
+      '> 5%'
+    ];
   }
 }
