@@ -98,7 +98,7 @@ export class GameTimelineChart implements OnInit {
     });
   }
 
-  private getGameOnlyDataSeries(sortedGames:[number, Game[]][]) {
+  private getGameOnlyDataSeries(sortedGames) {
     return [{
       type: 'column',
       name: 'Games',
@@ -106,7 +106,7 @@ export class GameTimelineChart implements OnInit {
       borderColor: '#530001',
       color: '#d30001',
       pointRange: 24 * 3600 * 1000,
-      data: sortedGames.map(([dateKey, games]:[number, Game[]]) => {
+      data: sortedGames.map(([dateKey, games]) => {
         return [dateKey, games.length];
       })
     }];
