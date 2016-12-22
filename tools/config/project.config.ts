@@ -1,45 +1,48 @@
-import {join} from 'path';
-import {SeedConfig} from './seed.config';
-import {InjectableDependency} from './seed.config.interfaces';
+import { join } from 'path';
 
+import { SeedConfig } from './seed.config';
+// import { ExtendPackages } from './seed.config.interfaces';
+
+/**
+ * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
+ * below.
+ */
 export class ProjectConfig extends SeedConfig {
+
   PROJECT_TASKS_DIR = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'project');
 
   constructor() {
     super();
-    // has to be set in seed.config.ts :(
-    //this.APP_BASE = '/agot/';
-    this.APP_TITLE = 'AGOT Tracker';
-    let additional_deps:InjectableDependency[] = [
-      {src: 'angular2-toaster/lib/toaster.css', inject: true, vendor: true},
+    // this.APP_TITLE = 'Put name of your app here';
+
+    /* Enable typeless compiler runs (faster) between typed compiler runs. */
+    // this.TYPED_COMPILE_INTERVAL = 5;
+
+    // Add `NPM` third-party libraries to be injected/bundled.
+    this.NPM_DEPENDENCIES = [
+      ...this.NPM_DEPENDENCIES,
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
-      {src: 'autotrack/autotrack.js', inject: 'libs'},
     ];
 
-    const seedDependencies = this.NPM_DEPENDENCIES;
-
-    this.NPM_DEPENDENCIES = seedDependencies.concat(additional_deps);
-    //
-    // this.APP_ASSETS = [
-    //   // {src: `${this.ASSETS_SRC}/css/toastr.min.css`, inject: true},
-    //   // {src: `${this.APP_DEST}/assets/scss/global.css`, inject: true},
-    //   // { src: `${this.ASSETS_SRC}/main.css`, inject: true }, // the old css file
-    //   { src: `${this.ASSETS_SRC}/main.scss`, inject: true }, // renamed SASS file
-    // ];
+    // Add `local` third-party libraries to be injected/bundled.
     this.APP_ASSETS = [
-      {src: `${this.CSS_SRC}/main.scss`, inject: true, vendor: false}
+      ...this.APP_ASSETS,
+      // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
+      // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
 
-    // Dev
-    this.SYSTEM_CONFIG.paths['lodash'] = `${this.APP_BASE}node_modules/lodash/index`;
-    // Prod
-    this.SYSTEM_BUILDER_CONFIG.paths['lodash'] = `node_modules/lodash/index.js`;
+    // Add packages (e.g. ng2-translate)
+    // let additionalPackages: ExtendPackages[] = [{
+    //   name: 'ng2-translate',
+    //   // Path to the package's bundle
+    //   path: 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
+    // }];
+    //
+    // this.addPackagesBundles(additionalPackages);
 
-    this.CSS_PROD_BUNDLE = 'main.css';
-
-    this.BROWSER_LIST = [
-      '> 5%'
-    ];
+    /* Add to or override NPM module configurations: */
+    // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
   }
+
 }
