@@ -23,6 +23,8 @@ export class ProjectConfig extends SeedConfig {
       ...this.NPM_DEPENDENCIES,
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
+      {src: 'angular2-toaster/toaster.css', inject: true, vendor: true},
+      {src: 'autotrack/autotrack.js', inject: 'libs'},
     ];
 
     // Add `local` third-party libraries to be injected/bundled.
@@ -40,6 +42,12 @@ export class ProjectConfig extends SeedConfig {
     // }];
     //
     // this.addPackagesBundles(additionalPackages);
+
+    this.SYSTEM_CONFIG.paths['lodash'] = `${this.APP_BASE}node_modules/lodash/index`;
+    this.SYSTEM_BUILDER_CONFIG.paths['lodash'] = `node_modules/lodash/index.js`;
+
+    this.ENABLE_SCSS = true;
+    // this.SCSS_SRC = `${this.APP_SRC}/scss`;
 
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
