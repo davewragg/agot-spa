@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
-  "version": "0.0.0",
-  "description": "Modular starter project for Angular 2 (and beyond) with statically typed build and AoT compilation",
+  "name": "agot-webassets",
+  "version": "1.0.0",
+  "description": "SPA for AGOT game tracker",
   "repository": {
-    "url": "https://github.com/mgechev/angular-seed"
+    "url": "http://paulhoughton.org/agot"
   },
   "scripts": {
     "build.dev": "gulp build.dev --color --env-config dev",
