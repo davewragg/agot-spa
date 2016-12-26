@@ -80,3 +80,4 @@ $enable-gradients: true !default;
 $enable-transitions: true !default;
 
 @import "bootstrap/scss/bootstrap.scss";
+@import 'angular2-toaster/toaster';

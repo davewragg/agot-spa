@@ -1,7 +1,6 @@
 import { join } from 'path';
-
 import { SeedConfig } from './seed.config';
-// import { ExtendPackages } from './seed.config.interfaces';
+import { ExtendPackages } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -23,7 +22,7 @@ export class ProjectConfig extends SeedConfig {
       ...this.NPM_DEPENDENCIES,
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
-      {src: 'angular2-toaster/toaster.css', inject: true, vendor: true},
+      // {src: 'angular2-toaster/toaster.css', inject: true, vendor: true},
       {src: 'autotrack/autotrack.js', inject: 'libs'},
     ];
 
@@ -43,14 +42,33 @@ export class ProjectConfig extends SeedConfig {
     //
     // this.addPackagesBundles(additionalPackages);
 
+    let additionalPackages: ExtendPackages[] = [
+      {
+        name: 'angular2-toaster',
+        path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
+      },
+      {
+        name: 'angular2-toaster/*',
+        path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
+      },
+      {
+        name: 'moment',
+        path: 'node_modules/moment',
+        packageMeta: {
+          main: 'moment.js',
+          defaultExtension: 'js'
+        }
+      }
+    ];
+    this.addPackagesBundles(additionalPackages);
+
     this.SYSTEM_CONFIG.paths['lodash'] = `${this.APP_BASE}node_modules/lodash/index`;
     this.SYSTEM_BUILDER_CONFIG.paths['lodash'] = `node_modules/lodash/index.js`;
 
     this.ENABLE_SCSS = true;
-    // this.SCSS_SRC = `${this.APP_SRC}/scss`;
 
     /* Add to or override NPM module configurations: */
-    // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
+    this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
   }
 
 }
