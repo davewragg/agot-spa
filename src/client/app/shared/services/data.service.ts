@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import * as moment from 'moment/moment';
+import * as _ from 'lodash';
+import { Config } from '../config/env.config';
 import { Game } from '../models/game.model';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { DateRangeType } from '../models/date-range-type.model';
 import { SetOfResults } from '../models/set-of-results.model';
 import { Deck } from '../models/deck.model';
-import * as moment from 'moment/moment';
-import * as _ from 'lodash';
 
 declare let Rollbar: any;
 
@@ -16,9 +17,7 @@ export class DataService {
   private today: string;
   private aWeekAgo: string;
 
-  // TODO migrate to env config
-  // private baseUrl = '<%= ENV %>' === 'prod' ? '<%= APP_BASE %>' : '//paulhoughton.org<%= APP_BASE %>';
-  private baseUrl = '//paulhoughton.org/agot/';
+  private baseUrl = Config.API;
 
   private static setAllTime(criteria: FilterCriteria) {
     return DataService.setDates(criteria, null, null);

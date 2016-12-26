@@ -38,10 +38,10 @@ export class ProjectConfig extends SeedConfig {
         name: 'angular2-toaster',
         path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
       },
-      // {
-      //   name: 'angular2-toaster/*',
-      //   path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
-      // },
+      {
+        name: 'angular2-toaster/*',
+        path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
+      },
       {
         name: 'moment',
         path: 'node_modules/moment',
