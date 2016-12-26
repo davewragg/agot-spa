@@ -1,28 +1,28 @@
-import {Injectable} from '@angular/core';
-import {ToasterService} from 'angular2-toaster/angular2-toaster';
+import { Injectable } from '@angular/core';
+import { ToasterService } from 'angular2-toaster/angular2-toaster';
 
 @Injectable()
 export class NotificationService {
-  constructor(private toasterService:ToasterService) {
+  constructor(private toasterService: ToasterService) {
   }
 
-  success(title?:string, body?:string) {
+  success(title?: string, body?: string) {
     this.toasterService.pop('success', title, body);
   }
 
-  warn(title?:string, body?:string) {
+  warn(title?: string, body?: string) {
     this.toasterService.pop('warning', title, body);
   }
 
-  error(title?:string, body?:string) {
+  error(title?: string, body?: string) {
     this.toasterService.pop('error', title, body);
   }
 
-  info(title?:string, body?:string) {
+  info(title?: string, body?: string) {
     this.toasterService.pop('info', title, body);
   }
 
-  wait(title?:string, body?:string) {
+  wait(title?: string, body?: string) {
     this.toasterService.pop('wait', title, body);
   }
 }

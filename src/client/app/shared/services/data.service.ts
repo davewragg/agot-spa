@@ -165,7 +165,7 @@ export class DataService {
       search: additionalParams
     })
     // TODO .share()?
-      // .cache()
+    // .cache()
       .map(DataService.handleResponse);
   }
 

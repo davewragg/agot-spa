@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {FilterCriteria} from '../models/filter-criteria.model';
-import {Observable} from 'rxjs/Observable';
-import {DeckService} from './deck.service';
+import { Injectable } from '@angular/core';
+import { FilterCriteria } from '../models/filter-criteria.model';
+import { Observable } from 'rxjs/Observable';
+import { DeckService } from './deck.service';
 
 @Injectable()
 export class CacheService {
-  private _caches:Map<string, Map<string, any>> = new Map<string, Map<string, any>>();
+  private _caches: Map<string, Map<string, any>> = new Map<string, Map<string, any>>();
 
-  constructor(private deckService:DeckService) {
+  constructor(private deckService: DeckService) {
   }
 
   invalidate() {
@@ -18,7 +18,7 @@ export class CacheService {
     });
   }
 
-  setValue(cacheName:string, key:string, value:any) {
+  setValue(cacheName: string, key: string, value: any) {
     const cache = this._caches.get(cacheName) || new Map<string, any>();
     console.log('set cache value', key);
     cache.set(key, value);
@@ -26,7 +26,7 @@ export class CacheService {
     this._caches.set(cacheName, cache);
   }
 
-  getValue(cacheName:string, key:string) {
+  getValue(cacheName: string, key: string) {
     if (!this._caches.has(cacheName)) {
       console.log('no cache for', cacheName);
       return null;
@@ -35,11 +35,11 @@ export class CacheService {
     return cache.get(key) || null;
   }
 
-  getFilteredData(dataName:string,
-                  dataCall:(criteria:FilterCriteria) => Observable<any>,
-                  filterCriteria:FilterCriteria,
-                  scope:any):Observable<any> {
-    const key:string = filterCriteria ? JSON.stringify(filterCriteria) : 'ALL';
+  getFilteredData(dataName: string,
+                  dataCall: (criteria: FilterCriteria) => Observable<any>,
+                  filterCriteria: FilterCriteria,
+                  scope: any): Observable<any> {
+    const key: string = filterCriteria ? JSON.stringify(filterCriteria) : 'ALL';
     console.log('get data', key);
     const cachedData = this.getValue(dataName, key);
     if (cachedData) {
