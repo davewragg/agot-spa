@@ -1,22 +1,21 @@
 /* angular2-moment (c) 2015, 2016 Uri Shaked / MIT Licence */
-
-import {Pipe, ChangeDetectorRef, PipeTransform, EventEmitter, OnDestroy} from '@angular/core';
+import { Pipe, ChangeDetectorRef, PipeTransform, EventEmitter, OnDestroy } from '@angular/core';
 import * as moment from 'moment/moment';
 
 // under systemjs, moment is actually exported as the default export, so we account for that
-const momentConstructor:(value?:any) => moment.Moment = (<any>moment).default || moment;
+const momentConstructor: (value?: any) => moment.Moment = (<any>moment).default || moment;
 
-@Pipe({name: 'amCalendar', pure: true})
+@Pipe({ name: 'amCalendar', pure: true })
 export class CalendarPipe implements PipeTransform, OnDestroy {
 
   /**
    * @private Internal reference counter, so we can clean up when no instances are in use
    * @type {number}
    */
-  private static _refs:number = 0;
+  private static _refs: number = 0;
 
-  private static _timer:number;
-  private static _midnight:EventEmitter<Date>;
+  private static _timer: number;
+  private static _midnight: EventEmitter<Date>;
 
   private static _initTimer() {
     // initialize the timer
@@ -43,13 +42,13 @@ export class CalendarPipe implements PipeTransform, OnDestroy {
   }
 
   private static _getMillisecondsUntilUpdate() {
-    var now = momentConstructor();
-    var tomorrow = momentConstructor().startOf('day').add(1, 'days');
-    var timeToMidnight = tomorrow.valueOf() - now.valueOf();
+    let now = momentConstructor();
+    let tomorrow = momentConstructor().startOf('day').add(1, 'days');
+    let timeToMidnight = tomorrow.valueOf() - now.valueOf();
     return timeToMidnight + 1000; // 1 second after midnight
   }
 
-  constructor(private _cdRef:ChangeDetectorRef) {
+  constructor(private _cdRef: ChangeDetectorRef) {
     // using a single static timer for all instances of this pipe for performance reasons
     CalendarPipe._initTimer();
 
@@ -60,11 +59,11 @@ export class CalendarPipe implements PipeTransform, OnDestroy {
     CalendarPipe._midnight.subscribe(() => this._cdRef.markForCheck());
   }
 
-  transform(value:Date | moment.Moment, ...args:any[]):any {
+  transform(value: Date | moment.Moment, ...args: any[]): any {
     return momentConstructor(value).calendar();
   }
 
-  ngOnDestroy():void {
+  ngOnDestroy(): void {
     if (CalendarPipe._refs > 0) {
       CalendarPipe._refs--;
     }

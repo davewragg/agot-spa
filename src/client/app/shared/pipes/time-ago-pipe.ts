@@ -1,16 +1,15 @@
 /* angular2-moment (c) 2015, 2016 Uri Shaked / MIT Licence */
-
-import {Pipe, ChangeDetectorRef, PipeTransform, OnDestroy} from '@angular/core';
+import { Pipe, ChangeDetectorRef, PipeTransform, OnDestroy } from '@angular/core';
 import * as moment from 'moment/moment';
 
 // under systemjs, moment is actually exported as the default export, so we account for that
-const momentConstructor:(value?:any) => moment.Moment = (<any>moment).default || moment;
+const momentConstructor: (value?: any) => moment.Moment = (<any>moment).default || moment;
 
-@Pipe({name: 'amTimeAgo', pure: false})
+@Pipe({ name: 'amTimeAgo', pure: false })
 export class TimeAgoPipe implements PipeTransform, OnDestroy {
-  private _currentTimer:number;
+  private _currentTimer: number;
 
-  static _getSecondsUntilUpdate(momentInstance:moment.Moment) {
+  static _getSecondsUntilUpdate(momentInstance: moment.Moment) {
     const howOld = Math.abs(momentConstructor().diff(momentInstance, 'minute'));
     if (howOld < 1) {
       return 1;
@@ -23,10 +22,10 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
     }
   }
 
-  constructor(private _cdRef:ChangeDetectorRef) {
+  constructor(private _cdRef: ChangeDetectorRef) {
   }
 
-  transform(value:Date | moment.Moment, ...args:any[]):any {
+  transform(value: Date | moment.Moment, ...args: any[]): any {
     const momentInstance = momentConstructor(value);
     this._removeTimer();
     const timeToUpdate = TimeAgoPipe._getSecondsUntilUpdate(momentInstance) * 1000;
@@ -34,7 +33,7 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
     return momentConstructor(value).from(momentConstructor());
   }
 
-  ngOnDestroy():void {
+  ngOnDestroy(): void {
     this._removeTimer();
   }
 
