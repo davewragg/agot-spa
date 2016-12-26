@@ -33,24 +33,15 @@ export class ProjectConfig extends SeedConfig {
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
 
-    // Add packages (e.g. ng2-translate)
-    // let additionalPackages: ExtendPackages[] = [{
-    //   name: 'ng2-translate',
-    //   // Path to the package's bundle
-    //   path: 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
-    // }];
-    //
-    // this.addPackagesBundles(additionalPackages);
-
     let additionalPackages: ExtendPackages[] = [
       {
         name: 'angular2-toaster',
         path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
       },
-      {
-        name: 'angular2-toaster/*',
-        path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
-      },
+      // {
+      //   name: 'angular2-toaster/*',
+      //   path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
+      // },
       {
         name: 'moment',
         path: 'node_modules/moment',
