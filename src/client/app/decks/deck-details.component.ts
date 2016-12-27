@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, Params } from '@angular/router';
 import { DeckService } from '../shared/services/deck.service';
 import { Deck } from '../shared/models/deck.model';
-import { SpinnerComponent } from '../shared/components/spinner.component';
-import { DeckEditFormComponent } from './deck-edit-form.component';
-import { ViewDeckComponent } from './view-deck.component';
+// import { SpinnerComponent } from '../shared/components/spinner.component';
+// import { DeckEditFormComponent } from './deck-edit-form.component';
+// import { ViewDeckComponent } from './view-deck.component';
 import { NotificationService } from '../shared/services/notification.service';
 import { StatsService } from '../shared/services/stats.service';
 import { DeckStats } from '../shared/models/deck-stats.model';
-import { DeckStatsComponent } from './deck-stats.component';
+// import { DeckStatsComponent } from './deck-stats.component';
 
 @Component({
   selector: 'agot-deck-details',
   templateUrl: 'decks/deck-details.component.html',
-  directives: [
-    ROUTER_DIRECTIVES,
-    SpinnerComponent,
-    DeckEditFormComponent,
-    DeckStatsComponent,
-    ViewDeckComponent
-  ]
+  // directives: [
+  //   ROUTER_DIRECTIVES,
+  //   SpinnerComponent,
+  //   DeckEditFormComponent,
+  //   DeckStatsComponent,
+  //   ViewDeckComponent
+  // ]
 })
 export class DeckDetailsComponent implements OnInit {
   deck: Deck;
@@ -33,13 +33,14 @@ export class DeckDetailsComponent implements OnInit {
   isLoadingStats: boolean;
   loadError: any = null;
 
-  constructor(params: RouteParams,
+  constructor(params: Params,
               private deckService: DeckService,
               private statsService: StatsService,
               private notificationService: NotificationService,
               private router: Router) {
-    this.deckIdParam = <number>+params.get('id');
-    this.editParam = !!params.get('edit');
+    // TODO routing
+    // this.deckIdParam = <number>+params.get('id');
+    // this.editParam = !!params.get('edit');
     this.editing = this.editParam || !this.deckIdParam;
   }
 

@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, Params } from '@angular/router';
 import { PlayerService } from '../shared/services/player.service';
 import { Player } from '../shared/models/player.model';
 import { PlayerStats } from '../shared/models/player-stats.model';
-import { PlayerStatsComponent } from './player-stats.component';
+// import { PlayerStatsComponent } from './player-stats.component';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import { DateRangeType } from '../shared/models/date-range-type.model';
-import { DateRangeComponent } from '../home/components/date-range.component';
-import { SpinnerComponent } from '../shared/components/spinner.component';
+// import { DateRangeComponent } from '../home/components/date-range.component';
+// import { SpinnerComponent } from '../shared/components/spinner.component';
 import { Observable } from 'rxjs/Observable';
 import { StatsService } from '../shared/services/stats.service';
 
 @Component({
   selector: 'agot-player-details',
   templateUrl: 'players/player-details.html',
-  directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent, SpinnerComponent]
+  // directives: [ROUTER_DIRECTIVES, PlayerStatsComponent, DateRangeComponent, SpinnerComponent]
 })
 export class PlayerDetailsComponent implements OnInit {
   player: Player;
@@ -25,11 +25,12 @@ export class PlayerDetailsComponent implements OnInit {
 
   initialFiltering: FilterCriteria;
 
-  constructor(params: RouteParams,
+  constructor(params: Params,
               private _router: Router,
               private _statsService: StatsService,
               private _playerService: PlayerService) {
-    this.playerIdParam = <number>+params.get('id');
+    // TODO routing
+    // this.playerIdParam = <number>+params.get('id');
     this.setInitialFiltering(params);
   }
 
@@ -70,7 +71,7 @@ export class PlayerDetailsComponent implements OnInit {
     this.isLoading = false;
   }
 
-  private setInitialFiltering(params: RouteParams) {
+  private setInitialFiltering(params: Params) {
     this.initialFiltering = Object.assign(new FilterCriteria(), {
       ascending: true,
       rangeSelection: DateRangeType.ALL_TIME

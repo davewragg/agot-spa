@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, RouteParams } from '@angular/router';
+import { Router, Params } from '@angular/router';
 import { Game } from '../../shared/models/game.model';
 import { GameService } from '../../shared/services/game.service';
-import { GamesTableComponent } from './games-table.component';
-import { DateRangeComponent } from './date-range.component';
+// import { GamesTableComponent } from './games-table.component';
+// import { DateRangeComponent } from './date-range.component';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
-import { SpinnerComponent } from '../../shared/components/spinner.component';
-import { GameTimelineChartComponent } from '../../shared/components/game-timeline-chart';
+// import { SpinnerComponent } from '../../shared/components/spinner.component';
+// import { GameTimelineChartComponent } from '../../shared/components/game-timeline-chart';
 
 @Component({
   selector: 'agot-games',
   templateUrl: 'home/components/games.html',
-  directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent, GameTimelineChartComponent]
+  // directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent, GameTimelineChartComponent]
 })
 export class GamesComponent implements OnInit {
   @Input()
@@ -25,7 +25,7 @@ export class GamesComponent implements OnInit {
   loadingError: any = null;
   isLoading: boolean;
 
-  constructor(params: RouteParams,
+  constructor(params: Params,
               private _router: Router,
               private _gameService: GameService) {
     this.setInitialFiltering(params);
@@ -59,7 +59,7 @@ export class GamesComponent implements OnInit {
       );
   }
 
-  private setInitialFiltering(params: RouteParams) {
+  private setInitialFiltering(params: Params) {
     this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }

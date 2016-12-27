@@ -1,14 +1,12 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 import { Deck } from '../shared/models/deck.model';
-import { SpinnerComponent } from '../shared/components/spinner.component';
 import { ThronesDbService } from '../shared/services/thrones-db.service';
-import { DeckClassBlockComponent } from '../shared/components/deck-class-block.component';
 
 @Component({
   selector: 'agot-deck-import-form',
   templateUrl: 'decks/deck-import-form.component.html',
-  directives: [SpinnerComponent, DeckClassBlockComponent]
+  // directives: [SpinnerComponent, DeckClassBlockComponent]
 })
 export class DeckImportFormComponent implements OnInit {
   @Input()

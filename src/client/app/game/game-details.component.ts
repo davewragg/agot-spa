@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteParams } from '@angular/router';
+import { Router, Params } from '@angular/router';
 import { GameService } from '../shared/services/game.service';
 import { Game } from '../shared/models/game.model';
-import { GameFormComponent } from './game-form.component';
-import { ViewGameComponent } from './view-game.component';
+// import { GameFormComponent } from './game-form.component';
+// import { ViewGameComponent } from './view-game.component';
 import { NotificationService } from '../shared/services/notification.service';
-import { SpinnerComponent } from '../shared/components/spinner.component';
+// import { SpinnerComponent } from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-game-details',
   templateUrl: 'game/game-details.html',
-  directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
+  // directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
 })
 export class GameDetailsComponent implements OnInit {
   game: Game;
@@ -22,12 +22,13 @@ export class GameDetailsComponent implements OnInit {
   isLoading: boolean;
   loadError: any = null;
 
-  constructor(params: RouteParams,
+  constructor(params: Params,
               private gameService: GameService,
               private router: Router,
               private notificationService: NotificationService) {
-    this.gameIdParam = <number>+params.get('id');
-    this.editParam = !!params.get('edit');
+    // TODO routing
+    // this.gameIdParam = <number>+params.get('id');
+    // this.editParam = !!params.get('edit');
     this.editing = this.editParam || !this.gameIdParam;
   }
 

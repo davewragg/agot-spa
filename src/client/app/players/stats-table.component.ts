@@ -4,20 +4,20 @@ import { PlayerService } from '../shared/services/player.service';
 import { Faction } from '../shared/models/faction.model';
 import { Player } from '../shared/models/player.model';
 import { Agenda } from '../shared/models/agenda.model';
-import { FactionBadgeComponent } from '../shared/components/faction-badge.component';
-import { AgendaBadgeComponent } from '../shared/components/agenda-badge.component';
-import { PlayerLinkComponent } from '../shared/components/player-link.component';
-import { ColourRangeDirective } from '../shared/directives/colour-range.directive';
+// import { FactionBadgeComponent } from '../shared/components/faction-badge.component';
+// import { AgendaBadgeComponent } from '../shared/components/agenda-badge.component';
+// import { PlayerLinkComponent } from '../shared/components/player-link.component';
+// import { ColourRangeDirective } from '../shared/directives/colour-range.directive';
 import { DeckClass } from '../shared/models/deck-class.model';
-import { DeckClassBadgeComponent } from '../shared/components/deck-class-badge.component';
+// import { DeckClassBadgeComponent } from '../shared/components/deck-class-badge.component';
 import { StatsSet } from '../shared/models/stats-set.model';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'agot-stats-table',
   templateUrl: 'players/stats-table.component.html',
-  directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
-    PlayerLinkComponent, ColourRangeDirective]
+  // directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
+  //   PlayerLinkComponent, ColourRangeDirective]
 })
 export class StatsTableComponent {
   @Input()

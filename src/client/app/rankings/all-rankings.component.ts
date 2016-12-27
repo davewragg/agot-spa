@@ -1,16 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, Params } from '@angular/router';
 import { SetOfResults } from '../shared/models/set-of-results.model';
 import { RankingService } from '../shared/services/ranking.service';
-import { RankingsComponent } from './rankings.component';
-import { SpinnerComponent } from '../shared/components/spinner.component';
+// import { RankingsComponent } from './rankings.component';
+// import { SpinnerComponent } from '../shared/components/spinner.component';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
-import { Router, RouteParams } from '@angular/router';
-import { DateRangeComponent } from '../home/components/date-range.component';
+// import { DateRangeComponent } from '../home/components/date-range.component';
 
 @Component({
   selector: 'agot-all-rankings',
   templateUrl: 'rankings/all-rankings.component.html',
-  directives: [RankingsComponent, SpinnerComponent, DateRangeComponent]
+  // directives: [RankingsComponent, SpinnerComponent, DateRangeComponent]
 })
 export class AllRankingsComponent implements OnInit {
   @Input()
@@ -24,7 +24,7 @@ export class AllRankingsComponent implements OnInit {
   loadingError: any = null;
   isLoading: boolean;
 
-  constructor(params: RouteParams,
+  constructor(params: Params,
               private _router: Router,
               private _RankingService: RankingService) {
     this.setInitialFiltering(params);
@@ -58,7 +58,7 @@ export class AllRankingsComponent implements OnInit {
       );
   }
 
-  private setInitialFiltering(params: RouteParams) {
+  private setInitialFiltering(params: Params) {
     this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }

@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+// import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Game } from '../shared/models/game.model';
-import { GamePlayersComponent } from './game-players.component';
-import { DateFormatPipe } from '../shared/pipes/date-format-pipe';
+// import { GamePlayersComponent } from './game-players.component';
+// import { DateFormatPipe } from '../shared/pipes/date-format-pipe';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { Observable } from 'rxjs/Observable';
 import { Venue } from '../shared/models/venue.model';
@@ -10,8 +10,8 @@ import { Venue } from '../shared/models/venue.model';
 @Component({
   selector: 'agot-view-game',
   templateUrl: 'game/view-game.html',
-  directives: [GamePlayersComponent, ROUTER_DIRECTIVES],
-  pipes: [DateFormatPipe]
+  // directives: [GamePlayersComponent, ROUTER_DIRECTIVES],
+  // pipes: [DateFormatPipe]
 })
 export class ViewGameComponent {
   @Input()

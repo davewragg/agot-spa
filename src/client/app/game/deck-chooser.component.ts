@@ -1,12 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+// TODO omfg forms
 import { ControlGroup, FormBuilder, Validators } from '@angular/common';
 import { Deck } from '../shared/models/deck.model';
-import { SpinnerComponent } from '../shared/components/spinner.component';
+// import { SpinnerComponent } from '../shared/components/spinner.component';
 
 @Component({
   selector: 'agot-deck-chooser',
   templateUrl: 'game/deck-chooser.component.html',
-  directives: [<any>SpinnerComponent],
+  // directives: [<any>SpinnerComponent],
   styles: [
     `select.icon-menu option {
       background-repeat:no-repeat;

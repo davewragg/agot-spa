@@ -1,13 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { GamePlayer } from '../shared/models/game-player.model';
-import { DeckSelectorComponent } from './deck-selector.component';
-import { DeckLinkComponent } from '../shared/components/deck-link.component';
+// import { DeckSelectorComponent } from './deck-selector.component';
+// import { DeckLinkComponent } from '../shared/components/deck-link.component';
 
 @Component({
   selector: 'agot-game-player-row',
   templateUrl: 'game/game-player-row.html',
   styleUrls: ['game/game-player-row.css'],
-  directives: [DeckSelectorComponent, DeckLinkComponent]
+  // directives: [DeckSelectorComponent, DeckLinkComponent]
 })
 export class GamePlayerRowComponent {
   @Input()

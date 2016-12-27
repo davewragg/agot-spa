@@ -1,25 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES, RouteParams, Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 import { DeckService } from '../shared/services/deck.service';
-import { SpinnerComponent } from '../shared/components/spinner.component';
+// import { SpinnerComponent } from '../shared/components/spinner.component';
 import { Deck } from '../shared/models/deck.model';
-import { DecksTableComponent } from './decks-table.component';
+// import { DecksTableComponent } from './decks-table.component';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
-import { PlayerFilterComponent } from '../shared/components/player-filter.component';
-import { FactionFilterComponent } from '../shared/components/faction-filter.component';
-import { AgendaFilterComponent } from '../shared/components/agenda-filter.component';
+// import { PlayerFilterComponent } from '../shared/components/player-filter.component';
+// import { FactionFilterComponent } from '../shared/components/faction-filter.component';
+// import { AgendaFilterComponent } from '../shared/components/agenda-filter.component';
 
 @Component({
   selector: 'agot-decks',
   templateUrl: 'decks/decks.component.html',
-  directives: [
-    ROUTER_DIRECTIVES,
-    DecksTableComponent,
-    SpinnerComponent,
-    PlayerFilterComponent,
-    FactionFilterComponent,
-    AgendaFilterComponent,
-  ]
+  // directives: [
+  //   ROUTER_DIRECTIVES,
+  //   DecksTableComponent,
+  //   SpinnerComponent,
+  //   PlayerFilterComponent,
+  //   FactionFilterComponent,
+  //   AgendaFilterComponent,
+  // ]
 })
 export class DecksComponent implements OnInit {
   @Input()
@@ -32,7 +32,7 @@ export class DecksComponent implements OnInit {
 
   isLoading: boolean;
 
-  constructor(params: RouteParams,
+  constructor(params: Params,
               private _router: Router,
               private _deckService: DeckService) {
     this.setInitialFiltering(params);
@@ -67,7 +67,7 @@ export class DecksComponent implements OnInit {
       );
   }
 
-  private setInitialFiltering(params: RouteParams) {
+  private setInitialFiltering(params: Params) {
     this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }
