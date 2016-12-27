@@ -49,7 +49,31 @@ export class ProjectConfig extends SeedConfig {
           main: 'moment.js',
           defaultExtension: 'js'
         }
-      }
+      },
+      {
+        name: 'angular2-highcharts',
+        path: 'node_modules/angular2-highcharts',
+        packageMeta: {
+          main: 'index.js',
+          defaultExtension: 'js'
+        }
+      },
+      {
+        name: 'angular2-highcharts/*',
+        path: 'node_modules/angular2-highcharts',
+        packageMeta: {
+          main: 'index.js',
+          defaultExtension: 'js'
+        }
+      },
+      {
+        name: 'highcharts/*',
+        path: 'node_modules/highcharts',
+        packageMeta: {
+          main: 'highcharts.js',
+          defaultExtension: 'js'
+        }
+      },
     ];
     this.addPackagesBundles(additionalPackages);
 
