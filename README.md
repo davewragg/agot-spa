@@ -1,3 +1,12 @@
+### TODO
+* routing
+* forms
+* refactor component paths
+* routing modules
+* module imports
+* ...
+* ngrx & effects
+
 # Introduction
 
 [![Angular Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://angular.io/styleguide)
@@ -83,7 +92,7 @@ $ npm run build.prod.exp
 
 The application provides full Docker support. You can use it for both development as well as production builds and deployments.
 
-## How to build and start the dockerized version of the application 
+## How to build and start the dockerized version of the application
 
 The Dockerization infrastructure is described in the `docker-compose.yml` (respectively `docker-compose.production.yml`.
 The application consists of two containers:
