@@ -15,7 +15,7 @@ export class PlayedStatsChartComponent implements OnInit {
   @Input()
   stats: Stats;
 
-  private options: any = {};
+  public options: any = {};
 
   ngOnInit() {
     this.options = {

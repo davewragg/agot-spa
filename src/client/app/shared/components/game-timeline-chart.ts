@@ -22,7 +22,7 @@ export class GameTimelineChartComponent implements OnInit {
   @Input()
   deckId: number;
 
-  private options: any = {};
+  public options: any = {};
 
   private labels: any = {
     [Result.WON]: 'Won',
