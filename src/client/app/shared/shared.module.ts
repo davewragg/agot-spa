@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
+import { ChartModule } from 'angular2-highcharts';
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
 import { NameListService } from './name-list/index';
@@ -26,7 +27,7 @@ import {
  */
 
 @NgModule({
-  imports: [CommonModule, RouterModule, ToasterModule],
+  imports: [CommonModule, RouterModule, ToasterModule, ChartModule],
   declarations: [
     ToolbarComponent,
     NavbarComponent,
