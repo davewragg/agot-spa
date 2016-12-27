@@ -1,5 +1,5 @@
 :host {
-  background-color: #106cc8;
+  background-color: #000;
   color: rgba(255, 255, 255, 0.87);
   display: block;
   height: 48px;
@@ -14,10 +14,11 @@ h1 {
   line-height: 48px;
 }
 
-.more {
-  background: url("./assets/svg/more.svg");
+.header-icon {
+  background: url(./assets/img/header.png);
   float: right;
-  height: 24px;
-  margin-top: 12px;
-  width: 24px;
+  height: 2.2em;
+  margin-top: 0.4em;
+  width: 2.2em;
+  background-size: cover;
 }

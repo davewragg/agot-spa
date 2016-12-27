@@ -6,6 +6,7 @@ import { ToasterModule } from 'angular2-toaster/angular2-toaster';
 import { ChartModule } from 'angular2-highcharts';
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
+import { FooterComponent } from './footer/index';
 import { NameListService } from './name-list/index';
 import { CalendarPipe, DateFormatPipe, TimeAgoPipe } from './pipes/index';
 import {
@@ -31,6 +32,7 @@ import {
   declarations: [
     ToolbarComponent,
     NavbarComponent,
+    FooterComponent,
     CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
@@ -38,9 +40,11 @@ import {
   exports: [
     ToolbarComponent,
     NavbarComponent,
+    FooterComponent,
     CommonModule,
     FormsModule,
     RouterModule,
+    ToasterModule,
     CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
