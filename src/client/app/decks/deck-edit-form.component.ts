@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 // TODO omfg forms
-import { FormBuilder, ControlGroup, Validators, Control } from '@angular/common';
+import { FormBuilder, ControlGroup, Validators, Control } from '@angular/forms';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { NotificationService } from '../shared/services/notification.service';
 import { Agenda } from '../shared/models/agenda.model';

@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { FormBuilder, ControlGroup, Validators } from '@angular/forms';
 import { PlayerService } from '../shared/services/player.service';
 import { Player } from '../shared/models/player.model';
 import { GamePlayer } from '../shared/models/game-player.model';

@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
-import { FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { FormBuilder, ControlGroup, Validators } from '@angular/forms';
 import { Deck } from '../shared/models/deck.model';
 import { ThronesDbService } from '../shared/services/thrones-db.service';
 
