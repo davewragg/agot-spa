@@ -1,7 +1,6 @@
 import { join } from 'path';
 import * as slash from 'slash';
 import { argv } from 'yargs';
-
 import { BuildType, ExtendPackages, InjectableDependency } from './seed.config.interfaces';
 
 /************************* DO NOT CHANGE ************************
@@ -95,7 +94,7 @@ export class SeedConfig {
    * which can be overriden by the `--base` flag when running `npm start`.
    * @type {string}
    */
-  APP_BASE = argv['base'] || '/';
+  APP_BASE = argv['base'] || '/agot/';
 
   /**
    * The base path of node modules.

@@ -23,7 +23,7 @@ export class ProjectConfig extends SeedConfig {
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
       // {src: 'angular2-toaster/toaster.css', inject: true, vendor: true},
-      {src: 'autotrack/autotrack.js', inject: 'libs'},
+      { src: 'autotrack/autotrack.js', inject: 'libs' },
     ];
 
     // Add `local` third-party libraries to be injected/bundled.
@@ -86,4 +86,17 @@ export class ProjectConfig extends SeedConfig {
     this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
   }
 
+  getProxyMiddleware(): Array<any> {
+    const proxyMiddleware = require('http-proxy-middleware');
+    const context = `${this.APP_BASE}api`;
+    const middleware = proxyMiddleware(context, {
+      target: 'http://paulhoughton.org',
+      changeOrigin: true,
+      // logLevel: 'debug'
+    });
+
+    return [
+      middleware
+    ];
+  }
 }
