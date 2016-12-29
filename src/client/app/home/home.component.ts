@@ -1,56 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { NameListService } from '../shared/index';
+import { Component } from '@angular/core';
+// import { GamesComponent } from './components/games.component';
+// import { AllRankingsComponent } from './../rankings/all-rankings.component';
+import { FilterCriteria } from '../shared/models/filter-criteria.model';
+import { DateRangeType } from '../shared/models/date-range-type.model';
 
-/**
- * This class represents the lazy loaded HomeComponent.
- */
 @Component({
   moduleId: module.id,
-  selector: 'sd-home',
+  selector: 'agot-home',
   templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css'],
+  // directives: [GamesComponent, AllRankingsComponent, ROUTER_DIRECTIVES]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  filterCriteria: FilterCriteria;
 
-  newName: string = '';
-  errorMessage: string;
-  names: any[] = [];
-
-  /**
-   * Creates an instance of the HomeComponent with the injected
-   * NameListService.
-   *
-   * @param {NameListService} nameListService - The injected NameListService.
-   */
-  constructor(public nameListService: NameListService) {}
-
-  /**
-   * Get the names OnInit
-   */
-  ngOnInit() {
-    this.getNames();
+  constructor() {
+    this.filterCriteria = Object.assign(new FilterCriteria(), {
+      ascending: true,
+      rangeSelection: DateRangeType.THIS_WEEK
+    });
   }
-
-  /**
-   * Handle the nameListService observable
-   */
-  getNames() {
-    this.nameListService.get()
-      .subscribe(
-        names => this.names = names,
-        error => this.errorMessage = <any>error
-      );
-  }
-
-  /**
-   * Pushes a new name onto the names array
-   * @return {boolean} false to prevent default form submit behavior to refresh the page.
-   */
-  addName(): boolean {
-    // TODO: implement nameListService.post
-    this.names.push(this.newName);
-    this.newName = '';
-    return false;
-  }
-
 }

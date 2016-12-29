@@ -1,10 +1,7 @@
-<p>Howdy! Here's a list of awesome computer scientists. Do you know any others? Add to the list yourself.</p>
+<button class="btn btn-primary m-b-1" [routerLink]="['/NewGameDetails']">Create new game</button>
 
-<form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
-  <button type="submit">Add</button>
-</form>
+<agot-all-rankings [hideFilters]="true" title="All-time rankings"></agot-all-rankings>
+<div class="text-sm-right m-b-1"><a class="btn btn-primary-outline" [routerLink]="['/AllRankings']">More...</a></div>
 
-<ul>
-  <li *ngFor="let name of names">{{name}}</li>
-</ul>
+<!--<agot-games [initialFiltering]="filterCriteria" [hideFilters]="true" title="Latest games"></agot-games>-->
+<!--<div class="text-sm-right m-b-1"><a class="btn btn-primary-outline" [routerLink]="['/Games']">More...</a></div>-->

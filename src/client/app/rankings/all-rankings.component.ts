@@ -1,15 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, Params } from '@angular/router';
-import { SetOfResults } from '../shared/models/set-of-results.model';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RankingService } from '../shared/services/ranking.service';
+import { SetOfResults } from '../shared/models/set-of-results.model';
+import { FilterCriteria } from '../shared/models/filter-criteria.model';
 // import { RankingsComponent } from './rankings.component';
 // import { SpinnerComponent } from '../shared/components/spinner.component';
-import { FilterCriteria } from '../shared/models/filter-criteria.model';
 // import { DateRangeComponent } from '../home/components/date-range.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-all-rankings',
-  templateUrl: 'rankings/all-rankings.component.html',
+  templateUrl: 'all-rankings.component.html',
   // directives: [RankingsComponent, SpinnerComponent, DateRangeComponent]
 })
 export class AllRankingsComponent implements OnInit {
@@ -24,24 +25,20 @@ export class AllRankingsComponent implements OnInit {
   loadingError: any = null;
   isLoading: boolean;
 
-  constructor(params: Params,
+  constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _RankingService: RankingService) {
-    this.setInitialFiltering(params);
+
   }
 
   ngOnInit() {
-    this.loadRankings(this.initialFiltering);
-  }
-
-  onDateRangeChange(criteria: FilterCriteria) {
-    //this.loadRankings(criteria);
-    this._router.navigate(['AllRankings', FilterCriteria.serialise(criteria)]);
-  }
-
-  loadRankings(criteria?: FilterCriteria) {
-    this.isLoading = true;
-    this._RankingService.getRankings(criteria)
+    // this.setInitialFiltering(params);
+    // this.loadRankings(this.initialFiltering);
+    this._route.params
+      .defaultIfEmpty({}) // ?
+      .map(this.setInitialFiltering.bind(this))
+      .do(() => this.isLoading = true)
+      .switchMap((criteria: FilterCriteria) => this._RankingService.getRankings(criteria))
       .subscribe(
         (results) => {
           this.loadingError = null;
@@ -58,7 +55,18 @@ export class AllRankingsComponent implements OnInit {
       );
   }
 
-  private setInitialFiltering(params: Params) {
-    this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
+  onDateRangeChange(criteria: FilterCriteria) {
+    this.loadRankings(criteria);
+    // this._router.navigate(['AllRankings', FilterCriteria.serialise(criteria)]);
+  }
+
+  loadRankings(criteria?: FilterCriteria) {
+    //   this.isLoading = true;
+    //   return this._RankingService.getRankings(criteria);
+    this._router.navigate(['AllRankings', FilterCriteria.serialise(criteria)]);
+  }
+
+  private setInitialFiltering(params: Params): FilterCriteria {
+    return Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }

@@ -3,9 +3,10 @@ import { SetOfResults } from '../shared/models/set-of-results.model';
 // import { PlayerLinkComponent } from '../shared/components/player-link.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-rankings',
-  templateUrl: 'rankings/rankings.html',
-  styleUrls: ['rankings/rankings.css'],
+  templateUrl: 'rankings.html',
+  styleUrls: ['rankings.css'],
   // directives: [PlayerLinkComponent],
 })
 export class RankingsComponent {
