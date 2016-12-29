@@ -1,6 +1,7 @@
 export * from './agenda-badge.component';
 export * from './agenda-filter.component';
 export * from './count.component';
+export * from './date-range.component';
 export * from './deck-class-badge.component';
 export * from './deck-class-block.component';
 export * from './deck-link.component';

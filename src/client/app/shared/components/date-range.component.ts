@@ -1,14 +1,15 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { SeasonService } from '../../shared/services/season.service';
-import { FilterCriteria } from '../../shared/models/filter-criteria.model';
-import { Season } from '../../shared/models/season.model';
-import { DateRangeType } from '../../shared/models/date-range-type.model';
+import { SeasonService } from '../services/season.service';
+import { FilterCriteria } from '../models/filter-criteria.model';
+import { Season } from '../models/season.model';
+import { DateRangeType } from '../models/date-range-type.model';
 import * as moment from 'moment/moment';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-date-range',
-  templateUrl: 'home/components/date-range.html',
+  templateUrl: 'date-range.component.html',
 })
 export class DateRangeComponent implements OnInit {
   @Input()

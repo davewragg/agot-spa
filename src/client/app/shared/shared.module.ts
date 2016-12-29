@@ -11,6 +11,7 @@ import {
   AgendaBadgeComponent,
   AgendaFilterComponent,
   CountComponent,
+  DateRangeComponent,
   DeckClassBadgeComponent,
   DeckClassBlockComponent,
   DeckLinkComponent,
@@ -43,7 +44,7 @@ import {
  */
 
 @NgModule({
-  imports: [CommonModule, RouterModule, ToasterModule, ChartModule],
+  imports: [CommonModule, RouterModule, FormsModule, ToasterModule, ChartModule],
   declarations: [
     ToolbarComponent,
     NavbarComponent,
@@ -54,6 +55,7 @@ import {
     AgendaBadgeComponent,
     AgendaFilterComponent,
     CountComponent,
+    DateRangeComponent,
     DeckClassBadgeComponent,
     DeckClassBlockComponent,
     DeckLinkComponent,
@@ -80,6 +82,7 @@ import {
     AgendaBadgeComponent,
     AgendaFilterComponent,
     CountComponent,
+    DateRangeComponent,
     DeckClassBadgeComponent,
     DeckClassBlockComponent,
     DeckLinkComponent,
