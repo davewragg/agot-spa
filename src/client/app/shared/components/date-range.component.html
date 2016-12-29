@@ -41,12 +41,12 @@
       <label class="sr-only" for="fromDate">From date</label>
       <div class="input-group">
         <div class="input-group-addon">From</div>
-        <input type="date" [(ngModel)]="criteria.fromDate" class="form-control" id="fromDate">
+        <input type="date" [(ngModel)]="criteria.fromDate" name="fromDate" class="form-control" id="fromDate">
       </div>
       <label class="sr-only" for="toDate">To date</label>
       <div class="input-group">
         <div class="input-group-addon">To</div>
-        <input type="date" [(ngModel)]="criteria.toDate" class="form-control" id="toDate">
+        <input type="date" [(ngModel)]="criteria.toDate" name="toDate" class="form-control" id="toDate">
       </div>
       <button type="submit" class="btn btn-primary-outline">Execute</button>
     </div>
