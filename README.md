@@ -1,8 +1,12 @@
 ### TODO
+* modules - games, rankings etc - where do they live eh?
+  * all rankings
+  * games
+* move home/components out in to the world
 * routing
 * forms
 * refactor component paths
-* routing modules
+* routing modules & lazy loading
 * module imports
 * ...
 * ngrx & effects
