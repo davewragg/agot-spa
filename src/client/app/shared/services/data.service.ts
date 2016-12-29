@@ -32,8 +32,8 @@ export class DataService {
 
   private static convertFilterCriteriaToSearchParams(filterCriteria: FilterCriteria) {
     const params: URLSearchParams = new URLSearchParams();
-    params.set('startDate', filterCriteria.fromDate);
-    params.set('endDate', filterCriteria.toDate);
+    params.set('startDate', JSON.stringify(filterCriteria.fromDate));
+    params.set('endDate', JSON.stringify(filterCriteria.toDate));
     // yes I know this is backwards but it's a quick fix here
     params.set('sortBy', filterCriteria.ascending ? 'desc' : 'asc');
     if (filterCriteria.playerIds) {

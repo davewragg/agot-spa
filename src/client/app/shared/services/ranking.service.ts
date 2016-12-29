@@ -15,7 +15,8 @@ export class RankingService {
   getRankings(filterCriteria: FilterCriteria): Observable<SetOfResults> {
     return this.cacheService.getFilteredData('rankings', this.dataService.getRankings, filterCriteria, this.dataService)
       .map((results: SetOfResults): SetOfResults => {
-        results.playerWinLossRecord = _.mapValues(results.playerWinLossRecord, (gameResults) => gameResults.reverse());
+        results.playerWinLossRecord = _.mapValues(results.playerWinLossRecord,
+          (gameResults) => gameResults.reverse());
         return results;
       });
   }

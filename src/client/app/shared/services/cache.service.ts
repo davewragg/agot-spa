@@ -47,7 +47,7 @@ export class CacheService {
       return cachedData;
     }
     console.log('::not cached');
-    const data = dataCall.call(scope, filterCriteria).cache();
+    const data = dataCall.call(scope, filterCriteria).share();
     this.setValue(dataName, key, data);
 
     return data;
