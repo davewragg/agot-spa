@@ -5,8 +5,8 @@ import { SetOfResults } from '../shared/models/set-of-results.model';
 @Component({
   moduleId: module.id,
   selector: 'agot-rankings',
-  templateUrl: 'rankings.html',
-  styleUrls: ['rankings.css'],
+  templateUrl: 'rankings.component.html',
+  styleUrls: ['rankings.component.css'],
   // directives: [PlayerLinkComponent],
 })
 export class RankingsComponent {
