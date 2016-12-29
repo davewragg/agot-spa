@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Agenda } from '../models/agenda.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-agenda-badge',
   template: `
     <img class="agenda-badge" src="./assets/img/agenda{{ agenda.agendaId }}.png" alt="{{ agenda.title }}">

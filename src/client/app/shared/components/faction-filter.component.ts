@@ -7,8 +7,9 @@ import * as _ from 'lodash';
 // import { FactionBadgeComponent } from './faction-badge.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-faction-filter',
-  templateUrl: 'shared/components/faction-filter.component.html',
+  templateUrl: 'faction-filter.component.html',
   // directives: [FactionBadgeComponent]
 })
 export class FactionFilterComponent implements OnInit {

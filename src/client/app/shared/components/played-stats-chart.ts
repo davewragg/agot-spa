@@ -2,6 +2,7 @@ import { Component, Input, ChangeDetectionStrategy, OnInit } from '@angular/core
 import { Stats } from '../models/stats.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-played-stats-chart',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

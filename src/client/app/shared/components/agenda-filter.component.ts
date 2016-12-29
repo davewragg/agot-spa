@@ -7,8 +7,9 @@ import * as _ from 'lodash';
 // import { AgendaBadgeComponent } from './agenda-badge.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-agenda-filter',
-  templateUrl: 'shared/components/agenda-filter.component.html',
+  templateUrl: 'agenda-filter.component.html',
   // directives: [AgendaBadgeComponent]
 })
 export class AgendaFilterComponent implements OnInit {

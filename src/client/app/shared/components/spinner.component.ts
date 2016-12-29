@@ -5,13 +5,16 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import Timer = NodeJS.Timer;
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-spinner',
-  templateUrl: 'shared/components/spinner.component.html',
-  styleUrls: ['shared/components/spinner.component.css'],
+  templateUrl: 'spinner.component.html',
+  styleUrls: ['spinner.component.css'],
 })
 export class SpinnerComponent implements OnDestroy {
   @Input()
   public delay: number = 100;
+
+  public isDelayedRunning: boolean = false;
 
   @Input()
   public set isRunning(value: boolean) {
@@ -30,9 +33,7 @@ export class SpinnerComponent implements OnDestroy {
       this.cancelTimeout();
     }, this.delay);
   }
-
   private currentTimeout: Timer;
-  private isDelayedRunning: boolean = false;
 
   ngOnDestroy(): any {
     this.cancelTimeout();

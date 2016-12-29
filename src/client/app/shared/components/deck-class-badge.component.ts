@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DeckClass } from '../models/deck-class.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-deck-class-badge',
   template: `
     <img class="faction-badge" src="./assets/img/icon{{ deckClass.faction.factionId }}.png"

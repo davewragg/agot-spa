@@ -6,8 +6,9 @@ import { Player } from '../models/player.model';
 import * as _ from 'lodash';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-player-filter',
-  templateUrl: 'shared/components/player-filter.component.html',
+  templateUrl: 'player-filter.component.html',
 })
 export class PlayerFilterComponent implements OnInit {
   @Input()

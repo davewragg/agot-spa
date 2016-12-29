@@ -5,6 +5,7 @@
 import { Input, Component, ChangeDetectionStrategy, OnChanges } from '@angular/core';
 
 @Component({
+  moduleId: module.id,
   selector: 'ng-pluralize',
   template: `<span>{{content}}</span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,

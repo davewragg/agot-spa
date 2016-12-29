@@ -7,7 +7,22 @@ import { ChartModule } from 'angular2-highcharts';
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
 import { FooterComponent } from './footer/index';
-import { NameListService } from './name-list/index';
+import {
+  AgendaBadgeComponent,
+  AgendaFilterComponent,
+  CountComponent,
+  DeckClassBadgeComponent,
+  DeckClassBlockComponent,
+  DeckLinkComponent,
+  FactionBadgeComponent,
+  FactionFilterComponent,
+  GameTimelineChartComponent,
+  NgPluralizeComponent,
+  PlayedStatsChartComponent,
+  PlayerFilterComponent,
+  PlayerLinkComponent,
+  SpinnerComponent
+} from './components/index';
 import { CalendarPipe, DateFormatPipe, TimeAgoPipe } from './pipes/index';
 import {
   CacheService,
@@ -36,6 +51,20 @@ import {
     CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
+    AgendaBadgeComponent,
+    AgendaFilterComponent,
+    CountComponent,
+    DeckClassBadgeComponent,
+    DeckClassBlockComponent,
+    DeckLinkComponent,
+    FactionBadgeComponent,
+    FactionFilterComponent,
+    GameTimelineChartComponent,
+    NgPluralizeComponent,
+    PlayedStatsChartComponent,
+    PlayerFilterComponent,
+    PlayerLinkComponent,
+    SpinnerComponent
   ],
   exports: [
     ToolbarComponent,
@@ -48,6 +77,20 @@ import {
     CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
+    AgendaBadgeComponent,
+    AgendaFilterComponent,
+    CountComponent,
+    DeckClassBadgeComponent,
+    DeckClassBlockComponent,
+    DeckLinkComponent,
+    FactionBadgeComponent,
+    FactionFilterComponent,
+    GameTimelineChartComponent,
+    NgPluralizeComponent,
+    PlayedStatsChartComponent,
+    PlayerFilterComponent,
+    PlayerLinkComponent,
+    SpinnerComponent
   ],
 })
 export class SharedModule {
@@ -55,7 +98,7 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        NameListService,
+        // NameListService,
         CacheService,
         DataService,
         DeckService,

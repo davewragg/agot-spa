@@ -4,6 +4,7 @@ import { Result } from '../models/result.enum';
 import { StatsService } from '../services/stats.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-game-timeline-chart',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

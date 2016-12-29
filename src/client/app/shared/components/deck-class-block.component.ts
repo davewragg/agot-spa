@@ -3,6 +3,7 @@ import { DeckClass } from '../models/deck-class.model';
 import { Stats } from '../models/stats.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-deck-class-block',
   template: `
     <div *ngIf="deckClass" class="text-xs-center deck-class-block"
