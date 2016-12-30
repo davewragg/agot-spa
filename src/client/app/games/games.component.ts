@@ -1,16 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, Params } from '@angular/router';
-import { Game } from '../../shared/models/game.model';
-import { GameService } from '../../shared/services/game.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { GameService } from '../shared/services/game.service';
+import { Game } from '../shared/models/game.model';
+import { FilterCriteria } from '../shared/models/filter-criteria.model';
 // import { GamesTableComponent } from './games-table.component';
 // import { DateRangeComponent } from './date-range.component';
-import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 // import { SpinnerComponent } from '../../shared/components/spinner.component';
 // import { GameTimelineChartComponent } from '../../shared/components/game-timeline-chart';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-games',
-  templateUrl: 'home/components/games.html',
+  templateUrl: 'games.component.html',
   // directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent, GameTimelineChartComponent]
 })
 export class GamesComponent implements OnInit {
@@ -25,24 +26,20 @@ export class GamesComponent implements OnInit {
   loadingError: any = null;
   isLoading: boolean;
 
-  constructor(params: Params,
+  constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _gameService: GameService) {
-    this.setInitialFiltering(params);
+
   }
 
   ngOnInit() {
-    this.loadGames(this.initialFiltering);
-  }
-
-  onDateRangeChange(criteria: FilterCriteria) {
-    //this.loadGames(criteria);
-    this._router.navigate(['Games', FilterCriteria.serialise(criteria)]);
-  }
-
-  loadGames(criteria?: FilterCriteria) {
-    this.isLoading = true;
-    this._gameService.getGames(criteria)
+    // this.setInitialFiltering(params);
+    // this.loadGames(this.initialFiltering);
+    this._route.params
+      .defaultIfEmpty({}) // ?
+      .map(this.setInitialFiltering.bind(this))
+      .do(() => this.isLoading = true)
+      .switchMap((criteria: FilterCriteria) => this._gameService.getGames(criteria))
       .subscribe(
         (games: Game[]) => {
           this.loadingError = null;
@@ -59,7 +56,15 @@ export class GamesComponent implements OnInit {
       );
   }
 
+  onDateRangeChange(criteria: FilterCriteria) {
+    this.loadGames(criteria);
+  }
+
+  loadGames(criteria?: FilterCriteria) {
+    this._router.navigate(['Games', FilterCriteria.serialise(criteria)]);
+  }
+
   private setInitialFiltering(params: Params) {
-    this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
+    return Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
   }
 }
