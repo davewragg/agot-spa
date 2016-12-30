@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { isEmpty } from 'lodash';
 import { RankingService } from '../shared/services/ranking.service';
 import { SetOfResults } from '../shared/models/set-of-results.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
@@ -35,7 +36,6 @@ export class AllRankingsComponent implements OnInit {
     // this.setInitialFiltering(params);
     // this.loadRankings(this.initialFiltering);
     this._route.params
-      .defaultIfEmpty({}) // ?
       .map(this.setInitialFiltering.bind(this))
       .do(() => this.isLoading = true)
       .switchMap((criteria: FilterCriteria) => this._RankingService.getRankings(criteria))
@@ -66,7 +66,10 @@ export class AllRankingsComponent implements OnInit {
     this._router.navigate(['AllRankings', FilterCriteria.serialise(criteria)]);
   }
 
-  private setInitialFiltering(params: Params): FilterCriteria {
-    return Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
+  private setInitialFiltering(params: Params) {
+    const defaultFilter = this.initialFiltering || {};
+    return isEmpty(params) ?
+      defaultFilter :
+      Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { isEmpty } from 'lodash';
 import { GameService } from '../shared/services/game.service';
 import { Game } from '../shared/models/game.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
@@ -36,7 +37,6 @@ export class GamesComponent implements OnInit {
     // this.setInitialFiltering(params);
     // this.loadGames(this.initialFiltering);
     this._route.params
-      .defaultIfEmpty({}) // ?
       .map(this.setInitialFiltering.bind(this))
       .do(() => this.isLoading = true)
       .switchMap((criteria: FilterCriteria) => this._gameService.getGames(criteria))
@@ -65,6 +65,9 @@ export class GamesComponent implements OnInit {
   }
 
   private setInitialFiltering(params: Params) {
-    return Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
+    const defaultFilter = this.initialFiltering || {};
+    return isEmpty(params) ?
+      defaultFilter :
+      Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }
 }
