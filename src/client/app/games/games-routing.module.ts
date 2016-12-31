@@ -6,6 +6,8 @@ import { GamesComponent } from './games.component';
   imports: [
     RouterModule.forChild([
       { path: 'games', component: GamesComponent }
+      // {path: '/games/new', component: GameDetailsComponent, name: 'NewGameDetails'},
+      // {path: '/games/:id', component: GameDetailsComponent, name: 'GameDetails'},
     ])
   ],
   exports: [RouterModule]

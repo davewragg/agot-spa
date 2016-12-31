@@ -6,7 +6,7 @@ export class FilterCriteria {
   fromDate: string; //iso
   toDate: string; //iso
   ascending: boolean = true;
-  rangeSelection: DateRangeType = DateRangeType.ALL_TIME;
+  rangeSelection: DateRangeType = DateRangeType.CURRENT_SEASON;
   playerIds: number[] = [];
   factionIds: number[] = [];
   agendaIds: number[] = [];
