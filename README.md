@@ -1,15 +1,25 @@
 ### TODO
-* modules - games, rankings etc - where do they live eh?
-  * all rankings
-  * games
-* move home/components out in to the world
-* routing
-* forms
-* refactor component paths
-* routing modules & lazy loading
-* module imports
-* ...
-* ngrx & effects
+- [ ] routing!
+- [ ] modules - games, rankings etc - where do they live eh?
+  - [ ] all rankings
+  - [ ] games
+- [ ] update forms so they work
+- [x] move home/components out in to the world
+- [ ] forms
+- [ ] loading states :/
+- [ ] bootstrap outline buttons
+- [ ] refactor component paths
+- [ ] routing modules & lazy loading
+- [ ] module imports
+
+  ...
+- [ ] ngrx & effects
+- [ ] AOT
+- [ ] updated insights view
+- [ ] login and route/content protection
+- [ ] player groups/metas view
+- [ ] material
+- [ ] improve deck selector
 
 # Introduction
 
