@@ -1,17 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Params, Router } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
+import { isEmpty } from 'lodash';
 import { DeckService } from '../shared/services/deck.service';
-// import { SpinnerComponent } from '../shared/components/spinner.component';
 import { Deck } from '../shared/models/deck.model';
-// import { DecksTableComponent } from './decks-table.component';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
+// import { SpinnerComponent } from '../shared/components/spinner.component';
+// import { DecksTableComponent } from './decks-table.component';
 // import { PlayerFilterComponent } from '../shared/components/player-filter.component';
 // import { FactionFilterComponent } from '../shared/components/faction-filter.component';
 // import { AgendaFilterComponent } from '../shared/components/agenda-filter.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-decks',
-  templateUrl: 'decks/decks.component.html',
+  templateUrl: 'decks.component.html',
   // directives: [
   //   ROUTER_DIRECTIVES,
   //   DecksTableComponent,
@@ -32,25 +34,19 @@ export class DecksComponent implements OnInit {
 
   isLoading: boolean;
 
-  constructor(params: Params,
+  constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _deckService: DeckService) {
-    this.setInitialFiltering(params);
+
   }
 
   ngOnInit() {
-    this.loadDecks(this.initialFiltering);
-  }
-
-
-  onFilterChange(criteria: FilterCriteria) {
-    // this.loadDecks(criteria);
-    this._router.navigate(['Decks', FilterCriteria.serialise(criteria)]);
-  }
-
-  loadDecks(criteria?: FilterCriteria) {
-    this.isLoading = true;
-    this._deckService.getDecks(criteria)
+    // this.setInitialFiltering(params);
+    // this.loadDecks(this.initialFiltering);
+    this._route.params
+      .map(this.setInitialFiltering.bind(this))
+      .do(() => this.isLoading = true)
+      .switchMap((criteria: FilterCriteria) => this._deckService.getDecks(criteria))
       .subscribe(
         (decks: Deck[]) => {
           this.loadingError = null;
@@ -67,7 +63,20 @@ export class DecksComponent implements OnInit {
       );
   }
 
+
+  onFilterChange(criteria: FilterCriteria) {
+    this.loadDecks(criteria);
+    // this._router.navigate(['/decks', FilterCriteria.serialise(criteria)]);
+  }
+
+  loadDecks(criteria?: FilterCriteria) {
+    this._router.navigate(['/decks', FilterCriteria.serialise(criteria)]);
+  }
+
   private setInitialFiltering(params: Params) {
-    this.initialFiltering = Object.assign(this.initialFiltering || {}, FilterCriteria.deserialise(params));
+    const defaultFilter = this.initialFiltering || {};
+    return isEmpty(params) ?
+      defaultFilter :
+      Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }
 }

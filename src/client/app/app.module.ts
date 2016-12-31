@@ -5,9 +5,11 @@ import { HttpModule } from '@angular/http';
 import { ToasterService } from 'angular2-toaster';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AboutModule } from './about/about.module';
-import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
+import { HomeModule } from './home/home.module';
+import { GamesModule } from './games/games.module';
+import { RankingsModule } from './rankings/rankings.module';
+import { DecksModule } from './decks/decks.module';
 import {
   CacheService,
   DataService,
@@ -23,7 +25,16 @@ import {
 } from './shared/services/index';
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, AboutModule, HomeModule, SharedModule.forRoot()],
+  imports: [
+    BrowserModule,
+    HttpModule,
+    AppRoutingModule,
+    SharedModule.forRoot(),
+    HomeModule,
+    GamesModule,
+    RankingsModule,
+    DecksModule
+  ],
   declarations: [AppComponent],
   providers: [
     {
