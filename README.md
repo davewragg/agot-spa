@@ -13,6 +13,7 @@
 - [ ] module imports
 
   ...
+- [ ] CURRENT_SEASON by default
 - [ ] ngrx & effects
 - [ ] AOT
 - [ ] updated insights view
