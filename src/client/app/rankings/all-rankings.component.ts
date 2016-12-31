@@ -57,13 +57,13 @@ export class AllRankingsComponent implements OnInit {
 
   onDateRangeChange(criteria: FilterCriteria) {
     this.loadRankings(criteria);
-    // this._router.navigate(['AllRankings', FilterCriteria.serialise(criteria)]);
+    // this._router.navigate(['/rankings', FilterCriteria.serialise(criteria)]);
   }
 
   loadRankings(criteria?: FilterCriteria) {
     //   this.isLoading = true;
     //   return this._RankingService.getRankings(criteria);
-    this._router.navigate(['AllRankings', FilterCriteria.serialise(criteria)]);
+    this._router.navigate(['/rankings', FilterCriteria.serialise(criteria)]);
   }
 
   private setInitialFiltering(params: Params) {
