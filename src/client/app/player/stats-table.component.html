@@ -21,7 +21,7 @@
     <td>{{ entry[1].won }}</td>
     <td>{{ entry[1].drawn }}</td>
     <td>{{ entry[1].lost }}</td>
-    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+    <td agotColourRange="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
   <tr *ngIf="statsSet?.deckClass?.size">
     <th colspan="6">Decks</th>
@@ -34,7 +34,7 @@
     <td>{{ entry[1].won }}</td>
     <td>{{ entry[1].drawn }}</td>
     <td>{{ entry[1].lost }}</td>
-    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+    <td agotColourRange="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
   <tr *ngIf="statsSet?.factions?.size">
     <th colspan="6" class="table-active">Factions</th>
@@ -47,7 +47,7 @@
     <td>{{ entry[1].won }}</td>
     <td>{{ entry[1].drawn }}</td>
     <td>{{ entry[1].lost }}</td>
-    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+    <td agotColourRange="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
   <tr *ngIf="statsSet?.agendas?.size">
     <th colspan="6" class="table-active">Agendas</th>
@@ -60,7 +60,7 @@
     <td>{{ entry[1].won }}</td>
     <td>{{ entry[1].drawn }}</td>
     <td>{{ entry[1].lost }}</td>
-    <td [agotColourRange]="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
+    <td agotColourRange="entry[1].winPercentage">{{ entry[1].winPercentage }}%</td>
   </tr>
   </tbody>
 </table>
