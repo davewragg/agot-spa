@@ -21,7 +21,6 @@ import { DateRangeType } from '../shared/models/date-range-type.model';
 export class PlayerDetailsComponent implements OnInit {
   player: Player;
   playerStats: PlayerStats;
-  playerIdParam: number;
 
   isLoading: boolean;
 
@@ -31,35 +30,34 @@ export class PlayerDetailsComponent implements OnInit {
               private _router: Router,
               private _statsService: StatsService,
               private _playerService: PlayerService) {
-    // TODO routing
     // this.playerIdParam = <number>+params.get('id');
     // this.setInitialFiltering(params);
   }
 
   ngOnInit() {
-    if (this.playerIdParam) {
-      // this.loadPlayerAndStats(this.initialFiltering);
-      this._route.params
-        .map(this.setInitialFiltering.bind(this))
-        .do(() => this.isLoading = true)
-        .switchMap((criteria: FilterCriteria) =>
-          Observable.combineLatest(
-            this._playerService.getPlayer(this.playerIdParam),
-            this._statsService.getPlayerStats(this.playerIdParam, criteria)
-          )).subscribe(
-        ([player, stats]:[Player, PlayerStats]) => {
-          console.log(player, stats);
-          this.player = player;
-          this.playerStats = stats;
-          // .combineLatest may not trigger done()
-          this.stopLoading();
-        },
-        (error) => {
-          console.error(error);
-          this.stopLoading();
-        },
-        () => this.stopLoading());
-    }
+    // this.loadPlayerAndStats(this.initialFiltering);
+    let playerIdParam: number;
+    this._route.params
+      .do((params: Params) => playerIdParam = +params['id'])
+      .map(this.setInitialFiltering.bind(this))
+      .do(() => this.isLoading = true)
+      .switchMap((criteria: FilterCriteria) =>
+        Observable.combineLatest(
+          this._playerService.getPlayer(playerIdParam),
+          this._statsService.getPlayerStats(playerIdParam, criteria)
+        )).subscribe(
+      ([player, stats]:[Player, PlayerStats]) => {
+        console.log(player, stats);
+        this.player = player;
+        this.playerStats = stats;
+        // .combineLatest may not trigger done()
+        this.stopLoading();
+      },
+      (error) => {
+        console.error(error);
+        this.stopLoading();
+      },
+      () => this.stopLoading());
   }
 
   onDateRangeChange(criteria: FilterCriteria) {
@@ -69,8 +67,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   private loadPlayerAndStats(criteria?: FilterCriteria) {
-    const routeConfig = Object.assign({ id: this.player.playerId }, FilterCriteria.serialise(criteria));
-    this._router.navigate(['/players/', routeConfig]);
+    this._router.navigate(['/players/', this.player.playerId, FilterCriteria.serialise(criteria)]);
   }
 
   private stopLoading() {
