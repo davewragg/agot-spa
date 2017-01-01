@@ -14,8 +14,9 @@ import { StatsSet } from '../shared/models/stats-set.model';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-stats-table',
-  templateUrl: 'players/stats-table.component.html',
+  templateUrl: 'stats-table.component.html',
   // directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
   //   PlayerLinkComponent, ColourRangeDirective]
 })

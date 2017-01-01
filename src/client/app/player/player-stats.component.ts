@@ -10,9 +10,10 @@ import { Player } from '../shared/models/player.model';
 // import { PlayedStatsChartComponent } from '../shared/components/played-stats-chart';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-player-stats',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'players/player-stats.html',
+  templateUrl: 'player-stats.component.html',
   // directives: [
   //   ROUTER_DIRECTIVES,
   //   CountComponent,

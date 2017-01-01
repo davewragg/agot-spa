@@ -4,8 +4,9 @@ import { PlayerInsights } from '../shared/models/player-insights.model';
 // import { DeckClassBlockComponent } from '../shared/components/deck-class-block.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-player-insights',
-  templateUrl: 'players/player-insights.html',
+  templateUrl: 'player-insights.component.html',
   // directives: [DeckClassBlockComponent]
 })
 export class PlayerInsightsComponent implements OnInit {

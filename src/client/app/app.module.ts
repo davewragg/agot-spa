@@ -12,6 +12,7 @@ import { RankingsModule } from './rankings/rankings.module';
 import { DecksModule } from './decks/decks.module';
 // import { DeckModule } from './deck/deck.module';
 import { PlayersModule } from './players/players.module';
+import { PlayerModule } from './player/player.module';
 import {
   CacheService,
   DataService,
@@ -37,7 +38,8 @@ import {
     RankingsModule,
     DecksModule,
     // DeckModule,
-    PlayersModule
+    PlayersModule,
+    PlayerModule
   ],
   declarations: [AppComponent],
   providers: [
