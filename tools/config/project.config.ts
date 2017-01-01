@@ -92,7 +92,7 @@ export class ProjectConfig extends SeedConfig {
     const middleware = proxyMiddleware(context, {
       target: 'http://paulhoughton.org',
       changeOrigin: true,
-      // logLevel: 'debug'
+      logLevel: 'debug'
     });
 
     return [
