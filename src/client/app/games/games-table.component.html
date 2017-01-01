@@ -14,7 +14,7 @@
         {{ getVenueName(game.venueId) | async }}
       </p>
       <p>
-        <a [routerLink]="['/GameDetails', {id: game.gameId}]">
+        <a [routerLink]="['/games', game.gameId]">
           [View]
         </a>
       </p>

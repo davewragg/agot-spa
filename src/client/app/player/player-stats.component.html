@@ -29,7 +29,7 @@
     <agot-player-insights [player]="player"
                           [playerInsights]="playerStats.insights"></agot-player-insights>
 
-    <a [routerLink]="['/Decks', {playerIds:[player.playerId]}]" class="btn btn-success-outline m-b-1">
+    <a [routerLink]="['/decks', {playerIds:[player.playerId]}]" class="btn btn-success-outline m-b-1">
       See all {{ player.name }}'s decks
     </a>
 
