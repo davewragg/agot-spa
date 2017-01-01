@@ -1,5 +1,14 @@
 ### TODO
 - [ ] routing!
+  - [x] home
+  - [x] games
+  - [ ] games/new
+  - [ ] games/:id
+  - [x] rankings
+  - [x] players
+  - [x] players/:id
+  - [x] decks
+  - [ ] decks/:id
 - [ ] modules - games, rankings etc - where do they live eh?
   - [x] all rankings
   - [ ] games
@@ -12,6 +21,7 @@
 - [ ] refactor component paths
 - [ ] routing modules & lazy loading
 - [ ] module imports
+- [ ] fix filter button behaviour
 - [ ] switch every changeDetectionStrategy to onPush bar containers
 - [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 
