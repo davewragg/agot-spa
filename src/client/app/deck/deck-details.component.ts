@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params } from '@angular/router';
+import { Router } from '@angular/router';
 import { DeckService } from '../shared/services/deck.service';
 import { Deck } from '../shared/models/deck.model';
 // import { SpinnerComponent } from '../shared/components/spinner.component';
@@ -11,8 +11,9 @@ import { DeckStats } from '../shared/models/deck-stats.model';
 // import { DeckStatsComponent } from './deck-stats.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-deck-details',
-  templateUrl: 'decks/deck-details.component.html',
+  templateUrl: 'deck-details.component.html',
   // directives: [
   //   ROUTER_DIRECTIVES,
   //   SpinnerComponent,
@@ -33,8 +34,7 @@ export class DeckDetailsComponent implements OnInit {
   isLoadingStats: boolean;
   loadError: any = null;
 
-  constructor(params: Params,
-              private deckService: DeckService,
+  constructor(private deckService: DeckService,
               private statsService: StatsService,
               private notificationService: NotificationService,
               private router: Router) {
@@ -62,7 +62,7 @@ export class DeckDetailsComponent implements OnInit {
     this.deckService.updateDeck(deck).subscribe((deck: Deck) => {
         if (creating) {
           // TODO skip reload
-          this.router.navigate(['/DeckDetails', { id: deck.deckId }]);
+          this.router.navigate(['/decks/', { id: deck.deckId }]);
           return;
         }
         this.deck = deck;
@@ -80,7 +80,7 @@ export class DeckDetailsComponent implements OnInit {
   onCancel() {
     // if creating or editing directly, GTFO
     if (!this.deck.deckId || this.editParam) {
-      this.router.navigate(['/Decks']);
+      this.router.navigate(['/decks']);
     } else {
       this.editing = false;
     }

@@ -10,6 +10,7 @@ import { HomeModule } from './home/home.module';
 import { GamesModule } from './games/games.module';
 import { RankingsModule } from './rankings/rankings.module';
 import { DecksModule } from './decks/decks.module';
+// import { DeckModule } from './deck/deck.module';
 import {
   CacheService,
   DataService,
@@ -33,7 +34,8 @@ import {
     HomeModule,
     GamesModule,
     RankingsModule,
-    DecksModule
+    DecksModule,
+    // DeckModule,
   ],
   declarations: [AppComponent],
   providers: [

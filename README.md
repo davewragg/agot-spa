@@ -1,7 +1,7 @@
 ### TODO
 - [ ] routing!
 - [ ] modules - games, rankings etc - where do they live eh?
-  - [ ] all rankings
+  - [x] all rankings
   - [ ] games
 - [ ] update forms so they work
 - [x] move home/components out in to the world
@@ -11,6 +11,8 @@
 - [ ] refactor component paths
 - [ ] routing modules & lazy loading
 - [ ] module imports
+- [ ] switch every changeDetectionStrategy to onPush bar containers
+- [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 
   ...
 - [ ] CURRENT_SEASON by default
@@ -21,6 +23,7 @@
 - [ ] player groups/metas view
 - [ ] material
 - [ ] improve deck selector
+- [ ] deck date range filtering?
 
 # Introduction
 
