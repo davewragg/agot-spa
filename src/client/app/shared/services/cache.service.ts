@@ -47,7 +47,8 @@ export class CacheService {
       return cachedData;
     }
     console.log('::not cached');
-    const data = dataCall.call(scope, filterCriteria).share();
+    const data = dataCall.call(scope, filterCriteria)
+      .publishReplay(1).refCount();
     this.setValue(dataName, key, data);
 
     return data;

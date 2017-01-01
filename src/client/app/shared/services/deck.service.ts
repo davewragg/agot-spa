@@ -82,6 +82,6 @@ export class DeckService {
     console.log('_getdecks called');
     return this.dataService.getReferenceData('decks')
       .map((deckObjects: any[]) => deckObjects.map((deckObj: any) => Object.assign(new Deck(), deckObj)))
-      .share();
+      .publishReplay(1).refCount();
   }
 }

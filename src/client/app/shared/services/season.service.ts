@@ -21,6 +21,7 @@ export class SeasonService {
   private _getSeasons() {
     return this.dataService.getReferenceData('seasons').map((seasons: Season[]) => {
       return seasons.reverse();
-    }).share();
+    })
+      .publishReplay(1).refCount();
   }
 }

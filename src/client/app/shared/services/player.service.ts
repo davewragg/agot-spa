@@ -24,6 +24,6 @@ export class PlayerService {
   private _getPlayers(): Observable<Player[]> {
     console.log('_getPlayers called');
     return this._dataService.getReferenceData('players', 'includeMostPlayedFaction=true')
-      .share();
+      .publishReplay(1).refCount();
   }
 }

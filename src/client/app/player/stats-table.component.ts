@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { PlayerService } from '../shared/services/player.service';
 import { Faction } from '../shared/models/faction.model';
@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Observable';
   moduleId: module.id,
   selector: 'agot-stats-table',
   templateUrl: 'stats-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   // directives: [FactionBadgeComponent, AgendaBadgeComponent, DeckClassBadgeComponent,
   //   PlayerLinkComponent, ColourRangeDirective]
 })
