@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { isEmpty } from 'lodash';
 import { Deck } from '../models/deck.model';
 import { DataService } from './data.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
@@ -60,7 +61,7 @@ export class DeckService {
     if (!this.data) {
       this.data = this._getDecks();
     }
-    if (!criteria) {
+    if (isEmpty(criteria)) {
       return this.data;
     }
     return this.data.map((decks: Deck[]) => {
