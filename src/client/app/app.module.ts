@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { ToasterService } from 'angular2-toaster';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -13,19 +12,6 @@ import { DecksModule } from './decks/decks.module';
 // import { DeckModule } from './deck/deck.module';
 import { PlayersModule } from './players/players.module';
 import { PlayerModule } from './player/player.module';
-import {
-  CacheService,
-  DataService,
-  DeckService,
-  GameService,
-  NotificationService,
-  PlayerService,
-  RankingService,
-  ReferenceDataService,
-  SeasonService,
-  StatsService,
-  ThronesDbService
-} from './shared/services/index';
 
 @NgModule({
   imports: [
@@ -47,18 +33,6 @@ import {
       provide: APP_BASE_HREF,
       useValue: '<%= APP_BASE %>'
     },
-    ToasterService,
-    CacheService,
-    DataService,
-    DeckService,
-    GameService,
-    NotificationService,
-    PlayerService,
-    RankingService,
-    ReferenceDataService,
-    SeasonService,
-    StatsService,
-    ThronesDbService
   ],
   bootstrap: [AppComponent]
 
