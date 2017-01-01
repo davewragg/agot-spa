@@ -1,4 +1,4 @@
-import {Directive, HostBinding} from '@angular/core';
+import { Directive, HostBinding } from '@angular/core';
 
 @Directive({
   selector: '[agotColourRange]',
@@ -7,7 +7,7 @@ import {Directive, HostBinding} from '@angular/core';
   // ],
 })
 export class ColourRangeDirective {
-  value:number;
+  value: number;
 
   @HostBinding('class.text-danger')
   get dismal() {

@@ -7,6 +7,7 @@ import { ChartModule } from 'angular2-highcharts';
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
 import { FooterComponent } from './footer/index';
+import { ColourRangeDirective } from './directives/index';
 import {
   AgendaBadgeComponent,
   AgendaFilterComponent,
@@ -52,6 +53,7 @@ import {
     CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
+    ColourRangeDirective,
     AgendaBadgeComponent,
     AgendaFilterComponent,
     CountComponent,
@@ -79,6 +81,7 @@ import {
     CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
+    ColourRangeDirective,
     AgendaBadgeComponent,
     AgendaFilterComponent,
     CountComponent,
