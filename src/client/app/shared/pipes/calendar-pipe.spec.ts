@@ -1,7 +1,7 @@
 import 'es6-shim';
 import 'reflect-metadata';
 import * as moment from 'moment/moment';
-import {CalendarPipe} from './calendar-pipe';
+import { CalendarPipe } from './calendar-pipe';
 
 describe('CalendarPipe', () => {
   describe('#transform', () => {

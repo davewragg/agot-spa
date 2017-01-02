@@ -1,5 +1,5 @@
 ### TODO
-- [ ] forms
+- [x] forms upgrade
 - [ ] [disabled] does nothing on deck edit form
 - [x] routing!
   - [x] home
@@ -18,8 +18,9 @@
   - [ ] new game component
   - [ ] edit game component
   - [ ] same for decks?
-- [ ] sort direction (seems always to be desc)
-- [ ] fix charts display
+- [x] sort direction (seems always to be desc)
+- [ ] fix loading state from url - seems to ignore criteria params
+- [ ] fix charts display (bordered)
 - [ ] update forms so they work
 - [x] move home/components out in to the world
 - [ ] loading states :/ - top level via store?
@@ -28,8 +29,8 @@
   - [ ] layout? 
 - [ ] refactor component paths
 - [ ] routing modules & lazy loading
-- [ ] module imports
-- [ ] fix filter button behaviour
+- [ ] module imports - decide what belongs where
+- [ ] fix filter button behaviour - is it always triggering?
 - [ ] switch every changeDetectionStrategy to onPush bar containers
 - [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 - [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)

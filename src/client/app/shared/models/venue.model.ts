@@ -1,4 +1,4 @@
 export interface Venue {
-  venueId:number;
-  name:string;
+  venueId: number;
+  name: string;
 }

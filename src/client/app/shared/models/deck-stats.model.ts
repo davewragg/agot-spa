@@ -1,14 +1,14 @@
-import {Stats} from './stats.model';
-import {Game} from './game.model';
-import {StatsSet} from './stats-set.model';
+import { Stats } from './stats.model';
+import { Game } from './game.model';
+import { StatsSet } from './stats-set.model';
 
 export class DeckStats {
-  games:Game[] = [];
-  overall:Stats = new Stats();
-  as:StatsSet = new StatsSet();
-  vs:StatsSet = new StatsSet();
+  games: Game[] = [];
+  overall: Stats = new Stats();
+  as: StatsSet = new StatsSet();
+  vs: StatsSet = new StatsSet();
 
-  sort(asc?:boolean, byLosing?:boolean) {
+  sort(asc?: boolean, byLosing?: boolean) {
     this.as.sort(asc, byLosing);
     this.vs.sort(asc, byLosing);
     return this;
