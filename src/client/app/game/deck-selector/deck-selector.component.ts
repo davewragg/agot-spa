@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Deck } from '../shared/models/deck.model';
-import { DeckService } from '../shared/services/deck.service';
+import { Deck } from '../../shared/models/deck.model';
+import { DeckService } from '../../shared/services/deck.service';
 // import { ExistingDeckSelectorComponent } from './existing-deck-selector.component';
 // import { DeckEditFormComponent } from '../decks/deck-edit-form.component';
 // import { DeckImportFormComponent } from '../decks/deck-import-form.component';
-import { NotificationService } from '../shared/services/notification.service';
+import { NotificationService } from '../../shared/services/notification.service';
 
 @Component({
   moduleId: module.id,

@@ -1,14 +1,15 @@
 ### TODO
-- [ ] routing!
+- [ ] forms
+- [x] routing!
   - [x] home
   - [x] games
-  - [ ] games/new
-  - [ ] games/:id
+  - [x] games/new
+  - [x] games/:id
   - [x] rankings
   - [x] players
   - [x] players/:id
   - [x] decks
-  - [ ] decks/:id
+  - [x] decks/:id
 - [x] modules - games, rankings etc - where do they live eh?
   - [x] all rankings
   - [x] games
@@ -20,7 +21,6 @@
 - [ ] fix charts display
 - [ ] update forms so they work
 - [x] move home/components out in to the world
-- [ ] forms
 - [ ] loading states :/ - top level via store?
 - [ ] bootstrap changes
   - [ ] outline buttons
@@ -37,6 +37,7 @@
 - [ ] CURRENT_SEASON by default
 - [ ] ngrx & effects
 - [ ] AOT
+- [ ] local storage/index db cache-first for data
 - [ ] updated insights view
 - [ ] login and route/content protection
 - [ ] player groups/metas view

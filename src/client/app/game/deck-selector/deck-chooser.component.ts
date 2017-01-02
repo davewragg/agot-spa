@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 // TODO omfg forms
 import { ControlGroup, FormBuilder, Validators } from '@angular/forms';
-import { Deck } from '../shared/models/deck.model';
+import { Deck } from '../../shared/models/deck.model';
 // import { SpinnerComponent } from '../shared/components/spinner.component';
 
 @Component({
