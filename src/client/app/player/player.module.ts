@@ -6,7 +6,6 @@ import { PlayerRoutingModule } from './player-routing.module';
 import { PlayerDetailsComponent } from './player-details.component';
 import { PlayerInsightsComponent } from './player-insights.component';
 import { PlayerStatsComponent } from './player-stats.component';
-import { StatsTableComponent } from './stats-table.component';
 
 @NgModule({
   imports: [CommonModule, SharedModule, PlayerRoutingModule, GamesModule],
@@ -14,7 +13,6 @@ import { StatsTableComponent } from './stats-table.component';
     PlayerDetailsComponent,
     PlayerInsightsComponent,
     PlayerStatsComponent,
-    StatsTableComponent
   ],
   // exports: [PlayersTableComponent, PlayersComponent]
 })

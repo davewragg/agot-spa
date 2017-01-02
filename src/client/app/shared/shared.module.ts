@@ -1,12 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
 import { ChartModule } from 'angular2-highcharts';
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
 import { FooterComponent } from './footer/index';
+import { StatsTableComponent } from './stats-table/stats-table.component';
 import { ColourRangeDirective } from './directives/index';
 import {
   AgendaBadgeComponent,
@@ -45,11 +46,12 @@ import {
  */
 
 @NgModule({
-  imports: [CommonModule, RouterModule, FormsModule, ToasterModule, ChartModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ToasterModule, ChartModule],
   declarations: [
     ToolbarComponent,
     NavbarComponent,
     FooterComponent,
+    StatsTableComponent,
     CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
@@ -74,8 +76,10 @@ import {
     ToolbarComponent,
     NavbarComponent,
     FooterComponent,
+    StatsTableComponent,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     ToasterModule,
     CalendarPipe,

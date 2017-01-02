@@ -19,6 +19,8 @@ export class DeckEditFormComponent implements OnInit {
   @Input()
   creating: boolean;
   @Input()
+  disabled: boolean; // TODO make this do something
+  @Input()
   editing: boolean;
   @Input()
   deck: Deck;

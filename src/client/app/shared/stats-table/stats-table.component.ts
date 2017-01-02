@@ -1,17 +1,17 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { ReferenceDataService } from '../shared/services/reference-data.service';
-import { PlayerService } from '../shared/services/player.service';
-import { Faction } from '../shared/models/faction.model';
-import { Player } from '../shared/models/player.model';
-import { Agenda } from '../shared/models/agenda.model';
+import { Observable } from 'rxjs/Observable';
+import { ReferenceDataService } from '../services/reference-data.service';
+import { PlayerService } from '../services/player.service';
+import { Faction } from '../models/faction.model';
+import { Player } from '../models/player.model';
+import { Agenda } from '../models/agenda.model';
 // import { FactionBadgeComponent } from '../shared/components/faction-badge.component';
 // import { AgendaBadgeComponent } from '../shared/components/agenda-badge.component';
 // import { PlayerLinkComponent } from '../shared/components/player-link.component';
 // import { ColourRangeDirective } from '../shared/directives/colour-range.directive';
-import { DeckClass } from '../shared/models/deck-class.model';
+import { DeckClass } from '../models/deck-class.model';
 // import { DeckClassBadgeComponent } from '../shared/components/deck-class-badge.component';
-import { StatsSet } from '../shared/models/stats-set.model';
-import { Observable } from 'rxjs/Observable';
+import { StatsSet } from '../models/stats-set.model';
 
 @Component({
   moduleId: module.id,
