@@ -5,8 +5,8 @@ import { GameDetailsComponent } from './game-details.component';
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: '/games/new', component: GameDetailsComponent },
-      { path: '/games/:id', component: GameDetailsComponent },
+      { path: 'games/new', component: GameDetailsComponent },
+      { path: 'games/:id', component: GameDetailsComponent },
     ])
   ],
   exports: [RouterModule]

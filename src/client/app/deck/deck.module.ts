@@ -18,7 +18,7 @@ import { DeckStatsComponent } from './deck-stats.component';
     DeckStatsComponent,
     ViewDeckComponent
   ],
-  // exports: [DeckDetailsComponent, ViewDeckComponent]
+  exports: [DeckImportFormComponent, DeckEditFormComponent]
 })
 export class DeckModule {
 }

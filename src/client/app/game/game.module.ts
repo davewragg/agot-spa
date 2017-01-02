@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { GameRoutingModule } from './game-routing.module';
+import { DeckModule } from '../deck/deck.module';
 import { DeckChooserComponent } from './deck-selector/deck-chooser.component';
 import { DeckSelectorComponent } from './deck-selector/deck-selector.component';
 import { ExistingDeckSelectorComponent } from './deck-selector/existing-deck-selector.component';
@@ -13,7 +14,7 @@ import { NewGamePlayerFormComponent } from './new-game-player-form.component';
 import { ViewGameComponent } from './view-game.component';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, GameRoutingModule],
+  imports: [CommonModule, SharedModule, GameRoutingModule, DeckModule],
   declarations: [
     DeckChooserComponent,
     DeckSelectorComponent,
