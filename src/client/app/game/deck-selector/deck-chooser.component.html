@@ -1,6 +1,6 @@
 <agot-spinner [isRunning]="isLoading"></agot-spinner>
-<form [ngFormModel]="deckChooserForm">
-  <select class="form-control icon-menu" [disabled]="isLoading" ngControl="deckId"
+<form [formGroup]="deckChooserForm">
+  <select class="form-control icon-menu" [disabled]="isLoading" formControlName="deckId"
           (change)="onDeckChange($event.target.value)">
     <option value="">--{{ isLoading ? 'Loading decks' : 'Choose deck' }}--</option>
     <option *ngFor="let deck of decks" value="{{ deck.deckId }}">

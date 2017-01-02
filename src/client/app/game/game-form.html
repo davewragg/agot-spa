@@ -1,13 +1,13 @@
-<form (ngSubmit)="onSubmit()" [ngFormModel]="gameForm" [hidden]="disabled" class="form">
+<form (ngSubmit)="onSubmit()" [formGroup]="gameForm" [hidden]="disabled" class="form">
   <fieldset class="card card-block">
     <div class="row">
       <div class="col-sm-6 form-group">
         <label class="form-control-label">Date</label>
-        <input type="datetime-local" ngControl="date" class="form-control form-control-sm">
+        <input type="datetime-local" formControlName="date" class="form-control form-control-sm">
       </div>
       <div class="col-sm-6 form-group">
         <label class="form-control-label">Venue</label>
-        <select class="form-control" ngControl="venueId">
+        <select class="form-control" formControlName="venueId">
           <option value="">--{{ isLoading ? 'Loading venues' : 'Select venue' }}--</option>
           <option *ngFor="let venue of venues | async" [value]="venue.venueId">{{ venue.name }}</option>
         </select>

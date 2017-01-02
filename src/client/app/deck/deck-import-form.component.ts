@@ -1,11 +1,12 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
-import { FormBuilder, ControlGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Deck } from '../shared/models/deck.model';
 import { ThronesDbService } from '../shared/services/thrones-db.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-deck-import-form',
-  templateUrl: 'decks/deck-import-form.component.html',
+  templateUrl: 'deck-import-form.component.html',
   // directives: [SpinnerComponent, DeckClassBlockComponent]
 })
 export class DeckImportFormComponent implements OnInit {
@@ -14,7 +15,7 @@ export class DeckImportFormComponent implements OnInit {
   @Output()
   updateDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
 
-  importForm: ControlGroup;
+  importForm: FormGroup;
   importedDeck: Deck;
   isImporting: boolean;
   importError: any;

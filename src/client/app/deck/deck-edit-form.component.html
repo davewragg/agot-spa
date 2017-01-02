@@ -1,15 +1,15 @@
-<form [ngFormModel]="deckForm" (ngSubmit)="onSubmit()" class="form row">
+<form [formGroup]="deckForm" (ngSubmit)="onSubmit()" class="form row">
   <div class="col-md-6">
     <div class="form-group">
       <label class="form-control-label">Faction</label>
-      <select class="form-control" ngControl="factionId" (change)="onDeckClassChange()">
+      <select class="form-control" formControlName="factionId" (change)="onDeckClassChange()">
         <option value="">--{{ _factions?.length ? 'Select faction' : 'Loading factions' }}---</option>
         <option *ngFor="let faction of factions | async" [value]="faction.factionId">{{ faction.name }}</option>
       </select>
     </div>
     <div class="form-group">
       <label class="form-control-label">Agenda</label>
-      <select class="form-control" ngControl="agendaId" (change)="onDeckClassChange()">
+      <select class="form-control" formControlName="agendaId" (change)="onDeckClassChange()">
         <option value="">--{{ _agendas?.length ? 'Select agenda' : 'Loading agendas' }}---</option>
         <option *ngFor="let agenda of agendas | async" [value]="agenda.agendaId">{{ agenda.title }}</option>
       </select>
@@ -17,7 +17,7 @@
     <!--TODO workaround https://github.com/angular/angular/issues/6374-->
     <div class="form-group" [hidden]="!showMore" *ngIf="true">
       <label class="form-control-label">Second Faction</label>
-      <select class="form-control" ngControl="secondFactionId" (change)="onDeckClassChange()">
+      <select class="form-control" formControlName="secondFactionId" (change)="onDeckClassChange()">
         <option value="">--{{ _factions?.length ? 'Select second faction' : 'Loading factions' }}---</option>
         <option *ngFor="let faction of factions | async" [value]="faction.factionId">{{ faction.name }}</option>
       </select>
@@ -26,11 +26,11 @@
   <div class="col-md-6">
     <div class="form-group">
       <label class="form-control-label">Title</label>
-      <input type="text" class="form-control" ngControl="title">
+      <input type="text" class="form-control" formControlName="title">
     </div>
     <div class="form-group">
       <label class="form-control-label">ThronesDB Link</label>
-      <input type="url" class="form-control" ngControl="thronesDbLink"
+      <input type="url" class="form-control" formControlName="thronesDbLink"
              placeholder="http://thronesdb.com/decklist/view/xxxx">
     </div>
   </div>

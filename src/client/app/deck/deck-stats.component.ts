@@ -8,9 +8,10 @@ import { Deck } from '../shared/models/deck.model';
 // import { GameTimelineChartComponent } from '../shared/components/game-timeline-chart';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-deck-stats',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'decks/deck-stats.component.html',
+  templateUrl: 'deck-stats.component.html',
   // directives: [CountComponent, StatsTableComponent, GamesTableComponent, PlayedStatsChartComponent, GameTimelineChartComponent]
 })
 export class DeckStatsComponent {

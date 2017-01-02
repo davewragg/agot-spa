@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, ControlGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlayerService } from '../shared/services/player.service';
 import { Player } from '../shared/models/player.model';
 import { GamePlayer } from '../shared/models/game-player.model';
@@ -19,7 +19,7 @@ export class NewGamePlayerFormComponent implements OnInit {
 
   gamePlayer: GamePlayer = <GamePlayer>{};
 
-  gamePlayerForm: ControlGroup;
+  gamePlayerForm: FormGroup;
 
   players: Observable<Player[]>;
   isLoading: boolean;

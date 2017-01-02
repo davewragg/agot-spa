@@ -10,7 +10,7 @@ import { GamesModule } from './games/games.module';
 // import { GameModule } from './game/game.module';
 import { RankingsModule } from './rankings/rankings.module';
 import { DecksModule } from './decks/decks.module';
-// import { DeckModule } from './deck/deck.module';
+import { DeckModule } from './deck/deck.module';
 import { PlayersModule } from './players/players.module';
 import { PlayerModule } from './player/player.module';
 
@@ -25,7 +25,7 @@ import { PlayerModule } from './player/player.module';
     // GameModule,
     RankingsModule,
     DecksModule,
-    // DeckModule,
+    DeckModule,
     PlayersModule,
     PlayerModule
   ],

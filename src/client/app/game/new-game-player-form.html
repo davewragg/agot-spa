@@ -1,8 +1,8 @@
-<form [ngFormModel]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form">
+<form [formGroup]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form">
   <div class="container row">
     <div class="form-group col-md-4 col-xs-12">
       <select class="form-control"
-              ngControl="playerId" (change)="onPlayerSelectChange($event.target.value)">
+              formControlName="playerId" (change)="onPlayerSelectChange($event.target.value)">
         <option value="">--{{ isLoading ? 'Loading players' : 'Select player' }}--</option>
         <option *ngFor="let player of players | async" [value]="player.playerId">{{ player.name }}</option>
       </select>

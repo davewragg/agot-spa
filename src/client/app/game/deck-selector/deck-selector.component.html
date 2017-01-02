@@ -15,7 +15,7 @@
 
 <div [ngSwitch]="deckSelection" class="row">
   <!--existing deck selection-->
-  <div *ngSwitchWhen="deckSelectionType.EXISTING" class="col-md-12">
+  <div *ngSwitchCase="deckSelectionType.EXISTING" class="col-md-12">
     <agot-existing-deck-selector [playerId]="playerId" [existingDeck]="existingDeck"
                                  (selectDeck)="onExistingDeckUpdate($event)"></agot-existing-deck-selector>
 
@@ -25,10 +25,10 @@
       </button>
     </div>
   </div>
-  <div *ngSwitchWhen="deckSelectionType.IMPORT" class="col-md-12">
+  <div *ngSwitchCase="deckSelectionType.IMPORT" class="col-md-12">
     <agot-deck-import-form (updateDeck)="onImportedDeckSelect($event)" [creating]="creating"></agot-deck-import-form>
   </div>
-  <div *ngSwitchWhen="deckSelectionType.NEW" class="col-md-12">
+  <div *ngSwitchCase="deckSelectionType.NEW" class="col-md-12">
     <agot-deck-edit-form (updateDeck)="onNewDeckSelect($event)"
                          [deck]="editDeck" [creating]="creating"></agot-deck-edit-form>
   </div>

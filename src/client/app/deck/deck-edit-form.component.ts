@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 // TODO omfg forms
-import { FormBuilder, ControlGroup, Validators, Control } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { NotificationService } from '../shared/services/notification.service';
 import { Agenda } from '../shared/models/agenda.model';
@@ -11,8 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import { DeckService } from '../shared/services/deck.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-deck-edit-form',
-  templateUrl: 'decks/deck-edit-form.component.html'
+  templateUrl: 'deck-edit-form.component.html'
 })
 export class DeckEditFormComponent implements OnInit {
   @Input()
@@ -26,16 +27,17 @@ export class DeckEditFormComponent implements OnInit {
   @Output()
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
-  deckForm: ControlGroup;
+  deckForm: FormGroup;
 
   agendas: Observable<Agenda[]>;
   factions: Observable<Faction[]>;
 
   showMore: boolean = false;
+  cancelling: boolean = false;
 
   // TODO legacy sticking plaster
-  private _factions: Faction[];
-  private _agendas: Agenda[];
+  _factions: Faction[];
+  _agendas: Agenda[];
 
   constructor(private _formBuilder: FormBuilder,
               private _referenceDataService: ReferenceDataService,
@@ -96,7 +98,7 @@ export class DeckEditFormComponent implements OnInit {
   };
 
   private setDefaultTitle() {
-    const title: Control = <Control>this.deckForm.controls['title'];
+    const title: FormControl = <FormControl>this.deckForm.controls['title'];
     if (!title.value || !title.touched) {
       const factionId: number = +this.deckForm.controls['factionId'].value;
       const agendaId: number = +this.deckForm.controls['agendaId'].value;
@@ -104,7 +106,7 @@ export class DeckEditFormComponent implements OnInit {
       const agenda = this.getAgenda(agendaId);
       const deckClassTitle = DeckClass.getDeckClassTitle(faction, agenda);
       const defaultTitle = `New ${deckClassTitle} deck`;
-      title.updateValue(defaultTitle, {});// TODO check {}
+      title.setValue(defaultTitle, {});// TODO check {}
     }
   }
 

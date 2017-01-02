@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 // TODO omfg forms
-import { FormBuilder, ControlGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { NotificationService } from '../shared/services/notification.service';
@@ -28,7 +28,7 @@ export class GameFormComponent implements OnInit {
   @Output()
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
-  gameForm: ControlGroup;
+  gameForm: FormGroup;
   gamePlayers: GamePlayer[];
   cancelling: boolean = false;
 
