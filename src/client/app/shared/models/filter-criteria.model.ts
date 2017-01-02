@@ -18,12 +18,12 @@ export class FilterCriteria {
 
   static deserialise(routeParams: Params): FilterCriteria {
     const criteria = new FilterCriteria();
-    // TODO come back and check this does what it's supposed to
     Object.assign(criteria, _.pick(routeParams, [
-      'fromDate', 'toDate', 'ascending', 'rangeSelection'
+      'fromDate', 'toDate',
     ]));
     // param strings
-    criteria.rangeSelection = +criteria.rangeSelection;
+    criteria.rangeSelection = +routeParams['rangeSelection'];
+    criteria.ascending = routeParams['ascending'] === 'true';
     if (routeParams['playerIds']) {
       criteria.playerIds = Array.from(routeParams['playerIds']).map((id) => +id);
     }
