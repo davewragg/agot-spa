@@ -12,6 +12,7 @@
 - [ ] modules - games, rankings etc - where do they live eh?
   - [x] all rankings
   - [ ] games
+- [ ] sort direction
 - [ ] fix charts display
 - [ ] update forms so they work
 - [x] move home/components out in to the world
@@ -24,6 +25,7 @@
 - [ ] fix filter button behaviour
 - [ ] switch every changeDetectionStrategy to onPush bar containers
 - [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
+- [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 
   ...
 - [ ] CURRENT_SEASON by default

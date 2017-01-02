@@ -8,7 +8,7 @@ import { DecksComponent } from './decks.component';
 @NgModule({
   imports: [CommonModule, SharedModule, DecksRoutingModule],
   declarations: [DecksTableComponent, DecksComponent],
-  exports: [DecksTableComponent, DecksComponent]
+  // exports: [DecksTableComponent, DecksComponent]
 })
 export class DecksModule {
 }

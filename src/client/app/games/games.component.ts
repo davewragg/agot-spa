@@ -61,7 +61,7 @@ export class GamesComponent implements OnInit {
   }
 
   loadGames(criteria?: FilterCriteria) {
-    this._router.navigate(['Games', FilterCriteria.serialise(criteria)]);
+    this._router.navigate(['/games', FilterCriteria.serialise(criteria)]);
   }
 
   private setInitialFiltering(params: Params) {

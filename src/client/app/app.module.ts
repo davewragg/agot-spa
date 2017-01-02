@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { GamesModule } from './games/games.module';
+import { GameModule } from './game/game.module';
 import { RankingsModule } from './rankings/rankings.module';
 import { DecksModule } from './decks/decks.module';
 // import { DeckModule } from './deck/deck.module';
@@ -21,6 +22,7 @@ import { PlayerModule } from './player/player.module';
     SharedModule.forRoot(),
     HomeModule,
     GamesModule,
+    GameModule,
     RankingsModule,
     DecksModule,
     // DeckModule,

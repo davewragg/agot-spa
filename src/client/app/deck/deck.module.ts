@@ -10,7 +10,7 @@ import { ViewDeckComponent } from './view-deck.component';
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule],
   declarations: [DeckDetailsComponent, DeckEditFormComponent, DeckImportFormComponent, ViewDeckComponent],
-  exports: [DeckDetailsComponent, ViewDeckComponent]
+  // exports: [DeckDetailsComponent, ViewDeckComponent]
 })
 export class DeckModule {
 }

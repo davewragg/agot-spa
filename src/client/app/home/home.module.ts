@@ -9,7 +9,6 @@ import { HomeRoutingModule } from './home-routing.module';
 @NgModule({
   imports: [CommonModule, HomeRoutingModule, SharedModule, RankingsModule, GamesModule],
   declarations: [HomeComponent],
-  exports: [HomeComponent],
-  providers: []
+  // exports: [HomeComponent],
 })
 export class HomeModule { }

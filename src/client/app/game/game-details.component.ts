@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GameService } from '../shared/services/game.service';
 import { Game } from '../shared/models/game.model';
 // import { GameFormComponent } from './game-form.component';
@@ -22,7 +22,7 @@ export class GameDetailsComponent implements OnInit {
   isLoading: boolean;
   loadError: any = null;
 
-  constructor(params: Params,
+  constructor(private _route: ActivatedRoute,
               private gameService: GameService,
               private router: Router,
               private notificationService: NotificationService) {
