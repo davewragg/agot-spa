@@ -8,8 +8,9 @@ import { NotificationService } from '../shared/services/notification.service';
 // import { SpinnerComponent } from '../shared/components/spinner.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-game-details',
-  templateUrl: 'game/game-details.html',
+  templateUrl: 'game-details.html',
   // directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
 })
 export class GameDetailsComponent implements OnInit {

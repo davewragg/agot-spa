@@ -8,8 +8,9 @@ import { Observable } from 'rxjs/Observable';
 import { Venue } from '../shared/models/venue.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-view-game',
-  templateUrl: 'game/view-game.html',
+  templateUrl: 'view-game.html',
   // directives: [GamePlayersComponent, ROUTER_DIRECTIVES],
   // pipes: [DateFormatPipe]
 })

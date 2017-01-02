@@ -12,9 +12,10 @@ import { Venue } from '../shared/models/venue.model';
 import * as _ from 'lodash';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-game-form',
-  templateUrl: 'game/game-form.html',
-  styleUrls: ['game/game-form.css'],
+  templateUrl: 'game-form.html',
+  styleUrls: ['game-form.css'],
   // directives: [GamePlayersComponent, SpinnerComponent]
 })
 export class GameFormComponent implements OnInit {

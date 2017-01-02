@@ -4,9 +4,10 @@ import { GamePlayer } from '../shared/models/game-player.model';
 // import { DeckLinkComponent } from '../shared/components/deck-link.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-game-player-row',
-  templateUrl: 'game/game-player-row.html',
-  styleUrls: ['game/game-player-row.css'],
+  templateUrl: 'game-player-row.html',
+  styleUrls: ['game-player-row.css'],
   // directives: [DeckSelectorComponent, DeckLinkComponent]
 })
 export class GamePlayerRowComponent {

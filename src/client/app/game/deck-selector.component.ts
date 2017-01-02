@@ -7,8 +7,9 @@ import { DeckService } from '../shared/services/deck.service';
 import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-deck-selector',
-  templateUrl: 'game/deck-selector.component.html',
+  templateUrl: 'deck-selector.component.html',
   // directives: [ExistingDeckSelectorComponent, DeckEditFormComponent, DeckImportFormComponent]
 })
 export class DeckSelectorComponent implements OnInit {

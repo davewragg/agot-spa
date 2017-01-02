@@ -5,8 +5,9 @@ import { GamePlayer } from '../shared/models/game-player.model';
 // import { GamePlayerRowComponent } from './game-player-row.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-game-players',
-  templateUrl: 'game/game-players.html',
+  templateUrl: 'game-players.html',
   // directives: [GamePlayerRowComponent, NewGamePlayerFormComponent]
 })
 export class GamePlayersComponent {

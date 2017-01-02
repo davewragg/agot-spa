@@ -8,8 +8,9 @@ import { Observable } from 'rxjs/Observable';
 // import { SpinnerComponent } from '../shared/components/spinner.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'agot-new-game-player-form',
-  templateUrl: 'game/new-game-player-form.html',
+  templateUrl: 'new-game-player-form.html',
   // directives: [DeckSelectorComponent, SpinnerComponent],
 })
 export class NewGamePlayerFormComponent implements OnInit {

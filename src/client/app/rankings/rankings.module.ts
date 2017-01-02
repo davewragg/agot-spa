@@ -8,7 +8,7 @@ import { RankingsRoutingModule } from './rankings-routing.module';
 @NgModule({
   imports: [CommonModule, SharedModule, RankingsRoutingModule],
   declarations: [RankingsComponent, AllRankingsComponent],
-  // exports: [RankingsComponent, AllRankingsComponent]
+  exports: [AllRankingsComponent]
 })
 export class RankingsModule {
 }

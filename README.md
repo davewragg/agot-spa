@@ -9,16 +9,22 @@
   - [x] players/:id
   - [x] decks
   - [ ] decks/:id
-- [ ] modules - games, rankings etc - where do they live eh?
+- [x] modules - games, rankings etc - where do they live eh?
   - [x] all rankings
-  - [ ] games
-- [ ] sort direction
+  - [x] games
+- [ ] game containers
+  - [ ] new game component
+  - [ ] edit game component
+  - [ ] same for decks?
+- [ ] sort direction (seems always to be desc)
 - [ ] fix charts display
 - [ ] update forms so they work
 - [x] move home/components out in to the world
 - [ ] forms
-- [ ] loading states :/
-- [ ] bootstrap outline buttons
+- [ ] loading states :/ - top level via store?
+- [ ] bootstrap changes
+  - [ ] outline buttons
+  - [ ] layout? 
 - [ ] refactor component paths
 - [ ] routing modules & lazy loading
 - [ ] module imports
