@@ -47,7 +47,7 @@ export class NewGamePlayerFormComponent implements OnInit {
     console.log(this.gamePlayer);
   }
 
-  onUpdateDeck({ deck, version }) {
+  onUpdateDeck({ deck, version }: any) {
     console.log(deck);
     this.gamePlayer.deck = deck;
     this.gamePlayer.thronesDbVersion = version;

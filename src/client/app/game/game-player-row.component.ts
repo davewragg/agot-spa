@@ -22,7 +22,7 @@ export class GamePlayerRowComponent {
 
   editing: boolean = false;
 
-  onUpdateDeck({ deck, version }) {
+  onUpdateDeck({ deck, version }: any) {
     this.gamePlayer.deck = deck;
     this.gamePlayer.thronesDbVersion = version;
     this.updatePlayer.emit(this.gamePlayer);
