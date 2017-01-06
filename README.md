@@ -18,6 +18,7 @@
   - [ ] new game component
   - [ ] edit game component
   - [ ] same for decks?
+- [ ] fix prod build - breaking on deps?
 - [x] sort direction (seems always to be desc)
 - [ ] fix loading state from url - seems to ignore criteria params
 - [ ] fix charts display (bordered)
@@ -38,7 +39,7 @@
   ...
 - [ ] CURRENT_SEASON by default
 - [ ] ngrx & effects
-- [ ] AOT
+- [ ] AOT - sort out templates
 - [ ] local storage/index db cache-first for data
 - [ ] updated insights view
 - [ ] login and route/content protection
