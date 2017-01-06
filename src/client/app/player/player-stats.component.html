@@ -1,4 +1,4 @@
-<div *ngIf="playerStats">
+<div *ngIf="playerStats && player">
   <div *ngIf="playerStats?.overall?.played < 1">
     <div class="m-b-1">
       <code>In this period, {{ player?.name || 'Player' }} has not played.</code>
