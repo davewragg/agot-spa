@@ -1,14 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationService } from '../shared/services/notification.service';
 import { GamePlayer } from '../shared/models/game-player.model';
-// import { NewGamePlayerFormComponent } from './new-game-player-form.component';
-// import { GamePlayerRowComponent } from './game-player-row.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-game-players',
   templateUrl: 'game-players.component.html',
-  // directives: [GamePlayerRowComponent, NewGamePlayerFormComponent]
 })
 export class GamePlayersComponent {
   @Input()

@@ -12,7 +12,6 @@ import { StatsService } from '../services/stats.service';
       <chart class="col-xs-12" [options]="options"></chart>
     </div>
   `,
-  // directives: [CHART_DIRECTIVES]
 })
 export class GameTimelineChartComponent implements OnInit {
   @Input()

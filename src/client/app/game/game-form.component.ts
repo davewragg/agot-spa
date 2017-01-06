@@ -1,14 +1,11 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-// TODO omfg forms
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { NotificationService } from '../shared/services/notification.service';
-// import { GamePlayersComponent } from './game-players.component';
 import { Game } from '../shared/models/game.model';
 import { GamePlayer } from '../shared/models/game-player.model';
 import { Venue } from '../shared/models/venue.model';
-// import { SpinnerComponent } from '../shared/components/spinner.component';
 import * as _ from 'lodash';
 
 @Component({
@@ -16,7 +13,6 @@ import * as _ from 'lodash';
   selector: 'agot-game-form',
   templateUrl: 'game-form.component.html',
   styleUrls: ['game-form.css'],
-  // directives: [GamePlayersComponent, SpinnerComponent]
 })
 export class GameFormComponent implements OnInit {
   @Input()

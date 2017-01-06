@@ -1,5 +1,4 @@
 import { Input, Component } from '@angular/core';
-// import { NgPluralizeComponent } from './ng2-pluralize';
 
 @Component({
   moduleId: module.id,
@@ -9,7 +8,6 @@ import { Input, Component } from '@angular/core';
                   'one': 'once',
                   '2': 'twice',
                   'other': '{} times'}"></ng-pluralize>`,
-  // directives: [NgPluralizeComponent]
 })
 export class CountComponent {
   @Input()

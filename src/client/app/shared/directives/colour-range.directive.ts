@@ -2,9 +2,6 @@ import { Directive, HostBinding } from '@angular/core';
 
 @Directive({
   selector: '[agotColourRange]',
-  // properties: [
-  //   'value: agotColourRange'
-  // ],
 })
 export class ColourRangeDirective {
   value: number;

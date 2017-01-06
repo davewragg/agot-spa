@@ -4,16 +4,11 @@ import { isEmpty } from 'lodash';
 import { GameService } from '../shared/services/game.service';
 import { Game } from '../shared/models/game.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
-// import { GamesTableComponent } from './games-table.component';
-// import { DateRangeComponent } from './date-range.component';
-// import { SpinnerComponent } from '../../shared/components/spinner.component';
-// import { GameTimelineChartComponent } from '../../shared/components/game-timeline-chart';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-games',
   templateUrl: 'games.component.html',
-  // directives: [GamesTableComponent, DateRangeComponent, SpinnerComponent, GameTimelineChartComponent]
 })
 export class GamesComponent implements OnInit {
   @Input()
@@ -34,8 +29,6 @@ export class GamesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.setInitialFiltering(params);
-    // this.loadGames(this.initialFiltering);
     this._route.params
       .map(this.setInitialFiltering.bind(this))
       .do(() => this.isLoading = true)

@@ -4,13 +4,11 @@ import { FilterCriteria } from '../models/filter-criteria.model';
 import { Observable } from 'rxjs/Observable';
 import { Faction } from '../models/faction.model';
 import * as _ from 'lodash';
-// import { FactionBadgeComponent } from './faction-badge.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-faction-filter',
   templateUrl: 'faction-filter.component.html',
-  // directives: [FactionBadgeComponent]
 })
 export class FactionFilterComponent implements OnInit {
   @Input()

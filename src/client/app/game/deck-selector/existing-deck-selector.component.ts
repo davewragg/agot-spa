@@ -1,13 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange } from '@angular/core';
 import { Deck } from '../../shared/models/deck.model';
 import { DeckService } from '../../shared/services/deck.service';
-// import { DeckChooserComponent } from './deck-chooser.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-existing-deck-selector',
   templateUrl: 'existing-deck-selector.component.html',
-  // directives: [DeckChooserComponent]
 })
 export class ExistingDeckSelectorComponent implements OnInit, OnChanges {
   @Input()

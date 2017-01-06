@@ -10,7 +10,6 @@ import { Stats } from '../models/stats.model';
       <chart class="col-xs-12" [options]="options"></chart>
     </div>
   `,
-  // directives: [CHART_DIRECTIVES]
 })
 export class PlayedStatsChartComponent implements OnInit {
   @Input()

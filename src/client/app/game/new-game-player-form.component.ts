@@ -3,15 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlayerService } from '../shared/services/player.service';
 import { Player } from '../shared/models/player.model';
 import { GamePlayer } from '../shared/models/game-player.model';
-// import { DeckSelectorComponent } from './deck-selector.component';
 import { Observable } from 'rxjs/Observable';
-// import { SpinnerComponent } from '../shared/components/spinner.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-new-game-player-form',
   templateUrl: 'new-game-player-form.html',
-  // directives: [DeckSelectorComponent, SpinnerComponent],
 })
 export class NewGamePlayerFormComponent implements OnInit {
   @Output()

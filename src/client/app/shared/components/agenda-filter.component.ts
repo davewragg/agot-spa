@@ -4,13 +4,11 @@ import { FilterCriteria } from '../models/filter-criteria.model';
 import { Observable } from 'rxjs/Observable';
 import { Agenda } from '../models/agenda.model';
 import * as _ from 'lodash';
-// import { AgendaBadgeComponent } from './agenda-badge.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-agenda-filter',
   templateUrl: 'agenda-filter.component.html',
-  // directives: [AgendaBadgeComponent]
 })
 export class AgendaFilterComponent implements OnInit {
   @Input()

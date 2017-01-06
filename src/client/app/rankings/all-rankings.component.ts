@@ -4,15 +4,11 @@ import { isEmpty } from 'lodash';
 import { RankingService } from '../shared/services/ranking.service';
 import { SetOfResults } from '../shared/models/set-of-results.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
-// import { RankingsComponent } from './rankings.component';
-// import { SpinnerComponent } from '../shared/components/spinner.component';
-// import { DateRangeComponent } from '../home/components/date-range.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-all-rankings',
   templateUrl: 'all-rankings.component.html',
-  // directives: [RankingsComponent, SpinnerComponent, DateRangeComponent]
 })
 export class AllRankingsComponent implements OnInit {
   @Input()
@@ -33,8 +29,6 @@ export class AllRankingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.setInitialFiltering(params);
-    // this.loadRankings(this.initialFiltering);
     this._route.params
       .map(this.setInitialFiltering.bind(this))
       .do(() => this.isLoading = true)
@@ -59,12 +53,9 @@ export class AllRankingsComponent implements OnInit {
 
   onDateRangeChange(criteria: FilterCriteria) {
     this.loadRankings(criteria);
-    // this._router.navigate(['/rankings', FilterCriteria.serialise(criteria)]);
   }
 
   loadRankings(criteria?: FilterCriteria) {
-    //   this.isLoading = true;
-    //   return this._RankingService.getRankings(criteria);
     this._router.navigate(['/rankings', FilterCriteria.serialise(criteria)]);
   }
 

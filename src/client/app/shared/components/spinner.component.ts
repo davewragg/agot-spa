@@ -43,6 +43,4 @@ export class SpinnerComponent implements OnDestroy {
     clearTimeout(this.currentTimeout);
     this.currentTimeout = undefined;
   }
-
-
 }

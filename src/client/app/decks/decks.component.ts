@@ -4,24 +4,11 @@ import { isEmpty } from 'lodash';
 import { DeckService } from '../shared/services/deck.service';
 import { Deck } from '../shared/models/deck.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
-// import { SpinnerComponent } from '../shared/components/spinner.component';
-// import { DecksTableComponent } from './decks-table.component';
-// import { PlayerFilterComponent } from '../shared/components/player-filter.component';
-// import { FactionFilterComponent } from '../shared/components/faction-filter.component';
-// import { AgendaFilterComponent } from '../shared/components/agenda-filter.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-decks',
   templateUrl: 'decks.component.html',
-  // directives: [
-  //   ROUTER_DIRECTIVES,
-  //   DecksTableComponent,
-  //   SpinnerComponent,
-  //   PlayerFilterComponent,
-  //   FactionFilterComponent,
-  //   AgendaFilterComponent,
-  // ]
 })
 export class DecksComponent implements OnInit {
   @Input()
@@ -41,8 +28,6 @@ export class DecksComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.setInitialFiltering(params);
-    // this.loadDecks(this.initialFiltering);
     this._route.params
       .map(this.setInitialFiltering.bind(this))
       .do(() => this.isLoading = true)
@@ -68,7 +53,6 @@ export class DecksComponent implements OnInit {
 
   onFilterChange(criteria: FilterCriteria) {
     this.loadDecks(criteria);
-    // this._router.navigate(['/decks', FilterCriteria.serialise(criteria)]);
   }
 
   loadDecks(criteria?: FilterCriteria) {

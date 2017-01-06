@@ -35,7 +35,7 @@
 - [ ] loading states
   - [x] fudge it for now
   - [ ] do something at store level
-- [ ] bootstrap changes
+- [x] bootstrap changes
   - [x] outline buttons
   - [x] margins
   - [x] that bottom layout fix
