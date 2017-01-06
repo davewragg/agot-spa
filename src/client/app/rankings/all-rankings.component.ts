@@ -43,6 +43,8 @@ export class AllRankingsComponent implements OnInit {
         (results) => {
           this.loadingError = null;
           this.results = results;
+          // TODO until loading states are sorted out
+          this.isLoading = false;
         },
         (err) => {
           this.loadingError = err._body || err;

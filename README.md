@@ -18,9 +18,9 @@
   - [ ] new game component
   - [ ] edit game component
   - [ ] same for decks?
-- [ ] home page issues
-  - [ ] missing headers
-  - [ ] missing game timeline chart
+- [x] home page issues
+  - [x] missing headers
+  - [x] missing game timeline chart
 - [x] fix prod build - breaking on deps?
 - [x] sort direction (seems always to be desc)
 - [ ] fix loading state from url - seems to ignore criteria params

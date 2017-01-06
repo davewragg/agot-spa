@@ -44,6 +44,8 @@ export class GamesComponent implements OnInit {
         (games: Game[]) => {
           this.loadingError = null;
           this.games = games;
+          // TODO until loading states are sorted out
+          this.isLoading = false;
         },
         (err) => {
           this.loadingError = err._body || err.message || err;
