@@ -9,8 +9,6 @@ import { DeckClass } from '../models/deck-class.model';
          alt="{{ deckClass.faction.name }}">
     <img *ngIf="deckClass.agenda" class="faction-badge" src="./assets/img/agenda{{ deckClass.agenda.agendaId }}.png"
          alt="{{ deckClass.agenda.title }}">
-    <img *ngIf="deckClass.secondFaction" class="faction-badge" src="./assets/img/faction{{ deckClass.secondFaction.factionId }}.png"
-         alt="{{ deckClass.secondFaction.title }}">
     <span class="small">{{ deckClass.name || getName(deckClass) }}</span>
   `,
   styles: [`

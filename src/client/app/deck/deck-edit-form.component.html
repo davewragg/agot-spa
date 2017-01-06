@@ -14,14 +14,6 @@
         <option *ngFor="let agenda of agendas | async" [value]="agenda.agendaId">{{ agenda.title }}</option>
       </select>
     </div>
-    <!--TODO workaround https://github.com/angular/angular/issues/6374-->
-    <div class="form-group" [hidden]="!showMore" *ngIf="true">
-      <label class="form-control-label">Second Faction</label>
-      <select class="form-control" formControlName="secondFactionId" (change)="onDeckClassChange()">
-        <option value="">--{{ _factions?.length ? 'Select second faction' : 'Loading factions' }}---</option>
-        <option *ngFor="let faction of factions | async" [value]="faction.factionId">{{ faction.name }}</option>
-      </select>
-    </div>
   </div>
   <div class="col-md-6">
     <div class="form-group">

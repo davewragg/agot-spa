@@ -15,8 +15,5 @@ export class Deck {
   creatorId: number;
   dateCreated: string;
   dateModified: string;
-  // legacy
-  secondFactionId: number;
-  secondFaction: Faction;
   [key: string]: string | number | Faction | Agenda;
 }

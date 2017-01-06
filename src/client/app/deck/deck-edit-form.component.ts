@@ -87,13 +87,11 @@ export class DeckEditFormComponent implements OnInit {
   private populateForm() {
     let factionId = this.deck.factionId || '';
     let agendaId = this.deck.agendaId || '';
-    let secondFactionId = this.deck.secondFactionId || '';
     let title = this.deck.title || this.deck.fallbackTitle || '';
     let thronesDbLink = this.deck.thronesDbLink || '';
     this.deckForm = this._formBuilder.group({
       factionId: [factionId, Validators.required],
       agendaId: [agendaId],
-      secondFactionId: [secondFactionId],
       title: [title, Validators.required],
       thronesDbLink: [thronesDbLink],
     });
@@ -119,11 +117,6 @@ export class DeckEditFormComponent implements OnInit {
       gamePlayer.agenda = this.getAgenda(+gamePlayer.agendaId);
     } else {
       gamePlayer.agenda = null;
-    }
-    if (gamePlayer.secondFactionId) {
-      gamePlayer.secondFaction = this.getFaction(+gamePlayer.secondFactionId);
-    } else {
-      gamePlayer.secondFaction = null;
     }
   }
 

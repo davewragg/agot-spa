@@ -10,17 +10,9 @@ export class DeckService {
   private data: Observable<Deck[]>;
 
   static validateDeck(deck: Deck): string {
-    // validate agenda XOR secondary faction
-    if (+deck.agendaId && deck.secondFactionId) {
-      return 'pick one';
-    }
     // validate banner is not the same as main faction
     if (+deck.agendaId === +deck.factionId) {
       return 'invalid banner';
-    }
-    // validate faction 1 != faction 2
-    if (+deck.factionId === +deck.secondFactionId) {
-      return 'invalid second faction';
     }
     return null;
   }
@@ -72,7 +64,7 @@ export class DeckService {
       return (criteria.playerIds.length ?
           criteria.playerIds.indexOf(deck.creatorId) > -1 : true) &&
         (criteria.factionIds.length ?
-          criteria.factionIds.indexOf(deck.factionId) > -1 || criteria.factionIds.indexOf(deck.secondFactionId) > -1 : true) &&
+          criteria.factionIds.indexOf(deck.factionId) > -1 : true) &&
         (criteria.agendaIds.length ?
           criteria.agendaIds.indexOf(deck.agendaId) > -1 : true);
     }

@@ -1,5 +1,5 @@
 <div [class.table-active]="editing"
-     class="text-xs-center faction-body faction-{{ gamePlayer.deck?.secondFactionId }}"
+     class="text-xs-center faction-body"
      [style.backgroundImage]="gamePlayer.deck?.agendaId && ('url(./assets/img/agenda' + gamePlayer.deck?.agendaId + '.png)')">
   <div class="card-header">
     <img class="card-image-top" src="./assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
@@ -19,7 +19,7 @@
     </li>
     <li class="list-group-item">
       <span>{{ gamePlayer.deck.faction?.name }}</span> /
-      {{ gamePlayer.deck.agenda?.title || gamePlayer.deck.secondFaction?.name || 'No Agenda' }}
+      {{ gamePlayer.deck.agenda?.title || 'No Agenda' }}
     </li>
   </ul>
   <div class="card-block edit-buttons" *ngIf="editing">

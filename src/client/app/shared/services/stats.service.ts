@@ -40,14 +40,11 @@ export class StatsService {
   }
 
   private static updateFactionAgendaStats(player: GamePlayer, stats: StatsSet, result: Result) {
-    if (!player.deck.secondFactionId) {
-      const deckClassId = DeckClass.getDeckClassId(player.deck.factionId, player.deck.agendaId);
-      StatsService.updateStatsFor(deckClassId, stats.deckClass, result);
-    }
+    const deckClassId = DeckClass.getDeckClassId(player.deck.factionId, player.deck.agendaId);
+    StatsService.updateStatsFor(deckClassId, stats.deckClass, result);
 
     StatsService.updateStatsFor(player.deck.agendaId, stats.agendas, result);
     StatsService.updateStatsFor(player.deck.factionId, stats.factions, result);
-    StatsService.updateStatsFor(player.deck.secondFactionId, stats.factions, result);
   }
 
   private static updateStatsFor(keyId: number | string, statsMap: Map<number | string, Stats>, result: Result) {
