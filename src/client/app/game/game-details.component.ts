@@ -10,7 +10,7 @@ import { NotificationService } from '../shared/services/notification.service';
 @Component({
   moduleId: module.id,
   selector: 'agot-game-details',
-  templateUrl: 'game-details.html',
+  templateUrl: 'game-details.component.html',
   // directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
 })
 export class GameDetailsComponent implements OnInit {

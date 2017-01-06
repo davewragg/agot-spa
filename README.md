@@ -1,6 +1,5 @@
 ### TODO
 - [x] forms upgrade
-- [ ] `[disabled]` does nothing on deck edit form
 - [x] routing!
   - [x] home
   - [x] games
@@ -14,12 +13,6 @@
 - [x] modules - games, rankings etc - where do they live eh?
   - [x] all rankings
   - [x] games
-- [ ] game containers
-  - [ ] new game component
-  - [ ] edit game component
-- [ ] deck containers
-  - [ ] new deck component
-  - [ ] edit deck component
 - [x] home page issues
   - [x] missing headers
   - [x] missing game timeline chart
@@ -29,24 +22,32 @@
   - [x] fix passing of deserialised criteria from url into filter component
 - [x] fix charts display (bordered - or is it a box-shadow?)
 - [ ] update forms so they work
+- [ ] `[disabled]` does nothing on deck edit form
+- [ ] game containers
+  - [ ] new game component
+  - [ ] edit game component
+- [ ] deck containers
+  - [ ] new deck component
+  - [ ] edit deck component
 - [x] move home/components out in to the world
-- [ ] loading states :/ - top level via store?
+- [ ] loading states
+  - [x] fudge it for now
+  - [ ] do something at store level
 - [ ] bootstrap changes
   - [x] outline buttons
   - [ ] layout? 
-- [ ] refactor component paths
-- [ ] routing modules & lazy loading
-- [ ] module imports - decide what belongs where
-- [ ] fix filter button behaviour - is it always triggering?
+- [x] refactor component paths
+- [x] module imports - decide what belongs where
+- [x] fix filter button behaviour - is it always triggering?
+- [x] routing modules
 - [ ] delete all the commented-out code
 - [ ] switch every changeDetectionStrategy to onPush bar containers
 - [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 - [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
-
-  ...
 - [ ] CURRENT_SEASON by default
-- [ ] make "Show Games" on player details a link to pre-filtered games search
+- [ ] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
 - [ ] rename `initialFilering` on containers to `searchCriteria` or something better
+- [ ] lazy loading
 - [ ] ngrx & effects
 - [x] AOT - sort out templates
 - [ ] local storage/index db cache-first for data
