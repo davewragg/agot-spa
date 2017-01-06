@@ -51,6 +51,8 @@ export class DecksComponent implements OnInit {
         (decks: Deck[]) => {
           this.loadingError = null;
           this.decks = decks;
+          // TODO until loading states are sorted out
+          this.isLoading = false;
         },
         (err) => {
           this.loadingError = err._body || err.message || err;

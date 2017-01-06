@@ -47,6 +47,8 @@
 - [ ] updated insights view to match new service
 - [ ] make all those silly little helper components pure/onchange, push async props to them
 - [ ] truncate visible lists above a limit, add show more (there must be a lib for this)
+  - [ ] decks
+  - [ ] games
 - [ ] login and route/content protection
 - [ ] player groups/metas view
 - [ ] material
