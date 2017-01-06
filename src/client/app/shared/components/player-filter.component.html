@@ -1,6 +1,6 @@
 <form (ngSubmit)="onExecute()" class="form">
   <div class="btn-group" data-toggle="buttons">
-    <button class="btn btn-secondary btn-secondary-outline label-button" type="button"> Players
+    <button class="btn btn-secondary btn-outline-secondary label-button" type="button"> Players
     </button>
     <label *ngFor="let player of players | async"
            class="btn btn-secondary" [class.active]="criteria.playerIds.includes(player.playerId)">
@@ -8,7 +8,7 @@
              [checked]="criteria.playerIds.includes(player.playerId)"
              [value]="player.playerId"> {{ player.name }}
     </label>
-    <button class="btn btn-secondary btn-secondary-outline label-button" type="button" (click)="onClear()"> All
+    <button class="btn btn-secondary btn-outline-secondary label-button" type="button" (click)="onClear()"> All
     </button>
   </div>
 </form>

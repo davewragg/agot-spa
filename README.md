@@ -24,12 +24,12 @@
 - [x] fix prod build - breaking on deps?
 - [x] sort direction (seems always to be desc)
 - [ ] fix loading state from url - seems to ignore criteria params
-- [ ] fix charts display (bordered)
+- [ ] fix charts display (bordered - or is it a box-shadow?)
 - [ ] update forms so they work
 - [x] move home/components out in to the world
 - [ ] loading states :/ - top level via store?
 - [ ] bootstrap changes
-  - [ ] outline buttons
+  - [x] outline buttons
   - [ ] layout? 
 - [ ] refactor component paths
 - [ ] routing modules & lazy loading

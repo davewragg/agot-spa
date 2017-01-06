@@ -29,7 +29,7 @@
     <agot-player-insights [player]="player"
                           [playerInsights]="playerStats.insights"></agot-player-insights>
 
-    <a [routerLink]="['/decks', {playerIds:[player.playerId]}]" class="btn btn-success-outline m-b-1">
+    <a [routerLink]="['/decks', {playerIds:[player.playerId]}]" class="btn btn-outline-success m-b-1">
       See all {{ player.name }}'s decks
     </a>
 
@@ -44,7 +44,7 @@
                               [playerId]="player.playerId"></agot-game-timeline-chart>
 
     <div class="m-b-1">
-      <button type="button" class="btn btn-success-outline" (click)="showGames = !showGames">{{ showGames ? 'Hide' :
+      <button type="button" class="btn btn-outline-success" (click)="showGames = !showGames">{{ showGames ? 'Hide' :
         'Show' }} games
       </button>
     </div>
