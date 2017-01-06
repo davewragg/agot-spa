@@ -1,9 +1,7 @@
 <div *ngIf="game">
-  <h2>{{ editing ?
-    game.gameId ? 'Edit' : 'Create'
-    : 'View' }} Game</h2>
+  <h2>{{ editing ? 'Edit' : 'View' }} Game</h2>
 
-  <agot-game-form [game]="game" *ngIf="editing" [disabled]="formDisabled"
+  <agot-game-form [game]="game" *ngIf="editing" [hidden]="formDisabled"
                   (update)="onSubmit($event)" (cancel)="onCancel()"></agot-game-form>
 
   <agot-view-game *ngIf="!editing" [game]="game" (edit)="onEdit()" (deleteGame)="onDelete()"></agot-view-game>

@@ -1,22 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { GameService } from '../shared/services/game.service';
 import { Game } from '../shared/models/game.model';
-// import { GameFormComponent } from './game-form.component';
-// import { ViewGameComponent } from './view-game.component';
 import { NotificationService } from '../shared/services/notification.service';
-// import { SpinnerComponent } from '../shared/components/spinner.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-game-details',
   templateUrl: 'game-details.component.html',
-  // directives: [GameFormComponent, ViewGameComponent, SpinnerComponent]
 })
 export class GameDetailsComponent implements OnInit {
   game: Game;
-  gameIdParam: number;
-  editParam: boolean;
 
   editing: boolean = false;
   formDisabled: boolean = false;
@@ -25,35 +19,34 @@ export class GameDetailsComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
               private gameService: GameService,
-              private router: Router,
               private notificationService: NotificationService) {
-    // TODO routing
-    // this.gameIdParam = <number>+params.get('id');
-    // this.editParam = !!params.get('edit');
-    this.editing = this.editParam || !this.gameIdParam;
   }
 
   ngOnInit() {
-    if (this.gameIdParam) {
-      this.loadGame();
-    } else {
-      this.game = new Game();
-    }
+    // this.loadGame();
+    this._route.params
+      .do(() => this.isLoading = true)
+      .switchMap((params: Params) => this.gameService.getGame(params['id']))
+      .subscribe(
+        (game) => {
+          this.isLoading = false;
+          return this.game = game;
+        },
+        (error) => {
+          this.isLoading = false;
+          return this.loadError = error;
+        },
+        () => this.isLoading = false
+      );
   }
 
   onSubmit(game: Game) {
     this.formDisabled = true;
     this.isLoading = true;
-    const creating = !game.gameId;
 
     console.log('details submit', game);
     // TODO if creating, redirect to /game/id on submit?
     this.gameService.updateGame(game).subscribe((game: Game) => {
-        if (creating) {
-          // TODO skip reload
-          this.router.navigate(['/GameDetails', { id: game.gameId }]);
-          return;
-        }
         this.game = game;
         this.formDisabled = false;
         this.editing = false;
@@ -67,12 +60,7 @@ export class GameDetailsComponent implements OnInit {
   }
 
   onCancel() {
-    // if creating or editing directly, GTFO
-    if (!this.game.gameId || this.editParam) {
-      this.router.navigate(['/']);
-    } else {
-      this.editing = false;
-    }
+    this.editing = false;
   }
 
   onEdit() {
@@ -90,13 +78,4 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
-  private loadGame() {
-    this.isLoading = true;
-    this.gameService.getGame(this.gameIdParam)
-      .subscribe(
-        (game) => this.game = game,
-        (error) => this.loadError = error,
-        () => this.isLoading = false
-      );
-  }
 }
