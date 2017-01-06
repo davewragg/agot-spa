@@ -9,17 +9,13 @@
 
     <div class="m-b-1">
       <code>{{ deck?.title || 'This deck' }} has been played
-        <agot-count [count]="deckStats?.overall?.played"></agot-count>
-        ,
+        <agot-count [count]="deckStats?.overall?.played"></agot-count>,
         won
-        <agot-count [count]="deckStats?.overall?.won"></agot-count>
-        ,
+        <agot-count [count]="deckStats?.overall?.won"></agot-count>,
         drawn
-        <agot-count [count]="deckStats?.overall?.drawn"></agot-count>
-        ,
+        <agot-count [count]="deckStats?.overall?.drawn"></agot-count>,
         and lost
-        <agot-count [count]="deckStats?.overall?.lost"></agot-count>
-        .
+        <agot-count [count]="deckStats?.overall?.lost"></agot-count>.
         Its win rate is {{ deckStats?.overall?.winPercentage }}%,
         with a loss rate of {{ deckStats?.overall?.lossPercentage }}%.
       </code>

@@ -6,7 +6,7 @@
                        (cancel)="onCancel()" [hidden]="formDisabled"
                        (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
 
-  <!--<agot-view-deck *ngIf="!editing" [deck]="deck"></agot-view-deck>-->
+  <agot-view-deck *ngIf="!editing" [deck]="deck"></agot-view-deck>
 
   <div [hidden]="editing">
     <div>
@@ -21,5 +21,7 @@
 <h3 *ngIf="!isLoadingDeck && !deck" class="alert alert-danger">Deck not found</h3>
 <h3 *ngIf="loadError" class="alert alert-danger">Disaster {{ loadError | json }}</h3>
 
-<h5 [hidden]="isLoadingStats">Deck Stats</h5>
-<agot-deck-stats [deck]="deck" [deckStats]="deckStats"></agot-deck-stats>
+<div *ngIf="deckStats && deck" class="m-b-1">
+  <h5 [hidden]="isLoadingStats">Deck Stats</h5>
+  <agot-deck-stats [deck]="deck" [deckStats]="deckStats"></agot-deck-stats>
+</div>

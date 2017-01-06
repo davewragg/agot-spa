@@ -84,7 +84,7 @@ export class DeckDetailsComponent implements OnInit {
 
   private loadDeckStats() {
     this._route.params
-      .do(() => this.isLoadingDeck = true)
+      .do(() => this.isLoadingStats = true)
       .switchMap((params: Params) => this.statsService.getDeckStats(params['id']))
       .subscribe(
         (stats) => {

@@ -1,16 +1,14 @@
-import { Component, Input } from '@angular/core';
-import { Deck } from '../shared/models/deck.model';
-// import { TimeAgoPipe } from '../shared/pipes/time-ago-pipe';
-// import { DateFormatPipe } from '../shared/pipes/date-format-pipe';
-import { PlayerService } from '../shared/services/player.service';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { PlayerService } from '../shared/services/player.service';
+import { Deck } from '../shared/models/deck.model';
 import { Player } from '../shared/models/player.model';
-// import { PlayerLinkComponent } from '../shared/components/player-link.component';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-view-deck',
   templateUrl: 'view-deck.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     .deck-block {
       background-repeat: no-repeat;
@@ -18,8 +16,6 @@ import { Player } from '../shared/models/player.model';
       background-size: cover;
     }
   `],
-  // pipes: [TimeAgoPipe, DateFormatPipe],
-  // directives: [PlayerLinkComponent]
 })
 export class ViewDeckComponent {
   @Input()
