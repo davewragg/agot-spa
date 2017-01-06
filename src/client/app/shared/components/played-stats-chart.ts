@@ -23,7 +23,6 @@ export class PlayedStatsChartComponent implements OnInit {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
-        plotShadow: true,
         type: 'pie',
         spacing: [0, 0, 0, 0],
         style: {

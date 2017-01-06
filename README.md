@@ -17,14 +17,16 @@
 - [ ] game containers
   - [ ] new game component
   - [ ] edit game component
-  - [ ] same for decks?
+- [ ] deck containers
+  - [ ] new deck component
+  - [ ] edit deck component
 - [x] home page issues
   - [x] missing headers
   - [x] missing game timeline chart
 - [x] fix prod build - breaking on deps?
 - [x] sort direction (seems always to be desc)
 - [ ] fix loading state from url - seems to ignore criteria params
-- [ ] fix charts display (bordered - or is it a box-shadow?)
+- [x] fix charts display (bordered - or is it a box-shadow?)
 - [ ] update forms so they work
 - [x] move home/components out in to the world
 - [ ] loading states :/ - top level via store?
