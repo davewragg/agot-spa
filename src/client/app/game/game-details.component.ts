@@ -69,7 +69,7 @@ export class GameDetailsComponent implements OnInit {
   onCancel() {
     // if creating or editing directly, GTFO
     if (!this.game.gameId || this.editParam) {
-      this.router.navigate(['/Home']);
+      this.router.navigate(['/']);
     } else {
       this.editing = false;
     }
