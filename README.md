@@ -37,7 +37,8 @@
   - [ ] do something at store level
 - [ ] bootstrap changes
   - [x] outline buttons
-  - [ ] layout? 
+  - [x] margins
+  - [x] that bottom layout fix
 - [x] refactor component paths
 - [x] module imports - decide what belongs where
 - [x] fix filter button behaviour - is it always triggering?
