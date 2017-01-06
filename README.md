@@ -18,7 +18,7 @@
   - [ ] new game component
   - [ ] edit game component
   - [ ] same for decks?
-- [ ] fix prod build - breaking on deps?
+- [x] fix prod build - breaking on deps?
 - [x] sort direction (seems always to be desc)
 - [ ] fix loading state from url - seems to ignore criteria params
 - [ ] fix charts display (bordered)
