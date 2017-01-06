@@ -21,7 +21,7 @@
 - [x] ~~fix loading state from url - seems to ignore criteria params~~
   - [x] fix passing of deserialised criteria from url into filter component
 - [x] fix charts display (bordered - or is it a box-shadow?)
-- [ ] update forms so they work
+- [x] update forms so they work
 - [x] fix all those bloody getPlayer calls from view deck owner
 - [x] `[disabled]` does nothing on deck edit form
 - [x] game containers
@@ -43,7 +43,7 @@
 - [x] module imports - decide what belongs where
 - [x] fix filter button behaviour - is it always triggering?
 - [x] routing modules
-- [ ] delete all the commented-out code
+- [x] delete all the commented-out code
 - [ ] switch every changeDetectionStrategy to onPush bar containers
 - [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 - [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)

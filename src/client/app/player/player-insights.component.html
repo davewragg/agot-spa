@@ -1,4 +1,4 @@
-<div class="card-deck-wrapper">
+<div class="card-deck-wrapper mb-2">
   <div class="card-deck">
     <agot-deck-class-block [deckClass]="playerInsights.mostUsedDeckClass.deckClass"
                            *ngIf="playerInsights.mostUsedDeckClass"
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<div class="mb-1 m-t-1 row">
+<div class="mb-1 mt-1 row">
   <div class="col-lg-6">
     <code *ngIf="!playerInsights.neverPlayedFactions.length">In this period
       {{ player?.name || 'Player' }} has played as every faction
