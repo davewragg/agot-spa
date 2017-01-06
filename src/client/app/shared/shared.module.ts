@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
 import { ChartModule } from 'angular2-highcharts';
-import { ToolbarComponent } from './toolbar/index';
-import { NavbarComponent } from './navbar/index';
-import { FooterComponent } from './footer/index';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 import { StatsTableComponent } from './stats-table/stats-table.component';
 import { ColourRangeDirective } from './directives/index';
 import {

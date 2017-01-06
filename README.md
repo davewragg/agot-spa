@@ -41,7 +41,9 @@
 - [ ] ngrx & effects
 - [ ] AOT - sort out templates
 - [ ] local storage/index db cache-first for data
-- [ ] updated insights view
+- [ ] updated insights view to match new service
+- [ ] make all those silly little helper components pure/onchange, push async props to them
+- [ ] truncate visible lists above a limit, add show more (there must be a lib for this)
 - [ ] login and route/content protection
 - [ ] player groups/metas view
 - [ ] material
