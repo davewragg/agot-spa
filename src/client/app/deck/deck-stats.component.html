@@ -1,13 +1,13 @@
 <div *ngIf="deckStats">
   <div *ngIf="deckStats?.overall?.played < 1">
-    <div class="m-b-1">
+    <div class="mb-1">
       <code>{{ deck?.title || 'This deck' }} has not been played.</code>
     </div>
   </div>
   <div *ngIf="deckStats?.overall?.played > 0">
     <agot-played-stats-chart class="col-xs-12" [stats]="deckStats.overall"></agot-played-stats-chart>
 
-    <div class="m-b-1">
+    <div class="mb-1">
       <code>{{ deck?.title || 'This deck' }} has been played
         <agot-count [count]="deckStats?.overall?.played"></agot-count>,
         won
@@ -31,13 +31,13 @@
     <agot-game-timeline-chart *ngIf="deckStats?.games?.length && deck?.deckId" [games]="deckStats?.games"
                               [deckId]="deck?.deckId"></agot-game-timeline-chart>
 
-    <div class="m-b-1">
+    <div class="mb-1">
       <button type="button" class="btn btn-outline-success" (click)="showGames = !showGames">{{ showGames ? 'Hide' :
         'Show' }} games
       </button>
     </div>
 
-    <div class="m-b-1">
+    <div class="mb-1">
       <agot-games-table *ngIf="showGames" [games]="deckStats?.games"></agot-games-table>
     </div>
   </div>
