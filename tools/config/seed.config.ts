@@ -14,8 +14,8 @@ import { BuildType, ExtendPackages, InjectableDependency } from './seed.config.i
  * same name in "./projects". For further information take a
  * look at the documentation:
  *
- * 1) https://github.com/mgechev/angular2-seed/tree/master/tools
- * 2) https://github.com/mgechev/angular2-seed/wiki
+ * 1) https://github.com/mgechev/angular-seed/tree/master/tools
+ * 2) https://github.com/mgechev/angular-seed/wiki
  *
  *****************************************************************/
 
@@ -143,7 +143,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'Welcome to angular2-seed!';
+  APP_TITLE = 'Welcome to angular-seed!';
 
   /**
    * The base folder of the applications source files.
