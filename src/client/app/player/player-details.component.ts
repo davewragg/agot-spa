@@ -20,6 +20,7 @@ import { DateRangeType } from '../shared/models/date-range-type.model';
 })
 export class PlayerDetailsComponent implements OnInit {
   player: Player;
+  playerIdParam: number;
   playerStats: PlayerStats;
 
   isLoading: boolean;
@@ -36,15 +37,14 @@ export class PlayerDetailsComponent implements OnInit {
 
   ngOnInit() {
     // this.loadPlayerAndStats(this.initialFiltering);
-    let playerIdParam: number;
     this._route.params
-      .do((params: Params) => playerIdParam = +params['id'])
+      .do((params: Params) => this.playerIdParam = +params['id'])
       .map(this.setInitialFiltering.bind(this))
       .do(() => this.isLoading = true)
       .switchMap((criteria: FilterCriteria) =>
         Observable.combineLatest(
-          this._playerService.getPlayer(playerIdParam),
-          this._statsService.getPlayerStats(playerIdParam, criteria)
+          this._playerService.getPlayer(this.playerIdParam),
+          this._statsService.getPlayerStats(this.playerIdParam, criteria)
         )).subscribe(
       ([player, stats]:[Player, PlayerStats]) => {
         console.log(player, stats);
@@ -67,7 +67,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   private loadPlayerAndStats(criteria?: FilterCriteria) {
-    this._router.navigate(['/players/', this.player.playerId, FilterCriteria.serialise(criteria)]);
+    this._router.navigate(['/players/', this.playerIdParam, FilterCriteria.serialise(criteria)]);
   }
 
   private stopLoading() {
