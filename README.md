@@ -1,6 +1,6 @@
 ### TODO
 - [x] forms upgrade
-- [ ] [disabled] does nothing on deck edit form
+- [ ] `[disabled]` does nothing on deck edit form
 - [x] routing!
   - [x] home
   - [x] games
@@ -25,7 +25,8 @@
   - [x] missing game timeline chart
 - [x] fix prod build - breaking on deps?
 - [x] sort direction (seems always to be desc)
-- [ ] fix loading state from url - seems to ignore criteria params
+- [x] ~~fix loading state from url - seems to ignore criteria params~~
+  - [x] fix passing of deserialised criteria from url into filter component
 - [x] fix charts display (bordered - or is it a box-shadow?)
 - [ ] update forms so they work
 - [x] move home/components out in to the world
@@ -37,12 +38,15 @@
 - [ ] routing modules & lazy loading
 - [ ] module imports - decide what belongs where
 - [ ] fix filter button behaviour - is it always triggering?
+- [ ] delete all the commented-out code
 - [ ] switch every changeDetectionStrategy to onPush bar containers
 - [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 - [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 
   ...
 - [ ] CURRENT_SEASON by default
+- [ ] make "Show Games" on player details a link to pre-filtered games search
+- [ ] rename `initialFilering` on containers to `searchCriteria` or something better
 - [ ] ngrx & effects
 - [x] AOT - sort out templates
 - [ ] local storage/index db cache-first for data

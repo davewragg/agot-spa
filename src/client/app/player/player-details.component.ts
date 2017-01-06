@@ -80,7 +80,7 @@ export class PlayerDetailsComponent implements OnInit {
       ascending: true,
       rangeSelection: DateRangeType.ALL_TIME
     });
-    return isEmpty(params) ?
+    return this.initialFiltering = isEmpty(params) ?
       defaultFilter :
       Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }

@@ -69,8 +69,8 @@ export class AllRankingsComponent implements OnInit {
   }
 
   private setInitialFiltering(params: Params) {
-    const defaultFilter = this.initialFiltering || {};
-    return isEmpty(params) ?
+    const defaultFilter = this.initialFiltering || new FilterCriteria();
+    return this.initialFiltering = isEmpty(params) ?
       defaultFilter :
       Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }
