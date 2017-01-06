@@ -22,8 +22,8 @@
   - [x] fix passing of deserialised criteria from url into filter component
 - [x] fix charts display (bordered - or is it a box-shadow?)
 - [ ] update forms so they work
-- [ ] fix all those bloody getPlayer calls from view deck owner
-- [ ] `[disabled]` does nothing on deck edit form
+- [x] fix all those bloody getPlayer calls from view deck owner
+- [x] `[disabled]` does nothing on deck edit form
 - [x] game containers
   - [x] new game component
   - [x] edit game component
