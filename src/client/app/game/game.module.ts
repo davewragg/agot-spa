@@ -12,10 +12,12 @@ import { GamePlayerRowComponent } from './game-player-row.component';
 import { GamePlayersComponent } from './game-players.component';
 import { NewGamePlayerFormComponent } from './new-game-player-form.component';
 import { ViewGameComponent } from './view-game.component';
+import { CreateGameComponent } from './create-game.component';
 
 @NgModule({
   imports: [CommonModule, SharedModule, GameRoutingModule, DeckModule],
   declarations: [
+    CreateGameComponent,
     DeckChooserComponent,
     DeckSelectorComponent,
     ExistingDeckSelectorComponent,
