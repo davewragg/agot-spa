@@ -10,7 +10,7 @@ import { Venue } from '../shared/models/venue.model';
 @Component({
   moduleId: module.id,
   selector: 'agot-view-game',
-  templateUrl: 'view-game.html',
+  templateUrl: 'view-game.component.html',
   // directives: [GamePlayersComponent, ROUTER_DIRECTIVES],
   // pipes: [DateFormatPipe]
 })
@@ -41,7 +41,7 @@ export class ViewGameComponent {
     this.edit.emit(this.game);
   }
 
-  onDelete(force: boolean) {
+  onDelete(force?: boolean) {
     if (!force) {
       this.deleting = true;
     } else {

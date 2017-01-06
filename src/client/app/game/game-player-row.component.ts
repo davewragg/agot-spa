@@ -6,7 +6,7 @@ import { GamePlayer } from '../shared/models/game-player.model';
 @Component({
   moduleId: module.id,
   selector: 'agot-game-player-row',
-  templateUrl: 'game-player-row.html',
+  templateUrl: 'game-player-row.component.html',
   styleUrls: ['game-player-row.css'],
   // directives: [DeckSelectorComponent, DeckLinkComponent]
 })

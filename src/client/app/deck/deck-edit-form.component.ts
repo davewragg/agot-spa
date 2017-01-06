@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-// TODO omfg forms
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { NotificationService } from '../shared/services/notification.service';
@@ -64,6 +63,7 @@ export class DeckEditFormComponent implements OnInit {
     this.setDefaultTitle();
   }
 
+  // TODO no force param?
   onCancel() {
     this.cancel.emit(true);
   }

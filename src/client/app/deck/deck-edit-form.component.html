@@ -40,7 +40,7 @@
 
       <div [hidden]="!cancelling" class="card card-block alert-warning">
         <p class="card-text">Woah, abandon changes?</p>
-        <button type="button" class="btn btn-sm btn-danger" (click)="onCancel(true)">Yep</button>
+        <button type="button" class="btn btn-sm btn-danger" (click)="onCancel()">Yep</button>
         <button type="button" class="btn btn-sm btn-secondary" (click)="cancelling = false">Whoops</button>
       </div>
     </div>

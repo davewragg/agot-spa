@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 @Component({
   moduleId: module.id,
   selector: 'agot-game-form',
-  templateUrl: 'game-form.html',
+  templateUrl: 'game-form.component.html',
   styleUrls: ['game-form.css'],
   // directives: [GamePlayersComponent, SpinnerComponent]
 })
@@ -59,7 +59,7 @@ export class GameFormComponent implements OnInit {
     this.update.emit(updatedGame);
   }
 
-  onCancel(force: boolean) {
+  onCancel(force?: boolean) {
     if (!force && this.gameForm.dirty) {
       this.cancelling = true;
     } else {

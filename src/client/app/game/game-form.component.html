@@ -17,7 +17,7 @@
   </fieldset>
 
   <agot-game-players [gamePlayers]="gamePlayers" [readOnly]="false"
-                     (playerChange)="onPlayerChange($event)"></agot-game-players>
+                     (playerChange)="onPlayerChange()"></agot-game-players>
 
   <div class="form-group">
     <button type="submit" [disabled]="!gameForm.valid"
