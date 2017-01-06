@@ -1,15 +1,12 @@
 <div *ngIf="deck" class="m-b-1">
-  <h2>{{ editing ?
-    deck.deckId ? 'Edit' : 'Create'
-    : 'View' }} Deck</h2>
+  <h2>{{ editing ? 'Edit' : 'View' }} Deck</h2>
 
-  <!--TODO if creating, select player-->
-  <agot-deck-edit-form [deck]="deck" *ngIf="editing" [disabled]="formDisabled"
-                       [editing]="!!deck.deckId" [creating]="!deck.deckId"
+  <agot-deck-edit-form [deck]="deck" *ngIf="editing"
+                       [editing]="!!deck.deckId" [creating]="false"
                        (cancel)="onCancel()" [hidden]="formDisabled"
                        (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
 
-  <agot-view-deck *ngIf="!editing" [deck]="deck"></agot-view-deck>
+  <!--<agot-view-deck *ngIf="!editing" [deck]="deck"></agot-view-deck>-->
 
   <div [hidden]="editing">
     <div>

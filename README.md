@@ -22,13 +22,14 @@
   - [x] fix passing of deserialised criteria from url into filter component
 - [x] fix charts display (bordered - or is it a box-shadow?)
 - [ ] update forms so they work
+- [ ] fix all those bloody getPlayer calls from view deck owner
 - [ ] `[disabled]` does nothing on deck edit form
-- [ ] game containers
+- [x] game containers
   - [x] new game component
-  - [ ] edit game component
-- [ ] deck containers
-  - [ ] new deck component
-  - [ ] edit deck component
+  - [x] edit game component
+- [x] deck containers
+  - [x] new deck component
+  - [x] edit deck component
 - [ ] disabled reactive form controls warning (see below)
 - [x] move home/components out in to the world
 - [ ] loading states

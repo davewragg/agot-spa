@@ -1,0 +1,11 @@
+<div *ngIf="deck" class="m-b-1">
+  <h2>Create Deck</h2>
+
+  <!--TODO if creating, select player-->
+  <agot-deck-edit-form [deck]="deck"
+                       [editing]="true" [creating]="true"
+                       (cancel)="onCancel()" [hidden]="formDisabled"
+                       (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
+</div>
+
+<agot-spinner [isRunning]="isLoading"></agot-spinner>

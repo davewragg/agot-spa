@@ -8,10 +8,12 @@ import { DeckEditFormComponent } from './deck-edit-form.component';
 import { DeckImportFormComponent } from './deck-import-form.component';
 import { ViewDeckComponent } from './view-deck.component';
 import { DeckStatsComponent } from './deck-stats.component';
+import { CreateDeckComponent } from './create-deck.component';
 
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule, GamesModule],
   declarations: [
+    CreateDeckComponent,
     DeckDetailsComponent,
     DeckEditFormComponent,
     DeckImportFormComponent,

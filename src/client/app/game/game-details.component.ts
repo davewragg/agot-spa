@@ -23,10 +23,9 @@ export class GameDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.loadGame();
     this._route.params
       .do(() => this.isLoading = true)
-      .switchMap((params: Params) => this.gameService.getGame(params['id']))
+      .switchMap((params: Params) => this.gameService.getGame(+params['id']))
       .subscribe(
         (game) => {
           this.isLoading = false;
