@@ -43,7 +43,7 @@
 - [x] routing modules
 - [x] delete all the commented-out code
 - [x] switch every changeDetectionStrategy to onPush bar containers
-- [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
+- [x] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 #### Post-merge
 - [ ] trim lodash imports
 - [ ] loading states
@@ -72,6 +72,7 @@
 - [ ] deck date range filtering?
 - [ ] unsubscriptions for containers?
 - [ ] route change transitions
+- [ ] fix that memory leak
 
 Reactive forms warning:
   It looks like you're using the disabled attribute with a reactive form directive. If you set disabled to true
