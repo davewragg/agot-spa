@@ -51,14 +51,12 @@
   - [ ] do something at store level
 - [ ] disabled reactive form controls warning (see below)
 - [x] ~~sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)~~ AOT resolved
+  - [ ] sanitise that one thronesdb link that it thinks is unsafe?
 - [ ] CURRENT_SEASON by default
   - [ ] check custom date range against seasons to see if they're selected 
 - [x] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
 - [ ] rename `initialFilering` on containers to `searchCriteria` or something better
-- [ ] lazy loading
-- [ ] ngrx & effects
 - [x] AOT - sort out templates
-- [ ] local storage/index db cache-first for data
 - [ ] updated insights view to match new service
 - [ ] make all those silly little helper components pure/onchange, push async props to them
 - [ ] truncate visible lists above a limit, add show more (there must be a lib for this)
@@ -66,6 +64,9 @@
   - [ ] games
 - [ ] login and route/content protection
 - [ ] player groups/metas view
+- [ ] lazy loading - need seed support?
+- [ ] ngrx & effects
+- [ ] local storage/index db cache-first for data
 - [ ] material
   - [ ] convert filters bars to single/multi-select dropdowns
 - [ ] improve deck selector
