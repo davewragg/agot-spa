@@ -1,4 +1,6 @@
 ### TODO
+
+#### Blockers
 - [x] forms upgrade
 - [x] routing!
   - [x] home
@@ -30,11 +32,7 @@
 - [x] deck containers
   - [x] new deck component
   - [x] edit deck component
-- [ ] disabled reactive form controls warning (see below)
 - [x] move home/components out in to the world
-- [ ] loading states
-  - [x] fudge it for now
-  - [ ] do something at store level
 - [x] bootstrap changes
   - [x] outline buttons
   - [x] margins
@@ -45,8 +43,14 @@
 - [x] routing modules
 - [x] delete all the commented-out code
 - [ ] switch every changeDetectionStrategy to onPush bar containers
-- [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 - [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
+#### Post-merge
+- [ ] trim lodash imports
+- [ ] loading states
+  - [x] fudge it for now
+  - [ ] do something at store level
+- [ ] disabled reactive form controls warning (see below)
+- [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 - [ ] CURRENT_SEASON by default
 - [ ] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
 - [ ] rename `initialFilering` on containers to `searchCriteria` or something better
@@ -62,6 +66,7 @@
 - [ ] login and route/content protection
 - [ ] player groups/metas view
 - [ ] material
+  - [ ] convert filters bars to single/multi-select dropdowns
 - [ ] improve deck selector
 - [ ] deck date range filtering?
 
