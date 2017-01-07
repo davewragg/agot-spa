@@ -1,0 +1,33 @@
+<fieldset class="card card-block">
+  <div class="row">
+    <div class="col-sm-6 form-group">
+      <label class="form-control-label">Date</label>
+      <span class="form-control-static font-weight-bold">
+        <time [attr.datetime]="game.date" title="{{ game.date | amDateFormat: 'LLLL' }}">
+          {{ game.date | amDateFormat: "D MMMM YYYY HH:mm" }}
+        </time>
+      </span>
+    </div>
+    <div class="col-sm-6 form-group" *ngIf="game.venueId">
+      <label class="form-control-label">Venue</label>
+      <span class="form-control-static font-weight-bold">
+        {{ getVenueName(game.venueId) | async }}
+      </span>
+    </div>
+  </div>
+</fieldset>
+
+<agot-game-players [gamePlayers]="game.gamePlayers" [readOnly]="true"></agot-game-players>
+
+<div>
+  <button type="button" class="btn btn-outline-success" (click)="onEdit()">Edit</button>
+  <button type="button" class="btn btn-outline-danger" (click)="onDelete()" [hidden]="deleting">Delete</button>
+
+  <div [hidden]="!deleting" class="card card-block alert-warning">
+    <p class="card-text">Serious delete game?</p>
+    <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(true)">Yep</button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="deleting = false">Whoops</button>
+  </div>
+
+  <a [routerLink]="['/games']" class="btn btn-outline-primary">&laquo; Back to Games</a>
+</div>

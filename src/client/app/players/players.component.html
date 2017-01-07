@@ -1,0 +1,17 @@
+<h2>Players</h2>
+<agot-spinner [isRunning]="isLoading"></agot-spinner>
+<div class="card-deck-wrapper">
+  <div class="card-deck">
+    <div *ngFor="let player of players | async" class="card text-xs-center">
+      <div class="card-header">
+        <h4>
+          <agot-player-link [player]="player"></agot-player-link>
+        </h4>
+      </div>
+      <img class="card-img-bottom" src="./assets/img/icon{{ player.mostPlayedFactionId }}.png">
+      <div class="card-footer text-muted small">
+        (faction most played)
+      </div>
+    </div>
+  </div>
+</div>

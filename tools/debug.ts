@@ -1,5 +1,5 @@
-import {argv} from 'yargs';
 import * as gulp from 'gulp';
+import { argv } from 'yargs';
 
 require('../gulpfile');
 
@@ -10,7 +10,7 @@ if (!TASK) {
 }
 
 console.log('**********************');
-console.log('* angular2-seed tools ');
+console.log('* angular-seed tools ');
 console.log('* debugging task:', TASK);
 console.log('**********************');
 

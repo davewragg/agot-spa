@@ -1,0 +1,40 @@
+<div class="form-group btn-group" data-toggle="buttons">
+  <label class="btn btn-outline-primary" [class.active]="deckSelection === deckSelectionType.EXISTING">
+    <input type="radio" name="useNewDeck" value="deckSelectionType.EXISTING" autocomplete="off"
+           (change)="onDeckSelectTypeChange(deckSelectionType.EXISTING)"> Existing
+  </label>
+  <label class="btn btn-outline-primary" [class.active]="deckSelection === deckSelectionType.IMPORT">
+    <input type="radio" name="useNewDeck" value="deckSelectionType.IMPORT" autocomplete="off"
+           (change)="onDeckSelectTypeChange(deckSelectionType.IMPORT)"> Import
+  </label>
+  <label class="btn btn-outline-primary" [class.active]="deckSelection === deckSelectionType.NEW">
+    <input type="radio" name="useNewDeck" value="deckSelectionType.NEW" autocomplete="off"
+           (change)="onDeckSelectTypeChange(deckSelectionType.NEW)"> New
+  </label>
+</div>
+
+<div [ngSwitch]="deckSelection" class="row">
+  <!--existing deck selection-->
+  <div *ngSwitchCase="deckSelectionType.EXISTING" class="col-md-12">
+    <agot-existing-deck-selector [playerId]="playerId" [existingDeck]="existingDeck"
+                                 (selectDeck)="onExistingDeckUpdate($event)"></agot-existing-deck-selector>
+
+    <div class="form-group">
+      <button type="button" (click)="onExistingDeckSelect()" class="btn btn-success" [disabled]="!existingDeck">
+        {{ creating ? 'Add Player' : 'Update' }}
+      </button>
+    </div>
+  </div>
+  <div *ngSwitchCase="deckSelectionType.IMPORT" class="col-md-12">
+    <agot-deck-import-form (updateDeck)="onImportedDeckSelect($event)" [creating]="creating"></agot-deck-import-form>
+  </div>
+  <div *ngSwitchCase="deckSelectionType.NEW" class="col-md-12">
+    <agot-deck-edit-form (updateDeck)="onNewDeckSelect($event)"
+                         [deck]="editDeck" [creating]="creating"></agot-deck-edit-form>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="form-control-label">ThronesDB version</label>
+  <input type="number" class="form-control" [(ngModel)]="deckVersion" inputmode="numeric">
+</div>
