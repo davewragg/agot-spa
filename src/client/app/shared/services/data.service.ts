@@ -23,6 +23,20 @@ export class DataService {
     return DataService.setDates(criteria, null, null);
   }
 
+  private static setCurrentSeason(criteria: FilterCriteria) {
+    const currentSeason = DataService.getCurrentSeason();
+    return DataService.setDates(criteria, currentSeason.startDate, currentSeason.endDate);
+  }
+
+  private static getCurrentSeason(): any {
+    // TODO this is a bit of a cheat
+    const now = moment();
+    return {
+      startDate: now.startOf('quarter').toISOString().slice(0, 10),
+      endDate: now.endOf('quarter').toISOString().slice(0, 10),
+    };
+  }
+
   private static setDates(criteria: FilterCriteria, fromDate?: string, toDate?: string) {
     return Object.assign(criteria, {
       fromDate: fromDate,
@@ -181,6 +195,8 @@ export class DataService {
     const range = updatedCriteria.rangeSelection;
     if (range === DateRangeType.THIS_WEEK) {
       this.setAWeekAgo(updatedCriteria);
+    } else if (range === DateRangeType.CURRENT_SEASON) {
+      DataService.setCurrentSeason(updatedCriteria);
     } else if (range === DateRangeType.ALL_TIME) {
       DataService.setAllTime(updatedCriteria);
     }

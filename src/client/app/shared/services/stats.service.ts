@@ -17,6 +17,7 @@ import { Stats } from '../models/stats.model';
 import { PlayerInsights } from '../models/player-insights.model';
 import { DeckClassStats } from '../models/deck-class-stats.model';
 import { CacheService } from './cache.service';
+import { DateRangeType } from '../models/date-range-type.model';
 
 @Injectable()
 export class StatsService {
@@ -153,7 +154,11 @@ export class StatsService {
 
   _getDeckStats(criteria: FilterCriteria): Observable<DeckStats> {
     const deckId = first(criteria.deckIds);
-    return this.gameService.getGames(Object.assign(new FilterCriteria(), { deckIds: [deckId], asc: false }))
+    return this.gameService.getGames(Object.assign(new FilterCriteria(), {
+      deckIds: [deckId],
+      asc: false,
+      rangeSelection: DateRangeType.ALL_TIME,
+    }))
       .map((games: Game[]): DeckStats => {
         return games.reduce(buildStatsFromGames, new DeckStats());
       }).do((deckStats: DeckStats) => {

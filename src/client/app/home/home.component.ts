@@ -8,10 +8,15 @@ import { DateRangeType } from '../shared/models/date-range-type.model';
   templateUrl: 'home.component.html',
 })
 export class HomeComponent {
-  filterCriteria: FilterCriteria;
+  gameFilterCriteria: FilterCriteria;
+  rankingFilterCriteria: FilterCriteria;
 
   constructor() {
-    this.filterCriteria = Object.assign(new FilterCriteria(), {
+    this.rankingFilterCriteria = Object.assign(new FilterCriteria(), {
+      ascending: true,
+      rangeSelection: DateRangeType.ALL_TIME
+    });
+    this.gameFilterCriteria = Object.assign(new FilterCriteria(), {
       ascending: true,
       rangeSelection: DateRangeType.THIS_WEEK
     });

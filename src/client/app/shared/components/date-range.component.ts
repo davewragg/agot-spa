@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { SeasonService } from '../services/season.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
@@ -11,7 +11,7 @@ import * as moment from 'moment/moment';
   selector: 'agot-date-range',
   templateUrl: 'date-range.component.html',
 })
-export class DateRangeComponent implements OnInit {
+export class DateRangeComponent implements OnInit, OnChanges {
   @Input()
   criteria: FilterCriteria;
   @Input()
@@ -24,6 +24,7 @@ export class DateRangeComponent implements OnInit {
 
   today: string;
   aWeekAgo: string;
+  selectedSeason: string;
 
   // TODO extract to utils
   private static convertDateString(dateString?: string) {
@@ -39,11 +40,13 @@ export class DateRangeComponent implements OnInit {
 
   ngOnInit() {
     if (!this.criteria) {
-      this.criteria = Object.assign(new FilterCriteria(), {
-        ascending: false,
-        rangeSelection: DateRangeType.ALL_TIME
-      });
+      this.criteria = new FilterCriteria();
     }
+    // TODO set season name
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // TODO set season name
   }
 
   onSortChange(ascending: boolean) {
