@@ -45,7 +45,7 @@
 - [x] switch every changeDetectionStrategy to onPush bar containers
 - [x] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 #### Post-merge
-- [ ] trim lodash imports
+- [x] trim lodash imports
 - [ ] loading states
   - [x] fudge it for now
   - [ ] do something at store level

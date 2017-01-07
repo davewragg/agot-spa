@@ -2,7 +2,6 @@ import * as gulp from 'gulp';
 import * as gulpLoadPlugins from 'gulp-load-plugins';
 import * as merge from 'merge-stream';
 import { join } from 'path';
-
 import Config from '../../config';
 
 const plugins = <any>gulpLoadPlugins();
@@ -10,7 +9,9 @@ const plugins = <any>gulpLoadPlugins();
 const getTask = (target: string, destDir: string) => {
   return gulp.src(join(destDir, target))
     .pipe(plugins.uglify({
-      compress: true,
+      compress: {
+        drop_console: true
+      },
       mangle: true
     }))
     .pipe(gulp.dest(destDir));
