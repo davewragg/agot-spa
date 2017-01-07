@@ -97,7 +97,7 @@ export class DeckEditFormComponent implements OnInit {
 
   private setDefaultTitle() {
     const title: FormControl = <FormControl>this.deckForm.controls['title'];
-    if (!title.value || !title.touched) {
+    if (!title.value || (!title.touched && this.creating)) {
       const factionId: number = +this.deckForm.controls['factionId'].value;
       const agendaId: number = +this.deckForm.controls['agendaId'].value;
       const faction = this.getFaction(factionId);
