@@ -6,11 +6,13 @@ import { SetOfResults } from '../shared/models/set-of-results.model';
   selector: 'agot-rankings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'rankings.component.html',
-  styleUrls: ['rankings.component.css'],
+  styles: [`
+    .icon {
+      height: 2.4em;
+    }
+  `],
 })
 export class RankingsComponent {
-  @Input()
-  name: string;
   @Input()
   rankings: SetOfResults;
 }
