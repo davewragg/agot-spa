@@ -1,6 +1,6 @@
 <h3 *ngIf="player">{{ player.name }}</h3>
 
-<agot-date-range [showSort]="false" [criteria]="initialFiltering"
+<agot-date-range [showSort]="false" [criteria]="criteria"
                  (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
 <agot-spinner [isRunning]="isLoading"></agot-spinner>

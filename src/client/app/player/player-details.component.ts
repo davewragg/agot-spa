@@ -21,7 +21,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   isLoading: boolean;
 
-  initialFiltering: FilterCriteria;
+  criteria: FilterCriteria;
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
@@ -32,7 +32,7 @@ export class PlayerDetailsComponent implements OnInit {
   ngOnInit() {
     this._route.params
       .do((params: Params) => this.playerIdParam = +params['id'])
-      .map(this.setInitialFiltering.bind(this))
+      .map(this.setFiltering.bind(this))
       .do(() => this.isLoading = true)
       .switchMap((criteria: FilterCriteria) =>
         Observable.combineLatest(
@@ -66,12 +66,12 @@ export class PlayerDetailsComponent implements OnInit {
     this.isLoading = false;
   }
 
-  private setInitialFiltering(params: Params) {
+  private setFiltering(params: Params) {
     const defaultFilter = Object.assign(new FilterCriteria(), {
       ascending: true,
       rangeSelection: DateRangeType.ALL_TIME
     });
-    return this.initialFiltering = isEmpty(params) ?
+    return this.criteria = isEmpty(params) ?
       defaultFilter :
       Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }

@@ -14,7 +14,7 @@ export class GamesComponent implements OnInit {
   @Input()
   title: string;
   @Input()
-  initialFiltering: FilterCriteria;
+  criteria: FilterCriteria;
   @Input()
   hideFilters: boolean = false;
 
@@ -30,7 +30,7 @@ export class GamesComponent implements OnInit {
 
   ngOnInit() {
     this._route.params
-      .map(this.setInitialFiltering.bind(this))
+      .map(this.setFiltering.bind(this))
       .do(() => this.isLoading = true)
       .switchMap((criteria: FilterCriteria) => this._gameService.getGames(criteria))
       .subscribe(
@@ -59,9 +59,9 @@ export class GamesComponent implements OnInit {
     this._router.navigate(['/games', FilterCriteria.serialise(criteria)]);
   }
 
-  private setInitialFiltering(params: Params) {
-    const defaultFilter = this.initialFiltering || new FilterCriteria();
-    return this.initialFiltering = isEmpty(params) ?
+  private setFiltering(params: Params) {
+    const defaultFilter = this.criteria || new FilterCriteria();
+    return this.criteria = isEmpty(params) ?
       defaultFilter :
       Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }

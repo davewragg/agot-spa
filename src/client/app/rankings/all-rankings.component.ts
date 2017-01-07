@@ -16,7 +16,7 @@ export class AllRankingsComponent implements OnInit {
   @Input()
   hideFilters: boolean = false;
   @Input()
-  initialFiltering: FilterCriteria;
+  criteria: FilterCriteria;
 
   results: SetOfResults;
   loadingError: any = null;
@@ -30,7 +30,7 @@ export class AllRankingsComponent implements OnInit {
 
   ngOnInit() {
     this._route.params
-      .map(this.setInitialFiltering.bind(this))
+      .map(this.setFiltering.bind(this))
       .do(() => this.isLoading = true)
       .switchMap((criteria: FilterCriteria) => this._RankingService.getRankings(criteria))
       .subscribe(
@@ -59,9 +59,9 @@ export class AllRankingsComponent implements OnInit {
     this._router.navigate(['/rankings', FilterCriteria.serialise(criteria)]);
   }
 
-  private setInitialFiltering(params: Params) {
-    const defaultFilter = this.initialFiltering || new FilterCriteria();
-    return this.initialFiltering = isEmpty(params) ?
+  private setFiltering(params: Params) {
+    const defaultFilter = this.criteria || new FilterCriteria();
+    return this.criteria = isEmpty(params) ?
       defaultFilter :
       Object.assign(defaultFilter, FilterCriteria.deserialise(params));
   }
