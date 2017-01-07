@@ -1,6 +1,6 @@
+import { Params } from '@angular/router';
 import { cloneDeep, pick } from 'lodash';
 import { DateRangeType } from './date-range-type.model';
-import { Params } from '@angular/router';
 
 export class FilterCriteria {
   fromDate: string; //iso
@@ -21,21 +21,23 @@ export class FilterCriteria {
     Object.assign(criteria, pick(routeParams, [
       'fromDate', 'toDate',
     ]));
-    // param strings
+    // params are strings
     criteria.rangeSelection = +routeParams['rangeSelection'];
     criteria.ascending = routeParams['ascending'] === 'true';
-    if (routeParams['playerIds']) {
-      criteria.playerIds = Array.from(routeParams['playerIds']).map((id) => +id);
+
+    const arrayParamKeys = [
+      'playerIds',
+      'factionIds',
+      'agendaIds',
+      'deckIds',
+    ];
+    return arrayParamKeys.reduce((memo: any, key: string) => {
+      memo[key] = extractNumberArray(routeParams[key]);
+      return memo;
+    }, criteria);
+
+    function extractNumberArray(param: string): number[] {
+      return param ? param.split(',').map((id) => +id) : [];
     }
-    if (routeParams['factionIds']) {
-      criteria.factionIds = Array.from(routeParams['factionIds']).map((id) => +id);
-    }
-    if (routeParams['agendaIds']) {
-      criteria.agendaIds = Array.from(routeParams['agendaIds']).map((id) => +id);
-    }
-    if (routeParams['deckIds']) {
-      criteria.deckIds = Array.from(routeParams['deckIds']).map((id) => +id);
-    }
-    return criteria;
   }
 }
