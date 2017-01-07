@@ -55,7 +55,7 @@
 - [x] CURRENT_SEASON by default
   - [x] check custom date range against seasons to see if they're selected 
 - [x] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
-- [ ] rename `initialFilering` on containers to `searchCriteria` or something better
+- [x] rename `initialFilering` on containers to `searchCriteria` or something better
 - [x] AOT - sort out templates
 - [ ] updated insights view to match new service
 - [ ] make all those silly little helper components pure/onchange, push async props to them
