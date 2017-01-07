@@ -53,7 +53,7 @@
 - [x] ~~sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)~~ AOT resolved
 - [ ] CURRENT_SEASON by default
   - [ ] check custom date range against seasons to see if they're selected 
-- [ ] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
+- [x] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
 - [ ] rename `initialFilering` on containers to `searchCriteria` or something better
 - [ ] lazy loading
 - [ ] ngrx & effects
@@ -72,7 +72,9 @@
 - [ ] deck date range filtering?
 - [ ] unsubscriptions for containers?
 - [ ] route change transitions
-- [ ] fix that memory leak
+- [ ] fix that memory leak - decks page?
+- [ ] app shell
+- [ ] service worker
 
 Reactive forms warning:
   It looks like you're using the disabled attribute with a reactive form directive. If you set disabled to true

@@ -32,13 +32,9 @@
                               [deckId]="deck?.deckId"></agot-game-timeline-chart>
 
     <div class="mb-1">
-      <button type="button" class="btn btn-outline-success" (click)="showGames = !showGames">{{ showGames ? 'Hide' :
-        'Show' }} games
-      </button>
-    </div>
-
-    <div class="mb-1">
-      <agot-games-table *ngIf="showGames" [games]="deckStats?.games"></agot-games-table>
+      <a [routerLink]="['/games', {deckIds:[deck.deckId]}]" class="btn btn-outline-success mb-1">
+        See all {{ deck.title }}'s games
+      </a>
     </div>
   </div>
 </div>

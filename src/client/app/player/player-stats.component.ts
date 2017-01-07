@@ -13,6 +13,4 @@ export class PlayerStatsComponent {
   player: Player;
   @Input()
   playerStats: PlayerStats;
-
-  showGames: boolean = false;
 }

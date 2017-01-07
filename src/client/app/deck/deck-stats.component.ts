@@ -13,6 +13,4 @@ export class DeckStatsComponent {
   deck: Deck;
   @Input()
   deckStats: DeckStats;
-
-  showGames: boolean = false;
 }
