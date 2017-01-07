@@ -16,6 +16,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="./assets/icons/apple-touch-icon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="./assets/icons/apple-touch-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon-180x180.png">
+  <link rel="icon" href="assets/favicon/favicon-<%= ENV_CONFIG.ENV %>.ico" type="image/png">
   <link rel="icon" type="image/png" href="./assets/icons/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="./assets/icons/android-chrome-192x192.png" sizes="192x192">
   <link rel="icon" type="image/png" href="./assets/icons/favicon-96x96.png" sizes="96x96">
@@ -35,7 +36,7 @@
       captureUncaught: true,
       enabled: !!document.domain === 'paulhoughton.org',
       payload: {
-        environment: '<%=ENV%>',
+        environment: '<%=BUILD_TYPE%>',
         code_version: '<%= VERSION %>',
         host: document.domain
       }
@@ -45,57 +46,35 @@
 </head>
 <body>
 
-  <agot-app>
-    <div class="home-spinner">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
-    </div>
-  </agot-app>
-  <div class="small" style="background-color: #f0f0f0">
-    <div class="small text-xs-right text-muted"><%= VERSION %> <%= ENV %>&nbsp;</div>
+<agot-app>
+  <div class="home-spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
   </div>
+</agot-app>
+<div class="small" style="background-color: #f0f0f0">
+  <div class="small text-xs-right text-muted"><%= VERSION %> <%= BUILD_TYPE %>&nbsp;</div>
+</div>
 
-  <script>
-  // function.name (all IE)
-  // Remove once https://github.com/angular/angular/issues/6501 is fixed.
-  /*! @source http://stackoverflow.com/questions/6903762/function-name-not-supported-in-ie*/
-  if (!Object.hasOwnProperty('name')) {
-    Object.defineProperty(Function.prototype, 'name', {
-      get: function() {
-        var matches = this.toString().match(/^\s*function\s*((?![0-9])[a-zA-Z0-9_$]*)\s*\(/);
-        var name = matches && matches.length > 1 ? matches[1] : "";
-        // For better performance only parse once, and then cache the
-        // result through a new accessor for repeated access.
-        Object.defineProperty(this, 'name', {value: name});
-        return name;
-      }
-    });
-  }
-  </script>
-
-  <script>
+<script>
   // Fixes undefined module function in SystemJS bundle
   function module() {}
-  </script>
+</script>
 
-  <!-- shims:js -->
-  <!-- endinject -->
+<!-- shims:js -->
+<!-- endinject -->
 
-  <% if (ENV === 'dev') { %>
-  <script>
-    System.config(<%=
-      JSON.stringify(SYSTEM_CONFIG, null, 2)
-    %>)
-  </script>
+  <% if (BUILD_TYPE === 'dev') { %>
+  <script src="<%= APP_BASE %>app/system-config.js"></script>
   <% } %>
 
-  <!-- libs:js -->
-  <!-- endinject -->
+<!-- libs:js -->
+<!-- endinject -->
 
-  <!-- inject:js -->
-  <!-- endinject -->
+<!-- inject:js -->
+<!-- endinject -->
 
-  <% if (ENV === 'dev') { %>
+  <% if (BUILD_TYPE === 'dev') { %>
   <script>
   System.import('<%= BOOTSTRAP_MODULE %>')
     .catch(function (e) {
@@ -109,14 +88,25 @@
       });
     });
   </script>
-  <% } %>
+<% } %>
+<% if (BUILD_TYPE === 'prod') { %>
   <script>
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('create', 'UA-75528335-1', 'auto');
-    ga('require', 'autotrack');
+  //  ga('require', 'autotrack');
+    ga('require', 'cleanUrlTracker', {});
+    ga('require', 'eventTracker', {});
+    ga('require', 'impressionTracker', {});
+    ga('require', 'mediaQueryTracker', {});
+    ga('require', 'outboundFormTracker', {});
+    ga('require', 'outboundLinkTracker', {});
+    ga('require', 'pageVisibilityTracker', {});
+    ga('require', 'socialWidgetTracker', {});
+    ga('require', 'urlChangeTracker', {});
     ga('send', 'pageview');
   </script>
   <script async src='https://www.google-analytics.com/analytics.js'></script>
+<% } %>
 
 </body>
 </html>

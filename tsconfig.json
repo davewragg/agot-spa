@@ -7,6 +7,7 @@
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "lib": ["es2015"],
     "sourceMap": true,
     "pretty": true,
     "allowUnreachableCode": false,
@@ -15,13 +16,17 @@
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noFallthroughCasesInSwitch": true,
-    "suppressImplicitAnyIndexErrors": true
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules"
+    ],
+    "types": [
+      "node"
+    ]
   },
   "exclude": [
     "node_modules",
     "dist",
-    "typings/browser.d.ts",
-    "typings/browser",
     "src"
   ],
   "compileOnSave": false

@@ -1,0 +1,54 @@
+<form (ngSubmit)="onExecute()" class="form">
+  <div class="btn-group pull-sm-right" data-toggle="buttons" *ngIf="showSort">
+    <label class="btn btn-secondary" [class.active]="!criteria.ascending">
+      <input type="radio" name="sortDir" (change)="onSortChange(false)"
+             [checked]="!criteria.ascending"
+             value="false" autocomplete="off"> Oldest first
+    </label>
+    <label class="btn btn-secondary" [class.active]="criteria.ascending">
+      <input type="radio" name="sortDir" (change)="onSortChange(true)"
+             [checked]="criteria.ascending"
+             value="true" autocomplete="off"> Newest first
+    </label>
+  </div>
+
+  <fieldset>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-secondary" [class.active]="criteria.rangeSelection === dateRangeType.THIS_WEEK">
+        <input type="radio" name="selectRange"
+               (change)="onSetRange(dateRangeType.THIS_WEEK)"
+               value="this week" autocomplete="off"> This week
+      </label>
+      <label class="btn btn-secondary" *ngFor="let season of seasons | async"
+             [class.active]="criteria.rangeSelection === season.name">
+        <input type="radio" name="selectRange"
+               value="{{ season.name }}" (change)="onSetSeason(season)"
+               autocomplete="off"> {{ season.name }}
+      </label>
+      <label class="btn btn-secondary" [class.active]="criteria.rangeSelection === dateRangeType.ALL_TIME">
+        <input type="radio" (change)="onSetRange(dateRangeType.ALL_TIME)"
+               value="all time"
+               name="selectRange" autocomplete="off"> All-time
+      </label>
+      <label class="btn btn-secondary" [class.active]="criteria.rangeSelection === dateRangeType.CUSTOM">
+        <input type="radio" value="custom"
+               name="selectRange" autocomplete="off"
+               (click)="criteria.rangeSelection = dateRangeType.CUSTOM"> Custom
+      </label>
+    </div>
+
+    <div [hidden]="criteria.rangeSelection !== dateRangeType.CUSTOM" class="form-group form-inline">
+      <label class="sr-only" for="fromDate">From date</label>
+      <div class="input-group">
+        <div class="input-group-addon">From</div>
+        <input type="date" [(ngModel)]="criteria.fromDate" name="fromDate" class="form-control" id="fromDate">
+      </div>
+      <label class="sr-only" for="toDate">To date</label>
+      <div class="input-group">
+        <div class="input-group-addon">To</div>
+        <input type="date" [(ngModel)]="criteria.toDate" name="toDate" class="form-control" id="toDate">
+      </div>
+      <button type="submit" class="btn btn-outline-primary">Execute</button>
+    </div>
+  </fieldset>
+</form>
