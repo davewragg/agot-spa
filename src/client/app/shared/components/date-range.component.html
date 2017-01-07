@@ -25,7 +25,7 @@
                value="this week" autocomplete="off"> Current season
       </label>
       <label class="btn btn-secondary" *ngFor="let season of seasons | async"
-             [class.active]="selectedSeason === season.name">
+             [class.active]="selectedSeason === (season.startDate + ':' + season.endDate)">
         <input type="radio" name="selectRange"
                value="{{ season.name }}" (change)="onSetSeason(season)"
                autocomplete="off"> {{ season.name }}

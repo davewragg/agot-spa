@@ -52,8 +52,8 @@
 - [ ] disabled reactive form controls warning (see below)
 - [x] ~~sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)~~ AOT resolved
   - [ ] sanitise that one thronesdb link that it thinks is unsafe?
-- [ ] CURRENT_SEASON by default
-  - [ ] check custom date range against seasons to see if they're selected 
+- [x] CURRENT_SEASON by default
+  - [x] check custom date range against seasons to see if they're selected 
 - [x] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
 - [ ] rename `initialFilering` on containers to `searchCriteria` or something better
 - [x] AOT - sort out templates

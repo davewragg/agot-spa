@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { SeasonService } from '../services/season.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
@@ -11,7 +11,7 @@ import * as moment from 'moment/moment';
   selector: 'agot-date-range',
   templateUrl: 'date-range.component.html',
 })
-export class DateRangeComponent implements OnInit, OnChanges {
+export class DateRangeComponent implements OnInit {
   @Input()
   criteria: FilterCriteria;
   @Input()
@@ -26,12 +26,6 @@ export class DateRangeComponent implements OnInit, OnChanges {
   aWeekAgo: string;
   selectedSeason: string;
 
-  // TODO extract to utils
-  private static convertDateString(dateString?: string) {
-    // have to remove the time and timezone to populate the control correctly
-    return dateString && dateString.slice(0, 10);
-  }
-
   constructor(private _seasonService: SeasonService) {
     this.seasons = _seasonService.seasons;
     this.today = moment().add(1, 'days').toISOString();
@@ -42,11 +36,7 @@ export class DateRangeComponent implements OnInit, OnChanges {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     }
-    // TODO set season name
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // TODO set season name
+    this.setSelectedSeason();
   }
 
   onSortChange(ascending: boolean) {
@@ -62,18 +52,24 @@ export class DateRangeComponent implements OnInit, OnChanges {
 
   onSetRange(range: DateRangeType) {
     this.criteria.rangeSelection = range;
+    this.setDates(null, null);
     this.onExecute();
   }
 
   onExecute() {
     //.debounceTime(400).distinctUntilChanged()
+    this.setSelectedSeason();
     this.rangeChange.emit(this.criteria);
   }
 
   private setDates(fromDate?: string, toDate?: string) {
     Object.assign(this.criteria, {
-      fromDate: DateRangeComponent.convertDateString(fromDate),
-      toDate: DateRangeComponent.convertDateString(toDate),
+      fromDate,
+      toDate,
     });
   };
+
+  private setSelectedSeason() {
+    this.selectedSeason = `${this.criteria.fromDate}:${this.criteria.toDate}`;
+  }
 }
