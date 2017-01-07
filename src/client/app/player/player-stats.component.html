@@ -9,7 +9,7 @@
 
     <div class="mb-1">
       <code>In this period
-        {{ player?.name || 'Player' }} has played
+        {{ player.name || 'Player' }} has played
         <agot-count [count]="playerStats?.overall?.played"></agot-count>,
         won
         <agot-count [count]="playerStats?.overall?.won"></agot-count>,
@@ -17,7 +17,7 @@
         <agot-count [count]="playerStats?.overall?.drawn"></agot-count>,
         and lost
         <agot-count [count]="playerStats?.overall?.lost"></agot-count>.
-        {{ player?.name || 'Player' }}'s win rate is {{ playerStats?.overall?.winPercentage }}%,
+        {{ player.name || 'Player' }}'s win rate is {{ playerStats?.overall?.winPercentage }}%,
         with a loss rate of {{ playerStats?.overall?.lossPercentage }}%.
       </code>
     </div>
@@ -36,7 +36,7 @@
                         class="col-lg-6 col-xs-12"></agot-stats-table>
     </div>
 
-    <agot-game-timeline-chart *ngIf="playerStats?.games?.length && player.playerId" [games]="playerStats?.games"
+    <agot-game-timeline-chart *ngIf="playerStats.games.length && player.playerId" [games]="playerStats.games"
                               [playerId]="player.playerId"></agot-game-timeline-chart>
 
     <div class="mb-1">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="mb-1">
-      <agot-games-table *ngIf="showGames" [games]="playerStats?.games"></agot-games-table>
+      <agot-games-table *ngIf="showGames" [games]="playerStats.games"></agot-games-table>
     </div>
   </div>
 </div>

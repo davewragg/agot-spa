@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DeckClass } from '../models/deck-class.model';
 import { Stats } from '../models/stats.model';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-deck-class-block',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngIf="deckClass" class="text-xs-center deck-class-block"
     [style.backgroundImage]="deckClass.agenda?.agendaId && ('url(./assets/img/agenda' + deckClass.agenda?.agendaId + '.png)')">

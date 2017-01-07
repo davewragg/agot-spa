@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Faction } from '../models/faction.model';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-faction-badge',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <img class="faction-badge" src="./assets/img/icon{{ faction.factionId }}.png"
          alt="{{ faction.name }}">

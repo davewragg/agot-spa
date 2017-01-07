@@ -52,6 +52,7 @@
 - [ ] disabled reactive form controls warning (see below)
 - [ ] sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)
 - [ ] CURRENT_SEASON by default
+  - [ ] check custom date range against seasons to see if they're selected 
 - [ ] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
 - [ ] rename `initialFilering` on containers to `searchCriteria` or something better
 - [ ] lazy loading

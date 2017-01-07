@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Player } from '../models/player.model';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-player-link',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
       <a *ngIf="player" [routerLink]="['/players', player.playerId]">
         {{ player.name || player.playerName || 'Player' }}

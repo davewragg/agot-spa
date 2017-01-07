@@ -1,8 +1,9 @@
-import { Input, Component } from '@angular/core';
+import { Input, Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-count',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-pluralize [count]="count"
                   [when]="{'0': 'none',
                   'one': 'once',
