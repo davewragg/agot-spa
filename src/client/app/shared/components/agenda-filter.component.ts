@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { pull } from 'lodash';
 import { ReferenceDataService } from '../services/reference-data.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
-import { Observable } from 'rxjs/Observable';
 import { Agenda } from '../models/agenda.model';
-import * as _ from 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -39,10 +39,10 @@ export class AgendaFilterComponent implements OnInit {
     //.debounceTime(400).distinctUntilChanged()
     const checked = $event.target.checked;
     const agendaId = +$event.target.value;
-    if (checked && !_.includes(this.criteria.agendaIds, agendaId)) {
+    if (checked && !this.criteria.agendaIds.includes(agendaId)) {
       this.criteria.agendaIds.push(agendaId);
     } else if (!checked) {
-      _.pull(this.criteria.agendaIds, agendaId);
+      pull(this.criteria.agendaIds, agendaId);
     }
     console.log(agendaId);
     this.onExecute();

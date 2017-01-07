@@ -1,12 +1,12 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { cloneDeep } from 'lodash';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { NotificationService } from '../shared/services/notification.service';
 import { Game } from '../shared/models/game.model';
 import { GamePlayer } from '../shared/models/game-player.model';
 import { Venue } from '../shared/models/venue.model';
-import * as _ from 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -87,13 +87,13 @@ export class GameFormComponent implements OnInit {
   };
 
   private deserialiseFormToGame(): Game {
-    const game = _.cloneDeep(this.game);
+    const game = cloneDeep(this.game);
     Object.assign(game, this.gameForm.value);
     // FIXME form values are strings
     game.venueId = +game.venueId;
 
     // set updated players back to game
-    game.gamePlayers = _.cloneDeep(this.gamePlayers);
+    game.gamePlayers = cloneDeep(this.gamePlayers);
 
     return game;
   };

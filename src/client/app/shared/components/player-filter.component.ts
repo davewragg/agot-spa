@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FilterCriteria } from '../models/filter-criteria.model';
-import { PlayerService } from '../services/player.service';
 import { Observable } from 'rxjs/Observable';
+import { pull } from 'lodash';
+import { PlayerService } from '../services/player.service';
+import { FilterCriteria } from '../models/filter-criteria.model';
 import { Player } from '../models/player.model';
-import * as _ from 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -32,10 +32,10 @@ export class PlayerFilterComponent implements OnInit {
     //.debounceTime(400).distinctUntilChanged()
     const checked = $event.target.checked;
     const playerId = +$event.target.value;
-    if (checked && !_.includes(this.criteria.playerIds, playerId)) {
+    if (checked && !this.criteria.playerIds.includes(playerId)) {
       this.criteria.playerIds.push(playerId);
     } else if (!checked) {
-      _.pull(this.criteria.playerIds, playerId);
+      pull(this.criteria.playerIds, playerId);
     }
     console.log(playerId);
     this.onExecute();

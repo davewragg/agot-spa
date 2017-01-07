@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment/moment';
-import * as _ from 'lodash';
+import { cloneDeep, pick, omit } from 'lodash';
 import { Config } from '../config/env.config';
 import { Game } from '../models/game.model';
 import { FilterCriteria } from '../models/filter-criteria.model';
@@ -58,12 +58,12 @@ export class DataService {
 
   private static _prepareGameData(game: Game) {
     //noinspection TypeScriptUnresolvedFunction
-    const gameCopy: any = _.cloneDeep(game);
+    const gameCopy: any = cloneDeep(game);
     // if deck has id, strip everything else
     gameCopy.gamePlayers.forEach((player: any) => {
       delete player.player;
       if (player.deck.deckId) {
-        player.deck = _.pick(player.deck, ['deckId']);
+        player.deck = pick(player.deck, ['deckId']);
       } else {
         player.deck = DataService._prepareDeckData(player.deck);
       }
@@ -78,7 +78,7 @@ export class DataService {
 
   private static _prepareDeckData(deck: Deck) {
     //noinspection TypeScriptUnresolvedFunction
-    return _.omit(_.cloneDeep(deck), [
+    return omit(cloneDeep(deck), [
       'faction', 'agenda', 'fallbackTitle', 'dateCreated', 'dateModified'
     ]);
   }

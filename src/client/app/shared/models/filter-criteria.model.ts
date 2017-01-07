@@ -1,6 +1,6 @@
+import { cloneDeep, pick } from 'lodash';
 import { DateRangeType } from './date-range-type.model';
 import { Params } from '@angular/router';
-import * as _ from 'lodash';
 
 export class FilterCriteria {
   fromDate: string; //iso
@@ -13,12 +13,12 @@ export class FilterCriteria {
   deckIds: number[] = [];
 
   static serialise(criteria: FilterCriteria): any {
-    return _.cloneDeep(criteria);
+    return cloneDeep(criteria);
   }
 
   static deserialise(routeParams: Params): FilterCriteria {
     const criteria = new FilterCriteria();
-    Object.assign(criteria, _.pick(routeParams, [
+    Object.assign(criteria, pick(routeParams, [
       'fromDate', 'toDate',
     ]));
     // param strings

@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { pull } from 'lodash';
 import { ReferenceDataService } from '../services/reference-data.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
-import { Observable } from 'rxjs/Observable';
 import { Faction } from '../models/faction.model';
-import * as _ from 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -39,10 +39,10 @@ export class FactionFilterComponent implements OnInit {
     //.debounceTime(400).distinctUntilChanged()
     const checked = $event.target.checked;
     const factionId = +$event.target.value;
-    if (checked && !_.includes(this.criteria.factionIds, factionId)) {
+    if (checked && !this.criteria.factionIds.includes(factionId)) {
       this.criteria.factionIds.push(factionId);
     } else if (!checked) {
-      _.pull(this.criteria.factionIds, factionId);
+      pull(this.criteria.factionIds, factionId);
     }
     console.log(factionId);
     this.onExecute();

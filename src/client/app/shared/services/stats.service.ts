@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { cloneDeep, first, chain } from 'lodash';
 import { GameService } from './game.service';
 import { ReferenceDataService } from './reference-data.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
@@ -16,7 +17,6 @@ import { Stats } from '../models/stats.model';
 import { PlayerInsights } from '../models/player-insights.model';
 import { DeckClassStats } from '../models/deck-class-stats.model';
 import { CacheService } from './cache.service';
-import * as _ from 'lodash';
 
 @Injectable()
 export class StatsService {
@@ -74,7 +74,7 @@ export class StatsService {
   }
 
   getTimelineSortedGames(games: Game[]): any[] {
-    return _.chain(games).groupBy((game: Game): string => {
+    return chain(games).groupBy((game: Game): string => {
       return game.date.substr(0, 10);
     }).toPairs()
       .map(([dateKey, games]:[string, Game[]]) => {
@@ -152,7 +152,7 @@ export class StatsService {
   }
 
   _getDeckStats(criteria: FilterCriteria): Observable<DeckStats> {
-    const deckId = _.first(criteria.deckIds);
+    const deckId = first(criteria.deckIds);
     return this.gameService.getGames(Object.assign(new FilterCriteria(), { deckIds: [deckId], asc: false }))
       .map((games: Game[]): DeckStats => {
         return games.reduce(buildStatsFromGames, new DeckStats());
@@ -188,13 +188,13 @@ export class StatsService {
   }
 
   getPlayerStats(playerId: number, criteria: FilterCriteria): Observable<PlayerStats> {
-    const criteriaCopy = _.cloneDeep(criteria);
+    const criteriaCopy = cloneDeep(criteria);
     criteriaCopy.playerIds = [playerId];
     return this.cacheService.getFilteredData('playerStats', this._getPlayerStats, criteriaCopy, this);
   }
 
   _getPlayerStats(criteria: FilterCriteria): Observable<PlayerStats> {
-    const playerId = _.first(criteria.playerIds);
+    const playerId = first(criteria.playerIds);
     return this.gameService.getGames(criteria)
       .map((games: Game[]): PlayerStats => {
         return games
@@ -214,7 +214,7 @@ export class StatsService {
     function buildStatsFromGames(stats: PlayerStats, game: Game): PlayerStats {
       stats.games.push(game);
 
-      var me = getMe(game);
+      const me = getMe(game);
       const result: Result = StatsService.getResultForPlayer(game, me.playerId);
 
       updateMyStats(me, stats, result);
