@@ -6,6 +6,7 @@
                        [editing]="true" [creating]="true"
                        (cancel)="onCancel()" [hidden]="formDisabled"
                        (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
+
+  <agot-spinner [isRunning]="isLoading"></agot-spinner>
 </div>
 
-<agot-spinner [isRunning]="isLoading"></agot-spinner>

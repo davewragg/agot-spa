@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Game } from '../shared/models/game.model';
 import { ReferenceDataService } from '../shared/services/reference-data.service';
 import { Observable } from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import { Venue } from '../shared/models/venue.model';
 @Component({
   moduleId: module.id,
   selector: 'agot-view-game',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'view-game.component.html',
 })
 export class ViewGameComponent {

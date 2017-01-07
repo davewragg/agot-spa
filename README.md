@@ -42,7 +42,7 @@
 - [x] fix filter button behaviour - is it always triggering?
 - [x] routing modules
 - [x] delete all the commented-out code
-- [ ] switch every changeDetectionStrategy to onPush bar containers
+- [x] switch every changeDetectionStrategy to onPush bar containers
 - [ ] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 #### Post-merge
 - [ ] trim lodash imports
@@ -70,6 +70,8 @@
   - [ ] convert filters bars to single/multi-select dropdowns
 - [ ] improve deck selector
 - [ ] deck date range filtering?
+- [ ] unsubscriptions for containers?
+- [ ] route change transitions
 
 Reactive forms warning:
   It looks like you're using the disabled attribute with a reactive form directive. If you set disabled to true
