@@ -63,6 +63,6 @@ export class AllRankingsComponent implements OnInit {
     const defaultFilter = this.criteria || new FilterCriteria();
     return this.criteria = isEmpty(params) ?
       defaultFilter :
-      Object.assign(defaultFilter, FilterCriteria.deserialise(params));
+      FilterCriteria.deserialise(params, defaultFilter);
   }
 }

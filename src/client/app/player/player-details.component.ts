@@ -73,6 +73,6 @@ export class PlayerDetailsComponent implements OnInit {
     });
     return this.criteria = isEmpty(params) ?
       defaultFilter :
-      Object.assign(defaultFilter, FilterCriteria.deserialise(params));
+      FilterCriteria.deserialise(params, defaultFilter);
   }
 }
