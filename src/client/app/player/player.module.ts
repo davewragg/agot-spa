@@ -5,6 +5,7 @@ import { PlayerRoutingModule } from './player-routing.module';
 import { PlayerDetailsComponent } from './player-details.component';
 import { PlayerInsightsComponent } from './player-insights.component';
 import { PlayerStatsComponent } from './player-stats.component';
+import { NewPlayerDetailsComponent } from './new-player-details.component';
 
 @NgModule({
   imports: [CommonModule, SharedModule, PlayerRoutingModule],
@@ -12,6 +13,7 @@ import { PlayerStatsComponent } from './player-stats.component';
     PlayerDetailsComponent,
     PlayerInsightsComponent,
     PlayerStatsComponent,
+    NewPlayerDetailsComponent,
   ],
   // exports: [PlayersTableComponent, PlayersComponent]
 })
