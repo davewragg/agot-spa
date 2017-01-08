@@ -5,9 +5,56 @@
 
 <agot-spinner [isRunning]="isLoading"></agot-spinner>
 
-<div *ngIf="playerStats">
-  <agot-player-stats [playerStats]="playerStats" [player]="player"></agot-player-stats>
+<!--Begin stats-->
+<div *ngIf="playerStats && player">
+  <div *ngIf="playerStats.gamesPlayed < 1">
+    <div class="mb-1">
+      <code>In this period, {{ player.name || 'Player' }} has not played.</code>
+    </div>
+  </div>
+  <div *ngIf="playerStats.gamesPlayed > 0">
+    <!--<agot-played-stats-chart class="col-xs-12" [stats]="playerStats.overall"></agot-played-stats-chart>-->
+
+    <div class="mb-1">
+      <code>In this period
+        {{ player.name || 'Player' }} has played
+        <agot-count [count]="playerStats.gamesPlayed"></agot-count>,
+        won
+        <agot-count [count]="playerStats.gamesWon"></agot-count>,
+        drawn
+        <agot-count [count]="playerStats.gamesDrawn"></agot-count>,
+        and lost
+        <agot-count [count]="playerStats.gamesLost"></agot-count>.
+        {{ player.name || 'Player' }}'s win rate is {{ playerStats.winPercentage }}%,
+        with a loss rate of {{ playerStats.lossPercentage }}%.
+      </code>
+    </div>
+
+    <!--<agot-player-insights [player]="player"-->
+                          <!--[playerInsights]="playerStats.insights"></agot-player-insights>-->
+
+    <a [routerLink]="['/decks', {playerIds:[player.playerId]}]" class="btn btn-outline-success mb-1">
+      See all {{ player.name }}'s decks
+    </a>
+
+    <!--<div class="row">-->
+      <!--<agot-stats-table title="Playing as" [statsSet]="playerStats.as"-->
+                        <!--class="col-lg-6 col-xs-12"></agot-stats-table>-->
+      <!--<agot-stats-table title="Playing versus" [statsSet]="playerStats.vs"-->
+                        <!--class="col-lg-6 col-xs-12"></agot-stats-table>-->
+    <!--</div>-->
+
+    <!--<agot-game-timeline-chart *ngIf="playerStats.games.length && player.playerId" [games]="playerStats.games"-->
+                              <!--[playerId]="player.playerId"></agot-game-timeline-chart>-->
+
+    <div class="mb-1">
+      <a [routerLink]="['/games', {playerIds:[player.playerId]}]" class="btn btn-outline-success mb-1">
+        See all {{ player.name }}'s games
+      </a>
+    </div>
+  </div>
 </div>
+<!--end stats-->
 
 <h3 *ngIf="!player && !isLoading" class="alert alert-danger">Player not found</h3>
 
