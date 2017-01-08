@@ -32,6 +32,65 @@
 
     <!--<agot-player-insights [player]="player"-->
                           <!--[playerInsights]="playerStats.insights"></agot-player-insights>-->
+    <div class="card-deck-wrapper mb-2">
+      <div class="card-deck">
+        <!--<agot-deck-class-block [deckClass]="playerStats.mostUsedDeckClass.deckClass"-->
+                               <!--*ngIf="playerStats.mostUsedDeckClass"-->
+                               <!--class="card"-->
+                               <!--footerText="{{ playerStats.mostUsedDeckClass.stats.played }} game{{ playerStats.mostUsedDeckClass.stats.played > 1 ? 's' : '' }}"-->
+                               <!--title="Most used deck"></agot-deck-class-block>-->
+        <!--<agot-deck-class-block [deckClass]="playerStats.mostSuccessfulDeckClass.deckClass"-->
+                               <!--*ngIf="playerStats.mostSuccessfulDeckClass"-->
+                               <!--class="card" headerClass="text-success"-->
+                               <!--footerText="{{ playerStats.mostSuccessfulDeckClass.stats.won }} win{{ playerStats.mostSuccessfulDeckClass.stats.won > 1 ? 's' : '' }}-->
+                           <!--({{ playerStats.mostSuccessfulDeckClass.stats.winPercentage }}%)"-->
+                               <!--title="Most successful"></agot-deck-class-block>-->
+        <!--<agot-deck-class-block [deckClass]="playerStats.leastSuccessfulDeckClass.deckClass"-->
+                               <!--*ngIf="playerStats.leastSuccessfulDeckClass"-->
+                               <!--class="card" headerClass="text-danger"-->
+                               <!--footerText="{{ playerStats.leastSuccessfulDeckClass.stats.lost }} defeat{{ playerStats.leastSuccessfulDeckClass.stats.lost > 1 ? 's' : '' }}-->
+                           <!--({{ playerStats.leastSuccessfulDeckClass.stats.lossPercentage }}%)"-->
+                               <!--title="Least successful"></agot-deck-class-block>-->
+        <!--<agot-deck-class-block [deckClass]="playerStats.bestResultsVsDeckClass.deckClass"-->
+                               <!--*ngIf="playerStats.bestResultsVsDeckClass"-->
+                               <!--class="card" headerClass="text-success"-->
+                               <!--footerText="{{ playerStats.bestResultsVsDeckClass.stats.won }} triumph{{ playerStats.bestResultsVsDeckClass.stats.won > 1 ? 's' : '' }}"-->
+                               <!--title="Eats for breakfast"></agot-deck-class-block>-->
+        <!--<agot-deck-class-block [deckClass]="playerStats.worstResultsVsDeckClass.deckClass"-->
+                               <!--*ngIf="playerStats.worstResultsVsDeckClass"-->
+                               <!--class="card" headerClass="text-danger"-->
+                               <!--footerText="{{ playerStats.worstResultsVsDeckClass.stats.lost }} humiliation{{ playerStats.worstResultsVsDeckClass.stats.lost > 1 ? 's' : '' }}"-->
+                               <!--title="Mortal nemesis"></agot-deck-class-block>-->
+      </div>
+    </div>
+
+    <div class="mb-1 mt-1 row">
+      <div class="col-lg-6">
+        <code *ngIf="!playerStats.neverPlayedFactions.length">In this period
+          {{ player.name || 'Player' }} has played as every faction
+        </code>
+        <code *ngIf="playerStats.neverPlayedFactions.length">In this period
+          {{ player.name || 'Player' }} has not played as
+          <span *ngFor="let faction of playerStats.neverPlayedFactions; let i = index">
+        {{ faction.name }}{{ i < playerStats.neverPlayedFactions.length -2 ? ',' :
+        i === playerStats.neverPlayedFactions.length -2 ? ' or' : '' }}
+      </span>
+        </code>
+      </div>
+      <div class="col-lg-6">
+        <code *ngIf="!playerStats.neverPlayedAgendas.length">In this period
+          {{ player.name || 'Player' }} has played as every agenda
+        </code>
+        <code *ngIf="playerStats.neverPlayedAgendas.length">In this period
+          {{ player.name || 'Player' }} has not played as
+          <span *ngFor="let agenda of playerStats.neverPlayedAgendas; let i = index">
+        {{ agenda.title }}{{ i < playerStats.neverPlayedAgendas.length -2 ? ',' :
+        i === playerStats.neverPlayedAgendas.length -2 ? ' or' : '' }}
+      </span>
+        </code>
+      </div>
+    </div>
+    <!--end insights-->
 
     <a [routerLink]="['/decks', {playerIds:[player.playerId]}]" class="btn btn-outline-success mb-1">
       See all {{ player.name }}'s decks

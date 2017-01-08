@@ -92,7 +92,6 @@ export class DataService {
   }
 
   private static _prepareDeckData(deck: Deck) {
-    //noinspection TypeScriptUnresolvedFunction
     return omit(cloneDeep(deck), [
       'faction', 'agenda', 'fallbackTitle', 'dateCreated', 'dateModified'
     ]);

@@ -3,6 +3,8 @@ import { Game } from './game.model';
 import { StatsSet } from './stats-set.model';
 import { PlayerInsights } from './player-insights.model';
 import { Deck } from './deck.model';
+import { Agenda } from './agenda.model';
+import { Faction } from './faction.model';
 
 interface DeckStat {
   deck: Deck;
@@ -30,6 +32,8 @@ export class PlayerStats {
   lossPercentage: number;
   factionsNotPlayed: number[];
   agendasNotPlayed: number[];
+  neverPlayedFactions: Faction[] = [];
+  neverPlayedAgendas: Agenda[] = [];
   mostUsedDeck: DeckStat;
   mostSuccessfulDeck: DeckStat;
   leastSuccessfulDeck: DeckStat;

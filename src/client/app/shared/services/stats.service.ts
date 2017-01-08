@@ -205,7 +205,14 @@ export class StatsService {
     criteriaCopy.playerIds = [playerId];
 
     return this.cacheService.getFilteredData('playerStats',
-      this.dataService.getPlayerStatistics, criteriaCopy, this.dataService);
+      this.dataService.getPlayerStatistics, criteriaCopy, this.dataService)
+      .map((playerStats: PlayerStats) => {
+        const agendasNotPlayed = playerStats.agendasNotPlayed.map((id) => this.getAgenda(id));
+        const factionsNotPlayed = playerStats.factionsNotPlayed.map((id) => this.getFaction(id));
+        playerStats.neverPlayedAgendas = agendasNotPlayed;
+        playerStats.neverPlayedFactions = factionsNotPlayed;
+        return playerStats;
+      });
   }
 
   _getPlayerStats(criteria: FilterCriteria): Observable<PlayerStats> {
