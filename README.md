@@ -73,7 +73,7 @@
 - [ ] deck date range filtering?
 - [ ] unsubscriptions for containers?
 - [ ] route change transitions
-- [ ] fix that memory leak - decks page?
+- [ ] fix that memory leak - decks page? charts?
 - [ ] app shell
 - [ ] service worker
 
