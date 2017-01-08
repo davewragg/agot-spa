@@ -22,7 +22,9 @@ export class FilterCriteria {
       'fromDate', 'toDate',
     ]));
     // params are strings
-    criteria.rangeSelection = +routeParams['rangeSelection'];
+    if (routeParams['rangeSelection']) {
+      criteria.rangeSelection = +routeParams['rangeSelection'];
+    }
     criteria.ascending = routeParams['ascending'] === 'true';
 
     const arrayParamKeys = [
