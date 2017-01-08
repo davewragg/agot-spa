@@ -6,9 +6,10 @@ import { PlayerDetailsComponent } from './player-details.component';
 import { PlayerInsightsComponent } from './player-insights.component';
 import { PlayerStatsComponent } from './player-stats.component';
 import { NewPlayerDetailsComponent } from './new-player-details.component';
+import { DeckModule } from '../deck/deck.module';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, PlayerRoutingModule],
+  imports: [CommonModule, SharedModule, PlayerRoutingModule, DeckModule],
   declarations: [
     PlayerDetailsComponent,
     PlayerInsightsComponent,

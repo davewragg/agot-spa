@@ -19,7 +19,7 @@ import { CreateDeckComponent } from './create-deck.component';
     DeckStatsComponent,
     ViewDeckComponent
   ],
-  exports: [DeckImportFormComponent, DeckEditFormComponent]
+  exports: [DeckImportFormComponent, DeckEditFormComponent, ViewDeckComponent]
 })
 export class DeckModule {
 }

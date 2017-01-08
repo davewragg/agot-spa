@@ -30,10 +30,28 @@
       </code>
     </div>
 
+    <!--Begin insights    -->
     <!--<agot-player-insights [player]="player"-->
                           <!--[playerInsights]="playerStats.insights"></agot-player-insights>-->
     <div class="card-deck-wrapper mb-2">
       <div class="card-deck">
+        Most used deck ({{ playerStats.mostUsedDeck.count }} games)
+        <agot-view-deck [deck]="playerStats.mostUsedDeck.deck"></agot-view-deck>
+
+        Most successful deck ({{ playerStats.mostSuccessfulDeck.count }} games,
+        {{ playerStats.mostSuccessfulDeck.winPercent }}% won)
+        <agot-view-deck [deck]="playerStats.mostSuccessfulDeck.deck"></agot-view-deck>
+
+        Least successful deck ({{ playerStats.leastSuccessfulDeck.count }} games,
+        {{ playerStats.leastSuccessfulDeck.winPercent }}% won)
+        <agot-view-deck [deck]="playerStats.leastSuccessfulDeck.deck"></agot-view-deck>
+
+        Most beaten deck ({{ playerStats.mostBeatenDeck.count }} wins)
+        <agot-view-deck [deck]="playerStats.mostBeatenDeck.deck"></agot-view-deck>
+
+        Most lost to deck ({{ playerStats.mostLostToDeck.count }} defeats)
+        <agot-view-deck [deck]="playerStats.mostLostToDeck.deck"></agot-view-deck>
+
         <!--<agot-deck-class-block [deckClass]="playerStats.mostUsedDeckClass.deckClass"-->
                                <!--*ngIf="playerStats.mostUsedDeckClass"-->
                                <!--class="card"-->
