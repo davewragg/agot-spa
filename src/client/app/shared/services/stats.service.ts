@@ -18,6 +18,7 @@ import { PlayerInsights } from '../models/player-insights.model';
 import { DeckClassStats } from '../models/deck-class-stats.model';
 import { CacheService } from './cache.service';
 import { DateRangeType } from '../models/date-range-type.model';
+import { DataService } from './data.service';
 
 @Injectable()
 export class StatsService {
@@ -67,7 +68,8 @@ export class StatsService {
     }
   }
 
-  constructor(private gameService: GameService,
+  constructor(private dataService: DataService,
+              private gameService: GameService,
               private _referenceDataService: ReferenceDataService,
               private cacheService: CacheService) {
     _referenceDataService.factions.subscribe((factions) => this._factions = factions);
@@ -196,6 +198,14 @@ export class StatsService {
     const criteriaCopy = cloneDeep(criteria);
     criteriaCopy.playerIds = [playerId];
     return this.cacheService.getFilteredData('playerStats', this._getPlayerStats, criteriaCopy, this);
+  }
+
+  getPlayerStatsNew(playerId: number, criteria: FilterCriteria): Observable<PlayerStats> {
+    const criteriaCopy = cloneDeep(criteria);
+    criteriaCopy.playerIds = [playerId];
+
+    return this.cacheService.getFilteredData('playerStats',
+      this.dataService.getPlayerStatistics, criteriaCopy, this.dataService);
   }
 
   _getPlayerStats(criteria: FilterCriteria): Observable<PlayerStats> {

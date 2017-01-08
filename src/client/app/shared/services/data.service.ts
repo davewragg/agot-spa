@@ -9,6 +9,7 @@ import { FilterCriteria } from '../models/filter-criteria.model';
 import { DateRangeType } from '../models/date-range-type.model';
 import { SetOfResults } from '../models/set-of-results.model';
 import { Deck } from '../models/deck.model';
+import { PlayerStats } from '../models/player-stats.model';
 
 declare let Rollbar: any;
 
@@ -180,6 +181,20 @@ export class DataService {
     })
     // TODO .share()?
     // .cache()
+      .map(DataService.handleResponse);
+  }
+
+  /**
+   * api/statistics/player/1/?startDate=null&endDate=null
+   */
+  getPlayerStatistics(filterCriteria: FilterCriteria): Observable<PlayerStats> {
+    console.log('getPlayerStats called');
+    const [playerId] = filterCriteria.playerIds;
+    const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+    const params = DataService.convertFilterCriteriaToSearchParams(criteria);
+    return this.http.get(this.baseUrl + 'api/statistics/player/' + playerId, {
+      search: params
+    })
       .map(DataService.handleResponse);
   }
 
