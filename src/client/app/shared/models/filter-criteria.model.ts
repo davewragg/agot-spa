@@ -16,8 +16,8 @@ export class FilterCriteria {
     return cloneDeep(criteria);
   }
 
-  static deserialise(routeParams: Params): FilterCriteria {
-    const criteria = new FilterCriteria();
+  static deserialise(routeParams: Params, sourceCriteria?: FilterCriteria): FilterCriteria {
+    const criteria = sourceCriteria || new FilterCriteria();
     Object.assign(criteria, pick(routeParams, [
       'fromDate', 'toDate',
     ]));
@@ -25,7 +25,9 @@ export class FilterCriteria {
     if (routeParams['rangeSelection']) {
       criteria.rangeSelection = +routeParams['rangeSelection'];
     }
-    criteria.ascending = routeParams['ascending'] === 'true';
+    if (routeParams['ascending']) {
+      criteria.ascending = routeParams['ascending'] === 'true';
+    }
 
     const arrayParamKeys = [
       'playerIds',
@@ -34,7 +36,9 @@ export class FilterCriteria {
       'deckIds',
     ];
     return arrayParamKeys.reduce((memo: any, key: string) => {
-      memo[key] = extractNumberArray(routeParams[key]);
+      if (routeParams[key]) {
+        memo[key] = extractNumberArray(routeParams[key]);
+      }
       return memo;
     }, criteria);
 
