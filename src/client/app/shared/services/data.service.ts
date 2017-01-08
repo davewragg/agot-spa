@@ -169,8 +169,9 @@ export class DataService {
       .map(DataService.handleResponse);
   }
 
-  /*
-   @param refDataType: factions / agendas / players / decks
+  /**
+   * @param refDataType: factions / agendas / players / decks
+   * @param additionalParams any additional params
    */
   getReferenceData(refDataType: string, additionalParams?: string): Observable<any> {
     console.log('getReferenceData called', refDataType);
