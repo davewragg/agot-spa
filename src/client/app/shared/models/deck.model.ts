@@ -6,6 +6,7 @@ export class Deck {
   factionId: number;
   agenda: Agenda;
   agendaId: number;
+  deckTypeId: number = 3;
   title: string;
   fallbackTitle: string;
   thronesDbId: number;
