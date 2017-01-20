@@ -9,6 +9,7 @@ import { FilterCriteria } from '../models/filter-criteria.model';
 import { DateRangeType } from '../models/date-range-type.model';
 import { SetOfResults } from '../models/set-of-results.model';
 import { Deck } from '../models/deck.model';
+import { Player } from '../models/player.model';
 
 declare let Rollbar: any;
 
@@ -132,7 +133,8 @@ export class DataService {
     console.log('getRankings called');
     const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
     const params = DataService.convertFilterCriteriaToSearchParams(criteria);
-    return this.http.get(this.baseUrl + 'api/rankings/get', {
+    // TODO handle player group id
+    return this.http.get(this.baseUrl + 'api/rankings/get/1', {
       search: params
     })
       .map(DataService.handleResponse)
@@ -194,8 +196,16 @@ export class DataService {
     return this.http.get(this.baseUrl + `api/${refDataType}/getall`, {
       search: additionalParams
     })
-    // TODO .share()?
-    // .cache()
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
+  }
+
+  getPlayers(): Observable<Player[]> {
+    console.log('getPlayers called');
+    // TODO handle player group id
+    return this.http.get(this.baseUrl + `api/players/getall/1`, {
+      search: 'includeMostPlayedFaction=true'
+    })
       .map(DataService.handleResponse)
       .catch(DataService.handleError);
   }
