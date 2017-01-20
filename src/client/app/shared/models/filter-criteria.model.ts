@@ -11,6 +11,7 @@ export class FilterCriteria {
   factionIds: number[] = [];
   agendaIds: number[] = [];
   deckIds: number[] = [];
+  playerGroupIds: number[] = [1]; // TODO hardcoded for now
 
   static serialise(criteria: FilterCriteria): any {
     return cloneDeep(criteria);
@@ -34,6 +35,7 @@ export class FilterCriteria {
       'factionIds',
       'agendaIds',
       'deckIds',
+      'playerGroupIds',
     ];
     return arrayParamKeys.reduce((memo: any, key: string) => {
       if (routeParams[key]) {
