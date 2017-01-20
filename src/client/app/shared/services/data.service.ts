@@ -14,6 +14,9 @@ declare let Rollbar: any;
 
 @Injectable()
 export class DataService {
+  private static LOGIN_PAGE_LOCATION = '/User/Account/Login';
+  private static REDIRECT_PARAM = '?returnUrl=';
+
   private today: string;
   private aWeekAgo: string;
 
@@ -111,6 +114,14 @@ export class DataService {
     return json.payload;
   }
 
+  private static handleError(error: Response): any {
+    if (error.status === 401) {
+      const currentUrl = JSON.stringify(window.location.pathname);
+      window.location.href = this.LOGIN_PAGE_LOCATION + this.REDIRECT_PARAM + currentUrl;
+    }
+    return Observable.throw(error);
+  }
+
   constructor(private http: Http) {
     // TODO strip time from these
     this.today = moment().add(1, 'days').toISOString();
@@ -124,7 +135,8 @@ export class DataService {
     return this.http.get(this.baseUrl + 'api/rankings/get', {
       search: params
     })
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   getFilteredGames(filterCriteria: FilterCriteria) {
@@ -133,7 +145,8 @@ export class DataService {
     return this.http.get(this.baseUrl + 'api/games/searchgames', {
       search: params
     })
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   getGames(filterCriteria: FilterCriteria) {
@@ -144,7 +157,8 @@ export class DataService {
   getGame(gameId: number): Observable<Game> {
     console.log('getgame called', gameId);
     return this.http.get(this.baseUrl + 'api/games/get/' + gameId)
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   updateGame(game: Game): Observable<Game> {
@@ -152,7 +166,8 @@ export class DataService {
     return this.http.put(this.baseUrl + 'api/games/edit',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   createGame(game: Game): Observable<Game> {
@@ -160,13 +175,15 @@ export class DataService {
     return this.http.post(this.baseUrl + 'api/games/create',
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   deleteGame(gameId: number): Observable<any> {
     console.log('deletegame called', gameId);
     return this.http.delete(this.baseUrl + 'api/games/delete/' + gameId)
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   /*
@@ -179,7 +196,8 @@ export class DataService {
     })
     // TODO .share()?
     // .cache()
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   updateDeck(deck: Deck): Observable<Deck> {
@@ -187,7 +205,8 @@ export class DataService {
     return this.http.put(this.baseUrl + 'api/decks/edit',
       DataService._serialiseDeck(deck),
       DataService._getContentHeaders())
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
   }
 
   private setDatesFromRangeType(criteria: FilterCriteria) {
