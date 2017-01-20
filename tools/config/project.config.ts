@@ -78,17 +78,19 @@ export class ProjectConfig extends SeedConfig {
     this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
   }
 
-  getProxyMiddleware(): Array<any> {
-    const proxyMiddleware = require('http-proxy-middleware');
-    const context = `${this.APP_BASE}api`;
-    const middleware = proxyMiddleware(context, {
-      target: 'http://paulhoughton.org',
-      changeOrigin: true,
-      logLevel: 'debug'
-    });
-
-    return [
-      middleware
-    ];
-  }
+  // getProxyMiddleware(): Array<any> {
+  //   const proxyMiddleware = require('http-proxy-middleware');
+  //   const apiContext = `${this.APP_BASE}api`;
+  //   const userContext = `${this.APP_BASE}User`;
+  //   const middleware = proxyMiddleware([apiContext, userContext], {
+  //     // target: 'http://paulhoughton.org',
+  //     target: 'http://agottracker-dev.eu-west-2.elasticbeanstalk.com',
+  //     changeOrigin: true,
+  //     logLevel: 'debug'
+  //   });
+  //
+  //   return [
+  //     middleware
+  //   ];
+  // }
 }
