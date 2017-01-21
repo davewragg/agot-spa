@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Config } from './shared/config/env.config';
-import './operators';
 import { PlayerService } from './shared/services/player.service';
+import { Config } from './shared/config/env.config';
 import { Player } from './shared/models/player.model';
+import './operators';
 
 /**
  * This class represents the main application component.
@@ -12,6 +12,7 @@ import { Player } from './shared/models/player.model';
   moduleId: module.id,
   selector: 'agot-app',
   templateUrl: 'app.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   currentPlayer: Observable<Player>;
