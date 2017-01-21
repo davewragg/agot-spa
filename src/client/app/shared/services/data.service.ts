@@ -210,6 +210,13 @@ export class DataService {
       .catch(DataService.handleError);
   }
 
+  getCurrentPlayer(): Observable<Player> {
+    console.log('getCurrentPlayer called');
+    return this.http.get(this.baseUrl + `api/players/currentplayer`)
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
+  }
+
   updateDeck(deck: Deck): Observable<Deck> {
     console.log('updatedeck called', deck);
     return this.http.put(this.baseUrl + 'api/decks/edit',
