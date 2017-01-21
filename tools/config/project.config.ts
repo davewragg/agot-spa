@@ -85,6 +85,9 @@ export class ProjectConfig extends SeedConfig {
   //   const middleware = proxyMiddleware([apiContext, userContext], {
   //     // target: 'http://paulhoughton.org',
   //     target: 'http://agottracker-dev.eu-west-2.elasticbeanstalk.com',
+  //     // target: 'https://agot.local.com:443',
+  //     // protocolRewrite: true,
+  //     // secure: true,
   //     changeOrigin: true,
   //     logLevel: 'debug'
   //   });
