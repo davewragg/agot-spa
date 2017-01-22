@@ -66,6 +66,54 @@ export class ProjectConfig extends SeedConfig {
           defaultExtension: 'js'
         }
       },
+      {
+        name: '@ngrx/core',
+        path: 'node_modules/@ngrx/core/bundles/core.min.umd.js'
+      },
+      {
+        name: '@ngrx/db',
+        path: 'node_modules/@ngrx/db/bundles/db.min.umd.js'
+      },
+      {
+        name: '@ngrx/effects',
+        path: 'node_modules/@ngrx/effects/bundles/effects.min.umd.js'
+      },
+      {
+        name: '@ngrx/router-store',
+        path: 'node_modules/@ngrx/router-store/bundles/router-store.min.umd.js'
+      },
+      {
+        name: '@ngrx/store',
+        path: 'node_modules/@ngrx/store/bundles/store.min.umd.js'
+      },
+      {
+        name: '@ngrx/store-devtools',
+        path: 'node_modules/@ngrx/store-devtools/bundles/store-devtools.min.umd.js'
+      },
+      {
+        name: 'ngrx-store-freeze',
+        path: 'node_modules/ngrx-store-freeze',
+        packageMeta: {
+          main: 'dist/index.js',
+          defaultExtension: 'js'
+        }
+      },
+      {
+        name: 'reselect',
+        path: 'node_modules/reselect',
+        packageMeta: {
+          main: 'dist/reselect.js',
+          defaultExtension: 'js'
+        }
+      },
+      {
+        name: 'deep-freeze-strict',
+        path: 'node_modules/deep-freeze-strict',
+        packageMeta: {
+          main: 'index.js',
+          defaultExtension: 'js'
+        }
+      }
     ];
     this.addPackagesBundles(additionalPackages);
 
