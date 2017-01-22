@@ -1,16 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Params } from '@angular/router';
 import { isEmpty } from 'lodash';
-import { GameService } from '../shared/services/game.service';
 import { Game } from '../shared/models/game.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import * as fromRoot from '../state-management/reducers/index';
+import * as gameActions from '../state-management/actions/game';
+
 
 @Component({
   moduleId: module.id,
   selector: 'agot-games',
   templateUrl: 'games.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GamesComponent implements OnInit {
+export class GamesComponent /*implements OnInit*/ {
   @Input()
   title: string;
   @Input()
@@ -18,46 +23,62 @@ export class GamesComponent implements OnInit {
   @Input()
   hideFilters: boolean = false;
 
-  games: Game[];
+  // games: Game[];
   loadingError: any = null;
   isLoading: boolean;
 
-  constructor(private _route: ActivatedRoute,
-              private _router: Router,
-              private _gameService: GameService) {
+  searchQuery$: Observable<FilterCriteria>;
+  games$: Observable<Game[]>;
+  loading$: Observable<boolean>;
 
+  constructor(private store: Store<fromRoot.State>) {
+    this.searchQuery$ = store.select(fromRoot.getSearchQuery).take(1);
+    this.games$ = store.select(fromRoot.getSearchResults);
+    this.loading$ = store.select(fromRoot.getSearchLoading);
   }
 
-  ngOnInit() {
-    this._route.params
-      .map(this.setFiltering.bind(this))
-      .do(() => this.isLoading = true)
-      .switchMap((criteria: FilterCriteria) => this._gameService.getGames(criteria))
-      .subscribe(
-        (games: Game[]) => {
-          this.loadingError = null;
-          this.games = games;
-          // TODO until loading states are sorted out
-          this.isLoading = false;
-        },
-        (err) => {
-          this.loadingError = err._body || err.message || err;
-          this.isLoading = false;
-        },
-        () => {
-          console.log('done');
-          this.isLoading = false;
-        }
-      );
+  search(criteria: FilterCriteria) {
+    this.store.dispatch(new gameActions.FilterAction(criteria));
   }
+
+
+  // constructor(private _route: ActivatedRoute,
+  //             private _router: Router,
+  //             private _gameService: GameService) {
+  //
+  // }
+
+  // ngOnInit() {
+  //   this._route.params
+  //     .map(this.setFiltering.bind(this))
+  //     .do(() => this.isLoading = true)
+  //     .switchMap((criteria: FilterCriteria) => this._gameService.getGames(criteria))
+  //     .subscribe(
+  //       (games: Game[]) => {
+  //         this.loadingError = null;
+  //         this.games = games;
+  //         // TODO until loading states are sorted out
+  //         this.isLoading = false;
+  //       },
+  //       (err) => {
+  //         this.loadingError = err._body || err.message || err;
+  //         this.isLoading = false;
+  //       },
+  //       () => {
+  //         console.log('done');
+  //         this.isLoading = false;
+  //       }
+  //     );
+  // }
 
   onDateRangeChange(criteria: FilterCriteria) {
-    this.loadGames(criteria);
+    // this.loadGames(criteria);
+    this.search(criteria);
   }
 
-  loadGames(criteria?: FilterCriteria) {
-    this._router.navigate(['/games', FilterCriteria.serialise(criteria)]);
-  }
+  // loadGames(criteria?: FilterCriteria) {
+  //   this._router.navigate(['/games', FilterCriteria.serialise(criteria)]);
+  // }
 
   private setFiltering(params: Params) {
     const defaultFilter = this.criteria || new FilterCriteria();
