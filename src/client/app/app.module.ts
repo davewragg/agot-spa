@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpModule } from '@angular/http';
-
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-// import { DBModule } from '@ngrx/db';
+import { DBModule } from '@ngrx/db';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -20,6 +18,10 @@ import { DecksModule } from './decks/decks.module';
 import { DeckModule } from './deck/deck.module';
 import { PlayersModule } from './players/players.module';
 import { PlayerModule } from './player/player.module';
+import { GameEffects } from './state-management/effects/game';
+import { CollectionEffects } from './state-management/effects/collection';
+import { reducer } from './state-management/reducers/index';
+import { schema } from './db';
 
 @NgModule({
   imports: [
@@ -35,7 +37,7 @@ import { PlayerModule } from './player/player.module';
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    // StoreModule.provideStore(reducer),
+    StoreModule.provideStore(reducer),
 
     /**
      * @ngrx/router-store keeps router state up-to-date in the store and uses
@@ -61,14 +63,14 @@ import { PlayerModule } from './player/player.module';
      *
      * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
      */
-    // EffectsModule.run(BookEffects),
-    // EffectsModule.run(CollectionEffects),
+    EffectsModule.run(GameEffects),
+    EffectsModule.run(CollectionEffects),
 
     /**
      * `provideDB` sets up @ngrx/db with the provided schema and makes the Database
      * service available.
      */
-    // DBModule.provideDB(schema),
+    DBModule.provideDB(schema),
 
     HomeModule,
     GamesModule,
