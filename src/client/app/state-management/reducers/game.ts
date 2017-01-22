@@ -1,63 +1,63 @@
 import { createSelector } from 'reselect';
-import { Book } from '../models/book';
-import * as book from '../actions/book';
+import * as game from '../actions/game';
 import * as collection from '../actions/collection';
+import { Game } from '../../shared/models/game.model';
 
 
 export interface State {
-  ids: string[];
-  entities: { [id: string]: Book };
-  selectedBookId: string | null;
-};
+  ids: number[];
+  entities: { [id: string]: Game };
+  selectedGameId: string | null;
+}
 
 const initialState: State = {
   ids: [],
   entities: {},
-  selectedBookId: null,
+  selectedGameId: null,
 };
 
-export function reducer(state = initialState, action: book.Actions | collection.Actions): State {
+export function reducer(state = initialState, action: game.Actions | collection.Actions): State {
   switch (action.type) {
-    case book.ActionTypes.SEARCH_COMPLETE:
+    case game.ActionTypes.FILTER_COMPLETE:
     case collection.ActionTypes.LOAD_SUCCESS: {
-      const books = action.payload;
-      const newBooks = books.filter(book => !state.entities[book.id]);
+      const games = action.payload;
+      const newGames = games.filter(game => !state.entities[game.gameId]);
 
-      const newBookIds = newBooks.map(book => book.id);
-      const newBookEntities = newBooks.reduce((entities: { [id: string]: Book }, book: Book) => {
+      const newGameIds = newGames.map(game => game.gameId);
+      const newGameEntities = newGames.reduce((entities: { [id: string]: Game }, game: Game) => {
         return Object.assign(entities, {
-          [book.id]: book
+          [game.gameId]: game
         });
       }, {});
 
       return {
-        ids: [ ...state.ids, ...newBookIds ],
-        entities: Object.assign({}, state.entities, newBookEntities),
-        selectedBookId: state.selectedBookId
+        ids: [...state.ids, ...newGameIds],
+        entities: Object.assign({}, state.entities, newGameEntities),
+        selectedGameId: state.selectedGameId
       };
     }
 
-    case book.ActionTypes.LOAD: {
-      const book = action.payload;
+    case game.ActionTypes.LOAD: {
+      const game = action.payload;
 
-      if (state.ids.indexOf(book.id) > -1) {
+      if (state.ids.indexOf(game.gameId) > -1) {
         return state;
       }
 
       return {
-        ids: [ ...state.ids, book.id ],
+        ids: [...state.ids, game.gameId],
         entities: Object.assign({}, state.entities, {
-          [book.id]: book
+          [game.gameId]: game
         }),
-        selectedBookId: state.selectedBookId
+        selectedGameId: state.selectedGameId
       };
     }
 
-    case book.ActionTypes.SELECT: {
+    case game.ActionTypes.SELECT: {
       return {
         ids: state.ids,
         entities: state.entities,
-        selectedBookId: action.payload
+        selectedGameId: action.payload
       };
     }
 
@@ -80,7 +80,7 @@ export const getEntities = (state: State) => state.entities;
 
 export const getIds = (state: State) => state.ids;
 
-export const getSelectedId = (state: State) => state.selectedBookId;
+export const getSelectedId = (state: State) => state.selectedGameId;
 
 export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
   return entities[selectedId];

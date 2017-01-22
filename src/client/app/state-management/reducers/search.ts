@@ -1,45 +1,44 @@
-import { createSelector } from 'reselect';
-import * as book from '../actions/book';
-
+import * as game from '../actions/game';
+import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 
 export interface State {
-  ids: string[];
+  ids: number[];
   loading: boolean;
-  query: string;
-};
+  criteria: FilterCriteria;
+}
 
 const initialState: State = {
   ids: [],
   loading: false,
-  query: ''
+  criteria: null,
 };
 
-export function reducer(state = initialState, action: book.Actions): State {
+export function reducer(state = initialState, action: game.Actions): State {
   switch (action.type) {
-    case book.ActionTypes.SEARCH: {
-      const query = action.payload;
+    case game.ActionTypes.FILTER: {
+      const criteria = action.payload;
 
-      if (query === '') {
+      if (!criteria) {
         return {
           ids: [],
           loading: false,
-          query
+          criteria
         };
       }
 
       return Object.assign({}, state, {
-        query,
+        criteria,
         loading: true
       });
     }
 
-    case book.ActionTypes.SEARCH_COMPLETE: {
-      const books = action.payload;
+    case game.ActionTypes.FILTER_COMPLETE: {
+      const games = action.payload;
 
       return {
-        ids: books.map(book => book.id),
+        ids: games.map(game => game.gameId),
         loading: false,
-        query: state.query
+        criteria: state.criteria
       };
     }
 
@@ -49,9 +48,8 @@ export function reducer(state = initialState, action: book.Actions): State {
   }
 }
 
-
 export const getIds = (state: State) => state.ids;
 
-export const getQuery = (state: State) => state.query;
+export const getCriteria = (state: State) => state.criteria;
 
 export const getLoading = (state: State) => state.loading;

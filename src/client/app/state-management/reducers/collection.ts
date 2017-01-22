@@ -1,12 +1,10 @@
-import { createSelector } from 'reselect';
 import * as collection from '../actions/collection';
-
 
 export interface State {
   loaded: boolean;
   loading: boolean;
-  ids: string[];
-};
+  ids: number[];
+}
 
 const initialState: State = {
   loaded: false,
@@ -23,34 +21,34 @@ export function reducer(state = initialState, action: collection.Actions): State
     }
 
     case collection.ActionTypes.LOAD_SUCCESS: {
-      const books = action.payload;
+      const games = action.payload;
 
       return {
         loaded: true,
         loading: false,
-        ids: books.map(book => book.id)
+        ids: games.map(game => game.gameId)
       };
     }
 
-    case collection.ActionTypes.ADD_BOOK_SUCCESS:
-    case collection.ActionTypes.REMOVE_BOOK_FAIL: {
-      const book = action.payload;
+    case collection.ActionTypes.ADD_GAME_SUCCESS:
+    case collection.ActionTypes.REMOVE_GAME_FAIL: {
+      const game = action.payload;
 
-      if (state.ids.indexOf(book.id) > -1) {
+      if (state.ids.indexOf(game.gameId) > -1) {
         return state;
       }
 
       return Object.assign({}, state, {
-        ids: [ ...state.ids, book.id ]
+        ids: [...state.ids, game.gameId]
       });
     }
 
-    case collection.ActionTypes.REMOVE_BOOK_SUCCESS:
-    case collection.ActionTypes.ADD_BOOK_FAIL: {
-      const book = action.payload;
+    case collection.ActionTypes.REMOVE_GAME_SUCCESS:
+    case collection.ActionTypes.ADD_GAME_FAIL: {
+      const game = action.payload;
 
       return Object.assign({}, state, {
-        ids: state.ids.filter(id => id !== book.id)
+        ids: state.ids.filter(id => id !== game.gameId)
       });
     }
 
@@ -59,7 +57,6 @@ export function reducer(state = initialState, action: collection.Actions): State
     }
   }
 }
-
 
 export const getLoaded = (state: State) => state.loaded;
 

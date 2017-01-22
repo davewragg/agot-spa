@@ -1,26 +1,4 @@
 import { createSelector } from 'reselect';
-import { ActionReducer } from '@ngrx/store';
-import * as fromRouter from '@ngrx/router-store';
-import { environment } from '../../environments/environment';
-import { Book } from '../models/book';
-
-/**
- * The compose function is one of our most handy tools. In basic terms, you give
- * it any number of functions and it returns a function. This new function
- * takes a value and chains it through every composed function, returning
- * the output.
- *
- * More: https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html
- */
-import { compose } from '@ngrx/core/compose';
-
-/**
- * storeFreeze prevents state from being mutated. When mutation occurs, an
- * exception will be thrown. This is useful during development mode to
- * ensure that none of the reducers accidentally mutates the state.
- */
-import { storeFreeze } from 'ngrx-store-freeze';
-
 /**
  * combineReducers is another useful metareducer that takes a map of reducer
  * functions and creates a new reducer that stores the gathers the values
@@ -29,9 +7,23 @@ import { storeFreeze } from 'ngrx-store-freeze';
  *
  * More: https://egghead.io/lessons/javascript-redux-implementing-combinereducers-from-scratch
  */
-import { combineReducers } from '@ngrx/store';
-
-
+import { ActionReducer, combineReducers } from '@ngrx/store';
+import * as fromRouter from '@ngrx/router-store';
+/**
+ * The compose function is one of our most handy tools. In basic terms, you give
+ * it any number of functions and it returns a function. This new function
+ * takes a value and chains it through every composed function, returning
+ * the output.
+ *
+ * More: https://drboolean.gitgames.io/mostly-adequate-guide/content/ch5.html
+ */
+import { compose } from '@ngrx/core/compose';
+/**
+ * storeFreeze prevents state from being mutated. When mutation occurs, an
+ * exception will be thrown. This is useful during development mode to
+ * ensure that none of the reducers accidentally mutates the state.
+ */
+import { storeFreeze } from 'ngrx-store-freeze';
 /**
  * Every reducer module's default export is the reducer function itself. In
  * addition, each module should export a type or interface that describes
@@ -39,7 +31,7 @@ import { combineReducers } from '@ngrx/store';
  * notation packages up all of the exports into a single object.
  */
 import * as fromSearch from './search';
-import * as fromBooks from './books';
+import * as fromGames from './game';
 import * as fromCollection from './collection';
 import * as fromLayout from './layout';
 
@@ -50,7 +42,7 @@ import * as fromLayout from './layout';
  */
 export interface State {
   search: fromSearch.State;
-  books: fromBooks.State;
+  games: fromGames.State;
   collection: fromCollection.State;
   layout: fromLayout.State;
   router: fromRouter.RouterState;
@@ -66,7 +58,7 @@ export interface State {
  */
 const reducers = {
   search: fromSearch.reducer,
-  books: fromBooks.reducer,
+  games: fromGames.reducer,
   collection: fromCollection.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
@@ -76,10 +68,9 @@ const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineRed
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 
 export function reducer(state: any, action: any) {
-  if (environment.production) {
+  if (String('<%= BUILD_TYPE %>') === 'prod') {
     return productionReducer(state, action);
-  }
-  else {
+  } else {
     return developmentReducer(state, action);
   }
 }
@@ -88,19 +79,19 @@ export function reducer(state: any, action: any) {
 /**
  * A selector function is a map function factory. We pass it parameters and it
  * returns a function that maps from the larger state tree into a smaller
- * piece of state. This selector simply selects the `books` state.
+ * piece of state. This selector simply selects the `games` state.
  *
  * Selectors are used with the `select` operator.
  *
  * ```ts
  * class MyComponent {
  * 	constructor(state$: Observable<State>) {
- * 	  this.booksState$ = state$.select(getBooksState);
+ * 	  this.gamesState$ = state$.select(getGamesState);
  * 	}
  * }
  * ```
  */
-export const getBooksState = (state: State) => state.books;
+export const getGamesState = (state: State) => state.games;
 
 /**
  * Every reducer module exports selector functions, however child reducers
@@ -108,8 +99,8 @@ export const getBooksState = (state: State) => state.books;
  * need to make new selectors that wrap them.
  *
  * Once again our compose function comes in handy. From right to left, we
- * first select the books state then we pass the state to the book
- * reducer's getBooks selector, finally returning an observable
+ * first select the games state then we pass the state to the game
+ * reducer's getGames selector, finally returning an observable
  * of search results.
  *
  * Share memoizes the selector functions and publishes the result. This means
@@ -117,45 +108,44 @@ export const getBooksState = (state: State) => state.books;
  * observable. Each subscription to the resultant observable
  * is shared across all subscribers.
  */
- export const getBookEntities = createSelector(getBooksState, fromBooks.getEntities);
- export const getBookIds = createSelector(getBooksState, fromBooks.getIds);
- export const getSelectedBookId = createSelector(getBooksState, fromBooks.getSelectedId);
- export const getSelectedBook = createSelector(getBooksState, fromBooks.getSelected);
+export const getGameEntities = createSelector(getGamesState, fromGames.getEntities);
+export const getGameIds = createSelector(getGamesState, fromGames.getIds);
+export const getSelectedGameId = createSelector(getGamesState, fromGames.getSelectedId);
+export const getSelectedGame = createSelector(getGamesState, fromGames.getSelected);
 
 
 /**
- * Just like with the books selectors, we also have to compose the search
+ * Just like with the games selectors, we also have to compose the search
  * reducer's and collection reducer's selectors.
  */
 export const getSearchState = (state: State) => state.search;
 
-export const getSearchBookIds = createSelector(getSearchState, fromSearch.getIds);
-export const getSearchQuery = createSelector(getSearchState, fromSearch.getQuery);
+export const getSearchGameIds = createSelector(getSearchState, fromSearch.getIds);
+export const getSearchQuery = createSelector(getSearchState, fromSearch.getCriteria);
 export const getSearchLoading = createSelector(getSearchState, fromSearch.getLoading);
 
 
 /**
  * Some selector functions create joins across parts of state. This selector
- * composes the search result IDs to return an array of books in the store.
+ * composes the search result IDs to return an array of games in the store.
  */
-export const getSearchResults = createSelector(getBookEntities, getSearchBookIds, (books, searchIds) => {
-  return searchIds.map(id => books[id]);
+export const getSearchResults = createSelector(getGameEntities, getSearchGameIds, (games, searchIds) => {
+  return searchIds.map(id => games[id]);
 });
-
 
 
 export const getCollectionState = (state: State) => state.collection;
 
 export const getCollectionLoaded = createSelector(getCollectionState, fromCollection.getLoaded);
 export const getCollectionLoading = createSelector(getCollectionState, fromCollection.getLoading);
-export const getCollectionBookIds = createSelector(getCollectionState, fromCollection.getIds);
+export const getCollectionGameIds = createSelector(getCollectionState, fromCollection.getIds);
 
-export const getBookCollection = createSelector(getBookEntities, getCollectionBookIds, (entities, ids) => {
+export const getGameCollection = createSelector(getGameEntities, getCollectionGameIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });
 
-export const isSelectedBookInCollection = createSelector(getCollectionBookIds, getSelectedBookId, (ids, selected) => {
-  return ids.indexOf(selected) > -1;
+export const isSelectedGameInCollection = createSelector(getCollectionGameIds, getSelectedGameId, (ids, selected) => {
+  return ids.indexOf(+selected) > -1;
 });
 
 /**
