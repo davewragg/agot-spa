@@ -13,8 +13,7 @@ import Timer = NodeJS.Timer;
 export class SpinnerComponent implements OnDestroy {
   @Input()
   public delay: number = 100;
-
-  public isDelayedRunning: boolean = false;
+  public isDelayedRunning: boolean = true;
 
   @Input()
   public set isRunning(value: boolean) {
@@ -28,11 +27,14 @@ export class SpinnerComponent implements OnDestroy {
       return;
     }
 
-    this.currentTimeout = setTimeout(() => {
-      this.isDelayedRunning = value;
-      this.cancelTimeout();
-    }, this.delay);
+    // TODO remove when whatever this timeout bug is gets fixed
+    this.isDelayedRunning = true;
+    // this.currentTimeout = setTimeout(() => {
+    //   this.isDelayedRunning = value;
+    //   this.cancelTimeout();
+    // }, this.delay);
   }
+
   private currentTimeout: Timer;
 
   ngOnDestroy(): any {
