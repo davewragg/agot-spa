@@ -18,7 +18,7 @@ export class FilterCriteria {
   }
 
   static deserialise(routeParams: Params, sourceCriteria?: FilterCriteria): FilterCriteria {
-    const criteria = sourceCriteria || new FilterCriteria();
+    const criteria = cloneDeep(sourceCriteria) || new FilterCriteria();
     Object.assign(criteria, pick(routeParams, [
       'fromDate', 'toDate',
     ]));

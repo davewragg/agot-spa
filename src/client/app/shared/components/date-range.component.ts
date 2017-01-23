@@ -32,9 +32,13 @@ export class DateRangeComponent implements OnInit {
     this.aWeekAgo = moment().subtract(7, 'days').toISOString();
   }
 
+  // TODO refactor this to be immutable - return a new object on every event
+
   ngOnInit() {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
+    } else {
+      this.criteria = Object.assign({}, this.criteria);
     }
     this.setSelectedSeason();
   }
@@ -58,7 +62,7 @@ export class DateRangeComponent implements OnInit {
 
   onExecute() {
     //.debounceTime(400).distinctUntilChanged()
-    this.setSelectedSeason();
+    // this.setSelectedSeason();
     this.rangeChange.emit(this.criteria);
   }
 
