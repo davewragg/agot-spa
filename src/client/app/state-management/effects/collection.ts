@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
-import { Database } from '@ngrx/db';
+// import { Database } from '@ngrx/db';
 import { Observable } from 'rxjs/Observable';
 import { defer } from 'rxjs/observable/defer';
-import { of } from 'rxjs/observable/of';
+// import { of } from 'rxjs/observable/of';
 import * as collection from '../actions/collection';
-import { Game } from '../../shared/models/game.model';
+// import { Game } from '../../shared/models/game.model';
 
 @Injectable()
 export class CollectionEffects {
@@ -22,7 +22,7 @@ export class CollectionEffects {
    */
   @Effect({ dispatch: false })
   openDB$: Observable<any> = defer(() => {
-    return this.db.open('games_app');
+    // return this.db.open('games_app');
   });
 
   /**
@@ -33,33 +33,35 @@ export class CollectionEffects {
   loadCollection$: Observable<Action> = this.actions$
     .ofType(collection.ActionTypes.LOAD)
     .startWith(new collection.LoadAction())
-    .switchMap(() =>
-      this.db.query('games')
-        .toArray()
-        .map((games: Game[]) => new collection.LoadSuccessAction(games))
-        .catch((error: Error) => of(new collection.LoadFailAction(error)))
-    );
+    // .switchMap(() =>
+    // this.db.query('games')
+    //   .toArray()
+    //   .map((games: Game[]) => new collection.LoadSuccessAction(games))
+    //   .catch((error: Error) => of(new collection.LoadFailAction(error)))
+    .map(() => new collection.LoadSuccessAction([]));
 
   @Effect()
   addGameToCollection$: Observable<Action> = this.actions$
     .ofType(collection.ActionTypes.ADD_GAME)
     .map((action: collection.AddGameAction) => action.payload)
-    .mergeMap(game =>
-      this.db.insert('games', [game])
-        .map(() => new collection.AddGameSuccessAction(game))
-        .catch(() => of(new collection.AddGameFailAction(game)))
-    );
+    // .mergeMap(game =>
+    //   this.db.insert('games', [game])
+    //     .map(() => new collection.AddGameSuccessAction(game))
+    //     .catch(() => of(new collection.AddGameFailAction(game)))
+    .map((game) => new collection.AddGameSuccessAction(game));
+  // );
 
   @Effect()
   removeGameFromCollection$: Observable<Action> = this.actions$
     .ofType(collection.ActionTypes.REMOVE_GAME)
     .map((action: collection.RemoveGameAction) => action.payload)
-    .mergeMap(game =>
-      this.db.executeWrite('games', 'delete', [game.gameId])
-        .map(() => new collection.RemoveGameSuccessAction(game))
-        .catch(() => of(new collection.RemoveGameFailAction(game)))
-    );
+    // .mergeMap(game =>
+    //   this.db.executeWrite('games', 'delete', [game.gameId])
+    //     .map(() => new collection.RemoveGameSuccessAction(game))
+    //     .catch(() => of(new collection.RemoveGameFailAction(game)))
+    // );
+    .map((game) => new collection.RemoveGameSuccessAction(game));
 
-  constructor(private actions$: Actions, private db: Database) {
+  constructor(private actions$: Actions/*, private db: Database*/) {
   }
 }

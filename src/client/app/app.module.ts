@@ -4,7 +4,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { DBModule } from '@ngrx/db';
+// import { DBModule } from '@ngrx/db';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
@@ -21,7 +21,7 @@ import { PlayerModule } from './player/player.module';
 import { GameEffects } from './state-management/effects/game';
 import { CollectionEffects } from './state-management/effects/collection';
 import { reducer } from './state-management/reducers/index';
-import { schema } from './db';
+// import { schema } from './db';
 
 @NgModule({
   imports: [
@@ -70,7 +70,7 @@ import { schema } from './db';
      * `provideDB` sets up @ngrx/db with the provided schema and makes the Database
      * service available.
      */
-    DBModule.provideDB(schema),
+    // DBModule.provideDB(schema),
 
     HomeModule,
     GamesModule,
