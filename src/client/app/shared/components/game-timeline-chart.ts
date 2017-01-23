@@ -9,9 +9,16 @@ import { StatsService } from '../services/stats.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="row">
-      <chart class="col-xs-12" [options]="options"></chart>
+      <chart class="col-xs-12 chart-box" [options]="options"></chart>
     </div>
   `,
+  styles: [
+    `.chart-box {
+      height: 300px;
+      min-width: 250px;
+      max-width: 1000px;
+    }`
+  ]
 })
 export class GameTimelineChartComponent implements OnInit, OnChanges {
   @Input()
