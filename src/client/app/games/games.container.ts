@@ -18,7 +18,7 @@ import { FilterCriteria } from '../shared/models/filter-criteria.model';
  * SelectedBookPageComponent
  */
 @Component({
-  selector: 'agot-view-games',
+  selector: 'agot-games-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <agot-games></agot-games>
@@ -29,7 +29,6 @@ export class GamesContainerComponent implements OnDestroy {
 
   constructor(private store: Store<fromRoot.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params
-      // .select<string>('id')
       .map(params => isEmpty(params) ? new FilterCriteria() : FilterCriteria.deserialise(params))
       .map(criteria => new gameActions.FilterAction(criteria))
       .subscribe(store);

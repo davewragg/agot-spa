@@ -33,6 +33,7 @@ export class DateRangeComponent implements OnInit {
   }
 
   // TODO refactor this to be immutable - return a new object on every event
+  // use OnChanges?
 
   ngOnInit() {
     if (!this.criteria) {
@@ -62,7 +63,7 @@ export class DateRangeComponent implements OnInit {
 
   onExecute() {
     //.debounceTime(400).distinctUntilChanged()
-    // this.setSelectedSeason();
+    this.setSelectedSeason();
     this.rangeChange.emit(this.criteria);
   }
 

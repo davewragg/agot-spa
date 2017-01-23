@@ -1,5 +1,5 @@
 <section>
-  <h2 [hidden]="isLoading">{{ title || 'Games' }}</h2>
+  <h2 [hidden]="loading$ | async">{{ title || 'Games' }}</h2>
 
   <agot-date-range [showSort]="true" [criteria]="searchQuery$ | async"
                    [hidden]="hideFilters"
@@ -12,8 +12,8 @@
     <!--<button type="button" (click)="loadGames(criteria)">Try again</button>-->
   <!--</div>-->
 
-  <agot-game-timeline-chart *ngIf="(!loading$ | async)"
+  <agot-game-timeline-chart [hidden]="loading$ | async"
                             [games]="games$ | async"></agot-game-timeline-chart>
 
-  <agot-games-table [games]="games$ | async"></agot-games-table>
+  <agot-games-table [games]="games$ | async" [hidden]="loading$ | async"></agot-games-table>
 </section>
