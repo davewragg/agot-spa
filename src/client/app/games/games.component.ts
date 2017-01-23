@@ -1,13 +1,13 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Params } from '@angular/router';
-import { isEmpty } from 'lodash';
-import { Game } from '../shared/models/game.model';
-import { FilterCriteria } from '../shared/models/filter-criteria.model';
+// import { Params } from '@angular/router';
+// import { isEmpty } from 'lodash';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { go } from '@ngrx/router-store';
+import { Game } from '../shared/models/game.model';
+import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import * as fromRoot from '../state-management/reducers/index';
-import * as gameActions from '../state-management/actions/game';
-
+// import * as gameActions from '../state-management/actions/game';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +24,7 @@ export class GamesComponent /*implements OnInit*/ {
   hideFilters: boolean = false;
 
   // games: Game[];
-  loadingError: any = null;
+  // loadingError: any = null;
   isLoading: boolean;
 
   searchQuery$: Observable<FilterCriteria>;
@@ -37,10 +37,9 @@ export class GamesComponent /*implements OnInit*/ {
     this.loading$ = store.select(fromRoot.getSearchLoading);
   }
 
-  search(criteria: FilterCriteria) {
-    this.store.dispatch(new gameActions.FilterAction(criteria));
-  }
-
+  // search(criteria: FilterCriteria) {
+  //   this.store.dispatch(new gameActions.FilterAction(criteria));
+  // }
 
   // constructor(private _route: ActivatedRoute,
   //             private _router: Router,
@@ -72,18 +71,19 @@ export class GamesComponent /*implements OnInit*/ {
   // }
 
   onDateRangeChange(criteria: FilterCriteria) {
-    // this.loadGames(criteria);
-    this.search(criteria);
+    this.loadGames(criteria);
+    // this.search(criteria);
   }
 
-  // loadGames(criteria?: FilterCriteria) {
-  //   this._router.navigate(['/games', FilterCriteria.serialise(criteria)]);
+  loadGames(criteria?: FilterCriteria) {
+    // this._router.navigate(['/games', FilterCriteria.serialise(criteria)]);
+    this.store.dispatch(go(['/games', FilterCriteria.serialise(criteria)]));
+  }
+
+  // private setFiltering(params: Params) {
+  //   const defaultFilter = this.criteria || new FilterCriteria();
+  //   return this.criteria = isEmpty(params) ?
+  //     defaultFilter :
+  //     FilterCriteria.deserialise(params, defaultFilter);
   // }
-
-  private setFiltering(params: Params) {
-    const defaultFilter = this.criteria || new FilterCriteria();
-    return this.criteria = isEmpty(params) ?
-      defaultFilter :
-      FilterCriteria.deserialise(params, defaultFilter);
-  }
 }

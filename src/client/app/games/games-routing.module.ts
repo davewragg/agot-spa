@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { GamesComponent } from './games.component';
+import { GamesContainerComponent } from './games.container';
 
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: 'games', component: GamesComponent }
-      // {path: '/games/new', component: GameDetailsComponent, name: 'NewGameDetails'},
-      // {path: '/games/:id', component: GameDetailsComponent, name: 'GameDetails'},
+      { path: 'games', component: GamesContainerComponent }
     ])
   ],
   exports: [RouterModule]
