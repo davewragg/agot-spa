@@ -68,9 +68,6 @@ export class RemoveGameFailAction implements Action {
  */
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
-
-  constructor() {
-  }
 }
 
 export class LoadSuccessAction implements Action {
