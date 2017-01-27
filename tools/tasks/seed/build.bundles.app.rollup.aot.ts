@@ -19,7 +19,6 @@ const config = {
       include: 'node_modules/**',
       // TODO until commonjs plugin is updated
       namedExports: {
-        // Object.keys(require('date-fns'))
         'node_modules/date-fns/index.js': [
           'endOfDay',
           'format',
@@ -29,7 +28,9 @@ const config = {
           'distanceInWordsToNow',
           'subDays',
           'startOfDay',
-        ]
+        ],
+        'node_modules/lodash/lodash.js': Object.keys(require('lodash')), // TODO get specific
+        'node_modules/angular2-highcharts/index.js': Object.keys(require('angular2-highcharts'))
       }
     })
   ]
