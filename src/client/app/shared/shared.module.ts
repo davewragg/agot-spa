@@ -26,7 +26,7 @@ import {
   PlayerLinkComponent,
   SpinnerComponent
 } from './components/index';
-import { CalendarPipe, DateFormatPipe, TimeAgoPipe } from './pipes/index';
+import { DateFormatPipe, TimeAgoPipe } from './pipes/index';
 import {
   CacheService,
   DataService,
@@ -52,7 +52,6 @@ import {
     NavbarComponent,
     FooterComponent,
     StatsTableComponent,
-    CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
     ColourRangeDirective,
@@ -82,7 +81,6 @@ import {
     ReactiveFormsModule,
     RouterModule,
     ToasterModule,
-    CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
     ColourRangeDirective,

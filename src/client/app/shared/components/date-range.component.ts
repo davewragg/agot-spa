@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { subDays, startOfDay, endOfDay } from 'date-fns';
 import { SeasonService } from '../services/season.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Season } from '../models/season.model';
 import { DateRangeType } from '../models/date-range-type.model';
-import * as moment from 'moment/moment';
 
 @Component({
   moduleId: module.id,
@@ -28,8 +28,9 @@ export class DateRangeComponent implements OnInit {
 
   constructor(private _seasonService: SeasonService) {
     this.seasons = _seasonService.seasons;
-    this.today = moment().add(1, 'days').toISOString();
-    this.aWeekAgo = moment().subtract(7, 'days').toISOString();
+    const now = new Date();
+    this.today = endOfDay(now).toISOString();
+    this.aWeekAgo = startOfDay(subDays(now, 7)).toISOString();
   }
 
   // TODO refactor this to be immutable - return a new object on every event

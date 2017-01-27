@@ -1,16 +1,13 @@
 /* angular2-moment (c) 2015, 2016 Uri Shaked / MIT Licence */
 import { Pipe, ChangeDetectorRef, PipeTransform, OnDestroy } from '@angular/core';
-import * as moment from 'moment/moment';
-
-// under systemjs, moment is actually exported as the default export, so we account for that
-const momentConstructor: (value?: any) => moment.Moment = (<any>moment).default || moment;
+import { differenceInMinutes, distanceInWordsToNow } from 'date-fns';
 
 @Pipe({ name: 'amTimeAgo', pure: false })
 export class TimeAgoPipe implements PipeTransform, OnDestroy {
   private _currentTimer: number;
 
-  static _getSecondsUntilUpdate(momentInstance: moment.Moment) {
-    const howOld = Math.abs(momentConstructor().diff(momentInstance, 'minute'));
+  static _getSecondsUntilUpdate(date: Date) {
+    const howOld = Math.abs(differenceInMinutes(new Date(), date));
     if (howOld < 1) {
       return 1;
     } else if (howOld < 60) {
@@ -25,12 +22,11 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
   constructor(private _cdRef: ChangeDetectorRef) {
   }
 
-  transform(value: Date | moment.Moment, ...args: any[]): any {
-    const momentInstance = momentConstructor(value);
+  transform(value: Date, ...args: any[]): any {
     this._removeTimer();
-    const timeToUpdate = TimeAgoPipe._getSecondsUntilUpdate(momentInstance) * 1000;
+    const timeToUpdate = TimeAgoPipe._getSecondsUntilUpdate(value) * 1000;
     this._currentTimer = window.setTimeout(() => this._cdRef.markForCheck(), timeToUpdate);
-    return momentConstructor(value).from(momentConstructor());
+    return distanceInWordsToNow(value, {addSuffix: true});
   }
 
   ngOnDestroy(): void {

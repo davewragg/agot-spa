@@ -43,10 +43,10 @@ export class ProjectConfig extends SeedConfig {
         path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
       },
       {
-        name: 'moment',
-        path: 'node_modules/moment',
+        name: 'date-fns',
+        path: 'node_modules/date-fns',
         packageMeta: {
-          main: 'moment.js',
+          main: 'date-fns.js',
           defaultExtension: 'js'
         }
       },

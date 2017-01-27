@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import * as moment from 'moment/moment';
+import { startOfQuarter, endOfQuarter, subDays, startOfDay, endOfDay } from 'date-fns';
 import { cloneDeep, pick, omit } from 'lodash';
 import { Config } from '../config/env.config';
 import { Game } from '../models/game.model';
@@ -34,10 +34,10 @@ export class DataService {
 
   private static getCurrentSeason(): any {
     // TODO this is a bit of a cheat
-    const now = moment();
+    const now = new Date();
     return {
-      startDate: now.startOf('quarter').toISOString().slice(0, 10),
-      endDate: now.endOf('quarter').toISOString().slice(0, 10),
+      startDate: startOfQuarter(now).toISOString().slice(0, 10),
+      endDate: endOfQuarter(now).toISOString().slice(0, 10),
     };
   }
 
@@ -124,9 +124,9 @@ export class DataService {
   }
 
   constructor(private http: Http) {
-    // TODO strip time from these
-    this.today = moment().add(1, 'days').toISOString();
-    this.aWeekAgo = moment().subtract(7, 'days').toISOString();
+    const now = new Date();
+    this.today = endOfDay(now).toISOString();
+    this.aWeekAgo = startOfDay(subDays(now, 7)).toISOString();
   }
 
   getRankings(filterCriteria: FilterCriteria): Observable<SetOfResults> {
