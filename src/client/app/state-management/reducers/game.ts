@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import * as game from '../actions/game';
-import * as collection from '../actions/collection';
+import * as gameActions from '../actions/game';
+import * as collectionActions from '../actions/collection';
 import { Game } from '../../shared/models/game.model';
 
 
@@ -16,10 +16,10 @@ const initialState: State = {
   selectedGameId: null,
 };
 
-export function reducer(state = initialState, action: game.Actions | collection.Actions): State {
+export function reducer(state = initialState, action: gameActions.Actions | collectionActions.Actions): State {
   switch (action.type) {
-    case game.ActionTypes.FILTER_COMPLETE:
-    case collection.ActionTypes.LOAD_SUCCESS: {
+    case gameActions.ActionTypes.FILTER_COMPLETE:
+    case collectionActions.ActionTypes.LOAD_SUCCESS: {
       const games = action.payload;
       const newGames = games.filter(game => !state.entities[game.gameId]);
 
@@ -37,7 +37,7 @@ export function reducer(state = initialState, action: game.Actions | collection.
       };
     }
 
-    case game.ActionTypes.LOAD: {
+    case gameActions.ActionTypes.LOAD: {
       const game = action.payload;
 
       if (state.ids.indexOf(game.gameId) > -1) {
@@ -53,7 +53,7 @@ export function reducer(state = initialState, action: game.Actions | collection.
       };
     }
 
-    case game.ActionTypes.SELECT: {
+    case gameActions.ActionTypes.SELECT: {
       return {
         ids: state.ids,
         entities: state.entities,
