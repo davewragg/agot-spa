@@ -19,6 +19,7 @@ import { DeckModule } from './deck/deck.module';
 import { PlayersModule } from './players/players.module';
 import { PlayerModule } from './player/player.module';
 import { GameEffects } from './state-management/effects/game';
+import { RankingsEffects } from './state-management/effects/rankings';
 import { CollectionEffects } from './state-management/effects/collection';
 import { reducer } from './state-management/reducers/index';
 // import { schema } from './db';
@@ -64,6 +65,7 @@ import { reducer } from './state-management/reducers/index';
      * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
      */
     EffectsModule.run(GameEffects),
+    EffectsModule.run(RankingsEffects),
     EffectsModule.run(CollectionEffects),
 
     /**

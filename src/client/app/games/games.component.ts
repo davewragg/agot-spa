@@ -29,6 +29,7 @@ export class GamesComponent {
     this.games$ = store.select(fromRoot.getSearchResults);
     this.loading$ = store.select(fromRoot.getSearchLoading);
   }
+
   onDateRangeChange(criteria: FilterCriteria) {
     this.loadGames(criteria);
   }

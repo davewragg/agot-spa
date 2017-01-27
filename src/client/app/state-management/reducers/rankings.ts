@@ -1,20 +1,45 @@
 import * as rankingsActions from '../actions/rankings';
 import { SetOfResults } from '../../shared/models/set-of-results.model';
+import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 
 export interface State {
-  selectedRankings: SetOfResults | null;
+  loading: boolean;
+  criteria: FilterCriteria;
+  filteredRankings: SetOfResults | null;
 }
 
 const initialState: State = {
-  selectedRankings: null,
+  loading: false,
+  criteria: null,
+  filteredRankings: null,
 };
 
 export function reducer(state = initialState, action: rankingsActions.Actions): State {
   switch (action.type) {
+    case rankingsActions.ActionTypes.FILTER: {
+      const criteria = action.payload;
+
+      if (!criteria) {
+        return {
+          loading: false,
+          criteria,
+          filteredRankings: state.filteredRankings,
+        };
+      }
+
+      return Object.assign({}, state, {
+        criteria,
+        loading: true,
+        filteredRankings: state.filteredRankings,
+      });
+    }
+
     case rankingsActions.ActionTypes.FILTER_COMPLETE: {
       const rankings = action.payload;
       return {
-        selectedRankings: rankings,
+        loading: false,
+        criteria: state.criteria,
+        filteredRankings: rankings,
       };
     }
 
@@ -32,5 +57,6 @@ export function reducer(state = initialState, action: rankingsActions.Actions): 
  * focused so they can be combined and composed to fit each particular
  * use-case.
  */
-
-export const getSelectedRankings = (state: State) => state.selectedRankings;
+export const getCriteria = (state: State) => state.criteria;
+export const getLoading = (state: State) => state.loading;
+export const getFilteredRankings = (state: State) => state.filteredRankings;

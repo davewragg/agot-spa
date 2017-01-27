@@ -1,54 +1,33 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { isEmpty } from 'lodash';
-import { RankingService } from '../shared/services/ranking.service';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { SetOfResults } from '../shared/models/set-of-results.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
+import * as fromRoot from '../state-management/reducers/index';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-all-rankings',
   templateUrl: 'all-rankings.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AllRankingsComponent implements OnInit {
+export class AllRankingsComponent {
   @Input()
   title: string;
   @Input()
   hideFilters: boolean = false;
   @Input()
-  criteria: FilterCriteria;
+  criteria: FilterCriteria; // TODO remove/refactor
 
-  results: SetOfResults;
-  loadingError: any = null;
-  isLoading: boolean;
+  criteria$: Observable<FilterCriteria>;
+  rankings$: Observable<SetOfResults>;
+  loading$: Observable<boolean>;
 
-  constructor(private _route: ActivatedRoute,
-              private _router: Router,
-              private _RankingService: RankingService) {
-
-  }
-
-  ngOnInit() {
-    this._route.params
-      .map(this.setFiltering.bind(this))
-      .do(() => this.isLoading = true)
-      .switchMap((criteria: FilterCriteria) => this._RankingService.getRankings(criteria))
-      .subscribe(
-        (results) => {
-          this.loadingError = null;
-          this.results = results;
-          // TODO until loading states are sorted out
-          this.isLoading = false;
-        },
-        (err) => {
-          this.loadingError = err._body || err;
-          this.isLoading = false;
-        },
-        () => {
-          console.log('rankings component done');
-          this.isLoading = false;
-        }
-      );
+  constructor(private store: Store<fromRoot.State>) {
+    this.criteria$ = store.select(fromRoot.getRankingsCriteria).take(1);
+    this.rankings$ = store.select(fromRoot.getFilteredRankings);
+    this.loading$ = store.select(fromRoot.getRankingsLoading);
   }
 
   onDateRangeChange(criteria: FilterCriteria) {
@@ -56,13 +35,6 @@ export class AllRankingsComponent implements OnInit {
   }
 
   loadRankings(criteria?: FilterCriteria) {
-    this._router.navigate(['/rankings', FilterCriteria.serialise(criteria)]);
-  }
-
-  private setFiltering(params: Params) {
-    const defaultFilter = this.criteria || new FilterCriteria();
-    return this.criteria = isEmpty(params) ?
-      defaultFilter :
-      FilterCriteria.deserialise(params, defaultFilter);
+    this.store.dispatch(go(['/rankings', FilterCriteria.serialise(criteria)]));
   }
 }

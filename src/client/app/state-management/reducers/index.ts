@@ -30,9 +30,10 @@ import { storeFreeze } from 'ngrx-store-freeze';
  * the state of the reducer plus any selector functions. The `* as`
  * notation packages up all of the exports into a single object.
  */
-import * as fromSearch from './search';
+import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
 import * as fromCollection from './collection';
+import * as fromRankings from './rankings';
 import * as fromLayout from './layout';
 
 
@@ -41,8 +42,9 @@ import * as fromLayout from './layout';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  search: fromSearch.State;
+  search: fromSearchGames.State;
   games: fromGames.State;
+  rankings: fromRankings.State;
   collection: fromCollection.State;
   layout: fromLayout.State;
   router: fromRouter.RouterState;
@@ -57,8 +59,9 @@ export interface State {
  * the result from right to left.
  */
 const reducers = {
-  search: fromSearch.reducer,
+  search: fromSearchGames.reducer,
   games: fromGames.reducer,
+  rankings: fromRankings.reducer,
   collection: fromCollection.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
@@ -85,9 +88,9 @@ export function reducer(state: any, action: any) {
  *
  * ```ts
  * class MyComponent {
- * 	constructor(state$: Observable<State>) {
- * 	  this.gamesState$ = state$.select(getGamesState);
- * 	}
+ *   constructor(state$: Observable<State>) {
+ *     this.gamesState$ = state$.select(getGamesState);
+ *   }
  * }
  * ```
  */
@@ -120,9 +123,9 @@ export const getSelectedGame = createSelector(getGamesState, fromGames.getSelect
  */
 export const getSearchState = (state: State) => state.search;
 
-export const getSearchGameIds = createSelector(getSearchState, fromSearch.getIds);
-export const getSearchQuery = createSelector(getSearchState, fromSearch.getCriteria);
-export const getSearchLoading = createSelector(getSearchState, fromSearch.getLoading);
+export const getSearchGameIds = createSelector(getSearchState, fromSearchGames.getIds);
+export const getSearchQuery = createSelector(getSearchState, fromSearchGames.getCriteria);
+export const getSearchLoading = createSelector(getSearchState, fromSearchGames.getLoading);
 
 
 /**
@@ -132,6 +135,11 @@ export const getSearchLoading = createSelector(getSearchState, fromSearch.getLoa
 export const getSearchResults = createSelector(getGameEntities, getSearchGameIds, (games, searchIds) => {
   return searchIds.map(id => games[id]);
 });
+
+export const getRankingsState = (state: State) => state.rankings;
+export const getRankingsCriteria = createSelector(getRankingsState, fromRankings.getCriteria);
+export const getRankingsLoading = createSelector(getRankingsState, fromRankings.getLoading);
+export const getFilteredRankings = createSelector(getRankingsState, fromRankings.getFilteredRankings);
 
 
 export const getCollectionState = (state: State) => state.collection;

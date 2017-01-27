@@ -1,16 +1,16 @@
 <section>
-  <h2 [hidden]="isLoading">{{ title || 'Rankings' }}</h2>
+  <h2 [hidden]="loading$ | async">{{ title || 'Rankings' }}</h2>
 
-  <agot-date-range [showSort]="false" [criteria]="criteria"
+  <agot-date-range [showSort]="false" [criteria]="criteria$ | async"
                    [hidden]="hideFilters"
                    (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
-  <agot-spinner [isRunning]="isLoading"></agot-spinner>
+  <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-  <div *ngIf="loadingError" class="alert alert-danger">
-    Well, shit. {{ loadingError | json }}
-    <button type="button" (click)="loadRankings(criteria)">Try again</button>
-  </div>
+  <!--<div *ngIf="loadingError" class="alert alert-danger">-->
+    <!--Well, shit. {{ loadingError | json }}-->
+    <!--<button type="button" (click)="loadRankings(criteria)">Try again</button>-->
+  <!--</div>-->
 
-  <agot-rankings [rankings]="results"></agot-rankings>
+  <agot-rankings [rankings]="rankings$ | async" [hidden]="loading$ | async"></agot-rankings>
 </section>

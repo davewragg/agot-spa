@@ -46,9 +46,11 @@
 - [x] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 #### Post-merge
 - [x] trim lodash imports
+- [x] rename rankings -> rankings-table && all-rankings -> rankings 
 - [ ] loading states
   - [x] fudge it for now
   - [ ] do something at store level
+  - [ ] LOADING ERRORS ON STORE
 - [ ] disabled reactive form controls warning (see below)
 - [x] ~~sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)~~ AOT resolved
   - [ ] sanitise that one thronesdb link that it thinks is unsafe?
