@@ -46,7 +46,7 @@ export class ProjectConfig extends SeedConfig {
         name: 'date-fns',
         path: 'node_modules/date-fns',
         packageMeta: {
-          main: 'date-fns.js',
+          main: 'index.js',
           defaultExtension: 'js'
         }
       },
