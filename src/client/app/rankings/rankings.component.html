@@ -1,74 +1,16 @@
-<section *ngIf="rankings" class="card">
-  <div class="row">
+<section>
+  <h2 [hidden]="loading$ | async">{{ title || 'Rankings' }}</h2>
 
-    <div class="col-lg-4">
-      <table class="table">
-        <thead>
-        <tr>
-          <th colspan="5">Players</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let ranking of rankings.rankedPlayers; let i = index"
-            [class.table-warning]="i === 0">
-          <td class="text-xs-right col-xs-1 col-sm-2">{{ i + 1 }}.</td>
-          <td class="col-xs-7 col-sm-4">
-            <agot-player-link [player]="ranking"></agot-player-link>
-          </td>
-          <td class="text-muted small text-xs-right col-xs-2 col-sm-3">{{ ranking.eloRating }}</td>
-          <td class="text-xs-right col-xs-2 col-sm-3">
-            <agot-player-form [results]="rankings.playerWinLossRecord[ranking.playerId]"></agot-player-form>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+  <agot-date-range [showSort]="false" [criteria]="criteria$ | async"
+                   [hidden]="hideFilters"
+                   (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
-    <div class="col-lg-4">
-      <table class="table">
-        <thead>
-        <tr>
-          <th colspan="5">Factions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let ranking of rankings.rankedFactions; let i = index"
-            [class.table-warning]="i == 0">
-          <td class="col-xs-1 text-xs-right">{{ i + 1 }}.</td>
-          <td class="col-xs-2 text-xs-right"><img class="icon" src="./assets/img/icon{{ ranking.playerId }}.png"
-                                                  alt="{{ ranking.playerName }}"></td>
-          <td class="col-xs-7">
-            {{ ranking.playerName }}
-          </td>
-          <td class="text-muted small text-xs-right col-xs-1">{{ ranking.eloRating }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+  <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-    <div class="col-lg-4">
-      <table class="table">
-        <thead>
-        <tr>
-          <th colspan="5">Agendas</th>
-        </tr>
-        </thead>
-        <tbody class="small">
-        <tr *ngFor="let ranking of rankings.rankedAgendas; let i = index"
-            [class.table-warning]="i == 0">
-          <td class="col-xs-1 text-xs-right">{{ i + 1 }}.</td>
-          <td class="col-xs-7">
-            {{ ranking.playerName }}
-          </td>
-          <td class="col-xs-2 text-xs-right">
-            <img class="icon" src="./assets/img/agenda{{ ranking.playerId }}.png" alt="{{ ranking.playerName }}">
-          </td>
-          <td class="text-muted text-xs-right col-xs-1">{{ ranking.eloRating }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+  <!--<div *ngIf="loadingError" class="alert alert-danger">-->
+    <!--Well, shit. {{ loadingError | json }}-->
+    <!--<button type="button" (click)="loadRankings(criteria)">Try again</button>-->
+  <!--</div>-->
 
-  </div>
-
+  <agot-rankings-table [rankings]="rankings$ | async" [hidden]="loading$ | async"></agot-rankings-table>
 </section>

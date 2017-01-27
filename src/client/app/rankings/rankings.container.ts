@@ -21,7 +21,7 @@ import { FilterCriteria } from '../shared/models/filter-criteria.model';
   selector: 'agot-rankings-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <agot-all-rankings></agot-all-rankings>
+    <agot-rankings></agot-rankings>
   `
 })
 export class RankingsContainerComponent implements OnDestroy {
