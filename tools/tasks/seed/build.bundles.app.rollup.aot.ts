@@ -16,7 +16,21 @@ const config = {
       jsnext: true, main: true, module: true
     }),
     commonjs({
-      include: 'node_modules/**'
+      include: 'node_modules/**',
+      // TODO until commonjs plugin is updated
+      namedExports: {
+        // Object.keys(require('date-fns'))
+        'node_modules/date-fns/index.js': [
+          'endOfDay',
+          'format',
+          'startOfQuarter',
+          'endOfQuarter',
+          'differenceInMinutes',
+          'distanceInWordsToNow',
+          'subDays',
+          'startOfDay',
+        ]
+      }
     })
   ]
 };
