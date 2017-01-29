@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import * as gameActions from '../actions/game';
-import * as collectionActions from '../actions/collection';
 import { Game } from '../../shared/models/game.model';
 
 
@@ -16,10 +15,9 @@ const initialState: State = {
   selectedGameId: null,
 };
 
-export function reducer(state = initialState, action: gameActions.Actions | collectionActions.Actions): State {
+export function reducer(state = initialState, action: gameActions.Actions): State {
   switch (action.type) {
-    case gameActions.ActionTypes.FILTER_COMPLETE:
-    case collectionActions.ActionTypes.LOAD_SUCCESS: {
+    case gameActions.ActionTypes.FILTER_COMPLETE: {
       const games = action.payload;
       const newGames = games.filter(game => !state.entities[game.gameId]);
 
