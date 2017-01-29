@@ -11,7 +11,7 @@ export class Deck {
   fallbackTitle: string;
   thronesDbId: number;
   thronesDbLink: string;
-  creatorId: number;
+  creatorId: string;
   dateCreated: string;
   dateModified: string;
   [key: string]: string | number | Faction | Agenda;

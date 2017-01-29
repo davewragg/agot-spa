@@ -62,7 +62,7 @@ export class GamePlayersComponent {
 
   private validateNewPlayer(newPlayer: GamePlayer) {
     // validate unique player
-    if (this.gamePlayers.find((gamePlayer) => gamePlayer.player.playerId === +newPlayer.playerId)) {
+    if (this.gamePlayers.find((gamePlayer) => gamePlayer.player.playerId === newPlayer.playerId)) {
       console.warn('player already listed');
       this.notificationService.warn('Nope', 'player already listed');
       return false;

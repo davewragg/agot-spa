@@ -12,7 +12,7 @@ export class DeckSelectorComponent implements OnInit {
   @Input()
   creating: boolean;
   @Input()
-  playerId: number;
+  playerId: string;
   @Input()
   existingDeck: Deck;
   @Input()

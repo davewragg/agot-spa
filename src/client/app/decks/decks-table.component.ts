@@ -17,7 +17,7 @@ export class DecksTableComponent {
   constructor(private _playerService: PlayerService) {
   }
 
-  getPlayer(playerId: number): Observable<Player> {
+  getPlayer(playerId: string): Observable<Player> {
     return this._playerService.getPlayer(playerId);
   }
 }

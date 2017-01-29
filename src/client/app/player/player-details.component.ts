@@ -16,7 +16,7 @@ import { DateRangeType } from '../shared/models/date-range-type.model';
 })
 export class PlayerDetailsComponent implements OnInit {
   player: Player;
-  playerIdParam: number;
+  playerIdParam: string;
   playerStats: PlayerStats;
 
   isLoading: boolean;
@@ -31,7 +31,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   ngOnInit() {
     this._route.params
-      .do((params: Params) => this.playerIdParam = +params['id'])
+      .do((params: Params) => this.playerIdParam = params['id'])
       .map(this.setFiltering.bind(this))
       .do(() => this.isLoading = true)
       .switchMap((criteria: FilterCriteria) =>

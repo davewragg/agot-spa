@@ -31,7 +31,7 @@ export class StatsTableComponent {
     return this._referenceDataService.getAgenda(agendaId);
   }
 
-  getPlayer(playerId: number): Observable<Player> {
+  getPlayer(playerId: string): Observable<Player> {
     return this._playerService.getPlayer(playerId);
   }
 

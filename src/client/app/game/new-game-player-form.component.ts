@@ -39,7 +39,7 @@ export class NewGamePlayerFormComponent implements OnInit {
   onPlayerSelectChange(playerId: string) {
     // TODO handle this properly, clear deck if !players?
     // new gamePlayer? player from Players
-    this.gamePlayer.playerId = +playerId;
+    this.gamePlayer.playerId = playerId;
     this.gamePlayer.deck = null;
     console.log(this.gamePlayer);
   }
@@ -70,7 +70,7 @@ export class NewGamePlayerFormComponent implements OnInit {
   };
 
   private getPlayer(gamePlayer: GamePlayer): Observable<Player> {
-    const playerId = +gamePlayer.playerId;
+    const playerId = gamePlayer.playerId;
     return this._playerService.getPlayer(playerId);
   }
 }

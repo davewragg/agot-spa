@@ -25,7 +25,7 @@ export class GameTimelineChartComponent implements OnInit, OnChanges {
   games: Game[];
 
   @Input()
-  playerId: number;
+  playerId: string;
   @Input()
   deckId: number;
 

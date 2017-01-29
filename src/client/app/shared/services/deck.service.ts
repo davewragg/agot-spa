@@ -20,7 +20,7 @@ export class DeckService {
   constructor(private dataService: DataService) {
   }
 
-  getDecksFor(playerId: number): Observable<Deck[]> {
+  getDecksFor(playerId: string): Observable<Deck[]> {
     return this.getDecks().map((allDecks: Deck[]) => {
       return allDecks.filter((deck: Deck) => deck.creatorId === playerId);
     });

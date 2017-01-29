@@ -9,7 +9,7 @@ import { DeckService } from '../../shared/services/deck.service';
 })
 export class ExistingDeckSelectorComponent implements OnInit, OnChanges {
   @Input()
-  playerId: number;
+  playerId: string;
   @Input()
   existingDeck: Deck;
   @Output()
@@ -46,12 +46,12 @@ export class ExistingDeckSelectorComponent implements OnInit, OnChanges {
     }
   }
 
-  private loadMyDecks(playerId: number) {
+  private loadMyDecks(playerId: string) {
     this.isLoadingMyDecks = true;
     if (!playerId) {
       return;
     }
-    this.deckService.getDecksFor(+playerId)
+    this.deckService.getDecksFor(playerId)
       .subscribe(
         (decks: Deck[]) => {
           this.myDecks = decks;

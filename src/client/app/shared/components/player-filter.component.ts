@@ -37,7 +37,7 @@ export class PlayerFilterComponent implements OnInit {
   onPlayerChange($event: any) {
     //.debounceTime(400).distinctUntilChanged()
     const checked = $event.target.checked;
-    const playerId = +$event.target.value;
+    const playerId = $event.target.value;
     if (checked && !this.criteria.playerIds.includes(playerId)) {
       this.criteria.playerIds.push(playerId);
     } else if (!checked) {

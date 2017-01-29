@@ -24,7 +24,7 @@ export class StatsService {
   private _factions: Faction[];
   private _agendas: Agenda[];
 
-  static getResultForPlayer(game: Game, playerId: number): Result {
+  static getResultForPlayer(game: Game, playerId: string): Result {
     const winner: GamePlayer = game.gamePlayers.find((gamePlayer: GamePlayer) => gamePlayer.isWinner);
     return !winner ? Result.DREW : winner.playerId === playerId ? Result.WON : Result.LOST;
   }
@@ -95,7 +95,7 @@ export class StatsService {
     });
   }
 
-  getDeckOrPlayerResultsData(sortedGames: [number, Game[]][], playerId: number, deckId: number) {
+  getDeckOrPlayerResultsData(sortedGames: [number, Game[]][], playerId: string, deckId: number) {
     const results: any = {
       [Result.WON]: [],
       [Result.DREW]: [],
@@ -115,7 +115,7 @@ export class StatsService {
     });
     return results;
 
-    function getDayResultsForPlayer(games: Game[], playerId: number): Map<Result, number> {
+    function getDayResultsForPlayer(games: Game[], playerId: string): Map<Result, number> {
       const resultsForDay: Map<Result, number> = new Map<Result, number>();
       games.forEach((game) => {
         const result = StatsService.getResultForPlayer(game, playerId);
@@ -192,7 +192,7 @@ export class StatsService {
     }
   }
 
-  getPlayerStats(playerId: number, criteria: FilterCriteria): Observable<PlayerStats> {
+  getPlayerStats(playerId: string, criteria: FilterCriteria): Observable<PlayerStats> {
     const criteriaCopy = cloneDeep(criteria);
     criteriaCopy.playerIds = [playerId];
     return this.cacheService.getFilteredData('playerStats', this._getPlayerStats, criteriaCopy, this);

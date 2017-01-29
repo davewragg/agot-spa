@@ -4,7 +4,7 @@ import { Deck } from './deck.model';
 export interface GamePlayer {
   gamePlayerId?: number;
   player: Player;
-  playerId: number;
+  playerId: string;
   isWinner: boolean;
   deck: Deck;
   deckId: number;
