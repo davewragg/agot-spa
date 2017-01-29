@@ -44,7 +44,7 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       const decks = action.payload;
       const newDecks = decks.filter(deck => !state.entities[deck.deckId]);
 
-      const newDeckIds = newDecks.map(deck => deck.deckId);
+      // const newDeckIds = newDecks.map(deck => deck.deckId);
       const newDeckEntities = newDecks.reduce((entities: { [id: string]: Deck }, deck: Deck) => {
         return Object.assign(entities, {
           [deck.deckId]: deck
@@ -52,7 +52,7 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       }, {});
 
       return {
-        ids: [...state.ids, ...newDeckIds],
+        ids: decks.map(deck => deck.deckId),
         entities: Object.assign({}, state.entities, newDeckEntities),
         selectedDeckId: state.selectedDeckId,
         loading: false,
