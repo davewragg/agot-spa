@@ -9,7 +9,6 @@ export interface State {
   selectedDeckId: string | null;
   loading: boolean;
   criteria: FilterCriteria;
-  filteredDecks: Deck[] | null;
 }
 
 const initialState: State = {
@@ -18,7 +17,6 @@ const initialState: State = {
   selectedDeckId: null,
   loading: false,
   criteria: null,
-  filteredDecks: null,
 };
 
 export function reducer(state = initialState, action: deckActions.Actions): State {
@@ -33,7 +31,6 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
           selectedDeckId: state.selectedDeckId,
           loading: false,
           criteria,
-          filteredDecks: state.filteredDecks,
         };
       }
 
@@ -60,7 +57,6 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: state.selectedDeckId,
         loading: false,
         criteria: state.criteria,
-        filteredDecks: newDecks,
       };
     }
 
@@ -79,7 +75,6 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: state.selectedDeckId,
         loading: false,
         criteria: state.criteria,
-        filteredDecks: state.filteredDecks,
       };
     }
 

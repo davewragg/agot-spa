@@ -34,6 +34,7 @@ import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
 import * as fromCollection from './collection';
 import * as fromRankings from './rankings';
+import * as fromDecks from './deck';
 import * as fromLayout from './layout';
 
 
@@ -45,6 +46,7 @@ export interface State {
   search: fromSearchGames.State;
   games: fromGames.State;
   rankings: fromRankings.State;
+  decks: fromDecks.State;
   collection: fromCollection.State;
   layout: fromLayout.State;
   router: fromRouter.RouterState;
@@ -62,6 +64,7 @@ const reducers = {
   search: fromSearchGames.reducer,
   games: fromGames.reducer,
   rankings: fromRankings.reducer,
+  decks: fromDecks.reducer,
   collection: fromCollection.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
@@ -141,6 +144,14 @@ export const getRankingsCriteria = createSelector(getRankingsState, fromRankings
 export const getRankingsLoading = createSelector(getRankingsState, fromRankings.getLoading);
 export const getFilteredRankings = createSelector(getRankingsState, fromRankings.getFilteredRankings);
 
+export const getDecksState = (state: State) => state.decks;
+export const getFilteredDeckIds = createSelector(getSearchState, fromDecks.getIds);
+export const getDecksCriteria = createSelector(getDecksState, fromDecks.getCriteria);
+export const getDecksLoading = createSelector(getDecksState, fromDecks.getLoading);
+export const getDeckEntities = createSelector(getDecksState, fromDecks.getEntities);
+export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckIds, (games, searchIds) => {
+  return searchIds.map(id => games[id]);
+});
 
 export const getCollectionState = (state: State) => state.collection;
 
