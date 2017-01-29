@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { pull } from 'lodash';
+import { pull, cloneDeep } from 'lodash';
 import { ReferenceDataService } from '../services/reference-data.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Faction } from '../models/faction.model';
@@ -28,6 +28,7 @@ export class FactionFilterComponent implements OnInit {
       this.criteria = new FilterCriteria();
     } else {
       this.expanded = !!this.criteria.factionIds.length;
+      this.criteria = cloneDeep(this.criteria);
     }
   }
 
