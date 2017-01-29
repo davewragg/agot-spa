@@ -145,7 +145,7 @@ export const getRankingsLoading = createSelector(getRankingsState, fromRankings.
 export const getFilteredRankings = createSelector(getRankingsState, fromRankings.getFilteredRankings);
 
 export const getDecksState = (state: State) => state.decks;
-export const getFilteredDeckIds = createSelector(getSearchState, fromDecks.getIds);
+export const getFilteredDeckIds = createSelector(getDecksState, fromDecks.getIds);
 export const getDecksCriteria = createSelector(getDecksState, fromDecks.getCriteria);
 export const getDecksLoading = createSelector(getDecksState, fromDecks.getLoading);
 export const getDeckEntities = createSelector(getDecksState, fromDecks.getEntities);
