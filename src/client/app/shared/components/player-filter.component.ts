@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { pull } from 'lodash';
+import { pull, cloneDeep } from 'lodash';
 import { PlayerService } from '../services/player.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Player } from '../models/player.model';
@@ -9,6 +9,7 @@ import { Player } from '../models/player.model';
   moduleId: module.id,
   selector: 'agot-player-filter',
   templateUrl: 'player-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerFilterComponent implements OnInit {
   @Input()
@@ -22,9 +23,14 @@ export class PlayerFilterComponent implements OnInit {
     this.players = playerService.getPlayers();
   }
 
+  // TODO refactor this to be immutable - return a new object on every event
+  // use OnChanges?
+
   ngOnInit() {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
+    } else {
+      this.criteria = cloneDeep(this.criteria);
     }
   }
 

@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { pull } from 'lodash';
+import { pull, cloneDeep } from 'lodash';
 import { ReferenceDataService } from '../services/reference-data.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Agenda } from '../models/agenda.model';
@@ -9,6 +9,7 @@ import { Agenda } from '../models/agenda.model';
   moduleId: module.id,
   selector: 'agot-agenda-filter',
   templateUrl: 'agenda-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgendaFilterComponent implements OnInit {
   @Input()
@@ -23,11 +24,15 @@ export class AgendaFilterComponent implements OnInit {
     this.agendas = referenceDataService.agendas;
   }
 
+  // TODO refactor this to be immutable - return a new object on every event
+  // use OnChanges?
+
   ngOnInit() {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
       this.expanded = !!this.criteria.agendaIds.length;
+      this.criteria = cloneDeep(this.criteria);
     }
   }
 

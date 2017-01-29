@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { subDays, startOfDay, endOfDay } from 'date-fns';
+import { cloneDeep } from 'lodash';
 import { SeasonService } from '../services/season.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Season } from '../models/season.model';
@@ -10,6 +11,7 @@ import { DateRangeType } from '../models/date-range-type.model';
   moduleId: module.id,
   selector: 'agot-date-range',
   templateUrl: 'date-range.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateRangeComponent implements OnInit {
   @Input()
@@ -40,7 +42,7 @@ export class DateRangeComponent implements OnInit {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
-      this.criteria = Object.assign({}, this.criteria);
+      this.criteria = cloneDeep(this.criteria);
     }
     this.setSelectedSeason();
   }
