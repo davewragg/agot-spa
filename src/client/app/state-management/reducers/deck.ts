@@ -78,6 +78,16 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       };
     }
 
+    case deckActions.ActionTypes.SELECT: {
+      return {
+        ids: state.ids,
+        entities: state.entities,
+        selectedDeckId: action.payload,
+        loading: false,
+        criteria: state.criteria,
+      };
+    }
+
     default: {
       return state;
     }

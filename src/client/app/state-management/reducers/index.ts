@@ -152,6 +152,9 @@ export const getDeckEntities = createSelector(getDecksState, fromDecks.getEntiti
 export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckIds, (games, searchIds) => {
   return searchIds.map(id => games[id]);
 });
+// export const getSelectedDeckId = createSelector(getDecksState, fromDecks.getSelectedId);
+export const getSelectedDeck = createSelector(getDecksState, fromDecks.getSelected);
+
 
 export const getCollectionState = (state: State) => state.collection;
 
@@ -161,10 +164,6 @@ export const getCollectionGameIds = createSelector(getCollectionState, fromColle
 
 export const getGameCollection = createSelector(getGameEntities, getCollectionGameIds, (entities, ids) => {
   return ids.map(id => entities[id]);
-});
-
-export const isSelectedGameInCollection = createSelector(getCollectionGameIds, getSelectedGameId, (ids, selected) => {
-  return ids.indexOf(+selected) > -1;
 });
 
 /**

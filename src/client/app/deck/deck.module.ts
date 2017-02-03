@@ -8,6 +8,8 @@ import { DeckImportFormComponent } from './deck-import-form.component';
 import { ViewDeckComponent } from './view-deck.component';
 import { DeckStatsComponent } from './deck-stats.component';
 import { CreateDeckComponent } from './create-deck.component';
+import { SelectedDeckPageComponent } from './selected-deck.container';
+import { ViewDeckPageComponent } from './deck.container';
 
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule],
@@ -17,7 +19,9 @@ import { CreateDeckComponent } from './create-deck.component';
     DeckEditFormComponent,
     DeckImportFormComponent,
     DeckStatsComponent,
-    ViewDeckComponent
+    ViewDeckComponent,
+    SelectedDeckPageComponent,
+    ViewDeckPageComponent,
   ],
   exports: [DeckImportFormComponent, DeckEditFormComponent]
 })

@@ -15,6 +15,7 @@ export const ActionTypes = {
   FILTER: type('[Deck] Filter'),
   FILTER_COMPLETE: type('[Deck] Filter Complete'),
   LOAD: type('[Deck] Load'),
+  SELECT: type('[Deck] Select'),
 };
 
 /**
@@ -45,6 +46,13 @@ export class LoadAction implements Action {
   }
 }
 
+export class SelectAction implements Action {
+  type = ActionTypes.SELECT;
+
+  constructor(public payload: string) {
+  }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -52,4 +60,5 @@ export class LoadAction implements Action {
 export type Actions
   = FilterAction
   | FilterCompleteAction
-  | LoadAction;
+  | LoadAction
+  | SelectAction;
