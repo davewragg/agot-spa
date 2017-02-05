@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { Deck } from '../../shared/models/deck.model';
+import { DeckStats } from '../../shared/models/deck-stats.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -16,6 +17,7 @@ export const ActionTypes = {
   FILTER_COMPLETE: type('[Deck] Filter Complete'),
   LOAD: type('[Deck] Load'),
   SELECT: type('[Deck] Select'),
+  SELECT_COMPLETE: type('[Deck] Select Complete'),
 };
 
 /**
@@ -49,7 +51,14 @@ export class LoadAction implements Action {
 export class SelectAction implements Action {
   type = ActionTypes.SELECT;
 
-  constructor(public payload: string) {
+  constructor(public payload: number) {
+  }
+}
+
+export class SelectCompleteAction implements Action {
+  type = ActionTypes.SELECT_COMPLETE;
+
+  constructor(public payload: DeckStats) {
   }
 }
 
@@ -61,4 +70,5 @@ export type Actions
   = FilterAction
   | FilterCompleteAction
   | LoadAction
-  | SelectAction;
+  | SelectAction
+  | SelectCompleteAction;

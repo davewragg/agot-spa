@@ -29,7 +29,7 @@ export class ViewDeckPageComponent implements OnDestroy {
 
   constructor(private store: Store<fromRoot.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params
-      .select<string>('id')
+      .select<number>('id')
       .map(id => new deck.SelectAction(id))
       .subscribe(store);
   }

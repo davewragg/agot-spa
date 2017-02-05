@@ -6,6 +6,7 @@ import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import * as deck from '../actions/deck';
 import { DeckService } from '../../shared/services/deck.service';
+import { StatsService } from '../../shared/services/stats.service';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -41,6 +42,24 @@ export class DeckEffects {
         .catch(() => of(new deck.FilterCompleteAction([])));
     });
 
-  constructor(private actions$: Actions, private deckService: DeckService) {
+  @Effect()
+  getStats$: Observable<Action> = this.actions$
+    .ofType(deck.ActionTypes.SELECT)
+    // .debounceTime(300)
+    .map((action: deck.SelectAction) => action.payload)
+    .switchMap(deckId => {
+      if (!deckId) {
+        return empty();
+      }
+
+      const nextStats$ = this.actions$.ofType(deck.ActionTypes.SELECT).skip(1);
+
+      return this.statsService.getDeckStats(deckId)
+        .takeUntil(nextStats$)
+        .map(stats => new deck.SelectCompleteAction(stats))
+        .catch(() => of(new deck.SelectCompleteAction(undefined)));
+    });
+
+  constructor(private actions$: Actions, private deckService: DeckService, private statsService: StatsService) {
   }
 }

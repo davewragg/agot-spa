@@ -34,7 +34,8 @@ import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
 import * as fromCollection from './collection';
 import * as fromRankings from './rankings';
-import * as fromDecks from './deck';
+import * as fromDecks from './decks';
+import * as fromDeck from './deck';
 import * as fromLayout from './layout';
 
 
@@ -47,6 +48,7 @@ export interface State {
   games: fromGames.State;
   rankings: fromRankings.State;
   decks: fromDecks.State;
+  deck: fromDeck.State;
   collection: fromCollection.State;
   layout: fromLayout.State;
   router: fromRouter.RouterState;
@@ -65,6 +67,7 @@ const reducers = {
   games: fromGames.reducer,
   rankings: fromRankings.reducer,
   decks: fromDecks.reducer,
+  deck: fromDeck.reducer,
   collection: fromCollection.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
@@ -154,6 +157,11 @@ export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckI
 });
 // export const getSelectedDeckId = createSelector(getDecksState, fromDecks.getSelectedId);
 export const getSelectedDeck = createSelector(getDecksState, fromDecks.getSelected);
+
+
+export const getDeckState = (state: State) => state.deck;
+export const getDeckStats = createSelector(getDeckState, fromDeck.getDeckStats);
+export const getDeckLoading = createSelector(getDeckState, fromDeck.getLoading);
 
 
 export const getCollectionState = (state: State) => state.collection;
