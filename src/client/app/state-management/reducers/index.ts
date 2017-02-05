@@ -159,9 +159,9 @@ export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckI
 export const getSelectedDeck = createSelector(getDecksState, fromDecks.getSelected);
 
 
-export const getDeckState = (state: State) => state.deck;
-export const getDeckStats = createSelector(getDeckState, fromDeck.getDeckStats);
-export const getDeckLoading = createSelector(getDeckState, fromDeck.getLoading);
+export const getSelectedDeckState = (state: State) => state.deck;
+export const getSelectedDeckStats = createSelector(getSelectedDeckState, fromDeck.getDeckStats);
+export const getSelectedDeckStatsLoading = createSelector(getSelectedDeckState, fromDeck.getLoading);
 
 
 export const getCollectionState = (state: State) => state.collection;
