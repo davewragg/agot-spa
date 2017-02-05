@@ -1,6 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import { go } from '@ngrx/router-store';
 import * as fromRoot from '../state-management/reducers/index';
 import { Deck } from '../shared/models/deck.model';
 import { DeckStats } from '../shared/models/deck-stats.model';
@@ -11,6 +13,11 @@ import { DeckStats } from '../shared/models/deck-stats.model';
   template: `
     <div class="mb-1">
       <agot-view-deck [deck]="deck$ | async"></agot-view-deck>
+      <div>
+        <button *ngIf="!(deck$ | async)?.thronesDbId" type="button" class="btn btn-outline-success" (click)="onEdit()">Edit</button>
+        <a [routerLink]="['/decks']" class="btn btn-outline-primary">&laquo; All Decks</a>
+      </div>
+
     </div>
     <agot-spinner [isRunning]="deckStatsLoading$ | async"></agot-spinner>
     <div [hidden]="deckStatsLoading$ | async" class="mb-1">
@@ -24,9 +31,13 @@ export class SelectedDeckPageComponent {
   deckStats$: Observable<DeckStats>;
   deckStatsLoading$: Observable<boolean>;
 
-  constructor(private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
     this.deck$ = store.select(fromRoot.getSelectedDeck);
     this.deckStats$ = store.select(fromRoot.getSelectedDeckStats);
     this.deckStatsLoading$ = store.select(fromRoot.getSelectedDeckStatsLoading);
+  }
+
+  onEdit() {
+    this.store.dispatch(go(['decks', this.route.snapshot.params['id'], 'edit']));
   }
 }
