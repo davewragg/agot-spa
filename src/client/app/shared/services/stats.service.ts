@@ -148,12 +148,12 @@ export class StatsService {
 
   getDeckStats(deckId: number): Observable<PlayerStats> {
     const criteria = new FilterCriteria();
-    criteria.deckIds = [deckId];
+    criteria.deckIds = [+deckId];
     return this.cacheService.getFilteredData('deckStats', this._getDeckStats, criteria, this);
   }
 
   _getDeckStats(criteria: FilterCriteria): Observable<DeckStats> {
-    const deckId = first(criteria.deckIds);
+    const deckId = +first(criteria.deckIds);
     return this.gameService.getGames(Object.assign(new FilterCriteria(), {
       deckIds: [deckId],
       asc: false,
