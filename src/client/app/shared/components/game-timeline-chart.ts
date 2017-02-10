@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { Game } from '../models/game.model';
 import { Result } from '../models/result.enum';
 import { StatsService } from '../services/stats.service';
@@ -20,7 +20,7 @@ import { StatsService } from '../services/stats.service';
     }`
   ]
 })
-export class GameTimelineChartComponent implements OnInit, OnChanges {
+export class GameTimelineChartComponent implements OnChanges {
   @Input()
   games: Game[];
 
@@ -46,10 +46,6 @@ export class GameTimelineChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setOptions();
-  }
-
-  ngOnInit() {
     this.setOptions();
   }
 

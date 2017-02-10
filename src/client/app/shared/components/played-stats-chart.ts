@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { Stats } from '../models/stats.model';
 
 @Component({
@@ -11,16 +11,12 @@ import { Stats } from '../models/stats.model';
     </div>
   `,
 })
-export class PlayedStatsChartComponent implements OnInit, OnChanges {
+export class PlayedStatsChartComponent implements OnChanges {
   @Input()
   stats: Stats;
   public options: any = {};
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setOptions();
-  }
-
-  ngOnInit() {
     this.setOptions();
   }
 
