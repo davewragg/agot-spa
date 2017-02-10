@@ -1,101 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { DeckService } from '../shared/services/deck.service';
-import { NotificationService } from '../shared/services/notification.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import * as fromRoot from '../state-management/reducers/index';
 import { Deck } from '../shared/models/deck.model';
-import { StatsService } from '../shared/services/stats.service';
-import { DeckStats } from '../shared/models/deck-stats.model';
+import { go } from '@ngrx/router-store';
 
 @Component({
-  moduleId: module.id,
   selector: 'agot-deck-details',
-  templateUrl: 'deck-details.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div class="mb-1">
+      <h2>Edit Deck</h2>
+    
+      <agot-deck-edit-form [deck]="deck$ | async"
+                           [editing]="true" [creating]="false"
+                           (cancel)="onCancel()" [hidden]="loading$ | async"
+                           (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
+    
+      <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
+    </div>
+  `
 })
-export class DeckDetailsComponent implements OnInit {
-  deck: Deck;
-  deckStats: DeckStats;
+export class DeckDetailsComponent {
+  deck$: Observable<Deck>;
+  loading$: Observable<boolean>;
 
-  editing: boolean = false;
-  formDisabled: boolean = false;
-  isLoadingDeck: boolean;
-  isLoadingStats: boolean;
-  loadError: any = null;
-
-  constructor(private _route: ActivatedRoute,
-              private deckService: DeckService,
-              private statsService: StatsService,
-              private notificationService: NotificationService) {
-  }
-
-  ngOnInit() {
-    this.loadDeck();
-    this.loadDeckStats();
-  }
-
-  onSubmit(deck: Deck) {
-    this.formDisabled = true;
-    this.isLoadingDeck = true;
-
-    console.log('details submit', deck);
-    this.deckService.updateDeck(deck).subscribe((deck: Deck) => {
-        this.deck = deck;
-        this.formDisabled = false;
-        this.editing = false;
-      }, (error) => {
-        this.formDisabled = false;
-        console.error(error);
-        this.notificationService.error('Whoops', error.message || error._body || error);
-        this.isLoadingDeck = false;
-      }, () => this.isLoadingDeck = false
-    );
+  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
+    this.deck$ = store.select(fromRoot.getDeckForEdit);
+    this.loading$ = store.select(fromRoot.getDecksLoading);
   }
 
   onCancel() {
-    this.editing = false;
+    // TODO canDeactivate check
+    this.store.dispatch(go(['decks', this.route.snapshot.params['id']]));
   }
 
-  onEdit() {
-    if (this.deck && this.deck.thronesDbId) {
-      return;
-    }
-    this.editing = true;
-  }
-
-  private loadDeck() {
-    this._route.params
-      .do(() => this.isLoadingDeck = true)
-      .switchMap((params: Params) => this.deckService.getDeck(+params['id']))
-      .subscribe(
-        (deck) => {
-          this.deck = deck;
-          if (deck.thronesDbId && this.editing) {
-            this.editing = false;
-          }
-          this.isLoadingDeck = false;
-        },
-        (error) => {
-          this.isLoadingDeck = false;
-          return this.loadError = error;
-        },
-        () => this.isLoadingDeck = false
-      );
-
-  }
-
-  private loadDeckStats() {
-    this._route.params
-      .do(() => this.isLoadingStats = true)
-      .switchMap((params: Params) => this.statsService.getDeckStats(+params['id']))
-      .subscribe(
-        (stats) => {
-          this.isLoadingStats = false;
-          this.deckStats = stats;
-        },
-        (error) => {
-          this.isLoadingStats = false;
-          return this.loadError = error;
-        },
-        () => this.isLoadingStats = false
-      );
+  onSubmit() {
+  //   this.formDisabled = true;
+  //   this.isLoadingDeck = true;
+  //
+  //   console.log('details submit', deck);
+  //   this.deckService.updateDeck(deck).subscribe((deck: Deck) => {
+  //       this.deck = deck;
+  //       this.formDisabled = false;
+  //       this.editing = false;
+  //     }, (error) => {
+  //       this.formDisabled = false;
+  //       console.error(error);
+  //       this.notificationService.error('Whoops', error.message || error._body || error);
+  //       this.isLoadingDeck = false;
+  //     }, () => this.isLoadingDeck = false
+  //   )
   }
 }

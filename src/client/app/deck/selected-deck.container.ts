@@ -12,6 +12,8 @@ import { DeckStats } from '../shared/models/deck-stats.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="mb-1">
+      <h2>View Deck</h2>
+
       <agot-view-deck [deck]="deck$ | async"></agot-view-deck>
       <div>
         <button *ngIf="!(deck$ | async)?.thronesDbId" type="button" class="btn btn-outline-success" (click)="onEdit()">Edit</button>

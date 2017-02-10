@@ -158,6 +158,7 @@ export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckI
 // export const getSelectedDeckId = createSelector(getDecksState, fromDecks.getSelectedId);
 export const getSelectedDeck = createSelector(getDecksState, fromDecks.getSelected);
 
+export const getDeckForEdit = createSelector(getDecksState, fromDecks.getDeckForEdit);
 
 export const getSelectedDeckState = (state: State) => state.deck;
 export const getSelectedDeckStats = createSelector(getSelectedDeckState, fromDeck.getDeckStats);

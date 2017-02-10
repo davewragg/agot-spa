@@ -11,6 +11,7 @@ import { CreateDeckComponent } from './create-deck.component';
 import { SelectedDeckPageComponent } from './selected-deck.container';
 import { ViewDeckPageComponent } from './deck.container';
 import { DeckExistsGuard } from '../state-management/guards/deck-exists';
+import { EditDeckPageComponent } from './edit-deck.container';
 
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule],
@@ -23,6 +24,7 @@ import { DeckExistsGuard } from '../state-management/guards/deck-exists';
     ViewDeckComponent,
     SelectedDeckPageComponent,
     ViewDeckPageComponent,
+    EditDeckPageComponent,
   ],
   providers: [
     DeckExistsGuard,

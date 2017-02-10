@@ -6,7 +6,7 @@ import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'agot-deck-details',
+  selector: 'agot-create-deck-details',
   templateUrl: 'create-deck.component.html',
 })
 export class CreateDeckComponent implements OnInit {

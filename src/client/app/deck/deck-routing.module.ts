@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { ViewDeckPageComponent } from './deck.container';
 import { CreateDeckComponent } from './create-deck.component';
 import { DeckExistsGuard } from '../state-management/guards/deck-exists';
-import { DeckDetailsComponent } from './deck-details.component';
+import { EditDeckPageComponent } from './edit-deck.container';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { DeckDetailsComponent } from './deck-details.component';
       },
       {
         path: 'decks/:id/edit',
-        component: DeckDetailsComponent,
+        component: EditDeckPageComponent,
         canActivate: [DeckExistsGuard], // todo guard for checking edit rights/thrones db id
       },
       // TODO /deck or /decks?

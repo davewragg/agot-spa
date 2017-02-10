@@ -16,6 +16,7 @@ export const ActionTypes = {
   FILTER: type('[Deck] Filter'),
   FILTER_COMPLETE: type('[Deck] Filter Complete'),
   LOAD: type('[Deck] Load'),
+  SELECT_FOR_EDIT: type('[Deck] Select for Edit'),
   SELECT: type('[Deck] Select'),
   SELECT_COMPLETE: type('[Deck] Select Complete'),
 };
@@ -48,6 +49,13 @@ export class LoadAction implements Action {
   }
 }
 
+export class SelectForEditAction implements Action {
+  type = ActionTypes.SELECT_FOR_EDIT;
+
+  constructor(public payload: number) {
+  }
+}
+
 export class SelectAction implements Action {
   type = ActionTypes.SELECT;
 
@@ -70,5 +78,6 @@ export type Actions
   = FilterAction
   | FilterCompleteAction
   | LoadAction
+  | SelectForEditAction
   | SelectAction
   | SelectCompleteAction;

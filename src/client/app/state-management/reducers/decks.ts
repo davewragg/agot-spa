@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { cloneDeep } from 'lodash';
 import * as deckActions from '../actions/deck';
 import { Deck } from '../../shared/models/deck.model';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
@@ -9,6 +10,7 @@ export interface State {
   selectedDeckId: number | null;
   loading: boolean;
   criteria: FilterCriteria;
+  deckToEditId: number | null;
 }
 
 const initialState: State = {
@@ -17,6 +19,7 @@ const initialState: State = {
   selectedDeckId: null,
   loading: false,
   criteria: null,
+  deckToEditId: null,
 };
 
 export function reducer(state = initialState, action: deckActions.Actions): State {
@@ -31,6 +34,7 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
           selectedDeckId: state.selectedDeckId,
           loading: false,
           criteria,
+          deckToEditId: null,
         };
       }
 
@@ -57,6 +61,7 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: state.selectedDeckId,
         loading: false,
         criteria: state.criteria,
+        deckToEditId: null,
       };
     }
 
@@ -75,6 +80,7 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: state.selectedDeckId,
         loading: false,
         criteria: state.criteria,
+        deckToEditId: null,
       };
     }
 
@@ -85,6 +91,18 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: action.payload,
         loading: false,
         criteria: state.criteria,
+        deckToEditId: null,
+      };
+    }
+
+    case deckActions.ActionTypes.SELECT_FOR_EDIT: {
+      return {
+        ids: state.ids,
+        entities: state.entities,
+        selectedDeckId: state.selectedDeckId,
+        loading: false,
+        criteria: state.criteria,
+        deckToEditId: action.payload,
       };
     }
 
@@ -117,6 +135,10 @@ export const getSelected = createSelector(getEntities, getSelectedId, (entities,
   return entities[selectedId];
 });
 
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
+export const getDeckForEdit = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
+  return cloneDeep(entities[selectedId]);
 });
+
+// export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
+//   return ids.map(id => entities[id]);
+// });
