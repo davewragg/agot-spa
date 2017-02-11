@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { isEqual } from 'lodash';
 import { DeckType } from '../models/deck-type.model';
 import { Faction } from '../models/faction.model';
 import { Agenda } from '../models/agenda.model';
@@ -7,6 +8,8 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
 import { Venue } from '../models/venue.model';
+import { RefDataType } from './ref-data.type';
+import { refDataStorage } from './ref-data-storage';
 
 @Injectable()
 export class ReferenceDataService {
@@ -71,24 +74,26 @@ export class ReferenceDataService {
     });
   }
 
+  private getViaCache<T>(refDataType: RefDataType, subject: BehaviorSubject<T[]>) {
+    const localData: T[] = refDataStorage.getRefData(refDataType);
+    if (localData) {
+      subject.next(localData);
+    }
+    this.dataService.getReferenceData(refDataType)
+      .subscribe((apiData: T[]) => {
+        if (!isEqual(apiData, localData)) {
+          subject.next(apiData);
+          refDataStorage.setRefData(refDataType, apiData);
+        }
+      },
+      (err) => console.error(err)
+    );
+    return subject;
+  }
+
   private loadInitialData() {
-    this.dataService.getReferenceData('factions').subscribe(
-      (factions: Faction[]) => {
-        this._factions$.next(factions);
-      },
-      (err) => console.error(err)
-    );
-    this.dataService.getReferenceData('agendas').subscribe(
-      (agendas: Agenda[]) => {
-        this._agendas$.next(agendas);
-      },
-      (err) => console.error(err)
-    );
-    this.dataService.getReferenceData('venues').subscribe(
-      (venues: Venue[]) => {
-        this._venues$.next(venues);
-      },
-      (err) => console.error(err)
-    );
+    this.getViaCache('factions', this._factions$);
+    this.getViaCache('agendas', this._agendas$);
+    this.getViaCache('venues', this._venues$);
   }
 }

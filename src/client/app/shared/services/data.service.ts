@@ -10,6 +10,7 @@ import { DateRangeType } from '../models/date-range-type.model';
 import { SetOfResults } from '../models/set-of-results.model';
 import { Deck } from '../models/deck.model';
 import { Player } from '../models/player.model';
+import { RefDataType } from './ref-data.type';
 
 declare let Rollbar: any;
 
@@ -191,7 +192,7 @@ export class DataService {
   /*
    @param refDataType: factions / agendas / players / decks
    */
-  getReferenceData(refDataType: string, additionalParams?: string): Observable<any> {
+  getReferenceData(refDataType: RefDataType, additionalParams?: string): Observable<any> {
     console.log('getReferenceData called', refDataType);
     return this.http.get(this.baseUrl + `api/${refDataType}/getall`, {
       search: additionalParams
