@@ -402,7 +402,7 @@ Forks of this project demonstrate how to extend and integrate with other librari
 │       │   │   ├── about.component.ts
 │       │   │   ├── about.module.ts
 │       │   │   ├── about.routes.ts
-│       │   │   └── index.ts
+│       │   │   └── root.ts
 │       │   ├── app.component.e2e-spec.ts
 │       │   ├── app.component.html
 │       │   ├── app.component.spec.ts
@@ -417,7 +417,7 @@ Forks of this project demonstrate how to extend and integrate with other librari
 │       │   │   ├── home.component.ts
 │       │   │   ├── home.module.ts
 │       │   │   ├── home.routes.ts
-│       │   │   └── index.ts
+│       │   │   └── root.ts
 │       │   ├── i18n.providers.ts
 │       │   ├── main-prod.ts
 │       │   ├── main.ts
@@ -425,19 +425,19 @@ Forks of this project demonstrate how to extend and integrate with other librari
 │       │   ├── shared
 │       │   │   ├── config
 │       │   │   │   └── env.config.ts
-│       │   │   ├── index.ts
+│       │   │   ├── root.ts
 │       │   │   ├── name-list
-│       │   │   │   ├── index.ts
+│       │   │   │   ├── root.ts
 │       │   │   │   ├── name-list.service.spec.ts
 │       │   │   │   └── name-list.service.ts
 │       │   │   ├── navbar
-│       │   │   │   ├── index.ts
+│       │   │   │   ├── root.ts
 │       │   │   │   ├── navbar.component.css
 │       │   │   │   ├── navbar.component.html
 │       │   │   │   └── navbar.component.ts
 │       │   │   ├── shared.module.ts
 │       │   │   └── toolbar
-│       │   │       ├── index.ts
+│       │   │       ├── root.ts
 │       │   │       ├── toolbar.component.css
 │       │   │       ├── toolbar.component.html
 │       │   │       └── toolbar.component.ts

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { go } from '@ngrx/router-store';
 import { Game } from '../shared/models/game.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
-import * as fromRoot from '../state-management/reducers/index';
+import * as fromRoot from '../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,

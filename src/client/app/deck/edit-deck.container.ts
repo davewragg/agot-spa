@@ -4,7 +4,7 @@ import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
-import * as fromRoot from '../state-management/reducers/index';
+import * as fromRoot from '../state-management/reducers/root';
 import * as deck from '../state-management/actions/deck';
 
 /**

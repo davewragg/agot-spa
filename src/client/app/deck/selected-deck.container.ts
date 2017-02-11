@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { go } from '@ngrx/router-store';
-import * as fromRoot from '../state-management/reducers/index';
+import * as fromRoot from '../state-management/reducers/root';
 import { Deck } from '../shared/models/deck.model';
 import { DeckStats } from '../shared/models/deck-stats.model';
 

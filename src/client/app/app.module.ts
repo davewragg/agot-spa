@@ -22,7 +22,7 @@ import { GameEffects } from './state-management/effects/game';
 import { RankingsEffects } from './state-management/effects/rankings';
 import { DeckEffects } from './state-management/effects/deck';
 import { CollectionEffects } from './state-management/effects/collection';
-import { reducer } from './state-management/reducers/index';
+import { reducer } from './state-management/reducers/root';
 // import { schema } from './db';
 
 @NgModule({

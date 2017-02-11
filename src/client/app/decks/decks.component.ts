@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import { Deck } from '../shared/models/deck.model';
-import * as fromRoot from '../state-management/reducers/index';
+import * as fromRoot from '../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
