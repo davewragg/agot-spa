@@ -32,11 +32,12 @@ export class DeckDetailsComponent {
   }
 
   onCancel() {
-    // TODO canDeactivate check
+    // TODO canDeactivate guard check - dirty$
     this.store.dispatch(go(['decks', this.route.snapshot.params['id']]));
   }
 
   onSubmit() {
+    // TODO call yeractual action
   //   this.formDisabled = true;
   //   this.isLoadingDeck = true;
   //

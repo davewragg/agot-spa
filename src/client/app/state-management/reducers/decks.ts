@@ -7,10 +7,13 @@ import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 export interface State {
   ids: number[];
   entities: { [id: number]: Deck };
-  selectedDeckId: number | null;
+  selectedDeckId: number;
   loading: boolean;
   criteria: FilterCriteria;
-  deckToEditId: number | null;
+  deckToEdit: {
+    deck: Deck,
+    dirty: boolean,
+  };
 }
 
 const initialState: State = {
@@ -19,7 +22,10 @@ const initialState: State = {
   selectedDeckId: null,
   loading: false,
   criteria: null,
-  deckToEditId: null,
+  deckToEdit: {
+    deck: null,
+    dirty: false,
+  },
 };
 
 export function reducer(state = initialState, action: deckActions.Actions): State {
@@ -34,7 +40,10 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
           selectedDeckId: state.selectedDeckId,
           loading: false,
           criteria,
-          deckToEditId: null,
+          deckToEdit: {
+            deck: null,
+            dirty: false,
+          },
         };
       }
 
@@ -61,7 +70,10 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: state.selectedDeckId,
         loading: false,
         criteria: state.criteria,
-        deckToEditId: null,
+        deckToEdit: {
+          deck: null,
+          dirty: false,
+        },
       };
     }
 
@@ -80,7 +92,10 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: state.selectedDeckId,
         loading: false,
         criteria: state.criteria,
-        deckToEditId: null,
+        deckToEdit: {
+          deck: null,
+          dirty: false,
+        },
       };
     }
 
@@ -91,18 +106,25 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         selectedDeckId: action.payload,
         loading: false,
         criteria: state.criteria,
-        deckToEditId: null,
+        deckToEdit: {
+          deck: null,
+          dirty: false,
+        },
       };
     }
 
     case deckActions.ActionTypes.SELECT_FOR_EDIT: {
+      const deckCopy = cloneDeep(state.entities[action.payload]);
       return {
         ids: state.ids,
         entities: state.entities,
         selectedDeckId: state.selectedDeckId,
         loading: false,
         criteria: state.criteria,
-        deckToEditId: action.payload,
+        deckToEdit: {
+          deck: deckCopy,
+          dirty: false,
+        },
       };
     }
 
@@ -135,9 +157,8 @@ export const getSelected = createSelector(getEntities, getSelectedId, (entities,
   return entities[selectedId];
 });
 
-export const getDeckForEdit = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return cloneDeep(entities[selectedId]);
-});
+export const getDeckForEdit = (state: State) => state.deckToEdit.deck;
+export const getDeckForEditDirty = (state: State) => state.deckToEdit.dirty;
 
 // export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
 //   return ids.map(id => entities[id]);
