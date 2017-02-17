@@ -21,7 +21,7 @@ import { PlayerModule } from './player/player.module';
 import { GameEffects } from './state-management/effects/game';
 import { RankingsEffects } from './state-management/effects/rankings';
 import { DeckEffects } from './state-management/effects/deck';
-import { CollectionEffects } from './state-management/effects/collection';
+import { RefDataEffects } from './state-management/effects/ref-data';
 import { reducer } from './state-management/reducers/root';
 // import { schema } from './db';
 
@@ -68,7 +68,7 @@ import { reducer } from './state-management/reducers/root';
     EffectsModule.run(GameEffects),
     EffectsModule.run(RankingsEffects),
     EffectsModule.run(DeckEffects),
-    EffectsModule.run(CollectionEffects),
+    EffectsModule.run(RefDataEffects),
 
     /**
      * `provideDB` sets up @ngrx/db with the provided schema and makes the Database

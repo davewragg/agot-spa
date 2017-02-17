@@ -15,7 +15,7 @@ export class ReferenceDataService {
   private _subjects$: { [id: string]: BehaviorSubject<any> } = {};
 
   constructor(private dataService: DataService) {
-    this.loadInitialData();
+    // this.loadInitialData();
   }
 
   get factions(): Observable<Faction[]> {

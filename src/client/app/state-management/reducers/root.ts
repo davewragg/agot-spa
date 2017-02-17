@@ -32,7 +32,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
  */
 import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
-import * as fromCollection from './collection';
+import * as fromRefData from './ref-data';
 import * as fromRankings from './rankings';
 import * as fromDecks from './decks';
 import * as fromDeck from './deck';
@@ -49,7 +49,7 @@ export interface State {
   rankings: fromRankings.State;
   decks: fromDecks.State;
   deck: fromDeck.State;
-  collection: fromCollection.State;
+  refData: fromRefData.State;
   layout: fromLayout.State;
   router: fromRouter.RouterState;
 }
@@ -68,7 +68,7 @@ const reducers = {
   rankings: fromRankings.reducer,
   decks: fromDecks.reducer,
   deck: fromDeck.reducer,
-  collection: fromCollection.reducer,
+  collection: fromRefData.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
 };
@@ -166,15 +166,10 @@ export const getSelectedDeckStats = createSelector(getSelectedDeckState, fromDec
 export const getSelectedDeckStatsLoading = createSelector(getSelectedDeckState, fromDeck.getLoading);
 
 
-export const getCollectionState = (state: State) => state.collection;
+export const getRefDataState = (state: State) => state.refData;
 
-export const getCollectionLoaded = createSelector(getCollectionState, fromCollection.getLoaded);
-export const getCollectionLoading = createSelector(getCollectionState, fromCollection.getLoading);
-export const getCollectionGameIds = createSelector(getCollectionState, fromCollection.getIds);
-
-export const getGameCollection = createSelector(getGameEntities, getCollectionGameIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});
+export const getRefDataLoaded = createSelector(getRefDataState, fromRefData.getLoaded);
+export const getRefDataLoading = createSelector(getRefDataState, fromRefData.getLoading);
 
 /**
  * Layout Reducers
