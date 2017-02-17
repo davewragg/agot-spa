@@ -33,7 +33,6 @@ export class DeckEditFormComponent implements OnInit {
   factions$: Observable<Faction[]>;
   refDataLoading$: Observable<boolean>;
 
-  showMore: boolean = false;
   cancelling: boolean = false;
 
   _factions: { [id: string]: Faction };
@@ -51,7 +50,6 @@ export class DeckEditFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showMore = this.editing;
     // can't edit imported/saved decks when creating game
     if (this.creating || (this.deck.deckId && !this.editing)) {
       this.deck = new Deck();
