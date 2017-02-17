@@ -76,6 +76,8 @@ export class ReferenceDataService {
     const localData: T[] = this.getFromLocal(refDataType);
     if (localData) {
       subject = new BehaviorSubject<T[]>(localData);
+    } else {
+      subject = new BehaviorSubject<T[]>([]);
     }
     this.dataService.getReferenceData(refDataType)
       .subscribe((apiData: T[]) => {

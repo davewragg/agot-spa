@@ -68,7 +68,7 @@ const reducers = {
   rankings: fromRankings.reducer,
   decks: fromDecks.reducer,
   deck: fromDeck.reducer,
-  collection: fromRefData.reducer,
+  refData: fromRefData.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
 };
@@ -122,11 +122,6 @@ export const getGameIds = createSelector(getGamesState, fromGames.getIds);
 export const getSelectedGameId = createSelector(getGamesState, fromGames.getSelectedId);
 export const getSelectedGame = createSelector(getGamesState, fromGames.getSelected);
 
-
-/**
- * Just like with the games selectors, we also have to compose the search
- * reducer's and collection reducer's selectors.
- */
 export const getSearchState = (state: State) => state.search;
 
 export const getSearchGameIds = createSelector(getSearchState, fromSearchGames.getIds);
@@ -170,6 +165,14 @@ export const getRefDataState = (state: State) => state.refData;
 
 export const getRefDataLoaded = createSelector(getRefDataState, fromRefData.getLoaded);
 export const getRefDataLoading = createSelector(getRefDataState, fromRefData.getLoading);
+export const getFactions = createSelector(getRefDataState, fromRefData.getFactions);
+export const getAgendas = createSelector(getRefDataState, fromRefData.getAgendas);
+export const getVenues = createSelector(getRefDataState, fromRefData.getVenues);
+export const getSeasons = createSelector(getRefDataState, fromRefData.getSeasons);
+
+export const getFactionsList = createSelector(getRefDataState, fromRefData.getFactionsList);
+export const getAgendasList = createSelector(getRefDataState, fromRefData.getAgendasList);
+export const getVenuesList = createSelector(getRefDataState, fromRefData.getVenuesList);
 
 /**
  * Layout Reducers
