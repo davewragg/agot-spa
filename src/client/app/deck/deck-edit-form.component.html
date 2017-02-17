@@ -3,15 +3,15 @@
     <div class="form-group">
       <label class="form-control-label">Faction</label>
       <select class="form-control" formControlName="factionId" (change)="onDeckClassChange()">
-        <option value="">--{{ _factions?.length ? 'Select faction' : 'Loading factions' }}---</option>
-        <option *ngFor="let faction of factions | async" [value]="faction.factionId">{{ faction.name }}</option>
+        <option value="">--{{ (refDataLoading$ | async) ? 'Loading factions': 'Select faction' }}---</option>
+        <option *ngFor="let faction of factions$ | async" [value]="faction.factionId">{{ faction.name }}</option>
       </select>
     </div>
     <div class="form-group">
       <label class="form-control-label">Agenda</label>
       <select class="form-control" formControlName="agendaId" (change)="onDeckClassChange()">
-        <option value="">--{{ _agendas?.length ? 'Select agenda' : 'Loading agendas' }}---</option>
-        <option *ngFor="let agenda of agendas | async" [value]="agenda.agendaId">{{ agenda.title }}</option>
+        <option value="">--{{ (refDataLoading$ | async) ? 'Loading agendas': 'Select agenda' }}---</option>
+        <option *ngFor="let agenda of agendas$ | async" [value]="agenda.agendaId">{{ agenda.title }}</option>
       </select>
     </div>
   </div>
@@ -26,16 +26,12 @@
              placeholder="http://thronesdb.com/decklist/view/xxxx">
     </div>
   </div>
-  <!--<div class="col-xs-2 col-xs-offset-10 text-xs-right">-->
-  <!--TODO why this not work on mobile?-->
-  <!--<button type="button" class="btn btn-sm btn-outline-primary" (click)="showMore = !showMore">...</button>-->
-  <!--</div>-->
+
   <div class="col-md-12">
     <div class="form-group">
       <button type="submit" class="btn btn-success" [disabled]="!deckForm.valid">
         {{ creating ? 'Add Player' : 'Update' }}
       </button>
-      <!--TODO cancel button if editing-->
       <button *ngIf="editing" type="button" class="btn" (click)="onCancel()" [hidden]="cancelling">Cancel</button>
 
       <div [hidden]="!cancelling" class="card card-block alert-warning">

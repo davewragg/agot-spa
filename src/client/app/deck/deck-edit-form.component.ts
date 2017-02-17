@@ -1,13 +1,14 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ReferenceDataService } from '../shared/services/reference-data.service';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import { NotificationService } from '../shared/services/notification.service';
 import { Agenda } from '../shared/models/agenda.model';
 import { Faction } from '../shared/models/faction.model';
 import { Deck } from '../shared/models/deck.model';
 import { DeckClass } from '../shared/models/deck-class.model';
-import { Observable } from 'rxjs/Observable';
 import { DeckService } from '../shared/services/deck.service';
+import * as fromRoot from '../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
@@ -28,24 +29,25 @@ export class DeckEditFormComponent implements OnInit {
 
   deckForm: FormGroup;
 
-  agendas: Observable<Agenda[]>;
-  factions: Observable<Faction[]>;
+  agendas$: Observable<Agenda[]>;
+  factions$: Observable<Faction[]>;
+  refDataLoading$: Observable<boolean>;
 
   showMore: boolean = false;
   cancelling: boolean = false;
 
-  // TODO legacy sticking plaster
-  _factions: Faction[];
-  _agendas: Agenda[];
+  _factions: { [id: string]: Faction };
+  _agendas: { [id: string]: Agenda };
 
   constructor(private _formBuilder: FormBuilder,
-              private _referenceDataService: ReferenceDataService,
+              private store: Store<fromRoot.State>,
               private _notificationService: NotificationService) {
-    this.factions = this._referenceDataService.factions;
-    this.agendas = this._referenceDataService.agendas;
-    // TODO legacy sticking plaster
-    this.factions.subscribe((factions) => this._factions = factions);
-    this.agendas.subscribe((agendas) => this._agendas = agendas);
+    this.factions$ = store.select(fromRoot.getFactionsList);
+    this.agendas$ = store.select(fromRoot.getAgendasList);
+    this.refDataLoading$ = store.select(fromRoot.getRefDataLoading);
+
+    store.select(fromRoot.getFactions).subscribe((factions) => this._factions = factions);
+    store.select(fromRoot.getAgendas).subscribe((agendas) => this._agendas = agendas);
   }
 
   ngOnInit() {
@@ -118,13 +120,11 @@ export class DeckEditFormComponent implements OnInit {
     }
   }
 
-  // TODO legacy sticking plaster
   private getFaction(factionId: number | string) {
-    return this._factions.find((faction) => faction.factionId === +factionId);
+    return this._factions[factionId];
   }
 
-  // TODO legacy sticking plaster
   private getAgenda(agendaId: number | string) {
-    return this._agendas.find((agenda) => agenda.agendaId === +agendaId);
+    return this._agendas[agendaId];
   }
 }
