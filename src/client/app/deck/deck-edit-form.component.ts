@@ -20,14 +20,25 @@ export class DeckEditFormComponent implements OnInit {
   creating: boolean;
   @Input()
   editing: boolean;
+
   @Input()
-  deck: Deck;
+  set deck(deck: Deck) {
+    if (deck) {
+      this.deckForm.patchValue(deck);
+    }
+  }
+
   @Output()
   updateDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
   @Output()
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
-  deckForm: FormGroup;
+  deckForm: FormGroup = new FormGroup({
+    factionId: new FormControl(['', Validators.required]),
+    agendaId: new FormControl(''),
+    title: new FormControl(['', Validators.required]),
+    thronesDbLink: new FormControl(''),
+  });
 
   agendas$: Observable<Agenda[]>;
   factions$: Observable<Faction[]>;
@@ -51,10 +62,9 @@ export class DeckEditFormComponent implements OnInit {
 
   ngOnInit() {
     // can't edit imported/saved decks when creating game
-    if (this.creating || (this.deck.deckId && !this.editing)) {
+    if (this.creating || (this.deck && this.deck.deckId && !this.editing)) {
       this.deck = new Deck();
     }
-    this.populateForm();
   }
 
   onDeckClassChange() {
@@ -76,27 +86,15 @@ export class DeckEditFormComponent implements OnInit {
       return;
     }
 
-    Object.assign(this.deck, updatedDeck);
-    this.populateDeck(this.deck);
-    console.log(this.deck);
-    this.updateDeck.emit(this.deck);
+    const newDeck = Object.assign({}, this.deck, updatedDeck);
+    this.populateDeck(newDeck);
+    console.log(newDeck);
+    this.updateDeck.emit(newDeck);
   }
-
-  private populateForm() {
-    let factionId = this.deck.factionId || '';
-    let agendaId = this.deck.agendaId || '';
-    let title = this.deck.title || this.deck.fallbackTitle || '';
-    let thronesDbLink = this.deck.thronesDbLink || '';
-    this.deckForm = this._formBuilder.group({
-      factionId: [factionId, Validators.required],
-      agendaId: [agendaId],
-      title: [title, Validators.required],
-      thronesDbLink: [thronesDbLink],
-    });
-  };
 
   private setDefaultTitle() {
     const title: FormControl = <FormControl>this.deckForm.controls['title'];
+    // TODO this might still be wonky, although bot sure exactly when
     if (!title.value || (!title.touched && this.creating)) {
       const factionId: number = +this.deckForm.controls['factionId'].value;
       const agendaId: number = +this.deckForm.controls['agendaId'].value;
@@ -108,14 +106,11 @@ export class DeckEditFormComponent implements OnInit {
     }
   }
 
-  private populateDeck(gamePlayer: Deck) {
-    // form properties default to strings
-    gamePlayer.faction = this.getFaction(+gamePlayer.factionId);
-    if (gamePlayer.agendaId) {
-      gamePlayer.agenda = this.getAgenda(+gamePlayer.agendaId);
-    } else {
-      gamePlayer.agenda = null;
-    }
+  private populateDeck(deck: Deck) {
+    deck.factionId = +deck.factionId;
+    deck.agendaId = +deck.agendaId;
+    deck.faction = this.getFaction(deck.factionId);
+    deck.agenda = deck.agendaId ? this.getAgenda(deck.agendaId) : null;
   }
 
   private getFaction(factionId: number | string) {
