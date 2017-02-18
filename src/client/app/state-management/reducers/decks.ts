@@ -128,6 +128,22 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       };
     }
 
+    case deckActions.ActionTypes.UPDATE: {
+      // yeah i'll work on this bit
+      const updatedDeck = action.payload ? action.payload : state.deckToEdit.deck;
+      return {
+        ids: state.ids,
+        entities: state.entities,
+        selectedDeckId: state.selectedDeckId,
+        loading: false,
+        criteria: state.criteria,
+        deckToEdit: {
+          deck: updatedDeck,
+          dirty: true,
+        },
+      };
+    }
+
     default: {
       return state;
     }

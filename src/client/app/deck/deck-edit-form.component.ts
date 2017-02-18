@@ -9,6 +9,7 @@ import { Deck } from '../shared/models/deck.model';
 import { DeckClass } from '../shared/models/deck-class.model';
 import { DeckService } from '../shared/services/deck.service';
 import * as fromRoot from '../state-management/reducers/root';
+import * as deckActions from '../state-management/actions/deck';
 
 @Component({
   moduleId: module.id,
@@ -67,8 +68,8 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
       this.deck = new Deck();
     }
     this.changesSub = this.deckForm.valueChanges.subscribe(() => {
-      console.log('dirty');
-      // dispatchAction dirty dirty
+      // TODO convert changes into a deck
+      this.store.dispatch(new deckActions.UpdateAction(null));
     });
   }
 
