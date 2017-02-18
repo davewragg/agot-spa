@@ -16,7 +16,9 @@ import { EditDeckPageComponent } from './edit-deck.container';
       {
         path: 'decks/:id/edit',
         component: EditDeckPageComponent,
-        canActivate: [DeckExistsGuard], // todo guard for checking edit rights/thrones db id
+        canActivate: [DeckExistsGuard],
+        // todo guard for checking edit rights/thrones db id
+        // todo guard for can deactivate on dirty
       },
       // TODO /deck or /decks?
       { path: 'decks/new', component: CreateDeckComponent } // TODO /deck or /decks?
