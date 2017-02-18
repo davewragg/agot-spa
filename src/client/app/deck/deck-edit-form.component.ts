@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { NotificationService } from '../shared/services/notification.service';
@@ -15,7 +15,7 @@ import * as fromRoot from '../state-management/reducers/root';
   selector: 'agot-deck-edit-form',
   templateUrl: 'deck-edit-form.component.html'
 })
-export class DeckEditFormComponent implements OnInit {
+export class DeckEditFormComponent implements OnInit, OnDestroy {
   @Input()
   creating: boolean;
   @Input()
@@ -49,8 +49,9 @@ export class DeckEditFormComponent implements OnInit {
   _factions: { [id: string]: Faction };
   _agendas: { [id: string]: Agenda };
 
-  constructor(private _formBuilder: FormBuilder,
-              private store: Store<fromRoot.State>,
+  private changesSub: any;
+
+  constructor(private store: Store<fromRoot.State>,
               private _notificationService: NotificationService) {
     this.factions$ = store.select(fromRoot.getFactionsList);
     this.agendas$ = store.select(fromRoot.getAgendasList);
@@ -65,6 +66,14 @@ export class DeckEditFormComponent implements OnInit {
     if (this.creating || (this.deck && this.deck.deckId && !this.editing)) {
       this.deck = new Deck();
     }
+    this.changesSub = this.deckForm.valueChanges.subscribe(() => {
+      console.log('dirty');
+      // dispatchAction dirty dirty
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.changesSub.unsubscribe();
   }
 
   onDeckClassChange() {
@@ -88,7 +97,6 @@ export class DeckEditFormComponent implements OnInit {
 
     const newDeck = Object.assign({}, this.deck, updatedDeck);
     this.populateDeck(newDeck);
-    console.log(newDeck);
     this.updateDeck.emit(newDeck);
   }
 
@@ -102,7 +110,7 @@ export class DeckEditFormComponent implements OnInit {
       const agenda = this.getAgenda(agendaId);
       const deckClassTitle = DeckClass.getDeckClassTitle(faction, agenda);
       const defaultTitle = `New ${deckClassTitle} deck`;
-      title.setValue(defaultTitle, {});// TODO check {}
+      title.setValue(defaultTitle);
     }
   }
 

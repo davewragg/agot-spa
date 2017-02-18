@@ -36,7 +36,8 @@ export class DeckDetailsComponent {
     this.store.dispatch(go(['decks', this.route.snapshot.params['id']]));
   }
 
-  onSubmit() {
+  onSubmit(deck: Deck) {
+    console.log(deck);
     // TODO call yeractual action
   //   this.formDisabled = true;
   //   this.isLoadingDeck = true;
