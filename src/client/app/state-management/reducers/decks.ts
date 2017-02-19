@@ -128,6 +128,19 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       };
     }
 
+    case deckActions.ActionTypes.SAVE_UPDATED: {
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    }
+
+    case deckActions.ActionTypes.SAVE_UPDATED_COMPLETE:
+    case deckActions.ActionTypes.SAVE_UPDATED_FAILURE: {
+      return Object.assign({}, state, {
+        loading: false,
+      });
+    }
+
     case deckActions.ActionTypes.UPDATE: {
       // yeah i'll work on this bit
       const updatedDeck = action.payload ? action.payload : state.deckToEdit.deck;

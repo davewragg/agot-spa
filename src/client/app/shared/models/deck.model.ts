@@ -15,4 +15,13 @@ export class Deck {
   dateCreated: string;
   dateModified: string;
   [key: string]: string | number | Faction | Agenda;
+
+  static patchValues(source: Deck, changes: any): Deck {
+    const updatedDeck: Deck = Object.assign({}, source, changes);
+    return ['factionId', 'agendaId', 'thronesDbId']
+      .reduce((memo, numericKey) => {
+        memo[numericKey] = memo[numericKey] && +memo[numericKey];
+        return memo;
+      }, updatedDeck);
+  }
 }

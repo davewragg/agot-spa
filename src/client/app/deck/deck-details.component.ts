@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as fromRoot from '../state-management/reducers/root';
 import { Deck } from '../shared/models/deck.model';
 import { go } from '@ngrx/router-store';
+import * as deckActions from '../state-management/actions/deck';
 
 @Component({
   selector: 'agot-deck-details',
@@ -32,27 +33,11 @@ export class DeckDetailsComponent {
   }
 
   onCancel() {
-    // TODO canDeactivate guard check - dirty$
     this.store.dispatch(go(['decks', this.route.snapshot.params['id']]));
   }
 
   onSubmit(deck: Deck) {
     console.log(deck);
-    // TODO call yeractual action
-  //   this.formDisabled = true;
-  //   this.isLoadingDeck = true;
-  //
-  //   console.log('details submit', deck);
-  //   this.deckService.updateDeck(deck).subscribe((deck: Deck) => {
-  //       this.deck = deck;
-  //       this.formDisabled = false;
-  //       this.editing = false;
-  //     }, (error) => {
-  //       this.formDisabled = false;
-  //       console.error(error);
-  //       this.notificationService.error('Whoops', error.message || error._body || error);
-  //       this.isLoadingDeck = false;
-  //     }, () => this.isLoadingDeck = false
-  //   )
+    this.store.dispatch(new deckActions.SaveUpdateAction(deck));
   }
 }

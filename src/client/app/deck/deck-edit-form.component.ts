@@ -25,9 +25,13 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   @Input()
   set deck(deck: Deck) {
     if (deck) {
+      this._deck = deck;
       this.deckForm.patchValue(deck);
     }
   }
+
+  // TODO bin this
+  _deck: Deck;
 
   @Output()
   updateDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
@@ -44,6 +48,7 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   agendas$: Observable<Agenda[]>;
   factions$: Observable<Faction[]>;
   refDataLoading$: Observable<boolean>;
+  formDirty$: Observable<boolean>;
 
   cancelling: boolean = false;
 
@@ -57,19 +62,17 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
     this.factions$ = store.select(fromRoot.getFactionsList);
     this.agendas$ = store.select(fromRoot.getAgendasList);
     this.refDataLoading$ = store.select(fromRoot.getRefDataLoading);
+    this.formDirty$ = store.select(fromRoot.getDeckForEditDirty);
 
     store.select(fromRoot.getFactions).subscribe((factions) => this._factions = factions);
     store.select(fromRoot.getAgendas).subscribe((agendas) => this._agendas = agendas);
   }
 
   ngOnInit() {
-    // can't edit imported/saved decks when creating game
-    if (this.creating || (this.deck && this.deck.deckId && !this.editing)) {
-      this.deck = new Deck();
-    }
-    this.changesSub = this.deckForm.valueChanges.subscribe(() => {
-      // TODO convert changes into a deck
-      this.store.dispatch(new deckActions.UpdateAction(null));
+    this.changesSub = this.deckForm.valueChanges.subscribe((changes) => {
+      // TODO dispatch changes only
+      const updatedDeck: Deck = Deck.patchValues(this._deck, changes);
+      this.store.dispatch(new deckActions.UpdateAction(updatedDeck));
     });
   }
 
@@ -87,8 +90,8 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // form properties default to strings
-    const updatedDeck: Deck = this.deckForm.value;
+    // TODO dispatch only changes
+    const updatedDeck: Deck = Deck.patchValues(this._deck, this.deckForm.value);
     const error = DeckService.validateDeck(updatedDeck);
     if (error) {
       this._notificationService.warn('Nope', error);
@@ -96,11 +99,12 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const newDeck = Object.assign({}, this.deck, updatedDeck);
-    this.populateDeck(newDeck);
-    this.updateDeck.emit(newDeck);
+    // TODO move this out to store
+    this.populateDeck(updatedDeck);
+    this.updateDeck.emit(updatedDeck);
   }
 
+  // TODO move this out to store
   private setDefaultTitle() {
     const title: FormControl = <FormControl>this.deckForm.controls['title'];
     // TODO this might still be wonky, although bot sure exactly when
@@ -115,17 +119,18 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  // TODO move this out to store
   private populateDeck(deck: Deck) {
-    deck.factionId = +deck.factionId;
-    deck.agendaId = +deck.agendaId;
     deck.faction = this.getFaction(deck.factionId);
     deck.agenda = deck.agendaId ? this.getAgenda(deck.agendaId) : null;
   }
 
+  // TODO move this out to store
   private getFaction(factionId: number | string) {
     return this._factions[factionId];
   }
 
+  // TODO move this out to store
   private getAgenda(agendaId: number | string) {
     return this._agendas[agendaId];
   }

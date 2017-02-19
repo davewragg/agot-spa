@@ -30,7 +30,7 @@
 
   <div class="col-md-12">
     <div class="form-group">
-      <button type="submit" class="btn btn-success" [disabled]="!deckForm.valid">
+      <button type="submit" class="btn btn-success" [disabled]="!deckForm.valid || !(formDirty$ | async)">
         {{ creating ? 'Add Player' : 'Update' }}
       </button>
       <button *ngIf="editing" type="button" class="btn" (click)="onCancel()" [hidden]="cancelling">Cancel</button>
