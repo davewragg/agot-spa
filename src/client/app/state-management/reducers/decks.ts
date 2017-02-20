@@ -139,22 +139,18 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       return Object.assign({}, state, {
         loading: false,
       });
+      // TODO clear deckToEdit on success
     }
 
-    case deckActions.ActionTypes.UPDATE: {
-      // yeah i'll work on this bit
-      const updatedDeck = action.payload ? action.payload : state.deckToEdit.deck;
-      return {
-        ids: state.ids,
-        entities: state.entities,
-        selectedDeckId: state.selectedDeckId,
+    case deckActions.ActionTypes.UPDATE_COMPLETE: {
+      const changes = action.payload;
+      return Object.assign({}, state, {
         loading: false,
-        criteria: state.criteria,
         deckToEdit: {
-          deck: updatedDeck,
+          deck: Deck.patchValues(state.deckToEdit.deck, changes),
           dirty: true,
         },
-      };
+      });
     }
 
     default: {

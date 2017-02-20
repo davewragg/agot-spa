@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
-import * as deckActions from '../actions/deck';
 import { DeckService } from '../../shared/services/deck.service';
 import { StatsService } from '../../shared/services/stats.service';
 import { NotificationService } from '../../shared/services/notification.service';
+import { Deck } from '../../shared/models/deck.model';
+import { Agenda } from '../../shared/models/agenda.model';
+import { Faction } from '../../shared/models/faction.model';
+import { DeckClass } from '../../shared/models/deck-class.model';
+import * as deckActions from '../actions/deck';
+import * as fromRoot from '../reducers/root';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -43,6 +48,16 @@ export class DeckEffects {
         .map(decks => new deckActions.FilterCompleteAction(decks))
         .catch(() => of(new deckActions.FilterCompleteAction([])));
     });
+
+  @Effect()
+  updateDeck$: Observable<Action> = this.actions$
+    .ofType(deckActions.ActionTypes.UPDATE)
+    .map((action: deckActions.UpdateAction) => action.payload)
+    .map(deck => {
+        const populatedDeck = this.populateDeck(deck);
+        return new deckActions.UpdateCompleteAction(populatedDeck);
+      }
+    );
 
   @Effect()
   saveUpdatedDeck$: Observable<Action> = this.actions$
@@ -86,9 +101,46 @@ export class DeckEffects {
         .catch(() => of(new deckActions.SelectCompleteAction(undefined)));
     });
 
+  _factions: { [id: string]: Faction };
+  _agendas: { [id: string]: Agenda };
+
   constructor(private actions$: Actions,
               private deckService: DeckService,
               private notificationService: NotificationService,
-              private statsService: StatsService) {
+              private statsService: StatsService,
+              private store: Store<fromRoot.State>,) {
+    store.select(fromRoot.getFactions).subscribe((factions) => this._factions = factions);
+    store.select(fromRoot.getAgendas).subscribe((agendas) => this._agendas = agendas);
+  }
+
+  private populateDeck(deck: Deck) {
+    const updatedDeck = Deck.patchValues(deck, {
+      faction: this.getFaction(deck.factionId),
+      agenda: deck.agendaId ? this.getAgenda(deck.agendaId) : null,
+    });
+
+    return this.setDefaultTitle(updatedDeck);
+  }
+
+  private setDefaultTitle(deck: Deck) {
+    const defaultTitle = this.getDefaultTitle(deck);
+    if (!deck.title) { // TODO need a touched check here or something
+      deck.title = defaultTitle;
+    }
+    return deck;
+  }
+
+  private getFaction(factionId: number | string) {
+    return this._factions[factionId];
+  }
+
+  private getAgenda(agendaId: number | string) {
+    return this._agendas[agendaId];
+  }
+
+  private getDefaultTitle(deck: Deck) {
+    const { faction, agenda } = deck;
+    const deckClassTitle = DeckClass.getDeckClassTitle(faction, agenda);
+    return `New ${deckClassTitle} deck`;
   }
 }

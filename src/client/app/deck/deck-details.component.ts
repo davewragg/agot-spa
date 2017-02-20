@@ -36,7 +36,10 @@ export class DeckDetailsComponent {
     this.store.dispatch(go(['decks', this.route.snapshot.params['id']]));
   }
 
-  onSubmit(deck: Deck) {
+  onSubmit() {
+    let deck: Deck;
+    // get from store synchronously
+    this.deck$.subscribe((currentDeck) => deck = currentDeck);
     console.log(deck);
     this.store.dispatch(new deckActions.SaveUpdateAction(deck));
   }

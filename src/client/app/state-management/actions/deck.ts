@@ -18,6 +18,7 @@ export const ActionTypes = {
   LOAD: type('[Deck] Load'),
   SELECT_FOR_EDIT: type('[Deck] Select for Edit'),
   UPDATE: type('[Deck] Update'),
+  UPDATE_COMPLETE: type('[Deck] Update Complete'),
   SAVE_UPDATED: type('[Deck] Save updated'),
   SAVE_UPDATED_COMPLETE: type('[Deck] Save complete'),
   SAVE_UPDATED_FAILURE: type('[Deck] Save failure'),
@@ -62,6 +63,13 @@ export class SelectForEditAction implements Action {
 
 export class UpdateAction implements Action {
   type = ActionTypes.UPDATE;
+
+  constructor(public payload: Deck) {
+  }
+}
+
+export class UpdateCompleteAction implements Action {
+  type = ActionTypes.UPDATE_COMPLETE;
 
   constructor(public payload: Deck) {
   }
@@ -112,6 +120,7 @@ export type Actions
   | LoadAction
   | SelectForEditAction
   | UpdateAction
+  | UpdateCompleteAction
   | SaveUpdateAction
   | SaveUpdateCompleteAction
   | SaveUpdateFailureAction
