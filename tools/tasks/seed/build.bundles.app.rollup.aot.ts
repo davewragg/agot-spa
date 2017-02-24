@@ -4,6 +4,7 @@ import { join } from 'path';
 
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const includePaths = require('rollup-plugin-includepaths');
 const rollup = require('rollup');
 
 const config = {
@@ -12,6 +13,12 @@ const config = {
   treeshake: true,
   moduleName: 'main',
   plugins: [
+    includePaths({
+      include: {},
+      paths: [join(Config.TMP_DIR, 'app')],
+      external: [],
+      extensions: ['.js', '.json', '.html', '.ts']
+    }),
     nodeResolve({
       jsnext: true, main: true, module: true
     }),
