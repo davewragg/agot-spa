@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { PlayerService } from './shared/services/player.service';
 import { Config } from './shared/config/env.config';
 import { Player } from './shared/models/player.model';
 import './operators';
+import { Store } from '@ngrx/store';
+import * as fromRoot from './state-management/reducers/root';
 
 /**
  * This class represents the main application component.
@@ -14,14 +15,11 @@ import './operators';
   templateUrl: 'app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
-  currentPlayer: Observable<Player>;
+export class AppComponent {
+  currentPlayer$: Observable<Player>;
 
-  constructor(private playerService: PlayerService) {
+  constructor(private store: Store<fromRoot.State>) {
     console.log('Environment config', Config);
-  }
-
-  ngOnInit(): void {
-    this.currentPlayer = this.playerService.getCurrentPlayer();
+    this.currentPlayer$ = store.select(fromRoot.getCurrentPlayer);
   }
 }

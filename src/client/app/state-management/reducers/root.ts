@@ -30,6 +30,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
  * the state of the reducer plus any selector functions. The `* as`
  * notation packages up all of the exports into a single object.
  */
+import * as fromCurrentPlayer from './current-player';
 import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
 import * as fromRefData from './ref-data';
@@ -44,6 +45,7 @@ import * as fromLayout from './layout';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
+  currentPlayer: fromCurrentPlayer.State;
   search: fromSearchGames.State;
   games: fromGames.State;
   rankings: fromRankings.State;
@@ -63,6 +65,7 @@ export interface State {
  * the result from right to left.
  */
 const reducers = {
+  currentPlayer: fromCurrentPlayer.reducer,
   search: fromSearchGames.reducer,
   games: fromGames.reducer,
   rankings: fromRankings.reducer,
@@ -84,6 +87,10 @@ export function reducer(state: any, action: any) {
   }
 }
 
+
+export const getCurrentPlayerState = (state: State) => state.currentPlayer;
+export const getCurrentPlayer = createSelector(getCurrentPlayerState, fromCurrentPlayer.getCurrentPlayer);
+export const getCurrentPlayerLoading = createSelector(getCurrentPlayerState, fromCurrentPlayer.getLoading);
 
 /**
  * A selector function is a map function factory. We pass it parameters and it
