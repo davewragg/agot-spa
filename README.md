@@ -75,6 +75,7 @@
 - [ ] ngrx & effects
 - [ ] local storage/index db cache-first for data
 - [ ] material
+  - [ ] layout module
   - [ ] convert filters bars to single/multi-select dropdowns
 - [ ] improve deck selector
 - [ ] deck date range filtering?
