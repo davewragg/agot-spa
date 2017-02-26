@@ -10,8 +10,9 @@ import { DeckStatsComponent } from './deck-stats.component';
 import { CreateDeckComponent } from './create-deck.component';
 import { SelectedDeckPageComponent } from './selected-deck.container';
 import { ViewDeckPageComponent } from './deck.container';
-import { DeckExistsGuard } from '../state-management/guards/deck-exists';
 import { EditDeckPageComponent } from './edit-deck.container';
+import { DeckExistsGuard } from '../state-management/guards/deck-exists';
+import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
 
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule],
@@ -28,6 +29,7 @@ import { EditDeckPageComponent } from './edit-deck.container';
   ],
   providers: [
     DeckExistsGuard,
+    DeckIsDirtyGuard,
   ],
   exports: [DeckImportFormComponent, DeckEditFormComponent]
 })

@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ViewDeckPageComponent } from './deck.container';
 import { CreateDeckComponent } from './create-deck.component';
-import { DeckExistsGuard } from '../state-management/guards/deck-exists';
 import { EditDeckPageComponent } from './edit-deck.container';
+import { DeckExistsGuard } from '../state-management/guards/deck-exists';
+import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
 
 @NgModule({
   imports: [
@@ -17,8 +18,8 @@ import { EditDeckPageComponent } from './edit-deck.container';
         path: 'decks/:id/edit',
         component: EditDeckPageComponent,
         canActivate: [DeckExistsGuard],
+        canDeactivate: [DeckIsDirtyGuard],
         // todo guard for checking edit rights[creatorId]/thrones db id
-        // todo guard for can deactivate on dirty
       },
       // TODO /deck or /decks?
       { path: 'decks/new', component: CreateDeckComponent } // TODO /deck or /decks?
