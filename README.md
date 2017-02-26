@@ -46,9 +46,9 @@
 - [x] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 #### Post-merge
 - [x] update logic to reducers
-- [ ] user to store
+- [x] user to store
 - [ ] edit can activate guards
-- [ ] edit can deactivate guard
+- [x] edit can deactivate guard
 - [ ] handle 403 better on notify
 
 - [x] rename rankings -> rankings-table && all-rankings -> rankings 
