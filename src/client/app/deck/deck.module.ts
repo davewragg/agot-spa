@@ -13,6 +13,7 @@ import { ViewDeckPageComponent } from './deck.container';
 import { EditDeckPageComponent } from './edit-deck.container';
 import { DeckExistsGuard } from '../state-management/guards/deck-exists';
 import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
+import { CanEditDeckGuard } from '../state-management/guards/deck-can-edit';
 
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule],
@@ -30,6 +31,7 @@ import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
   providers: [
     DeckExistsGuard,
     DeckIsDirtyGuard,
+    CanEditDeckGuard,
   ],
   exports: [DeckImportFormComponent, DeckEditFormComponent]
 })

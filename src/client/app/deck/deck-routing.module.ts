@@ -5,6 +5,7 @@ import { CreateDeckComponent } from './create-deck.component';
 import { EditDeckPageComponent } from './edit-deck.container';
 import { DeckExistsGuard } from '../state-management/guards/deck-exists';
 import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
+import { CanEditDeckGuard } from '../state-management/guards/deck-can-edit';
 
 @NgModule({
   imports: [
@@ -17,9 +18,8 @@ import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
       {
         path: 'decks/:id/edit',
         component: EditDeckPageComponent,
-        canActivate: [DeckExistsGuard],
+        canActivate: [CanEditDeckGuard, DeckExistsGuard],
         canDeactivate: [DeckIsDirtyGuard],
-        // todo guard for checking edit rights[creatorId]/thrones db id
       },
       // TODO /deck or /decks?
       { path: 'decks/new', component: CreateDeckComponent } // TODO /deck or /decks?
