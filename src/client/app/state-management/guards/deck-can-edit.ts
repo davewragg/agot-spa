@@ -33,7 +33,9 @@ export class CanEditDeckGuard implements CanActivate {
     ])
       .map(([deck, currentPlayer]) => {
         // TODO check whether there are any other permissions
-        const canEdit = deck.creatorId === currentPlayer.playerId;
+        const isOwner = deck.creatorId === currentPlayer.playerId;
+        const isImported = !!deck.thronesDbCode;
+        const canEdit = !isImported && isOwner;
         if (!canEdit) {
           this.notificationService.error('Not allowed to edit this deck');
         }
