@@ -47,7 +47,7 @@
 #### Post-merge
 - [x] update logic to reducers
 - [x] user to store
-- [ ] edit can activate guards
+- [x] edit can activate guards
 - [x] edit can deactivate guard
 - [ ] handle 403 better on notify
 
