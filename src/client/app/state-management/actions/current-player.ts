@@ -9,10 +9,8 @@ export const ActionTypes = {
 
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
-
-  constructor() {
-  }
 }
+
 export class LoadCompleteAction implements Action {
   type = ActionTypes.LOAD_COMPLETE;
 

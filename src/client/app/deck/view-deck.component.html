@@ -5,7 +5,7 @@
     <div class="card-header">{{ deck.title || deck.fallbackTitle }}</div>
     <img class="card-img" src="./assets/img/icon{{ deck.faction.factionId }}.png"
          alt="{{ deck.faction.name }}">
-    <ul class="list-group list-group-flush" *ngIf="!editing">
+    <ul class="list-group list-group-flush">
       <li class="list-group-item">
         <span>{{ deck.faction?.name }}</span> /
         {{ deck.agenda?.title || 'No Agenda' }}

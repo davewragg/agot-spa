@@ -17,7 +17,7 @@ import * as deckActions from '../state-management/actions/deck';
       <agot-deck-edit-form [deck]="deck$ | async"
                            [editing]="true" [creating]="false"
                            (cancel)="onCancel()" [hidden]="loading$ | async"
-                           (updateDeck)="onSubmit($event)"></agot-deck-edit-form>
+                           (updateDeck)="onSubmit()"></agot-deck-edit-form>
     
       <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
     </div>
@@ -40,7 +40,6 @@ export class DeckDetailsComponent {
     let deck: Deck;
     // get from store synchronously
     this.deck$.subscribe((currentDeck) => deck = currentDeck);
-    console.log(deck);
     this.store.dispatch(new deckActions.SaveUpdateAction(deck));
   }
 }
