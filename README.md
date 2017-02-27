@@ -45,11 +45,16 @@
 - [x] switch every changeDetectionStrategy to onPush bar containers
 - [x] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 #### Post-merge
-- [x] update logic to reducers
-- [x] user to store
-- [x] edit can activate guards
-- [x] edit can deactivate guard
-- [ ] handle 403 better on notify
+- [ ] ngrx
+  - [x] update logic to reducers
+  - [x] user to store
+  - [x] edit can activate guards
+  - [x] edit can deactivate guard
+  - [ ] handle 403 better on notify
+
+- [ ] update charts to 5.5
+  - [ ] update imports and check build
+  - [ ] dynamic interactions on changes (https://github.com/gevgeny/angular2-highcharts#dynamic-interaction-with-chart-object)
 
 - [x] rename rankings -> rankings-table && all-rankings -> rankings 
 - [ ] loading states
@@ -58,7 +63,7 @@
   - [ ] LOADING ERRORS ON STORE
 - [ ] disabled reactive form controls warning (see below)
 - [x] ~~sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)~~ AOT resolved
-  - [ ] sanitise that one thronesdb link that it thinks is unsafe?
+  - [ ] sanitise that one thronesdb link that it thinks is unsafe? (non-https?)
 - [x] CURRENT_SEASON by default
   - [x] check custom date range against seasons to see if they're selected 
 - [x] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
@@ -69,11 +74,12 @@
 - [ ] truncate visible lists above a limit, add show more (there must be a lib for this)
   - [ ] decks
   - [ ] games
-- [ ] login and route/content protection
+  - [ ] infinite scroll!
+- [x] login and route/content protection
 - [ ] player groups/metas view
 - [ ] lazy loading - need seed support?
-- [ ] ngrx & effects
-- [ ] local storage/index db cache-first for data
+- [x] ngrx & effects
+- [x] local storage/index db cache-first for data
 - [ ] material
   - [ ] layout module
   - [ ] convert filters bars to single/multi-select dropdowns
