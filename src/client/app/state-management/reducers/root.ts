@@ -33,6 +33,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import * as fromCurrentPlayer from './current-player';
 import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
+import * as fromPlayers from './player';
 import * as fromRefData from './ref-data';
 import * as fromRankings from './rankings';
 import * as fromDecks from './decks';
@@ -48,6 +49,7 @@ export interface State {
   currentPlayer: fromCurrentPlayer.State;
   search: fromSearchGames.State;
   games: fromGames.State;
+  players: fromPlayers.State;
   rankings: fromRankings.State;
   decks: fromDecks.State;
   deck: fromDeck.State;
@@ -68,6 +70,7 @@ const reducers = {
   currentPlayer: fromCurrentPlayer.reducer,
   search: fromSearchGames.reducer,
   games: fromGames.reducer,
+  players: fromPlayers.reducer,
   rankings: fromRankings.reducer,
   decks: fromDecks.reducer,
   deck: fromDeck.reducer,
@@ -148,6 +151,18 @@ export const getRankingsState = (state: State) => state.rankings;
 export const getRankingsCriteria = createSelector(getRankingsState, fromRankings.getCriteria);
 export const getRankingsLoading = createSelector(getRankingsState, fromRankings.getLoading);
 export const getFilteredRankings = createSelector(getRankingsState, fromRankings.getFilteredRankings);
+
+export const getPlayersState = (state: State) => state.players;
+export const getGroupPlayerIds = createSelector(getPlayersState, fromPlayers.getIds);
+export const getSelectedPlayerGroupId = createSelector(getPlayersState, fromPlayers.getSelectedGroupId);
+export const getPlayersLoading = createSelector(getPlayersState, fromPlayers.getLoading);
+export const getPlayerEntities = createSelector(getPlayersState, fromPlayers.getEntities);
+export const getGroupPlayers = createSelector(getPlayerEntities, getGroupPlayerIds, (players, groupIds) => {
+  return groupIds.map(id => players[id]);
+});
+// export const getSelectedPlayerId = createSelector(getPlayersState, fromPlayers.getSelectedId);
+export const getSelectedPlayer = createSelector(getPlayersState, fromPlayers.getSelected);
+export const getSelectedPlayerStats = createSelector(getPlayersState, fromPlayers.getSelectedPlayerStats);
 
 export const getDecksState = (state: State) => state.decks;
 export const getFilteredDeckIds = createSelector(getDecksState, fromDecks.getIds);
