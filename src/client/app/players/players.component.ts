@@ -1,28 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
-import { PlayerService } from '../shared/services/player.service';
+import * as fromRoot from '../state-management/reducers/root';
 import { Player } from '../shared/models/player.model';
+import { FilterCriteria } from '../shared/models/filter-criteria.model';
 
 @Component({
   moduleId: module.id,
-  selector: 'agot-all-players',
+  selector: 'agot-players',
   templateUrl: 'players.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayersComponent {
-  players: Observable<Player[]>;
-  isLoading: boolean;
+  selectedGroupId$: Observable<number>;
+  players$: Observable<Player[]>;
+  loading$: Observable<boolean>;
 
-  constructor(private _playerService: PlayerService) {
-    this.loadPlayers();
+  constructor(private store: Store<fromRoot.State>) {
+    this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
+    this.players$ = store.select(fromRoot.getGroupPlayers);
+    this.loading$ = store.select(fromRoot.getPlayersLoading);
   }
 
-  loadPlayers() {
-    this.isLoading = true;
-    this.players = this._playerService.getPlayers();
-    this.players.filter((x) => !!x && !!x.length).subscribe(
-      () => this.isLoading = false,
-      () => this.isLoading = false,
-      () => this.isLoading = false
-    );
+  onSelectedGroupChange(criteria: FilterCriteria) {
+    const [playerGroupId] = criteria.playerGroupIds;
+    console.log(playerGroupId);
+    this.loadPlayers(playerGroupId);
+  }
+
+  loadPlayers(playerGroupId?: number) {
+    this.store.dispatch(go(['/players', playerGroupId || '']));
   }
 }

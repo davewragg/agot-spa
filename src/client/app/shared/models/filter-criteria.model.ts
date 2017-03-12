@@ -11,7 +11,7 @@ export class FilterCriteria {
   factionIds: number[] = [];
   agendaIds: number[] = [];
   deckIds: number[] = [];
-  playerGroupIds: number[] = [1]; // TODO hardcoded for now
+  playerGroupIds: number[] = [];
 
   static serialise(criteria: FilterCriteria): any {
     return cloneDeep(criteria);

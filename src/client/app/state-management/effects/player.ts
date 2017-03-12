@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { PlayerService } from '../../shared/services/player.service';
 import { StatsService } from '../../shared/services/stats.service';
@@ -15,8 +14,8 @@ export class PlayerEffects {
     .ofType(playerActions.ActionTypes.GET_FOR_GROUP)
     .map((action: playerActions.GetForGroupAction) => action.payload)
     .switchMap(playerGroupId => {
-      if (!playerGroupId) {
-        return empty();
+      if (!playerGroupId || isNaN(playerGroupId)) {
+        return of(new playerActions.GetForGroupCompleteAction([]));
       }
 
       const nextSearch$ = this.actions$.ofType(playerActions.ActionTypes.GET_FOR_GROUP).skip(1);

@@ -1,13 +1,15 @@
 <h2>Players</h2>
-<agot-spinner [isRunning]="isLoading"></agot-spinner>
+<agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-<div class="mb-1">
-  <agot-player-group-selector></agot-player-group-selector>
+<div class="mb-1" *ngIf="!(loading$ | async)">
+  <agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
+                              (playerGroupChange)="onSelectedGroupChange($event)">
+  </agot-player-group-selector>
 </div>
 
 <div class="card-deck-wrapper">
   <div class="card-deck">
-    <div *ngFor="let player of players | async" class="card text-xs-center">
+    <div *ngFor="let player of players$ | async" class="card text-xs-center">
       <div class="card-header">
         <h4>
           <agot-player-link [player]="player"></agot-player-link>
@@ -18,5 +20,8 @@
         (faction most played)
       </div>
     </div>
+  </div>
+  <div *ngIf="!(players$ | async).length">
+    <blockquote>No players</blockquote>
   </div>
 </div>

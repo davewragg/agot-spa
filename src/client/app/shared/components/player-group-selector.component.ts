@@ -14,6 +14,7 @@ import { PlayerGroup } from '../models/player-group.model';
 })
 export class PlayerGroupSelectorComponent implements OnInit {
   @Input()
+  playerGroup: FilterCriteria | number;
   criteria: FilterCriteria;
   @Input()
   multiSelect: boolean = false;
@@ -22,12 +23,22 @@ export class PlayerGroupSelectorComponent implements OnInit {
 
   playerGroups$: Observable<PlayerGroup[]>;
 
+  private static getCriteria(playerGroup: FilterCriteria | number) {
+    if (typeof playerGroup === 'number') {
+      const criteria = new FilterCriteria();
+      criteria.playerGroupIds = [playerGroup];
+      return criteria;
+    }
+    return cloneDeep(playerGroup);
+  }
+
   constructor(private store: Store<fromRoot.State>) {
     this.playerGroups$ = store.select(fromRoot.getAllPlayerGroups);
   }
 
   ngOnInit() {
-    this.criteria = this.criteria ? cloneDeep(this.criteria) : new FilterCriteria();
+    this.criteria = this.playerGroup ?
+      PlayerGroupSelectorComponent.getCriteria(this.playerGroup) : new FilterCriteria();
   }
 
   onPlayerGroupChange($event: any) {
