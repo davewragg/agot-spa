@@ -34,6 +34,7 @@ import * as fromCurrentPlayer from './current-player';
 import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
 import * as fromPlayers from './player';
+import * as fromPlayerGroups from './player-group';
 import * as fromRefData from './ref-data';
 import * as fromRankings from './rankings';
 import * as fromDecks from './decks';
@@ -50,6 +51,7 @@ export interface State {
   search: fromSearchGames.State;
   games: fromGames.State;
   players: fromPlayers.State;
+  playerGroups: fromPlayerGroups.State;
   rankings: fromRankings.State;
   decks: fromDecks.State;
   deck: fromDeck.State;
@@ -71,6 +73,7 @@ const reducers = {
   search: fromSearchGames.reducer,
   games: fromGames.reducer,
   players: fromPlayers.reducer,
+  playerGroups: fromPlayerGroups.reducer,
   rankings: fromRankings.reducer,
   decks: fromDecks.reducer,
   deck: fromDeck.reducer,
@@ -163,6 +166,9 @@ export const getGroupPlayers = createSelector(getPlayerEntities, getGroupPlayerI
 // export const getSelectedPlayerId = createSelector(getPlayersState, fromPlayers.getSelectedId);
 export const getSelectedPlayer = createSelector(getPlayersState, fromPlayers.getSelected);
 export const getSelectedPlayerStats = createSelector(getPlayersState, fromPlayers.getSelectedPlayerStats);
+
+export const getPlayerGroupState = (state: State) => state.playerGroups;
+export const getPlayerGroups = createSelector(getPlayerGroupState, fromPlayerGroups.getAll);
 
 export const getDecksState = (state: State) => state.decks;
 export const getFilteredDeckIds = createSelector(getDecksState, fromDecks.getIds);

@@ -40,6 +40,7 @@ import {
   StatsService,
   ThronesDbService
 } from './services/index';
+import { PlayerGroupService } from './services/player-group.service';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -113,6 +114,7 @@ export class SharedModule {
         GameService,
         NotificationService,
         PlayerService,
+        PlayerGroupService,
         RankingService,
         ReferenceDataService,
         SeasonService,

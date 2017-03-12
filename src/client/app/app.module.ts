@@ -21,6 +21,7 @@ import { PlayerModule } from './player/player.module';
 import { GameEffects } from './state-management/effects/game';
 import { RankingsEffects } from './state-management/effects/rankings';
 import { PlayerEffects } from './state-management/effects/player';
+import { PlayerGroupEffects } from './state-management/effects/player-group';
 import { DeckEffects } from './state-management/effects/deck';
 import { RefDataEffects } from './state-management/effects/ref-data';
 import { CurrentPlayerEffects } from './state-management/effects/current-player';
@@ -72,6 +73,7 @@ import { reducer } from './state-management/reducers/root';
     EffectsModule.run(RankingsEffects),
     EffectsModule.run(DeckEffects),
     EffectsModule.run(PlayerEffects),
+    EffectsModule.run(PlayerGroupEffects),
     EffectsModule.run(RefDataEffects),
 
     /**

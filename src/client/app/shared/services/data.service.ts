@@ -11,6 +11,7 @@ import { SetOfResults } from '../models/set-of-results.model';
 import { Deck } from '../models/deck.model';
 import { Player } from '../models/player.model';
 import { RefDataType } from './ref-data.type';
+import { PlayerGroup } from '../models/player-group.model';
 
 declare let Rollbar: any;
 
@@ -135,9 +136,23 @@ export class DataService {
     const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
     const params = DataService.convertFilterCriteriaToSearchParams(criteria);
     // TODO handle player group id
-    return this.http.get(this.baseUrl + 'api/rankings/get/1', {
+    return this.http.get(`${this.baseUrl}api/rankings/get/1`, {
       search: params
     })
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
+  }
+
+  getPlayerGroup(id: number): Observable<PlayerGroup> {
+    console.log('getPlayerGroup called', id);
+    return this.http.get(`${this.baseUrl}api/playergroups/get/${id}`)
+      .map(DataService.handleResponse)
+      .catch(DataService.handleError);
+  }
+
+  getPlayerGroups() {
+    console.log('getPlayerGroups called');
+    return this.http.get(`${this.baseUrl}api/playergroups/getall`)
       .map(DataService.handleResponse)
       .catch(DataService.handleError);
   }
@@ -145,7 +160,7 @@ export class DataService {
   getFilteredGames(filterCriteria: FilterCriteria) {
     console.log('getfilteredgames called');
     const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
-    return this.http.get(this.baseUrl + 'api/games/searchgames', {
+    return this.http.get(`${this.baseUrl}api/games/searchgames`, {
       search: params
     })
       .map(DataService.handleResponse)
@@ -159,14 +174,14 @@ export class DataService {
 
   getGame(gameId: number): Observable<Game> {
     console.log('getgame called', gameId);
-    return this.http.get(this.baseUrl + 'api/games/get/' + gameId)
+    return this.http.get(`${this.baseUrl}api/games/get/${gameId}`)
       .map(DataService.handleResponse)
       .catch(DataService.handleError);
   }
 
   updateGame(game: Game): Observable<Game> {
     console.log('updategame called', game);
-    return this.http.put(this.baseUrl + 'api/games/edit',
+    return this.http.put(`${this.baseUrl}api/games/edit`,
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse)
@@ -175,7 +190,7 @@ export class DataService {
 
   createGame(game: Game): Observable<Game> {
     console.log('creategame called', game);
-    return this.http.post(this.baseUrl + 'api/games/create',
+    return this.http.post(`${this.baseUrl}api/games/create`,
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
       .map(DataService.handleResponse)
@@ -184,7 +199,7 @@ export class DataService {
 
   deleteGame(gameId: number): Observable<any> {
     console.log('deletegame called', gameId);
-    return this.http.delete(this.baseUrl + 'api/games/delete/' + gameId)
+    return this.http.delete(`${this.baseUrl}api/games/delete/${gameId}`)
       .map(DataService.handleResponse)
       .catch(DataService.handleError);
   }
@@ -201,10 +216,10 @@ export class DataService {
       .catch(DataService.handleError);
   }
 
-  getPlayers(): Observable<Player[]> {
+  getPlayers(criteria: FilterCriteria): Observable<Player[]> {
     console.log('getPlayers called');
-    // TODO handle player group id
-    return this.http.get(this.baseUrl + `api/players/getall/1`, {
+    const playerGroup = (criteria && criteria.playerGroupIds[0]) || 1; // TODO cough
+    return this.http.get(this.baseUrl + `api/players/getall/${playerGroup}`, {
       search: 'includeMostPlayedFaction=true'
     })
       .map(DataService.handleResponse)
@@ -213,14 +228,14 @@ export class DataService {
 
   getCurrentPlayer(): Observable<Player> {
     console.log('getCurrentPlayer called');
-    return this.http.get(this.baseUrl + `api/players/currentplayer`)
+    return this.http.get(`${this.baseUrl}api/players/currentplayer`)
       .map(DataService.handleResponse)
       .catch(DataService.handleError);
   }
 
   updateDeck(deck: Deck): Observable<Deck> {
     console.log('updatedeck called', deck);
-    return this.http.put(this.baseUrl + 'api/decks/edit',
+    return this.http.put(`${this.baseUrl}api/decks/edit`,
       DataService._serialiseDeck(deck),
       DataService._getContentHeaders())
       .map(DataService.handleResponse)
