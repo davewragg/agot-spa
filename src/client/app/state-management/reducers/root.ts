@@ -168,7 +168,7 @@ export const getSelectedPlayer = createSelector(getPlayersState, fromPlayers.get
 export const getSelectedPlayerStats = createSelector(getPlayersState, fromPlayers.getSelectedPlayerStats);
 
 export const getPlayerGroupState = (state: State) => state.playerGroups;
-export const getPlayerGroups = createSelector(getPlayerGroupState, fromPlayerGroups.getAll);
+export const getAllPlayerGroups = createSelector(getPlayerGroupState, fromPlayerGroups.getAll);
 
 export const getDecksState = (state: State) => state.decks;
 export const getFilteredDeckIds = createSelector(getDecksState, fromDecks.getIds);

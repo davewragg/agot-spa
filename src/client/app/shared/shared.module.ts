@@ -41,6 +41,7 @@ import {
   ThronesDbService
 } from './services/index';
 import { PlayerGroupService } from './services/player-group.service';
+import { PlayerGroupSelectorComponent } from './components/player-group-selector.component';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -69,6 +70,7 @@ import { PlayerGroupService } from './services/player-group.service';
     NgPluralizeComponent,
     PlayedStatsChartComponent,
     PlayerFilterComponent,
+    PlayerGroupSelectorComponent,
     PlayerLinkComponent,
     SpinnerComponent
   ],
@@ -98,6 +100,7 @@ import { PlayerGroupService } from './services/player-group.service';
     NgPluralizeComponent,
     PlayedStatsChartComponent,
     PlayerFilterComponent,
+    PlayerGroupSelectorComponent,
     PlayerLinkComponent,
     SpinnerComponent
   ],

@@ -1,0 +1,15 @@
+<form (ngSubmit)="onExecute()" class="form">
+  <div class="btn-group" data-toggle="buttons">
+    <button class="btn btn-sm btn-secondary btn-outline-secondary label-button" type="button"> Player Groups
+    </button>
+    <label *ngFor="let playerGroup of playerGroups$ | async"
+           class="btn btn-secondary btn-sm" [class.active]="criteria.playerGroupIds.includes(playerGroup.id)">
+      <input type="checkbox" name="ids" (change)="onPlayerGroupChange($event)"
+             [checked]="criteria.playerGroupIds.includes(playerGroup.id)"
+             [value]="playerGroup.id">
+      {{ playerGroup.name }}
+    </label>
+    <!--<button class="btn btn-secondary btn-outline-secondary label-button" type="button" (click)="onClear()"> All-->
+    <!--</button>-->
+  </div>
+</form>

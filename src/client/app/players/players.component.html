@@ -1,5 +1,10 @@
 <h2>Players</h2>
 <agot-spinner [isRunning]="isLoading"></agot-spinner>
+
+<div class="mb-1">
+  <agot-player-group-selector></agot-player-group-selector>
+</div>
+
 <div class="card-deck-wrapper">
   <div class="card-deck">
     <div *ngFor="let player of players | async" class="card text-xs-center">
