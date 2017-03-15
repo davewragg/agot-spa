@@ -28,6 +28,13 @@ export class DateRangeComponent implements OnInit {
   aWeekAgo: string;
   selectedSeason: string;
 
+  private static setDates(criteria: FilterCriteria, fromDate?: string, toDate?: string) {
+    return Object.assign({}, criteria, {
+      fromDate,
+      toDate,
+    });
+  };
+
   constructor(private _seasonService: SeasonService) {
     this.seasons = _seasonService.seasons;
     const now = new Date();
@@ -35,49 +42,45 @@ export class DateRangeComponent implements OnInit {
     this.aWeekAgo = startOfDay(subDays(now, 7)).toISOString();
   }
 
-  // TODO refactor this to be immutable - return a new object on every event
-  // use OnChanges?
-
   ngOnInit() {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
       this.criteria = cloneDeep(this.criteria);
     }
-    this.setSelectedSeason();
+    this.setSelectedSeason(this.criteria);
   }
 
   onSortChange(ascending: boolean) {
-    this.criteria.ascending = ascending;
-    this.onExecute();
+    // this.criteria.ascending = ascending;
+    const criteria = Object.assign({}, this.criteria, {
+      ascending,
+    });
+    this.onExecute(criteria);
   }
 
   onSetSeason(season: Season) {
-    this.criteria.rangeSelection = DateRangeType.CUSTOM;
-    this.setDates(season.startDate, season.endDate);
-    this.onExecute();
+    // this.criteria.rangeSelection = DateRangeType.CUSTOM;
+    const criteria = Object.assign({}, this.criteria, {
+      rangeSelection: DateRangeType.CUSTOM,
+    });
+    this.onExecute(DateRangeComponent.setDates(criteria, season.startDate, season.endDate));
   }
 
   onSetRange(range: DateRangeType) {
-    this.criteria.rangeSelection = range;
-    this.setDates(null, null);
-    this.onExecute();
-  }
-
-  onExecute() {
-    //.debounceTime(400).distinctUntilChanged()
-    this.setSelectedSeason();
-    this.rangeChange.emit(this.criteria);
-  }
-
-  private setDates(fromDate?: string, toDate?: string) {
-    Object.assign(this.criteria, {
-      fromDate,
-      toDate,
+    // this.criteria.rangeSelection = range;
+    const criteria = Object.assign({}, this.criteria, {
+      rangeSelection: range,
     });
-  };
+    this.onExecute(DateRangeComponent.setDates(criteria, null, null));
+  }
 
-  private setSelectedSeason() {
-    this.selectedSeason = `${this.criteria.fromDate}:${this.criteria.toDate}`;
+  onExecute(criteria: FilterCriteria) {
+    this.setSelectedSeason(criteria);
+    this.rangeChange.emit(criteria);
+  }
+
+  private setSelectedSeason(criteria: FilterCriteria) {
+    this.selectedSeason = `${criteria.fromDate}:${criteria.toDate}`;
   }
 }
