@@ -165,6 +165,7 @@ export const getGroupPlayers = createSelector(getPlayerEntities, getGroupPlayerI
 });
 // export const getSelectedPlayerId = createSelector(getPlayersState, fromPlayers.getSelectedId);
 export const getSelectedPlayer = createSelector(getPlayersState, fromPlayers.getSelected);
+export const getPlayerStatsFilterCriteria = createSelector(getPlayersState, fromPlayers.getStatsFilterCriteria);
 export const getSelectedPlayerStats = createSelector(getPlayersState, fromPlayers.getSelectedPlayerStats);
 
 export const getPlayerGroupState = (state: State) => state.playerGroups;

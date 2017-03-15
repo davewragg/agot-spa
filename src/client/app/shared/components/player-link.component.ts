@@ -6,7 +6,7 @@ import { Player } from '../models/player.model';
   selector: 'agot-player-link',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-      <a *ngIf="player" [routerLink]="['/players', player.playerId]">
+      <a *ngIf="player" [routerLink]="['/player', player.playerId]">
         {{ player.name || player.playerName || 'Player' }}
       </a>`,
 })
