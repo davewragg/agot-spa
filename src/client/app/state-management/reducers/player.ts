@@ -71,8 +71,10 @@ export function reducer(state = initialState, action: playerActions.Actions): St
 
 
     case playerActions.ActionTypes.SELECT: {
+      const { playerId, criteria } = action.payload;
       return Object.assign({}, state, {
-        selectedPlayerId: action.payload,
+        selectedPlayerId: playerId,
+        statsFilterCriteria: criteria,
         loading: true,
       });
     }
@@ -99,6 +101,8 @@ export const getIds = (state: State) => state.ids;
 export const getSelectedGroupId = (state: State) => state.selectedPlayerGroupId;
 
 export const getSelectedId = (state: State) => state.selectedPlayerId;
+
+export const getStatsFilterCriteria = (state: State) => state.statsFilterCriteria;
 
 export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
   return entities[selectedId];
