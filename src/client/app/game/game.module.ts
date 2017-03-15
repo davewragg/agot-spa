@@ -13,6 +13,9 @@ import { GamePlayersComponent } from './game-players.component';
 import { NewGamePlayerFormComponent } from './new-game-player-form.component';
 import { ViewGameComponent } from './view-game.component';
 import { CreateGameComponent } from './create-game.component';
+import { GameExistsGuard } from '../state-management/guards/game-exists';
+import { ViewGamePageComponent } from './game.container';
+import { SelectedGamePageComponent } from './selected-game.container';
 
 @NgModule({
   imports: [CommonModule, SharedModule, GameRoutingModule, DeckModule],
@@ -27,7 +30,12 @@ import { CreateGameComponent } from './create-game.component';
     GamePlayersComponent,
     NewGamePlayerFormComponent,
     ViewGameComponent,
+    ViewGamePageComponent,
+    SelectedGamePageComponent,
   ],
+  providers: [
+    GameExistsGuard,
+  ]
   // exports: []
 })
 export class GameModule {

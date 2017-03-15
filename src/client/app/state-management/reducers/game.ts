@@ -5,8 +5,8 @@ import { Game } from '../../shared/models/game.model';
 
 export interface State {
   ids: number[];
-  entities: { [id: string]: Game };
-  selectedGameId: string | null;
+  entities: { [id: number]: Game };
+  selectedGameId: number | null;
 }
 
 const initialState: State = {
@@ -22,7 +22,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       const newGames = games.filter(game => !state.entities[game.gameId]);
 
       const newGameIds = newGames.map(game => game.gameId);
-      const newGameEntities = newGames.reduce((entities: { [id: string]: Game }, game: Game) => {
+      const newGameEntities = newGames.reduce((entities: { [id: number]: Game }, game: Game) => {
         return Object.assign(entities, {
           [game.gameId]: game
         });

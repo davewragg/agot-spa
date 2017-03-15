@@ -49,7 +49,7 @@ export class LoadAction implements Action {
 export class SelectAction implements Action {
   type = ActionTypes.SELECT;
 
-  constructor(public payload: string) {
+  constructor(public payload: number) {
   }
 }
 
