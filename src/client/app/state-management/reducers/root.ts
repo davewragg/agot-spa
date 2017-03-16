@@ -93,67 +93,22 @@ export function reducer(state: any, action: any) {
   }
 }
 
+export const getRefDataState = (state: State) => state.refData;
+
+export const getRefDataLoaded = createSelector(getRefDataState, fromRefData.getLoaded);
+export const getRefDataLoading = createSelector(getRefDataState, fromRefData.getLoading);
+export const getFactions = createSelector(getRefDataState, fromRefData.getFactions);
+export const getAgendas = createSelector(getRefDataState, fromRefData.getAgendas);
+export const getVenues = createSelector(getRefDataState, fromRefData.getVenues);
+export const getSeasons = createSelector(getRefDataState, fromRefData.getSeasons);
+
+export const getFactionsList = createSelector(getRefDataState, fromRefData.getFactionsList);
+export const getAgendasList = createSelector(getRefDataState, fromRefData.getAgendasList);
+export const getVenuesList = createSelector(getRefDataState, fromRefData.getVenuesList);
 
 export const getCurrentPlayerState = (state: State) => state.currentPlayer;
 export const getCurrentPlayer = createSelector(getCurrentPlayerState, fromCurrentPlayer.getCurrentPlayer);
 export const getCurrentPlayerLoading = createSelector(getCurrentPlayerState, fromCurrentPlayer.getLoading);
-
-/**
- * A selector function is a map function factory. We pass it parameters and it
- * returns a function that maps from the larger state tree into a smaller
- * piece of state. This selector simply selects the `games` state.
- *
- * Selectors are used with the `select` operator.
- *
- * ```ts
- * class MyComponent {
- *   constructor(state$: Observable<State>) {
- *     this.gamesState$ = state$.select(getGamesState);
- *   }
- * }
- * ```
- */
-export const getGamesState = (state: State) => state.games;
-
-/**
- * Every reducer module exports selector functions, however child reducers
- * have no knowledge of the overall state tree. To make them useable, we
- * need to make new selectors that wrap them.
- *
- * Once again our compose function comes in handy. From right to left, we
- * first select the games state then we pass the state to the game
- * reducer's getGames selector, finally returning an observable
- * of search results.
- *
- * Share memoizes the selector functions and publishes the result. This means
- * every time you call the selector, you will get back the same result
- * observable. Each subscription to the resultant observable
- * is shared across all subscribers.
- */
-export const getGameEntities = createSelector(getGamesState, fromGames.getEntities);
-export const getGameIds = createSelector(getGamesState, fromGames.getIds);
-export const getSelectedGameId = createSelector(getGamesState, fromGames.getSelectedId);
-export const getSelectedGame = createSelector(getGamesState, fromGames.getSelected);
-
-export const getSearchState = (state: State) => state.search;
-
-export const getSearchGameIds = createSelector(getSearchState, fromSearchGames.getIds);
-export const getSearchQuery = createSelector(getSearchState, fromSearchGames.getCriteria);
-export const getSearchLoading = createSelector(getSearchState, fromSearchGames.getLoading);
-
-
-/**
- * Some selector functions create joins across parts of state. This selector
- * composes the search result IDs to return an array of games in the store.
- */
-export const getSearchResults = createSelector(getGameEntities, getSearchGameIds, (games, searchIds) => {
-  return searchIds.map(id => games[id]);
-});
-
-export const getRankingsState = (state: State) => state.rankings;
-export const getRankingsCriteria = createSelector(getRankingsState, fromRankings.getCriteria);
-export const getRankingsLoading = createSelector(getRankingsState, fromRankings.getLoading);
-export const getFilteredRankings = createSelector(getRankingsState, fromRankings.getFilteredRankings);
 
 export const getPlayersState = (state: State) => state.players;
 export const getGroupPlayerIds = createSelector(getPlayersState, fromPlayers.getIds);
@@ -189,19 +144,57 @@ export const getSelectedDeckState = (state: State) => state.deck;
 export const getSelectedDeckStats = createSelector(getSelectedDeckState, fromDeck.getDeckStats);
 export const getSelectedDeckStatsLoading = createSelector(getSelectedDeckState, fromDeck.getLoading);
 
+export const getGamesState = (state: State) => state.games;
 
-export const getRefDataState = (state: State) => state.refData;
+/**
+ * Every reducer module exports selector functions, however child reducers
+ * have no knowledge of the overall state tree. To make them useable, we
+ * need to make new selectors that wrap them.
+ *
+ * Once again our compose function comes in handy. From right to left, we
+ * first select the games state then we pass the state to the game
+ * reducer's getGames selector, finally returning an observable
+ * of search results.
+ *
+ * Share memoizes the selector functions and publishes the result. This means
+ * every time you call the selector, you will get back the same result
+ * observable. Each subscription to the resultant observable
+ * is shared across all subscribers.
+ */
+export const getGameEntities = createSelector(getGamesState, fromGames.getEntities);
+export const getGameIds = createSelector(getGamesState, fromGames.getIds);
+export const getSelectedGameId = createSelector(getGamesState, fromGames.getSelectedId);
+export const getSelectedGame = createSelector(getGameEntities, getSelectedGameId, getVenues,
+  (games, selectedGameId, venues) => {
+    const game = games[selectedGameId];
+    return Object.assign({}, game, {
+      venue: venues[game.venueId],
+    });
+  });
 
-export const getRefDataLoaded = createSelector(getRefDataState, fromRefData.getLoaded);
-export const getRefDataLoading = createSelector(getRefDataState, fromRefData.getLoading);
-export const getFactions = createSelector(getRefDataState, fromRefData.getFactions);
-export const getAgendas = createSelector(getRefDataState, fromRefData.getAgendas);
-export const getVenues = createSelector(getRefDataState, fromRefData.getVenues);
-export const getSeasons = createSelector(getRefDataState, fromRefData.getSeasons);
+export const getSearchState = (state: State) => state.search;
 
-export const getFactionsList = createSelector(getRefDataState, fromRefData.getFactionsList);
-export const getAgendasList = createSelector(getRefDataState, fromRefData.getAgendasList);
-export const getVenuesList = createSelector(getRefDataState, fromRefData.getVenuesList);
+export const getSearchGameIds = createSelector(getSearchState, fromSearchGames.getIds);
+export const getSearchQuery = createSelector(getSearchState, fromSearchGames.getCriteria);
+export const getSearchLoading = createSelector(getSearchState, fromSearchGames.getLoading);
+/**
+ * Some selector functions create joins across parts of state. This selector
+ * composes the search result IDs to return an array of games in the store.
+ */
+export const getSearchResults = createSelector(getGameEntities, getSearchGameIds, getVenues,
+  (games, searchIds, venues) => {
+    return searchIds.map(id => {
+      const game = games[id];
+      return Object.assign({}, game, {
+        venue: venues[game.venueId],
+      });
+    });
+  });
+
+export const getRankingsState = (state: State) => state.rankings;
+export const getRankingsCriteria = createSelector(getRankingsState, fromRankings.getCriteria);
+export const getRankingsLoading = createSelector(getRankingsState, fromRankings.getLoading);
+export const getFilteredRankings = createSelector(getRankingsState, fromRankings.getFilteredRankings);
 
 /**
  * Layout Reducers
