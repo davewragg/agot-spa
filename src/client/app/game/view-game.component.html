@@ -11,7 +11,7 @@
     <div class="col-sm-6 form-group" *ngIf="game.venueId">
       <label class="form-control-label">Venue</label>
       <span class="form-control-static font-weight-bold">
-        {{ getVenueName(game.venueId) | async }}
+        {{ game.venue.name }}
       </span>
     </div>
   </div>
