@@ -62,12 +62,13 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
     case gameActions.ActionTypes.DELETE_COMPLETE: {
       const game = action.payload;
       const newEntities = Object.assign({}, state.entities);
-      // TODO confirm this works
+      // TODO confirm this works (and is necessary)
       delete newEntities[game.gameId];
 
       return Object.assign({}, state, {
         ids: state.ids.filter(id => id !== game.gameId),
         entities: newEntities,
+        selectedGameId: null,
       });
     }
 

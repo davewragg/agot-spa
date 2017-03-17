@@ -26,6 +26,7 @@ import { DeckEffects } from './state-management/effects/deck';
 import { RefDataEffects } from './state-management/effects/ref-data';
 import { CurrentPlayerEffects } from './state-management/effects/current-player';
 import { reducer } from './state-management/reducers/root';
+import { LayoutModule } from './layout/layout.module';
 // import { schema } from './db';
 
 @NgModule({
@@ -82,6 +83,7 @@ import { reducer } from './state-management/reducers/root';
      */
     // DBModule.provideDB(schema),
 
+    LayoutModule,
     HomeModule,
     GamesModule,
     GameModule,

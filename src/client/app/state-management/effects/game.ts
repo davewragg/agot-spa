@@ -60,7 +60,7 @@ export class GameEffects {
     .do(() =>
       this.notificationService.success('There', `I hope you're happy`)
     )
-    .map(game => go(['games', game.gameId])); // should redirect to 404
+    .map(game => go(['/404']));
 
   @Effect({ dispatch: false })
   deleteGameError$ = this.actions$
