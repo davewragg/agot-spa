@@ -167,6 +167,7 @@ export const getSelectedGameId = createSelector(getGamesState, fromGames.getSele
 export const getSelectedGame = createSelector(getGameEntities, getSelectedGameId, getVenues,
   (games, selectedGameId, venues) => {
     const game = games[selectedGameId];
+    if (!game) return game;
     return Object.assign({}, game, {
       venue: venues[game.venueId],
     });
@@ -185,6 +186,7 @@ export const getSearchResults = createSelector(getGameEntities, getSearchGameIds
   (games, searchIds, venues) => {
     return searchIds.map(id => {
       const game = games[id];
+      if (!game) return game;
       return Object.assign({}, game, {
         venue: venues[game.venueId],
       });

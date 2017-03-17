@@ -4,8 +4,10 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
-import * as game from '../actions/game';
+import * as gameActions from '../actions/game';
 import { GameService } from '../../shared/services/game.service';
+import { go } from '@ngrx/router-store';
+import { NotificationService } from '../../shared/services/notification.service';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -25,22 +27,52 @@ import { GameService } from '../../shared/services/game.service';
 export class GameEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(game.ActionTypes.FILTER)
+    .ofType(gameActions.ActionTypes.FILTER)
     .debounceTime(300)
-    .map((action: game.FilterAction) => action.payload)
+    .map((action: gameActions.FilterAction) => action.payload)
     .switchMap(criteria => {
       if (!criteria) {
         return empty();
       }
 
-      const nextSearch$ = this.actions$.ofType(game.ActionTypes.FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.FILTER).skip(1);
 
       return this.gameService.getGames(criteria)
         .takeUntil(nextSearch$)
-        .map(games => new game.FilterCompleteAction(games))
-        .catch(() => of(new game.FilterCompleteAction([])));
+        .map(games => new gameActions.FilterCompleteAction(games))
+        .catch(() => of(new gameActions.FilterCompleteAction([])));
     });
 
-  constructor(private actions$: Actions, private gameService: GameService) {
+  @Effect()
+  delete$: Observable<Action> = this.actions$
+    .ofType(gameActions.ActionTypes.DELETE)
+    .map((action: gameActions.DeleteAction) => action.payload)
+    .mergeMap(game =>
+      this.gameService.deleteGame(game.gameId)
+        .map(() => new gameActions.DeleteCompleteAction(game))
+        .catch((error) => of(new gameActions.DeleteFailureAction(error)))
+    );
+
+  @Effect()
+  deleteGameSuccess$: Observable<Action> = this.actions$
+    .ofType(gameActions.ActionTypes.DELETE_COMPLETE)
+    .map((action: gameActions.DeleteCompleteAction) => action.payload)
+    .do(() =>
+      this.notificationService.success('There', `I hope you're happy`)
+    )
+    .map(game => go(['games', game.gameId])); // should redirect to 404
+
+  @Effect({ dispatch: false })
+  deleteGameError$ = this.actions$
+    .ofType(gameActions.ActionTypes.DELETE_FAILURE)
+    .map((action: gameActions.DeleteFailureAction) => action.payload)
+    .do(error =>
+      // TODO check error code for 403 here and admonish
+      this.notificationService.error('Whoops', error.message || error._body || error)
+    );
+
+  constructor(private actions$: Actions,
+              private gameService: GameService,
+              private notificationService: NotificationService) {
   }
 }

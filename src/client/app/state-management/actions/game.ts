@@ -16,6 +16,9 @@ export const ActionTypes = {
   FILTER_COMPLETE: type('[Game] Filter Complete'),
   LOAD: type('[Game] Load'),
   SELECT: type('[Game] Select'),
+  DELETE: type('[Game] Delete'),
+  DELETE_COMPLETE: type('[Game] Delete Complete'),
+  DELETE_FAILURE: type('[Game] Delete Failure'),
 };
 
 /**
@@ -53,6 +56,27 @@ export class SelectAction implements Action {
   }
 }
 
+export class DeleteAction implements Action {
+  type = ActionTypes.DELETE;
+
+  constructor(public payload: Game) {
+  }
+}
+
+export class DeleteCompleteAction implements Action {
+  type = ActionTypes.DELETE_COMPLETE;
+
+  constructor(public payload: Game) {
+  }
+}
+
+export class DeleteFailureAction implements Action {
+  type = ActionTypes.DELETE_FAILURE;
+
+  constructor(public payload: Error | any) {
+  }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -61,4 +85,7 @@ export type Actions
   = FilterAction
   | FilterCompleteAction
   | LoadAction
-  | SelectAction;
+  | SelectAction
+  | DeleteAction
+  | DeleteCompleteAction
+  | DeleteFailureAction;
