@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Player } from '../models/player.model';
+import { Player } from '../../shared/models/player.model';
 
 @Component({
   moduleId: module.id,
