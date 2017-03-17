@@ -7,4 +7,10 @@ export class Game {
   venueId: number;
   venue?: Venue;
   gamePlayers: GamePlayer[] = [];
+
+  static patchValues(source: Game, changes: any): Game {
+    const updatedGame: Game = Object.assign({}, source, changes);
+    updatedGame.venueId = +updatedGame.venueId;
+    return updatedGame;
+  }
 }

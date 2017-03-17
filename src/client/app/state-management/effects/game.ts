@@ -8,6 +8,7 @@ import * as gameActions from '../actions/game';
 import { GameService } from '../../shared/services/game.service';
 import { go } from '@ngrx/router-store';
 import { NotificationService } from '../../shared/services/notification.service';
+import { Game } from '../../shared/models/game.model';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -44,6 +45,46 @@ export class GameEffects {
     });
 
   @Effect()
+  createNewGame$: Observable<Action> = this.actions$
+    .ofType(gameActions.ActionTypes.CREATE_NEW)
+    .map(() => go(['games', 'new']));
+
+  @Effect()
+  updateGame$: Observable<Action> = this.actions$
+    .ofType(gameActions.ActionTypes.UPDATE)
+    .map((action: gameActions.UpdateAction) => action.payload)
+    .map(game => {
+        const populatedGame = this.populateGame(game);
+        return new gameActions.UpdateCompleteAction(populatedGame);
+      }
+    );
+
+  @Effect()
+  saveUpdatedGame$: Observable<Action> = this.actions$
+    .ofType(gameActions.ActionTypes.SAVE_UPDATED)
+    .map((action: gameActions.SaveUpdateAction) => action.payload)
+    .mergeMap(game =>
+      this.gameService.updateGame(game)
+        .map(() => new gameActions.SaveUpdateCompleteAction(game))
+        .catch((error) => of(new gameActions.SaveUpdateFailureAction(error)))
+    );
+
+  @Effect()
+  saveUpdatedGameSuccess$: Observable<Action> = this.actions$
+    .ofType(gameActions.ActionTypes.SAVE_UPDATED_COMPLETE)
+    .map((action: gameActions.SaveUpdateCompleteAction) => action.payload)
+    .map(game => go(['games', game.gameId]));
+
+  @Effect({ dispatch: false })
+  saveUpdatedGameError$ = this.actions$
+    .ofType(gameActions.ActionTypes.SAVE_UPDATED_FAILURE)
+    .map((action: gameActions.SaveUpdateFailureAction) => action.payload)
+    .do(error =>
+      // TODO check error code for 403 here and admonish
+      this.notificationService.error('Whoops', error.message || error._body || error)
+    );
+
+  @Effect()
   delete$: Observable<Action> = this.actions$
     .ofType(gameActions.ActionTypes.DELETE)
     .map((action: gameActions.DeleteAction) => action.payload)
@@ -74,5 +115,14 @@ export class GameEffects {
   constructor(private actions$: Actions,
               private gameService: GameService,
               private notificationService: NotificationService) {
+  }
+
+  private populateGame(game: Game) {
+    const updatedGame = Game.patchValues(game, {
+      // faction: this.getFaction(game.factionId),
+      // agenda: game.agendaId ? this.getAgenda(game.agendaId) : null,
+    });
+
+    return updatedGame;
   }
 }
