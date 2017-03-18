@@ -28,8 +28,4 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new rankingActions.FilterAction(rankingFilterCriteria));
     this.store.dispatch(new gameActions.FilterAction(gameFilterCriteria));
   }
-
-  onCreateGame() {
-    this.store.dispatch(new gameActions.CreateNewAction());
-  }
 }

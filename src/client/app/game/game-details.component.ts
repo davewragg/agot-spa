@@ -1,80 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { GameService } from '../shared/services/game.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import { go } from '@ngrx/router-store';
+import * as fromRoot from '../state-management/reducers/root';
 import { Game } from '../shared/models/game.model';
-import { NotificationService } from '../shared/services/notification.service';
+import * as gameActions from '../state-management/actions/game';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-game-details',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'game-details.component.html',
 })
-export class GameDetailsComponent implements OnInit {
-  game: Game;
+export class GameDetailsComponent {
+  game$: Observable<Game>;
+  loading$: Observable<boolean>;
 
-  editing: boolean = false;
-  formDisabled: boolean = false;
-  isLoading: boolean;
-  loadError: any = null;
-
-  constructor(private _route: ActivatedRoute,
-              private gameService: GameService,
-              private notificationService: NotificationService) {
-  }
-
-  ngOnInit() {
-    this._route.params
-      .do(() => this.isLoading = true)
-      .switchMap((params: Params) => this.gameService.getGame(+params['id']))
-      .subscribe(
-        (game) => {
-          this.isLoading = false;
-          return this.game = game;
-        },
-        (error) => {
-          this.isLoading = false;
-          return this.loadError = error;
-        },
-        () => this.isLoading = false
-      );
-  }
-
-  onSubmit(game: Game) {
-    this.formDisabled = true;
-    this.isLoading = true;
-
-    console.log('details submit', game);
-    // TODO if creating, redirect to /game/id on submit?
-    this.gameService.updateGame(game).subscribe((game: Game) => {
-        this.game = game;
-        this.formDisabled = false;
-        this.editing = false;
-      }, (error) => {
-        this.formDisabled = false;
-        console.error(error);
-        this.notificationService.error('Whoops', error.message || error._body || error);
-        this.isLoading = false;
-      }, () => this.isLoading = false
-    );
+  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
+    this.game$ = store.select(fromRoot.getGameForEdit);
+    this.loading$ = store.select(fromRoot.getGameLoading);
   }
 
   onCancel() {
-    this.editing = false;
+    // TODO handle cancel on create
+    const idParam = this.route.snapshot.params['id'] || '';
+    this.store.dispatch(go(['games', idParam]));
   }
 
-  onEdit() {
-    this.editing = true;
+  onSubmit() {
+    let game: Game;
+    // get from store synchronously
+    this.game$.subscribe((currentGame) => game = currentGame);
+    this.store.dispatch(new gameActions.SaveUpdateAction(game));
   }
-
-  onDelete() {
-    console.log('delete', this.game);
-    this.gameService.deleteGame(this.game.gameId).subscribe((result) => {
-      this.game = null;
-      this.notificationService.success('There', `I hope you're happy`);
-    }, (error) => {
-      console.error(error);
-      this.notificationService.error('Whoops', error.message || error._body || error);
-    });
-  }
-
 }

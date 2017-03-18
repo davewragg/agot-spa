@@ -45,11 +45,6 @@ export class GameEffects {
     });
 
   @Effect()
-  createNewGame$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.CREATE_NEW)
-    .map(() => go(['games', 'new']));
-
-  @Effect()
   updateGame$: Observable<Action> = this.actions$
     .ofType(gameActions.ActionTypes.UPDATE)
     .map((action: gameActions.UpdateAction) => action.payload)

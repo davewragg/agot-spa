@@ -1,13 +1,10 @@
-<div *ngIf="game">
-  <h2>{{ editing ? 'Edit' : 'View' }} Game</h2>
+<div>
+  <h2>Edit Game</h2>
 
-  <agot-game-form [game]="game" *ngIf="editing" [hidden]="formDisabled"
+  <agot-game-form [game]="(game$ | async)" [hidden]="loading$ | async"
                   (update)="onSubmit($event)" (cancel)="onCancel()"></agot-game-form>
-
-  <agot-view-game *ngIf="!editing" [game]="game" (edit)="onEdit()" (deleteGame)="onDelete()"></agot-view-game>
 </div>
 
-<agot-spinner [isRunning]="isLoading"></agot-spinner>
+<agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-<h3 *ngIf="!isLoading && !game" class="alert alert-danger">Game not found</h3>
-<h3 *ngIf="loadError" class="alert alert-danger">Disaster {{ loadError | json }}</h3>
+<h3 *ngIf="!(loading$ | async) && !(game$ | async)" class="alert alert-danger">Game not found</h3>

@@ -16,6 +16,10 @@ import { CreateGameComponent } from './create-game.component';
 import { GameExistsGuard } from '../state-management/guards/game-exists';
 import { ViewGamePageComponent } from './game.container';
 import { SelectedGamePageComponent } from './selected-game.container';
+import { EditGamePageComponent } from './edit-game.container';
+import { CreateGamePageComponent } from './create-game.container';
+import { GameIsDirtyGuard } from '../state-management/guards/game-is-dirty';
+import { CanEditGameGuard } from '../state-management/guards/game-can-edit';
 
 @NgModule({
   imports: [CommonModule, SharedModule, GameRoutingModule, DeckModule],
@@ -32,9 +36,13 @@ import { SelectedGamePageComponent } from './selected-game.container';
     ViewGameComponent,
     ViewGamePageComponent,
     SelectedGamePageComponent,
+    EditGamePageComponent,
+    CreateGamePageComponent,
   ],
   providers: [
     GameExistsGuard,
+    GameIsDirtyGuard,
+    CanEditGameGuard,
   ]
   // exports: []
 })

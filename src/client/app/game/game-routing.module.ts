@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { GameDetailsComponent } from './game-details.component';
-import { CreateGameComponent } from './create-game.component';
 import { GameExistsGuard } from '../state-management/guards/game-exists';
 import { ViewGamePageComponent } from './game.container';
+import { EditGamePageComponent } from './edit-game.container';
+import { CreateGamePageComponent } from './create-game.container';
+import { GameIsDirtyGuard } from '../state-management/guards/game-is-dirty';
+import { CanEditGameGuard } from '../state-management/guards/game-can-edit';
 
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: 'games/new', component: CreateGameComponent },
+      {
+        path: 'games/new',
+        component: CreateGamePageComponent,
+        canDeactivate: [GameIsDirtyGuard],
+      },
       {
         path: 'games/:id',
         component: ViewGamePageComponent,
@@ -16,8 +22,9 @@ import { ViewGamePageComponent } from './game.container';
       },
       {
         path: 'games/:id/edit',
-        component: GameDetailsComponent,
-        canActivate: [GameExistsGuard],
+        component: EditGamePageComponent,
+        canActivate: [CanEditGameGuard, GameExistsGuard],
+        canDeactivate: [GameIsDirtyGuard],
       },
     ])
   ],

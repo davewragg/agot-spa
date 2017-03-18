@@ -155,3 +155,6 @@ export const getSelected = createSelector(getEntities, getSelectedId, (entities,
 export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });
+
+export const getGameForEdit = (state: State) => state.gameToEdit.game;
+export const getGameForEditDirty = (state: State) => state.gameToEdit.dirty;

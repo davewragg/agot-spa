@@ -172,6 +172,10 @@ export const getSelectedGame = createSelector(getGameEntities, getSelectedGameId
       venue: venues[game.venueId],
     });
   });
+export const getGameForEdit = createSelector(getGamesState, fromGames.getGameForEdit);
+export const getGameForEditDirty = createSelector(getGamesState, fromGames.getGameForEditDirty);
+export const getGameLoading = createSelector(getGamesState, fromGames.getLoading);
+
 
 export const getSearchState = (state: State) => state.search;
 
