@@ -1,5 +1,6 @@
-<div>
-  <h2>Edit Game</h2>
+<div *ngIf="game$ | async">
+  <!--TODO create/edit-->
+  <h2>{{ (game$ | async).gameId ? 'Edit' : 'Create' }} Game</h2>
 
   <agot-game-form [game]="(game$ | async)" [hidden]="loading$ | async"
                   (update)="onSubmit($event)" (cancel)="onCancel()"></agot-game-form>

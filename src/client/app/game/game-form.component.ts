@@ -1,12 +1,13 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { cloneDeep } from 'lodash';
-import { ReferenceDataService } from '../shared/services/reference-data.service';
+import { Store } from '@ngrx/store';
 import { NotificationService } from '../shared/services/notification.service';
 import { Game } from '../shared/models/game.model';
 import { GamePlayer } from '../shared/models/game-player.model';
 import { Venue } from '../shared/models/venue.model';
+import * as fromRoot from '../state-management/reducers/root';
+import * as gameActions from '../state-management/actions/game';
 
 @Component({
   moduleId: module.id,
@@ -14,58 +15,81 @@ import { Venue } from '../shared/models/venue.model';
   templateUrl: 'game-form.component.html',
   styleUrls: ['game-form.css'],
 })
-export class GameFormComponent implements OnInit {
+export class GameFormComponent implements OnInit, OnDestroy {
   @Input()
-  game: Game;
+  set game(game: Game) {
+    if (game) {
+      this.gameForm.patchValue(Object.assign({}, game, {
+        date: GameFormComponent.convertDateString(game.date),
+      }), { emitEvent: false });
+    }
+  }
+
   @Input()
   disabled: boolean;
+
   @Output()
   update: EventEmitter<Game> = new EventEmitter<Game>();
   @Output()
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
-  gameForm: FormGroup;
+  gameForm: FormGroup = new FormGroup({
+    date: new FormControl(['', Validators.required]),
+    venueId: new FormControl(['', Validators.required]),
+  });
+
+  loading$: Observable<boolean>;
   gamePlayers: GamePlayer[];
   cancelling: boolean = false;
 
-  venues: Observable<Venue[]>;
-  isLoading: boolean;
+  venues$: Observable<Venue[]>;
+  refDataLoading$: Observable<boolean>;
+  formDirty$: Observable<boolean>;
 
-  constructor(private _FormBuilder: FormBuilder,
-              private _referenceDataService: ReferenceDataService,
+  private changesSub: any;
+
+  private static convertDateString(date: string) {
+    // have to remove the time and timezone to populate the control correctly
+    return date.slice(0, 16);
+  };
+
+  constructor(private store: Store<fromRoot.State>,
               private notificationService: NotificationService) {
-    this.isLoading = true;
-    this.venues = this._referenceDataService.venues;
-    this.venues.filter((x) => !!x && !!x.length).subscribe(
-      () => this.isLoading = false,
-      () => this.isLoading = false,
-      () => this.isLoading = false
-    );
+    this.venues$ = this.store.select(fromRoot.getVenuesList);
+    this.refDataLoading$ = store.select(fromRoot.getRefDataLoading);
+    this.formDirty$ = store.select(fromRoot.getGameForEditDirty);
+    this.loading$ = store.select(fromRoot.getGameLoading);
   }
 
   ngOnInit() {
-    this.serialiseGameToForm();
+    this.changesSub = this.gameForm.valueChanges.debounceTime(0).subscribe((changes) => {
+      this.store.dispatch(new gameActions.UpdateAction(changes));
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.changesSub.unsubscribe();
+  }
+
+  onPlayerChange() {
+    // TODO
   }
 
   onSubmit() {
     if (!this.validateGame()) {
       return;
     }
-    const updatedGame = this.deserialiseFormToGame();
-    this.update.emit(updatedGame);
+    this.update.emit(this.game);
   }
 
   onCancel(force?: boolean) {
-    if (!force && this.gameForm.dirty) {
+    let dirty: boolean;
+    this.formDirty$.subscribe((d) => dirty = d);
+    if (!force && dirty) {
       this.cancelling = true;
     } else {
       this.cancel.emit('cancelled');
     }
-  }
-
-  onPlayerChange() {
-    // TODO anything else here?
-    this.gameForm.markAsDirty(true);
   }
 
   private validateGame() {
@@ -75,31 +99,5 @@ export class GameFormComponent implements OnInit {
       return false;
     }
     return true;
-  };
-
-  private serialiseGameToForm() {
-    this.gameForm = this._FormBuilder.group({
-      date: [this.convertDateString(), Validators.required],
-      venueId: [this.game.venueId || '', Validators.required],
-    });
-    // clone players to new array
-    this.gamePlayers = this.game.gamePlayers.map((gamePlayer) => Object.assign({}, gamePlayer));
-  };
-
-  private deserialiseFormToGame(): Game {
-    const game = cloneDeep(this.game);
-    Object.assign(game, this.gameForm.value);
-    // FIXME form values are strings
-    game.venueId = +game.venueId;
-
-    // set updated players back to game
-    game.gamePlayers = cloneDeep(this.gamePlayers);
-
-    return game;
-  };
-
-  private convertDateString() {
-    // have to remove the time and timezone to populate the control correctly
-    return this.game.date.slice(0, 16);
   };
 }

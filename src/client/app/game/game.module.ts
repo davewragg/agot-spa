@@ -12,7 +12,6 @@ import { GamePlayerRowComponent } from './game-player-row.component';
 import { GamePlayersComponent } from './game-players.component';
 import { NewGamePlayerFormComponent } from './new-game-player-form.component';
 import { ViewGameComponent } from './view-game.component';
-import { CreateGameComponent } from './create-game.component';
 import { GameExistsGuard } from '../state-management/guards/game-exists';
 import { ViewGamePageComponent } from './game.container';
 import { SelectedGamePageComponent } from './selected-game.container';
@@ -24,7 +23,6 @@ import { CanEditGameGuard } from '../state-management/guards/game-can-edit';
 @NgModule({
   imports: [CommonModule, SharedModule, GameRoutingModule, DeckModule],
   declarations: [
-    CreateGameComponent,
     DeckChooserComponent,
     DeckSelectorComponent,
     ExistingDeckSelectorComponent,
