@@ -1,11 +1,11 @@
-import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { NotificationService } from '../shared/services/notification.service';
 import { Game } from '../shared/models/game.model';
-import { GamePlayer } from '../shared/models/game-player.model';
 import { Venue } from '../shared/models/venue.model';
+import { GamePlayer } from '../shared/models/game-player.model';
 import * as fromRoot from '../state-management/reducers/root';
 import * as gameActions from '../state-management/actions/game';
 
@@ -14,6 +14,7 @@ import * as gameActions from '../state-management/actions/game';
   selector: 'agot-game-form',
   templateUrl: 'game-form.component.html',
   styleUrls: ['game-form.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameFormComponent implements OnInit, OnDestroy {
   @Input()
@@ -39,9 +40,9 @@ export class GameFormComponent implements OnInit, OnDestroy {
   });
 
   loading$: Observable<boolean>;
-  gamePlayers: GamePlayer[];
   cancelling: boolean = false;
 
+  gamePlayers$: Observable<GamePlayer[]>;
   venues$: Observable<Venue[]>;
   refDataLoading$: Observable<boolean>;
   formDirty$: Observable<boolean>;
@@ -55,6 +56,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromRoot.State>,
               private notificationService: NotificationService) {
+    this.gamePlayers$ = this.store.select(fromRoot.getGameForEditGamePlayers);
     this.venues$ = this.store.select(fromRoot.getVenuesList);
     this.refDataLoading$ = store.select(fromRoot.getRefDataLoading);
     this.formDirty$ = store.select(fromRoot.getGameForEditDirty);
@@ -93,7 +95,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
   }
 
   private validateGame() {
-    if (this.gamePlayers.length < 2) {
+    if (this.game.gamePlayers.length < 2) {
       console.warn('not enough players');
       this.notificationService.warn('Nope', 'not enough players');
       return false;

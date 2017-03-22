@@ -33,6 +33,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import * as fromCurrentPlayer from './current-player';
 import * as fromSearchGames from './search-games';
 import * as fromGames from './game';
+import * as fromGamePlayer from './game-player';
 import * as fromPlayers from './player';
 import * as fromPlayerGroups from './player-group';
 import * as fromRefData from './ref-data';
@@ -40,6 +41,7 @@ import * as fromRankings from './rankings';
 import * as fromDecks from './decks';
 import * as fromDeck from './deck';
 import * as fromLayout from './layout';
+import { Game } from '../../shared/models/game.model';
 
 
 /**
@@ -50,6 +52,7 @@ export interface State {
   currentPlayer: fromCurrentPlayer.State;
   search: fromSearchGames.State;
   games: fromGames.State;
+  gamePlayer: fromGamePlayer.State;
   players: fromPlayers.State;
   playerGroups: fromPlayerGroups.State;
   rankings: fromRankings.State;
@@ -72,6 +75,7 @@ const reducers = {
   currentPlayer: fromCurrentPlayer.reducer,
   search: fromSearchGames.reducer,
   games: fromGames.reducer,
+  gamePlayer: fromGamePlayer.reducer,
   players: fromPlayers.reducer,
   playerGroups: fromPlayerGroups.reducer,
   rankings: fromRankings.reducer,
@@ -173,9 +177,13 @@ export const getSelectedGame = createSelector(getGameEntities, getSelectedGameId
     });
   });
 export const getGameForEdit = createSelector(getGamesState, fromGames.getGameForEdit);
+export const getGameForEditGamePlayers = createSelector(getGameForEdit, (game: Game) => game.gamePlayers);
 export const getGameForEditDirty = createSelector(getGamesState, fromGames.getGameForEditDirty);
 export const getGameLoading = createSelector(getGamesState, fromGames.getLoading);
 
+export const getGamePlayerState = (state: State) => state.gamePlayer;
+export const getGamePlayerForEdit = createSelector(getGamePlayerState, fromGamePlayer.getGamePlayerForEdit);
+export const getGamePlayerForEditDirty = createSelector(getGamePlayerState, fromGamePlayer.getGamePlayerForEditDirty);
 
 export const getSearchState = (state: State) => state.search;
 

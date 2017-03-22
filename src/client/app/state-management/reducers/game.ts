@@ -1,8 +1,7 @@
-import { createSelector } from 'reselect';
 import { cloneDeep } from 'lodash';
 import * as gameActions from '../actions/game';
 import { Game } from '../../shared/models/game.model';
-
+import { GamePlayer } from '../../shared/models/game-player.model';
 
 export interface State {
   ids: number[];
@@ -106,16 +105,78 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.SAVE_UPDATED_COMPLETE:
+    case gameActions.ActionTypes.SAVE_UPDATED_COMPLETE: {
+      return Object.assign({}, state, {
+        loading: false,
+        gameToEdit: {
+          game: null,
+          dirty: false,
+        },
+      });
+    }
+
     case gameActions.ActionTypes.SAVE_UPDATED_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
       });
-      // TODO clear gameToEdit on success
     }
 
     case gameActions.ActionTypes.UPDATE_COMPLETE: {
       const changes = action.payload;
+      return Object.assign({}, state, {
+        loading: false,
+        gameToEdit: {
+          game: Game.patchValues(state.gameToEdit.game, changes),
+          dirty: true,
+        },
+      });
+    }
+
+    case gameActions.ActionTypes.SET_WINNER: {
+      const winner = action.payload;
+      const updatePlayers = state.gameToEdit.game.gamePlayers.map((gamePlayer: GamePlayer) =>
+        GamePlayer.patchValues(gamePlayer, {
+          isWinner: (gamePlayer.playerId === (winner && winner.playerId))
+        }));
+      const changes = {
+        gamePlayers: updatePlayers,
+      };
+      return Object.assign({}, state, {
+        loading: false,
+        gameToEdit: {
+          game: Game.patchValues(state.gameToEdit.game, changes),
+          dirty: true,
+        },
+      });
+    }
+
+    case gameActions.ActionTypes.ADD_PLAYER: {
+      let player = action.payload;
+      if (!state.gameToEdit.game.gamePlayers.length) {
+        player = GamePlayer.patchValues(player, {
+          isWinner: true,
+        });
+      }
+      const changes = {
+        gamePlayers: [
+          ...state.gameToEdit.game.gamePlayers,
+          player,
+        ]
+      };
+      return Object.assign({}, state, {
+        loading: false,
+        gameToEdit: {
+          game: Game.patchValues(state.gameToEdit.game, changes),
+          dirty: true,
+        },
+      });
+    }
+
+    case gameActions.ActionTypes.REMOVE_PLAYER: {
+      const player = action.payload;
+      const changes = {
+        gamePlayers: state.gameToEdit.game.gamePlayers.filter((x) => x !== player),
+      };
       return Object.assign({}, state, {
         loading: false,
         gameToEdit: {
@@ -147,14 +208,6 @@ export const getIds = (state: State) => state.ids;
 export const getLoading = (state: State) => state.loading;
 
 export const getSelectedId = (state: State) => state.selectedGameId;
-
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
-
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});
 
 export const getGameForEdit = (state: State) => state.gameToEdit.game;
 export const getGameForEditDirty = (state: State) => state.gameToEdit.dirty;

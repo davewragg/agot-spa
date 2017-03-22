@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { Game } from '../../shared/models/game.model';
+import { GamePlayer } from '../../shared/models/game-player.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -20,6 +21,9 @@ export const ActionTypes = {
   CREATE_NEW: type('[Game] Create New'),
   UPDATE: type('[Game] Update'),
   UPDATE_COMPLETE: type('[Game] Update Complete'),
+  ADD_PLAYER: type('[Game] Add GamePlayer'),
+  REMOVE_PLAYER: type('[Game] Remove GamePlayer'),
+  SET_WINNER: type('[Game] Set Winner'),
   SAVE_UPDATED: type('[Game] Save updated'),
   SAVE_UPDATED_COMPLETE: type('[Game] Save complete'),
   SAVE_UPDATED_FAILURE: type('[Game] Save failure'),
@@ -88,6 +92,27 @@ export class UpdateCompleteAction implements Action {
   }
 }
 
+export class AddPlayerAction implements Action {
+  type = ActionTypes.ADD_PLAYER;
+
+  constructor(public payload: GamePlayer) {
+  }
+}
+
+export class RemovePlayerAction implements Action {
+  type = ActionTypes.REMOVE_PLAYER;
+
+  constructor(public payload: GamePlayer) {
+  }
+}
+
+export class SetWinnerAction implements Action {
+  type = ActionTypes.SET_WINNER;
+
+  constructor(public payload: GamePlayer) {
+  }
+}
+
 export class SaveUpdateAction implements Action {
   type = ActionTypes.SAVE_UPDATED;
 
@@ -143,6 +168,9 @@ export type Actions
   | CreateNewAction
   | UpdateAction
   | UpdateCompleteAction
+  | AddPlayerAction
+  | RemovePlayerAction
+  | SetWinnerAction
   | SaveUpdateAction
   | SaveUpdateCompleteAction
   | SaveUpdateFailureAction

@@ -1,15 +1,21 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { NotificationService } from '../shared/services/notification.service';
 import { GamePlayer } from '../shared/models/game-player.model';
+import * as fromRoot from '../state-management/reducers/root';
+import * as gameActions from '../state-management/actions/game';
+import * as gamePlayerActions from '../state-management/actions/game-player';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-game-players',
   templateUrl: 'game-players.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamePlayersComponent {
   @Input()
   gamePlayers: GamePlayer[];
+
   @Input()
   readOnly: boolean = false;
   @Output()
@@ -17,22 +23,16 @@ export class GamePlayersComponent {
 
   addActive: boolean = true;
 
-  constructor(private notificationService: NotificationService) {
+  constructor(private store: Store<fromRoot.State>,
+              private notificationService: NotificationService) {
   }
 
   onWinnerChange(newWinner?: GamePlayer) {
-    this.gamePlayers.forEach((gamePlayer: GamePlayer) => {
-      gamePlayer.isWinner = (gamePlayer === newWinner);
-    });
-    this.playerChange.emit(newWinner);
+    this.store.dispatch(new gameActions.SetWinnerAction(newWinner));
   }
 
   onRemove(gamePlayer: GamePlayer) {
-    const playerIndex = this.gamePlayers.indexOf(gamePlayer);
-    if (playerIndex > -1) {
-      this.gamePlayers.splice(playerIndex, 1);
-      this.playerChange.emit(gamePlayer);
-    }
+    this.store.dispatch(new gameActions.RemovePlayerAction(gamePlayer));
   }
 
   onPlayerEdit(updatedPlayer: GamePlayer) {
@@ -40,17 +40,12 @@ export class GamePlayersComponent {
   }
 
   onNewPlayerAdd(newPlayer: GamePlayer) {
-    console.log(newPlayer);
-    //TODO proper validation here
     if (!newPlayer || !this.validateNewPlayer(newPlayer)) {
       return;
     }
-    if (this.gamePlayers.length < 1) {
-      newPlayer.isWinner = true;
-    }
-    this.gamePlayers.push(newPlayer);
-    this.resetForm();
-    this.playerChange.emit(newPlayer);
+    this.store.dispatch(new gameActions.AddPlayerAction(newPlayer));
+    // TODO does this work?
+    this.store.dispatch(new gamePlayerActions.ClearAction());
   }
 
   private resetForm() {

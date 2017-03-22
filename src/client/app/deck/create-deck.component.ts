@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeckService } from '../shared/services/deck.service';
 import { Deck } from '../shared/models/deck.model';
@@ -8,6 +8,7 @@ import { NotificationService } from '../shared/services/notification.service';
   moduleId: module.id,
   selector: 'agot-create-deck-details',
   templateUrl: 'create-deck.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateDeckComponent implements OnInit {
   deck: Deck;

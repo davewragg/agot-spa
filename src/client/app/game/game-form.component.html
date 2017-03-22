@@ -16,7 +16,7 @@
     <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
   </fieldset>
 
-  <agot-game-players [gamePlayers]="gamePlayers" [readOnly]="false"
+  <agot-game-players [gamePlayers]="gamePlayers$ | async" [readOnly]="false"
                      (playerChange)="onPlayerChange()"></agot-game-players>
 
   <div class="form-group">
@@ -31,8 +31,6 @@
       <button type="button" class="btn btn-sm btn-danger" (click)="onCancel(true)">Yep</button>
       <button type="button" class="btn btn-sm btn-secondary" (click)="cancelling = false">Whoops</button>
     </div>
-
-    <!--<code>valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}</code>-->
   </div>
 
   <div [hidden]="gameForm.valid || gameForm.pristine" class="alert alert-danger">
