@@ -1,9 +1,11 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PlayerService } from '../shared/services/player.service';
+import { Store } from '@ngrx/store';
+import { find } from 'lodash';
+import { Observable } from 'rxjs/Observable';
+import * as fromRoot from '../state-management/reducers/root';
 import { Player } from '../shared/models/player.model';
 import { GamePlayer } from '../shared/models/game-player.model';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   moduleId: module.id,
@@ -18,18 +20,14 @@ export class NewGamePlayerFormComponent implements OnInit {
 
   gamePlayerForm: FormGroup;
 
-  players: Observable<Player[]>;
-  isLoading: boolean;
+  players$: Observable<Player[]>;
+  loading$: Observable<boolean>;
 
   constructor(private _formBuilder: FormBuilder,
-              private _playerService: PlayerService) {
-    this.isLoading = true;
-    this.players = this._playerService.getPlayers();
-    this.players.filter((x) => !!x && !!x.length).subscribe(
-      () => this.isLoading = false,
-      () => this.isLoading = false,
-      () => this.isLoading = false
-    );
+              private store: Store<fromRoot.State>) {
+    // TODO need to get all players?
+    this.players$ = store.select(fromRoot.getGroupPlayers);
+    this.loading$ = store.select(fromRoot.getPlayersLoading);
   }
 
   ngOnInit() {
@@ -52,14 +50,13 @@ export class NewGamePlayerFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isLoading = true;
-    this.getPlayer(this.gamePlayer).subscribe((player) => {
-      this.gamePlayer.player = player;
-      console.log(this.gamePlayer);
-      this.updatePlayer.emit(this.gamePlayer);
-      // TODO handle player loading errors
-      this.isLoading = false;
-    });
+    let players: Player[];
+    this.players$.subscribe(x => players = x);
+    const player = find(players, { playerId: this.gamePlayer.playerId });
+    this.gamePlayer.player = player;
+    console.log(this.gamePlayer);
+    // this.updatePlayer.emit(this.gamePlayer);
+    // TODO handle player loading errors
   }
 
   private populateForm() {
@@ -68,9 +65,4 @@ export class NewGamePlayerFormComponent implements OnInit {
       playerId: [playerId, Validators.required],
     });
   };
-
-  private getPlayer(gamePlayer: GamePlayer): Observable<Player> {
-    const playerId = gamePlayer.playerId;
-    return this._playerService.getPlayer(playerId);
-  }
 }

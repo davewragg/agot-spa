@@ -3,8 +3,8 @@
     <div class="form-group col-md-4 col-xs-12">
       <select class="form-control"
               formControlName="playerId" (change)="onPlayerSelectChange($event.target.value)">
-        <option value="">--{{ isLoading ? 'Loading players' : 'Select player' }}--</option>
-        <option *ngFor="let player of players | async" [value]="player.playerId">{{ player.name }}</option>
+        <option value="">--{{ (loading$ | async) ? 'Loading players' : 'Select player' }}--</option>
+        <option *ngFor="let player of players$ | async" [value]="player.playerId">{{ player.name }}</option>
       </select>
     </div>
 
@@ -12,5 +12,5 @@
                         class="col-md-8"
                         [playerId]="gamePlayer.playerId"></agot-deck-selector>
   </div>
-  <agot-spinner [isRunning]="isLoading"></agot-spinner>
+  <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 </form>
