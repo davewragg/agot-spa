@@ -51,8 +51,12 @@
   - [x] edit can activate guards
   - [x] edit can deactivate guard
   - [ ] handle 403 better on notify
-- [ ] my player groups selector
-- [ ] select group for player listing on game create
+- [ ] my player groups store selector (keep all groups as well)
+- [ ] store current meta in local storage and use that when blank?
+- [x] select group for player listing on game create
+- [ ] i bet player selector can actually select a player, not just an id
+
+- [ ] game time entry - UTC/BST!
 
 - [ ] update charts to 5.5
   - [ ] update imports and check build

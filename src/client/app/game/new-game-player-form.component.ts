@@ -1,16 +1,19 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { find } from 'lodash';
 import { Observable } from 'rxjs/Observable';
-import * as fromRoot from '../state-management/reducers/root';
+import { find } from 'lodash';
 import { Player } from '../shared/models/player.model';
 import { GamePlayer } from '../shared/models/game-player.model';
+import {FilterCriteria} from "../shared/models/filter-criteria.model";
+import * as fromRoot from '../state-management/reducers/root';
+import * as playerActions from '../state-management/actions/player';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-new-game-player-form',
   templateUrl: 'new-game-player-form.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewGamePlayerFormComponent implements OnInit {
   @Output()
@@ -20,18 +23,25 @@ export class NewGamePlayerFormComponent implements OnInit {
 
   gamePlayerForm: FormGroup;
 
+  selectedGroupId$: Observable<number>;
   players$: Observable<Player[]>;
   loading$: Observable<boolean>;
 
   constructor(private _formBuilder: FormBuilder,
               private store: Store<fromRoot.State>) {
-    // TODO need to get all players?
+    this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
     this.players$ = store.select(fromRoot.getGroupPlayers);
     this.loading$ = store.select(fromRoot.getPlayersLoading);
   }
 
   ngOnInit() {
     this.populateForm();
+  }
+
+  onSelectedGroupChange(criteria: FilterCriteria) {
+    const [playerGroupId] = criteria.playerGroupIds;
+    this.store.dispatch(new playerActions.GetForGroupAction(playerGroupId));
+    // TODO clear player in context, or leave?
   }
 
   onPlayerSelectChange(playerId: string) {

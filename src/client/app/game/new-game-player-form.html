@@ -1,6 +1,10 @@
 <form [formGroup]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form">
   <div class="container row">
     <div class="form-group col-md-4 col-xs-12">
+      <agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
+                                  (playerGroupChange)="onSelectedGroupChange($event)">
+      </agot-player-group-selector>
+
       <select class="form-control"
               formControlName="playerId" (change)="onPlayerSelectChange($event.target.value)">
         <option value="">--{{ (loading$ | async) ? 'Loading players' : 'Select player' }}--</option>
