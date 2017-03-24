@@ -51,6 +51,8 @@
   - [x] edit can activate guards
   - [x] edit can deactivate guard
   - [ ] handle 403 better on notify
+- [ ] my player groups selector
+- [ ] select group for player listing on game create
 
 - [ ] update charts to 5.5
   - [ ] update imports and check build
