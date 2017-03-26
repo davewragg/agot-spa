@@ -1,13 +1,14 @@
-import {Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { find } from 'lodash';
 import { Player } from '../shared/models/player.model';
 import { GamePlayer } from '../shared/models/game-player.model';
-import {FilterCriteria} from "../shared/models/filter-criteria.model";
+import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import * as fromRoot from '../state-management/reducers/root';
 import * as playerActions from '../state-management/actions/player';
+import * as gamePlayerActions from '../state-management/actions/game-player';
 
 @Component({
   moduleId: module.id,
@@ -15,27 +16,29 @@ import * as playerActions from '../state-management/actions/player';
   templateUrl: 'new-game-player-form.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewGamePlayerFormComponent implements OnInit {
+export class NewGamePlayerFormComponent {
   @Output()
-  updatePlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
+  updatePlayer: EventEmitter<number> = new EventEmitter<number>();
 
-  gamePlayer: GamePlayer = <GamePlayer>{};
+  @Input()
+  set gamePlayer(gamePlayer: GamePlayer) {
+    if (gamePlayer) {
+      this.gamePlayerForm.patchValue(gamePlayer, { emitEvent: false });
+    }
+  }
 
-  gamePlayerForm: FormGroup;
+  gamePlayerForm: FormGroup = new FormGroup({
+    playerId: new FormControl(['', Validators.required]),
+  });
 
   selectedGroupId$: Observable<number>;
   players$: Observable<Player[]>;
   loading$: Observable<boolean>;
 
-  constructor(private _formBuilder: FormBuilder,
-              private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State>) {
     this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
     this.players$ = store.select(fromRoot.getGroupPlayers);
     this.loading$ = store.select(fromRoot.getPlayersLoading);
-  }
-
-  ngOnInit() {
-    this.populateForm();
   }
 
   onSelectedGroupChange(criteria: FilterCriteria) {
@@ -47,32 +50,14 @@ export class NewGamePlayerFormComponent implements OnInit {
   onPlayerSelectChange(playerId: string) {
     // TODO handle this properly, clear deck if !players?
     // new gamePlayer? player from Players
-    this.gamePlayer.playerId = playerId;
-    this.gamePlayer.deck = null;
-    console.log(this.gamePlayer);
-  }
-
-  onUpdateDeck({ deck, version }: any) {
-    console.log(deck);
-    this.gamePlayer.deck = deck;
-    this.gamePlayer.thronesDbVersion = version;
-    this.onSubmit();
-  }
-
-  onSubmit() {
     let players: Player[];
     this.players$.subscribe(x => players = x);
-    const player = find(players, { playerId: this.gamePlayer.playerId });
-    this.gamePlayer.player = player;
-    console.log(this.gamePlayer);
-    // this.updatePlayer.emit(this.gamePlayer);
-    // TODO handle player loading errors
+    const player = find(players, { playerId });
+    this.store.dispatch(new gamePlayerActions.SetPlayerAction(player));
   }
 
-  private populateForm() {
-    let playerId = this.gamePlayer.playerId || '';
-    this.gamePlayerForm = this._formBuilder.group({
-      playerId: [playerId, Validators.required],
-    });
-  };
+  onUpdateDeck(deckAndVersion: any) {
+    this.store.dispatch(new gamePlayerActions.SetDeckAction(deckAndVersion));
+    this.updatePlayer.emit(this.gamePlayerForm.controls['playerId'].value);
+  }
 }

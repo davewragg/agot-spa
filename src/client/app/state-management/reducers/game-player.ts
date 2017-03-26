@@ -25,6 +25,7 @@ export function reducer(state = initialState, action: gamePlayerActions.Actions)
       const player = action.payload;
       const changes = {
         player,
+        playerId: player.playerId,
       };
       return Object.assign({}, state, {
         playerToEdit: GamePlayer.patchValues(state.playerToEdit, changes),
@@ -33,9 +34,11 @@ export function reducer(state = initialState, action: gamePlayerActions.Actions)
     }
 
     case gamePlayerActions.ActionTypes.SET_DECK: {
-      const deck = action.payload;
+      const { deck, version } = action.payload;
       const changes = {
         deck,
+        deckId: deck.deckId,
+        thronesDbVersion: version,
       };
       return Object.assign({}, state, {
         playerToEdit: GamePlayer.patchValues(state.playerToEdit, changes),
@@ -46,7 +49,7 @@ export function reducer(state = initialState, action: gamePlayerActions.Actions)
     case gamePlayerActions.ActionTypes.CLEAR: {
       return {
         dirty: false,
-        playerToEdit: null,
+        playerToEdit: new GamePlayer(),
       };
     }
 

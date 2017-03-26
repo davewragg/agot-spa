@@ -36,7 +36,7 @@ export class SetPlayerAction implements Action {
 export class SetDeckAction implements Action {
   type = ActionTypes.SET_DECK;
 
-  constructor(public payload: Deck) {
+  constructor(public payload: {deck: Deck, version: number}) {
   }
 }
 

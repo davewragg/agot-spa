@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { NotificationService } from '../shared/services/notification.service';
 import { GamePlayer } from '../shared/models/game-player.model';
 import * as fromRoot from '../state-management/reducers/root';
@@ -16,15 +17,16 @@ export class GamePlayersComponent {
   @Input()
   gamePlayers: GamePlayer[];
 
+  playerToAdd: Observable<GamePlayer>;
+
   @Input()
   readOnly: boolean = false;
   @Output()
   playerChange: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
-  addActive: boolean = true;
-
   constructor(private store: Store<fromRoot.State>,
               private notificationService: NotificationService) {
+    this.playerToAdd = store.select(fromRoot.getGamePlayerForEdit);
   }
 
   onWinnerChange(newWinner?: GamePlayer) {
@@ -39,25 +41,20 @@ export class GamePlayersComponent {
     this.playerChange.emit(updatedPlayer);
   }
 
-  onNewPlayerAdd(newPlayer: GamePlayer) {
-    if (!newPlayer || !this.validateNewPlayer(newPlayer)) {
+  onNewPlayerAdd(playerId: string) {
+    if (!playerId || !this.validateNewPlayer(playerId)) {
       return;
     }
+    let newPlayer: GamePlayer;
+    this.playerToAdd.subscribe(x => newPlayer = x);
     this.store.dispatch(new gameActions.AddPlayerAction(newPlayer));
-    // TODO does this work?
+    // TODO why this not work?
     this.store.dispatch(new gamePlayerActions.ClearAction());
   }
 
-  private resetForm() {
-    this.addActive = false;
-    setTimeout(() => {
-      this.addActive = true;
-    }, 0);
-  };
-
-  private validateNewPlayer(newPlayer: GamePlayer) {
+  private validateNewPlayer(newPlayerId: string) {
     // validate unique player
-    if (this.gamePlayers.find((gamePlayer) => gamePlayer.player.playerId === newPlayer.playerId)) {
+    if (this.gamePlayers.find((gamePlayer) => gamePlayer.playerId === newPlayerId)) {
       console.warn('player already listed');
       this.notificationService.warn('Nope', 'player already listed');
       return false;

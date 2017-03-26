@@ -1,4 +1,4 @@
-<form [formGroup]="gamePlayerForm" (ngSubmit)="onSubmit()" class="form">
+<form [formGroup]="gamePlayerForm" class="form">
   <div class="container row">
     <div class="form-group col-md-4 col-xs-12">
       <agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
@@ -12,9 +12,10 @@
       </select>
     </div>
 
-    <agot-deck-selector *ngIf="gamePlayer?.playerId" [creating]="true" (updateDeck)="onUpdateDeck($event)"
+    <agot-deck-selector *ngIf="gamePlayerForm.controls['playerId'].value[0]"
+                        [creating]="true" (updateDeck)="onUpdateDeck($event)"
                         class="col-md-8"
-                        [playerId]="gamePlayer.playerId"></agot-deck-selector>
+                        [playerId]="gamePlayerForm.controls['playerId'].value"></agot-deck-selector>
   </div>
   <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 </form>

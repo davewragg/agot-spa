@@ -57,6 +57,7 @@
 - [ ] i bet player selector can actually select a player, not just an id
 
 - [ ] game time entry - UTC/BST!
+- [ ] unauth bootloop
 
 - [ ] update charts to 5.5
   - [ ] update imports and check build

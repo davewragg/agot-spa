@@ -19,7 +19,9 @@
 
 <div class="card card-block" *ngIf="!readOnly">
   <h5 class="card-title">Add player</h5>
-  <agot-new-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-new-game-player-form>
+  <agot-new-game-player-form
+    [gamePlayer]="playerToAdd | async"
+    (updatePlayer)="onNewPlayerAdd($event)"></agot-new-game-player-form>
 </div>
 
 <div class="card card-block" *ngIf="!readOnly">
