@@ -36,12 +36,9 @@ export class DeckEffects {
   search$: Observable<Action> = this.actions$
     .ofType(deckActions.ActionTypes.FILTER)
     .debounceTime(300)
+    .startWith(new deckActions.FilterAction(null)) // load all decks from the off (!?)
     .map((action: deckActions.FilterAction) => action.payload)
     .switchMap(criteria => {
-      if (!criteria) {
-        return empty();
-      }
-
       const nextSearch$ = this.actions$.ofType(deckActions.ActionTypes.FILTER).skip(1);
 
       return this.deckService.getDecks(criteria)

@@ -141,7 +141,7 @@ export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckI
   return searchIds.map(id => decks[id]);
 });
 export const getAllDecks = createSelector(getDeckEntities, (decks) => {
-  // TODO nope
+  // relies on all deck entities having been loaded on boot
   return values(decks);
 });
 export const getGroupDecks = createSelector(getAllDecks, getGroupPlayerIds, (decks, playerIds) => {
