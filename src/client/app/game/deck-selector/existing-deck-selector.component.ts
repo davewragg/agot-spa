@@ -1,13 +1,16 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Deck } from '../../shared/models/deck.model';
-import { DeckService } from '../../shared/services/deck.service';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-existing-deck-selector',
   templateUrl: 'existing-deck-selector.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExistingDeckSelectorComponent implements OnInit, OnChanges {
+export class ExistingDeckSelectorComponent {
   @Input()
   playerId: string;
   @Input()
@@ -15,68 +18,31 @@ export class ExistingDeckSelectorComponent implements OnInit, OnChanges {
   @Output()
   selectDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
 
-  myDecks: Deck[];
-  allDecks: Deck[];
+  showDecksFor: ViewDecksType = ViewDecksType.ME;
+  viewDecksType = ViewDecksType;
 
-  isLoadingMyDecks: boolean;
-  isLoadingAllDecks: boolean;
+  myDecks$: Observable<Deck[]>;
+  groupDecks$: Observable<Deck[]>;
+  allDecks$: Observable<Deck[]>;
+  loading$: Observable<boolean>;
 
-  showAllDecks: boolean = false;
-
-  constructor(private deckService: DeckService) {
+  constructor(private store: Store<fromRoot.State>) {
+    this.myDecks$ = store.select(fromRoot.getFilteredDecks);
+    this.groupDecks$ = store.select(fromRoot.getGroupDecks);
+    this.allDecks$ = store.select(fromRoot.getAllDecks);
+    this.loading$ = store.select(fromRoot.getDecksLoading);
   }
 
-  setShowAllDecks(state: boolean) {
-    this.showAllDecks = state;
+  setShowDecks(state: ViewDecksType) {
+    this.showDecksFor = state;
   }
 
   onDeckSelect(deck: Deck) {
     console.log(deck);
     this.selectDeck.emit(deck);
   }
+}
 
-  ngOnInit() {
-    this.loadAllDecks();
-  }
-
-  ngOnChanges(changes: { [key: string]: SimpleChange }) {
-    const change = changes['playerId'];
-    if (change && change.previousValue !== change.currentValue) {
-      this.loadMyDecks(this.playerId);
-    }
-  }
-
-  private loadMyDecks(playerId: string) {
-    this.isLoadingMyDecks = true;
-    if (!playerId) {
-      return;
-    }
-    this.deckService.getDecksFor(playerId)
-      .subscribe(
-        (decks: Deck[]) => {
-          this.myDecks = decks;
-        },
-        (error: Error) => {
-          console.error(error);
-          this.isLoadingMyDecks = false;
-        }, () => {
-          this.isLoadingMyDecks = false;
-        }
-      );
-  }
-
-  private loadAllDecks() {
-    this.isLoadingAllDecks = true;
-    return this.deckService.getDecks().subscribe(
-      (decksArray: Deck[]) => {
-        this.allDecks = decksArray;
-      },
-      (error: Error) => {
-        console.error(error);
-        this.isLoadingAllDecks = false;
-      }, () => {
-        this.isLoadingAllDecks = false;
-      }
-    );
-  }
+enum ViewDecksType {
+  ME, GROUP, EVERYONE
 }

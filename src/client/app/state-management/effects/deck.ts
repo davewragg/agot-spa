@@ -13,6 +13,7 @@ import { Agenda } from '../../shared/models/agenda.model';
 import { Faction } from '../../shared/models/faction.model';
 import { DeckClass } from '../../shared/models/deck-class.model';
 import * as deckActions from '../actions/deck';
+import * as gamePlayerActions from '../actions/game-player';
 import * as fromRoot from '../reducers/root';
 
 /**
@@ -44,6 +45,19 @@ export class DeckEffects {
       const nextSearch$ = this.actions$.ofType(deckActions.ActionTypes.FILTER).skip(1);
 
       return this.deckService.getDecks(criteria)
+        .takeUntil(nextSearch$)
+        .map(decks => new deckActions.FilterCompleteAction(decks))
+        .catch(() => of(new deckActions.FilterCompleteAction([])));
+    });
+
+  @Effect()
+  getForPlayer$: Observable<Action> = this.actions$
+    .ofType(gamePlayerActions.ActionTypes.SET_PLAYER)
+    .map((action: gamePlayerActions.SetPlayerAction) => action.payload)
+    .switchMap(player => {
+      const nextSearch$ = this.actions$.ofType(gamePlayerActions.ActionTypes.SET_PLAYER).skip(1);
+
+      return this.deckService.getDecksFor(player.playerId)
         .takeUntil(nextSearch$)
         .map(decks => new deckActions.FilterCompleteAction(decks))
         .catch(() => of(new deckActions.FilterCompleteAction([])));

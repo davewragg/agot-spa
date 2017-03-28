@@ -16,20 +16,20 @@ const initialState: State = {
 export function reducer(state = initialState, action: deckActions.Actions): State {
   switch (action.type) {
     case deckActions.ActionTypes.SELECT: {
-      return {
+      return Object.assign({}, state, {
         selectedDeckId: action.payload,
         loading: true,
         deckStats: state.deckStats,
-      };
+      });
     }
     case deckActions.ActionTypes.SELECT_COMPLETE: {
       const stats = action.payload;
 
-      return {
+      return Object.assign({}, state, {
         selectedDeckId: state.selectedDeckId,
         loading: false,
         deckStats: stats,
-      };
+      });
     }
 
     default: {

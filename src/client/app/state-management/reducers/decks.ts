@@ -34,17 +34,15 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       const criteria = action.payload;
 
       if (!criteria) {
-        return {
+        return Object.assign({}, state, {
           ids: [],
-          entities: state.entities,
-          selectedDeckId: state.selectedDeckId,
           loading: false,
           criteria,
           deckToEdit: {
             deck: null,
             dirty: false,
           },
-        };
+        });
       }
 
       return Object.assign({}, state, {
@@ -64,17 +62,15 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         });
       }, {});
 
-      return {
+      return Object.assign({}, state, {
         ids: decks.map(deck => deck.deckId),
         entities: Object.assign({}, state.entities, newDeckEntities),
-        selectedDeckId: state.selectedDeckId,
         loading: false,
-        criteria: state.criteria,
         deckToEdit: {
           deck: null,
           dirty: false,
         },
-      };
+      });
     }
 
     case deckActions.ActionTypes.LOAD: {
@@ -84,48 +80,39 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
         return state;
       }
 
-      return {
+      return Object.assign({}, state, {
         ids: [...state.ids, deck.deckId],
         entities: Object.assign({}, state.entities, {
           [deck.deckId]: deck
         }),
-        selectedDeckId: state.selectedDeckId,
         loading: false,
-        criteria: state.criteria,
         deckToEdit: {
           deck: null,
           dirty: false,
         },
-      };
+      });
     }
 
     case deckActions.ActionTypes.SELECT: {
-      return {
-        ids: state.ids,
-        entities: state.entities,
+      return Object.assign({}, state, {
         selectedDeckId: action.payload,
         loading: false,
-        criteria: state.criteria,
         deckToEdit: {
           deck: null,
           dirty: false,
         },
-      };
+      });
     }
 
     case deckActions.ActionTypes.SELECT_FOR_EDIT: {
       const deckCopy = cloneDeep(state.entities[action.payload]);
-      return {
-        ids: state.ids,
-        entities: state.entities,
-        selectedDeckId: state.selectedDeckId,
+      return Object.assign({}, state, {
         loading: false,
-        criteria: state.criteria,
         deckToEdit: {
           deck: deckCopy,
           dirty: false,
         },
-      };
+      });
     }
 
     case deckActions.ActionTypes.SAVE_UPDATED: {
@@ -134,12 +121,17 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
       });
     }
 
-    case deckActions.ActionTypes.SAVE_UPDATED_COMPLETE:
+    case deckActions.ActionTypes.SAVE_UPDATED_COMPLETE: {
+      return Object.assign({}, state, {
+        loading: false,
+        deckToEdit: null,
+      });
+    }
+
     case deckActions.ActionTypes.SAVE_UPDATED_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
       });
-      // TODO clear deckToEdit on success
     }
 
     case deckActions.ActionTypes.UPDATE_COMPLETE: {

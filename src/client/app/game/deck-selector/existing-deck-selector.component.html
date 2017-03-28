@@ -1,22 +1,32 @@
 <div class="btn-group" data-toggle="buttons">
-  <label class="btn btn-outline-secondary" [class.active]="!showAllDecks">
+  <label class="btn btn-outline-secondary" [class.active]="showDecksFor === viewDecksType.ME">
     <input type="radio" name="showAllDecks" value="false" autocomplete="off"
-           (change)="setShowAllDecks(false)"> Player decks ({{ myDecks?.length }})
+           (change)="setShowDecks(viewDecksType.ME)"> Player decks ({{ (myDecks$ | async)?.length }})
   </label>
-  <label class="btn btn-outline-secondary" [class.active]="showAllDecks">
+  <label class="btn btn-outline-secondary" [class.active]="showDecksFor === viewDecksType.GROUP">
     <input type="radio" name="showAllDecks" value="true" autocomplete="off"
-           (change)="setShowAllDecks(true)"> All ({{ allDecks?.length }})
+           (change)="setShowDecks(viewDecksType.GROUP)"> Player Group ({{ (groupDecks$ | async)?.length }})
+  </label>
+  <label class="btn btn-outline-secondary" [class.active]="showDecksFor === viewDecksType.EVERYONE">
+    <input type="radio" name="showAllDecks" value="true" autocomplete="off"
+           (change)="setShowDecks(viewDecksType.EVERYONE)"> All ({{ (allDecks$ | async)?.length }})
   </label>
 </div>
 <!--my decks selector-->
-<div *ngIf="!showAllDecks" class="form-group">
-  <agot-deck-chooser [decks]="myDecks" [isLoading]="isLoadingMyDecks"
+<div *ngIf="showDecksFor === viewDecksType.ME" class="form-group">
+  <agot-deck-chooser [decks]="myDecks$ | async" [isLoading]="loading$ | async"
+                     [existingDeck]="existingDeck"
+                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
+</div>
+<!--group decks selector-->
+<div *ngIf="showDecksFor === viewDecksType.GROUP" class="form-group">
+  <agot-deck-chooser [decks]="groupDecks$ | async" [isLoading]="loading$ | async"
                      [existingDeck]="existingDeck"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <!--all decks selector-->
-<div *ngIf="showAllDecks" class="form-group">
-  <agot-deck-chooser [decks]="allDecks" [isLoading]="isLoadingAllDecks"
+<div *ngIf="showDecksFor === viewDecksType.EVERYONE" class="form-group">
+  <agot-deck-chooser [decks]="allDecks$ | async" [isLoading]="loading$ | async"
                      [existingDeck]="existingDeck"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>

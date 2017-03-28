@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { values } from 'lodash';
 /**
  * combineReducers is another useful metareducer that takes a map of reducer
  * functions and creates a new reducer that stores the gathers the values
@@ -42,6 +43,7 @@ import * as fromDecks from './decks';
 import * as fromDeck from './deck';
 import * as fromLayout from './layout';
 import { Game } from '../../shared/models/game.model';
+import { Deck } from '../../shared/models/deck.model';
 
 
 /**
@@ -135,8 +137,15 @@ export const getFilteredDeckIds = createSelector(getDecksState, fromDecks.getIds
 export const getDecksCriteria = createSelector(getDecksState, fromDecks.getCriteria);
 export const getDecksLoading = createSelector(getDecksState, fromDecks.getLoading);
 export const getDeckEntities = createSelector(getDecksState, fromDecks.getEntities);
-export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckIds, (games, searchIds) => {
-  return searchIds.map(id => games[id]);
+export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckIds, (decks, searchIds) => {
+  return searchIds.map(id => decks[id]);
+});
+export const getAllDecks = createSelector(getDeckEntities, (decks) => {
+  // TODO nope
+  return values(decks);
+});
+export const getGroupDecks = createSelector(getAllDecks, getGroupPlayerIds, (decks, playerIds) => {
+  return decks.filter((deck: Deck) => playerIds.includes(deck.creatorId));
 });
 // export const getSelectedDeckId = createSelector(getDecksState, fromDecks.getSelectedId);
 export const getSelectedDeck = createSelector(getDecksState, fromDecks.getSelected);

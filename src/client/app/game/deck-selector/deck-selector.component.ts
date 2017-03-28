@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Deck } from '../../shared/models/deck.model';
 import { DeckService } from '../../shared/services/deck.service';
 import { NotificationService } from '../../shared/services/notification.service';
@@ -7,6 +7,7 @@ import { NotificationService } from '../../shared/services/notification.service'
   moduleId: module.id,
   selector: 'agot-deck-selector',
   templateUrl: 'deck-selector.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeckSelectorComponent implements OnInit {
   @Input()
