@@ -4,7 +4,7 @@ import { Venue } from './venue.model';
 
 export class Game {
   gameId: number;
-  date: string = new Date().toISOString(); //ISO STRING
+  date: string = Game.getDateAsIsoString(new Date()); //ISO STRING
   venueId: number = null;
   venue?: Venue;
   gamePlayers: GamePlayer[] = [];
@@ -16,5 +16,9 @@ export class Game {
       updatedGame.gamePlayers = cloneDeep(updatedGame.gamePlayers);
     }
     return updatedGame;
+  }
+
+  static getDateAsIsoString(date: Date) {
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()
   }
 }

@@ -61,6 +61,8 @@
 - [x] clear game player does not clear the add new player form
 - [ ] edit/remove player from game
 - [ ] edit game
+- [ ] no times being saved on games?
+- [ ] error on creating a game you're not a member of - seems to be mutating something
 
 - [ ] game time entry - UTC/BST!
 - [ ] unauth bootloop
