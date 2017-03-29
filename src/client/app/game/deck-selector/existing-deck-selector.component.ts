@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Deck } from '../../shared/models/deck.model';
@@ -10,7 +10,7 @@ import * as fromRoot from '../../state-management/reducers/root';
   templateUrl: 'existing-deck-selector.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExistingDeckSelectorComponent {
+export class ExistingDeckSelectorComponent implements OnInit {
   @Input()
   playerId: string;
   @Input()
@@ -31,6 +31,13 @@ export class ExistingDeckSelectorComponent {
     this.groupDecks$ = store.select(fromRoot.getGroupDecks);
     this.allDecks$ = store.select(fromRoot.getAllDecks);
     this.loading$ = store.select(fromRoot.getDecksLoading);
+  }
+
+  ngOnInit() {
+    // check whether we have a deck already, and whether it's mine
+    if (this.existingDeck && this.existingDeck.creatorId !== this.playerId) {
+      this.showDecksFor = ViewDecksType.EVERYONE;
+    }
   }
 
   setShowDecks(state: ViewDecksType) {
