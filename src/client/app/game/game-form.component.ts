@@ -22,6 +22,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
     if (game) {
       this.gameForm.patchValue(Object.assign({}, game, {
         date: GameFormComponent.convertDateString(game.date),
+        venueId: game.venueId || '',
       }), { emitEvent: false });
     }
   }
@@ -74,7 +75,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
   }
 
   onPlayerChange() {
-    // TODO
+    // TODO ??
   }
 
   onSubmit() {

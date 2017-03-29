@@ -25,7 +25,9 @@ export class DeckChooserComponent {
   @Input()
   set existingDeck(deck: Deck) {
     if (deck) {
-      this.deckChooserForm.patchValue(deck, { emitEvent: false });
+      this.deckChooserForm.patchValue(deck);
+    } else {
+      this.deckChooserForm.patchValue({ deckId: '' });
     }
   };
 
