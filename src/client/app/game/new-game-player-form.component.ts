@@ -9,6 +9,7 @@ import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import * as fromRoot from '../state-management/reducers/root';
 import * as playerActions from '../state-management/actions/player';
 import * as gamePlayerActions from '../state-management/actions/game-player';
+import { Deck } from '../shared/models/deck.model';
 
 @Component({
   moduleId: module.id,
@@ -23,9 +24,14 @@ export class NewGamePlayerFormComponent {
   @Input()
   set gamePlayer(gamePlayer: GamePlayer) {
     if (gamePlayer) {
-      this.gamePlayerForm.patchValue(gamePlayer, { emitEvent: false });
+      this.gamePlayerForm.patchValue(gamePlayer);
+      this.playerDeck = gamePlayer.deck;
+    } else {
+      this.gamePlayerForm.patchValue({ playerId: '' });
     }
   }
+
+  playerDeck: Deck;
 
   gamePlayerForm: FormGroup = new FormGroup({
     playerId: new FormControl(['', Validators.required]),
@@ -48,6 +54,9 @@ export class NewGamePlayerFormComponent {
   }
 
   onPlayerSelectChange(playerId: string) {
+    if (!playerId) {
+      return;
+    }
     // TODO handle this properly, clear deck if !players?
     // new gamePlayer? player from Players
     let players: Player[];

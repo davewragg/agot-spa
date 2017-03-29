@@ -14,7 +14,7 @@
 
     <agot-deck-selector *ngIf="gamePlayerForm.controls['playerId'].value[0]"
                         [creating]="true" (updateDeck)="onUpdateDeck($event)"
-                        class="col-md-8"
+                        class="col-md-8" [existingDeck]="playerDeck"
                         [playerId]="gamePlayerForm.controls['playerId'].value"></agot-deck-selector>
   </div>
   <agot-spinner [isRunning]="loading$ | async"></agot-spinner>

@@ -17,7 +17,7 @@ export class GamePlayersComponent {
   @Input()
   gamePlayers: GamePlayer[];
 
-  playerToAdd: Observable<GamePlayer>;
+  playerToAdd$: Observable<GamePlayer>;
 
   @Input()
   readOnly: boolean = false;
@@ -26,7 +26,7 @@ export class GamePlayersComponent {
 
   constructor(private store: Store<fromRoot.State>,
               private notificationService: NotificationService) {
-    this.playerToAdd = store.select(fromRoot.getGamePlayerForEdit);
+    this.playerToAdd$ = store.select(fromRoot.getGamePlayerForEdit);
   }
 
   onWinnerChange(newWinner?: GamePlayer) {
@@ -46,9 +46,8 @@ export class GamePlayersComponent {
       return;
     }
     let newPlayer: GamePlayer;
-    this.playerToAdd.subscribe(x => newPlayer = x);
+    this.playerToAdd$.subscribe(x => newPlayer = x);
     this.store.dispatch(new gameActions.AddPlayerAction(newPlayer));
-    // TODO why this not work?
     this.store.dispatch(new gamePlayerActions.ClearAction());
   }
 

@@ -1,5 +1,7 @@
 import * as gamePlayerActions from '../actions/game-player';
 import { GamePlayer } from '../../shared/models/game-player.model';
+import { Player } from '../../shared/models/player.model';
+import { Deck } from '../../shared/models/deck.model';
 
 export interface State {
   dirty: boolean;
@@ -47,9 +49,15 @@ export function reducer(state = initialState, action: gamePlayerActions.Actions)
     }
 
     case gamePlayerActions.ActionTypes.CLEAR: {
+      const gamePlayer = new GamePlayer();
+      gamePlayer.playerId = '';
+      gamePlayer.player = <Player>{ playerId: gamePlayer.playerId };
+      gamePlayer.deckId = -1;
+      gamePlayer.deck = <Deck>{ deckId: gamePlayer.deckId };
+      gamePlayer.thronesDbVersion = null;
       return {
         dirty: false,
-        playerToEdit: new GamePlayer(),
+        playerToEdit: gamePlayer,
       };
     }
 
