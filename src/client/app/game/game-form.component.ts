@@ -36,8 +36,8 @@ export class GameFormComponent implements OnInit, OnDestroy {
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
   gameForm: FormGroup = new FormGroup({
-    date: new FormControl(['', Validators.required]),
-    venueId: new FormControl(['', Validators.required]),
+    date: new FormControl('', Validators.required),
+    venueId: new FormControl('', Validators.required),
   });
 
   loading$: Observable<boolean>;
@@ -96,7 +96,9 @@ export class GameFormComponent implements OnInit, OnDestroy {
   }
 
   private validateGame() {
-    if (this.game.gamePlayers.length < 2) {
+    let gamePlayers: GamePlayer[];
+    this.gamePlayers$.subscribe(x => gamePlayers = x);
+    if (gamePlayers.length < 2) {
       console.warn('not enough players');
       this.notificationService.warn('Nope', 'not enough players');
       return false;

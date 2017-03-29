@@ -51,9 +51,7 @@ export function reducer(state = initialState, action: gamePlayerActions.Actions)
     case gamePlayerActions.ActionTypes.CLEAR: {
       const gamePlayer = new GamePlayer();
       gamePlayer.playerId = '';
-      gamePlayer.player = <Player>{ playerId: gamePlayer.playerId };
       gamePlayer.deckId = -1;
-      gamePlayer.deck = <Deck>{ deckId: gamePlayer.deckId };
       gamePlayer.thronesDbVersion = null;
       return {
         dirty: false,

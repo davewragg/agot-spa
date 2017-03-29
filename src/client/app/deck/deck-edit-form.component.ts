@@ -34,9 +34,9 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
   deckForm: FormGroup = new FormGroup({
-    factionId: new FormControl(['', Validators.required]),
+    factionId: new FormControl('', Validators.required),
     agendaId: new FormControl(''),
-    title: new FormControl(['', Validators.required]),
+    title: new FormControl('', Validators.required),
     thronesDbLink: new FormControl(''),
   });
 

@@ -5,7 +5,7 @@ import { Venue } from './venue.model';
 export class Game {
   gameId: number;
   date: string = new Date().toISOString(); //ISO STRING
-  venueId: number;
+  venueId: number = null;
   venue?: Venue;
   gamePlayers: GamePlayer[] = [];
 

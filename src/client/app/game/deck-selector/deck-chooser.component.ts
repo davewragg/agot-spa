@@ -32,7 +32,7 @@ export class DeckChooserComponent {
   };
 
   deckChooserForm: FormGroup = new FormGroup({
-    deckId: new FormControl(['', Validators.required]),
+    deckId: new FormControl('', Validators.required),
   });
 
   onDeckChange(deckId: string) {

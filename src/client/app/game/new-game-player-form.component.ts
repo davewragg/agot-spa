@@ -34,7 +34,7 @@ export class NewGamePlayerFormComponent {
   playerDeck: Deck;
 
   gamePlayerForm: FormGroup = new FormGroup({
-    playerId: new FormControl(['', Validators.required]),
+    playerId: new FormControl('', Validators.required),
   });
 
   selectedGroupId$: Observable<number>;

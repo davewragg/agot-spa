@@ -186,7 +186,9 @@ export const getSelectedGame = createSelector(getGameEntities, getSelectedGameId
     });
   });
 export const getGameForEdit = createSelector(getGamesState, fromGames.getGameForEdit);
-export const getGameForEditGamePlayers = createSelector(getGameForEdit, (game: Game) => game.gamePlayers);
+export const getGameForEditGamePlayers = createSelector(getGameForEdit, (game: Game) => {
+  return game ? game.gamePlayers : [];
+});
 export const getGameForEditDirty = createSelector(getGamesState, fromGames.getGameForEditDirty);
 export const getGameLoading = createSelector(getGamesState, fromGames.getLoading);
 

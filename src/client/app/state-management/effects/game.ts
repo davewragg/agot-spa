@@ -60,7 +60,7 @@ export class GameEffects {
     .map((action: gameActions.SaveUpdateAction) => action.payload)
     .mergeMap(game =>
       this.gameService.updateGame(game)
-        .map(() => new gameActions.SaveUpdateCompleteAction(game))
+        .map((updatedGame) => new gameActions.SaveUpdateCompleteAction(updatedGame))
         .catch((error) => of(new gameActions.SaveUpdateFailureAction(error)))
     );
 
