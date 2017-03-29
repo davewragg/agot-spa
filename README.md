@@ -51,10 +51,14 @@
   - [x] edit can activate guards
   - [x] edit can deactivate guard
   - [ ] handle 403 better on notify
-- [ ] my player groups store selector (keep all groups as well)
-- [ ] store current meta in local storage and use that when blank?
+- [ ] "my player groups" store selector (keep all groups as well)
+- [ ] store current meta in local storage and don't read from params
+- [ ] update group chooser to separate My Groups from All, prop for showAll
+- [ ] store all decks in local storage and trigger load afterwards
 - [x] select group for player listing on game create
-- [ ] i bet player selector can actually select a player, not just an id
+- [ ] ~~i bet player selector can actually select a player, not just an id~~
+- [ ] on save game it seems to submit the form (isWinner=true)
+- [ ] clear game player does not clear the add new player form
 
 - [ ] game time entry - UTC/BST!
 - [ ] unauth bootloop

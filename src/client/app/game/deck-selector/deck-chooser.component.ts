@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Deck } from '../../shared/models/deck.model';
 
 @Component({
@@ -7,31 +7,31 @@ import { Deck } from '../../shared/models/deck.model';
   selector: 'agot-deck-chooser',
   templateUrl: 'deck-chooser.component.html',
   styles: [
-    `select.icon-menu option {
-      background-repeat:no-repeat;
-      background-position:bottom left;
-      padding-left:30px;
+      `select.icon-menu option {
+      background-repeat: no-repeat;
+      background-position: bottom left;
+      padding-left: 30px;
     }`
   ]
 })
-export class DeckChooserComponent implements OnInit {
+export class DeckChooserComponent {
   @Input()
   isLoading: boolean;
-  @Input()
-  existingDeck: Deck;
   @Input()
   decks: Deck[];
   @Output()
   selectDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
 
-  deckChooserForm: FormGroup;
+  @Input()
+  set existingDeck(deck: Deck) {
+    if (deck) {
+      this.deckChooserForm.patchValue(deck, { emitEvent: false });
+    }
+  };
 
-  constructor(private _formBuilder: FormBuilder) {
-  }
-
-  ngOnInit() {
-    this.populateForm();
-  }
+  deckChooserForm: FormGroup = new FormGroup({
+    deckId: new FormControl(['', Validators.required]),
+  });
 
   onDeckChange(deckId: string) {
     if (!deckId) {
@@ -40,11 +40,4 @@ export class DeckChooserComponent implements OnInit {
     const deck = this.decks.find((deck) => deck.deckId === +deckId);
     this.selectDeck.emit(deck);
   }
-
-  private populateForm() {
-    let deckId = (this.existingDeck && this.existingDeck.deckId) || '';
-    this.deckChooserForm = this._formBuilder.group({
-      deckId: [deckId, Validators.required],
-    });
-  };
 }
