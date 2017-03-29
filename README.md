@@ -57,8 +57,10 @@
 - [ ] store all decks in local storage and trigger load afterwards
 - [x] select group for player listing on game create
 - [ ] ~~i bet player selector can actually select a player, not just an id~~
-- [ ] on save game it seems to submit the form (isWinner=true)
-- [ ] clear game player does not clear the add new player form
+- [x] on save game it seems to submit the form (isWinner=true)
+- [x] clear game player does not clear the add new player form
+- [ ] edit/remove player from game
+- [ ] edit game
 
 - [ ] game time entry - UTC/BST!
 - [ ] unauth bootloop

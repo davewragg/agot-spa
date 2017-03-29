@@ -1,5 +1,5 @@
 <div *ngIf="game$ | async">
-  <!--TODO create/edit-->
+  <!--TODO ; let game on NG4-->
   <h2>{{ (game$ | async).gameId ? 'Edit' : 'Create' }} Game</h2>
 
   <agot-game-form [game]="(game$ | async)" [hidden]="loading$ | async"
