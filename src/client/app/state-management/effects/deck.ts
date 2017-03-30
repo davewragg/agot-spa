@@ -120,7 +120,7 @@ export class DeckEffects {
               private deckService: DeckService,
               private notificationService: NotificationService,
               private statsService: StatsService,
-              private store: Store<fromRoot.State>,) {
+              private store: Store<fromRoot.State>) {
     store.select(fromRoot.getFactions).subscribe((factions) => this._factions = factions);
     store.select(fromRoot.getAgendas).subscribe((agendas) => this._agendas = agendas);
   }

@@ -11,7 +11,7 @@
         </time>
       </p>
       <p>
-        {{ game.venue.name }}
+        {{ game.venue?.name }}
       </p>
       <p>
         <a [routerLink]="['/games', game.gameId]">

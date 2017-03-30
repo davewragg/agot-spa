@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
@@ -9,6 +9,7 @@ import { GameService } from '../../shared/services/game.service';
 import { go } from '@ngrx/router-store';
 import { NotificationService } from '../../shared/services/notification.service';
 import { Game } from '../../shared/models/game.model';
+import * as fromRoot from '../reducers/root';
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -38,10 +39,12 @@ export class GameEffects {
 
       const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.FILTER).skip(1);
 
-      return this.gameService.getGames(criteria)
-        .takeUntil(nextSearch$)
-        .map(games => new gameActions.FilterCompleteAction(games))
-        .catch(() => of(new gameActions.FilterCompleteAction([])));
+      return this.waitForRefDataToLoad().switchMap(() =>
+        this.gameService.getGames(criteria)
+          .takeUntil(nextSearch$)
+          .map(games => new gameActions.FilterCompleteAction(games))
+          .catch(() => of(new gameActions.FilterCompleteAction([])))
+      );
     });
 
   @Effect()
@@ -109,7 +112,14 @@ export class GameEffects {
 
   constructor(private actions$: Actions,
               private gameService: GameService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private store: Store<fromRoot.State>) {
+  }
+
+  waitForRefDataToLoad(): Observable<boolean> {
+    return this.store.select(fromRoot.getRefDataLoaded)
+      .filter(loaded => loaded)
+      .take(1);
   }
 
   private populateGame(game: Game) {
