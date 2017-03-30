@@ -1,68 +1,44 @@
-import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Deck } from '../shared/models/deck.model';
-import { ThronesDbService } from '../shared/services/thrones-db.service';
+import * as fromRoot from '../state-management/reducers/root';
+import * as thronesDbActions from '../state-management/actions/thrones-db';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-deck-import-form',
   templateUrl: 'deck-import-form.component.html',
-  // directives: [SpinnerComponent, DeckClassBlockComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DeckImportFormComponent implements OnInit {
+export class DeckImportFormComponent {
   @Input()
   creating: boolean;
   @Output()
   updateDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
 
-  importForm: FormGroup;
-  importedDeck: Deck;
-  isImporting: boolean;
-  importError: any;
+  importForm: FormGroup = new FormGroup({
+    thronesDbId: new FormControl('', Validators.compose([Validators.required, Validators.pattern('[0-9]+')])),
+  });
 
-  constructor(private _formBuilder: FormBuilder,
-              private thronesDbService: ThronesDbService) {
-  }
+  importedDeck$: Observable<Deck>;
+  loading$: Observable<boolean>;
 
-  ngOnInit() {
-    this.populateForm();
+  constructor(private store: Store<fromRoot.State>) {
+    this.importedDeck$ = store.select(fromRoot.getImportedDeck);
+    this.loading$ = store.select(fromRoot.getImportedDeckLoading);
   }
 
   onSubmit() {
     // new properties default to strings
     const thronesDbId: number = +this.importForm.controls['thronesDbId'].value;
-
-    console.log(thronesDbId);
-    this.isImporting = true;
-    this.importError = null;
-    this.thronesDbService.importAndConvertThronesDbDeck(thronesDbId).subscribe(
-      (deck: Deck) => {
-        if (!deck) {
-          this.importError = 'Not found';
-        } else {
-          this.importedDeck = deck;
-        }
-        // may not trigger complete?
-        this.isImporting = false;
-      },
-      (error) => {
-        console.error(error);
-        this.importError = `Couldn't load deck. Please check the id and try again.`;
-        this.isImporting = false;
-      },
-      () => this.isImporting = false
-    );
+    this.store.dispatch(new thronesDbActions.ImportDeckAction(thronesDbId));
   }
 
   onDeckSelect() {
-    console.log(this.importedDeck);
-    this.updateDeck.emit(this.importedDeck);
+    let importedDeck: Deck;
+    this.importedDeck$.subscribe(x => importedDeck = x);
+    this.updateDeck.emit(importedDeck);
   }
-
-  private populateForm() {
-    let thronesDbId = '';
-    this.importForm = this._formBuilder.group({
-      thronesDbId: [thronesDbId, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
-    });
-  };
 }

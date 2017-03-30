@@ -8,24 +8,21 @@
         <input type="text" pattern="[0-9]+" class="form-control" formControlName="thronesDbId" placeholder="e.g. 2570">
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-success" [disabled]="!importForm.valid || isImporting">
+        <button type="submit" class="btn btn-success" [disabled]="!importForm.valid || (loading$ | async)">
           Import
         </button>
       </div>
     </form>
   </div>
   <div class="col-md-6">
-    <agot-spinner [isRunning]="isImporting"></agot-spinner>
+    <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-    <div class="alert alert-danger" *ngIf="importError">
-      {{ importError }}
-    </div>
-
-    <div *ngIf="importedDeck">
-      <agot-deck-class-block [deckClass]="importedDeck"
+    <!--TODO let this on ng4+-->
+    <div *ngIf="importedDeck$ | async">
+      <agot-deck-class-block [deckClass]="importedDeck$ | async"
                              class="card"
                              title="Does this look right?"
-                             footerText="{{ importedDeck.thronesDbLink }}"></agot-deck-class-block>
+                             footerText="{{ (importedDeck$ | async).thronesDbLink }}"></agot-deck-class-block>
       <div class="form-group">
         <button type="button" class="btn btn-success" (click)="onDeckSelect()">
           {{ creating ? 'Add Player' : 'Update' }}

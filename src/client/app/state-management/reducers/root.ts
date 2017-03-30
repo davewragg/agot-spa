@@ -41,6 +41,7 @@ import * as fromRefData from './ref-data';
 import * as fromRankings from './rankings';
 import * as fromDecks from './decks';
 import * as fromDeck from './deck';
+import * as fromThronesDb from './thrones-db';
 import * as fromLayout from './layout';
 import { Game } from '../../shared/models/game.model';
 import { Deck } from '../../shared/models/deck.model';
@@ -60,6 +61,7 @@ export interface State {
   rankings: fromRankings.State;
   decks: fromDecks.State;
   deck: fromDeck.State;
+  thronesDb: fromThronesDb.State;
   refData: fromRefData.State;
   layout: fromLayout.State;
   router: fromRouter.RouterState;
@@ -83,6 +85,7 @@ const reducers = {
   rankings: fromRankings.reducer,
   decks: fromDecks.reducer,
   deck: fromDeck.reducer,
+  thronesDb: fromThronesDb.reducer,
   refData: fromRefData.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
@@ -220,6 +223,10 @@ export const getRankingsState = (state: State) => state.rankings;
 export const getRankingsCriteria = createSelector(getRankingsState, fromRankings.getCriteria);
 export const getRankingsLoading = createSelector(getRankingsState, fromRankings.getLoading);
 export const getFilteredRankings = createSelector(getRankingsState, fromRankings.getFilteredRankings);
+
+export const getThronesDbState = (state: State) => state.thronesDb;
+export const getImportedDeck = createSelector(getThronesDbState, fromThronesDb.getImportedDeck);
+export const getImportedDeckLoading = createSelector(getThronesDbState, fromThronesDb.getImportedDeckLoading);
 
 /**
  * Layout Reducers

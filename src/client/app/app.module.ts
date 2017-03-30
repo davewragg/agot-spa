@@ -25,6 +25,7 @@ import { PlayerGroupEffects } from './state-management/effects/player-group';
 import { DeckEffects } from './state-management/effects/deck';
 import { RefDataEffects } from './state-management/effects/ref-data';
 import { CurrentPlayerEffects } from './state-management/effects/current-player';
+import { ThronesDbEffects } from './state-management/effects/thrones-db';
 import { reducer } from './state-management/reducers/root';
 import { LayoutModule } from './layout/layout.module';
 // import { schema } from './db';
@@ -76,6 +77,7 @@ import { LayoutModule } from './layout/layout.module';
     EffectsModule.run(PlayerEffects),
     EffectsModule.run(PlayerGroupEffects),
     EffectsModule.run(RefDataEffects),
+    EffectsModule.run(ThronesDbEffects),
 
     /**
      * `provideDB` sets up @ngrx/db with the provided schema and makes the Database

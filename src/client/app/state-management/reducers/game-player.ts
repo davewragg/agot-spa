@@ -1,7 +1,5 @@
 import * as gamePlayerActions from '../actions/game-player';
 import { GamePlayer } from '../../shared/models/game-player.model';
-import { Player } from '../../shared/models/player.model';
-import { Deck } from '../../shared/models/deck.model';
 
 export interface State {
   dirty: boolean;
