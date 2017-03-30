@@ -8,7 +8,7 @@ import { Agenda } from '../models/agenda.model';
 
 @Injectable()
 export class ThronesDbService {
-  private baseUrl = 'http://thronesdb.com';
+  private baseUrl = 'https://thronesdb.com';
   private thronesDbLinkBase = this.baseUrl + '/decklist/view/';
 
   private static handleResponse(response: Response): any {
