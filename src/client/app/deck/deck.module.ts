@@ -7,7 +7,6 @@ import { DeckEditFormComponent } from './deck-edit-form.component';
 import { DeckImportFormComponent } from './deck-import-form.component';
 import { ViewDeckComponent } from './view-deck.component';
 import { DeckStatsComponent } from './deck-stats.component';
-import { CreateDeckComponent } from './create-deck.component';
 import { SelectedDeckPageComponent } from './selected-deck.container';
 import { ViewDeckPageComponent } from './deck.container';
 import { EditDeckPageComponent } from './edit-deck.container';
@@ -18,7 +17,6 @@ import { CanEditDeckGuard } from '../state-management/guards/deck-can-edit';
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule],
   declarations: [
-    CreateDeckComponent,
     DeckDetailsComponent,
     DeckEditFormComponent,
     DeckImportFormComponent,

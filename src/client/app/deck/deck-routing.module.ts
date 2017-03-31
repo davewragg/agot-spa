@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ViewDeckPageComponent } from './deck.container';
-import { CreateDeckComponent } from './create-deck.component';
 import { EditDeckPageComponent } from './edit-deck.container';
 import { DeckExistsGuard } from '../state-management/guards/deck-exists';
 import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
@@ -21,8 +20,6 @@ import { CanEditDeckGuard } from '../state-management/guards/deck-can-edit';
         canActivate: [CanEditDeckGuard, DeckExistsGuard],
         canDeactivate: [DeckIsDirtyGuard],
       },
-      // TODO /deck or /decks?
-      { path: 'decks/new', component: CreateDeckComponent } // TODO /deck or /decks?
     ])
   ],
   exports: [RouterModule]
