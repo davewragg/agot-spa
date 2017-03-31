@@ -8,7 +8,6 @@ import { Faction } from '../shared/models/faction.model';
 import { Deck } from '../shared/models/deck.model';
 import { DeckService } from '../shared/services/deck.service';
 import * as fromRoot from '../state-management/reducers/root';
-import * as deckActions from '../state-management/actions/deck';
 
 @Component({
   moduleId: module.id,
@@ -32,6 +31,8 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   @Output()
   updateDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
   @Output()
+  change: EventEmitter<Deck> = new EventEmitter<Deck>();
+  @Output()
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
   deckForm: FormGroup = new FormGroup({
@@ -44,7 +45,6 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   agendas$: Observable<Agenda[]>;
   factions$: Observable<Faction[]>;
   refDataLoading$: Observable<boolean>;
-  formDirty$: Observable<boolean>;
 
   cancelling: boolean = false;
 
@@ -55,12 +55,11 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
     this.factions$ = store.select(fromRoot.getFactionsList);
     this.agendas$ = store.select(fromRoot.getAgendasList);
     this.refDataLoading$ = store.select(fromRoot.getRefDataLoading);
-    this.formDirty$ = store.select(fromRoot.getDeckForEditDirty);
   }
 
   ngOnInit() {
-    this.changesSub = this.deckForm.valueChanges.debounceTime(0).subscribe((changes) => {
-      this.store.dispatch(new deckActions.UpdateAction(changes));
+    this.changesSub = this.deckForm.valueChanges.debounceTime(100).subscribe((changes) => {
+      this.change.emit(changes);
     });
   }
 

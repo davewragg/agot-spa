@@ -13,12 +13,13 @@ import * as deckActions from '../state-management/actions/deck';
   template: `
     <div class="mb-1">
       <h2>Edit Deck</h2>
-    
+
       <agot-deck-edit-form [deck]="deck$ | async"
                            [editing]="true" [creating]="false"
+                           (change)="onChanges($event)"
                            (cancel)="onCancel()" [hidden]="loading$ | async"
                            (updateDeck)="onSubmit()"></agot-deck-edit-form>
-    
+
       <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
     </div>
   `
@@ -34,6 +35,10 @@ export class DeckDetailsComponent {
 
   onCancel() {
     this.store.dispatch(go(['decks', this.route.snapshot.params['id']]));
+  }
+
+  onChanges(deck: Deck) {
+    this.store.dispatch(new deckActions.UpdateAction(deck));
   }
 
   onSubmit() {

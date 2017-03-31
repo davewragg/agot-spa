@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { DeckService } from '../../shared/services/deck.service';
 import { NotificationService } from '../../shared/services/notification.service';
 import { Deck } from '../../shared/models/deck.model';
 import * as fromRoot from '../../state-management/reducers/root';
-import { Store } from '@ngrx/store';
+import * as deckActions from '../../state-management/actions/deck';
 
 @Component({
   moduleId: module.id,
@@ -32,6 +33,7 @@ export class DeckSelectorComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>,
               private deckService: DeckService,
               private notificationService: NotificationService) {
+    // TODO fromRoot.getGamePlayerDeckToEdit ?
     this.editDeck$ = store.select(fromRoot.getDeckForEdit);
   }
 
@@ -65,6 +67,11 @@ export class DeckSelectorComponent implements OnInit {
           this.selectNewDeck(deck);
         }
       });
+  }
+
+  onNewDeckChanges(deck: Deck) {
+    this.store.dispatch(new deckActions.UpdateAction(deck));
+    // TODO gamePlayerActions.UpdateDeckAction
   }
 
   onNewDeckSelect() {
