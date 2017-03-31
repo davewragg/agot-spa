@@ -24,14 +24,14 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   @Input()
   set deck(deck: Deck) {
     if (deck) {
-      this.deckForm.patchValue(deck, { emitEvent: false});
+      this.deckForm.patchValue(deck, { emitEvent: false });
     }
   }
 
   @Output()
   updateDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
   @Output()
-  change: EventEmitter<Deck> = new EventEmitter<Deck>();
+  deckChange: EventEmitter<Deck> = new EventEmitter<Deck>();
   @Output()
   cancel: EventEmitter<any> = new EventEmitter<any>();
 
@@ -58,9 +58,9 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.changesSub = this.deckForm.valueChanges.debounceTime(100).subscribe((changes) => {
-      this.change.emit(changes);
-    });
+    this.changesSub = this.deckForm.valueChanges
+      .debounceTime(100)
+      .subscribe((changes) => this.deckChange.emit(changes));
   }
 
   ngOnDestroy(): void {

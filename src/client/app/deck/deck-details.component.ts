@@ -16,7 +16,7 @@ import * as deckActions from '../state-management/actions/deck';
 
       <agot-deck-edit-form [deck]="deck$ | async"
                            [editing]="true" [creating]="false"
-                           (change)="onChanges($event)"
+                           (deckChange)="onChanges($event)"
                            (cancel)="onCancel()" [hidden]="loading$ | async"
                            (updateDeck)="onSubmit()"></agot-deck-edit-form>
 
