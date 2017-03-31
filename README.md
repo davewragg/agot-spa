@@ -59,10 +59,11 @@
 - [ ] ~~i bet player selector can actually select a player, not just an id~~
 - [x] on save game it seems to submit the form (isWinner=true)
 - [x] clear game player does not clear the add new player form
-- [ ] edit/remove player from game
+- [ ] edit player from in game... eek
 - [ ] edit game
 - [ ] no times being saved on games?
-- [ ] error on creating a game you're not a member of - seems to be mutating something
+- [x] error on creating a game you're not a member of - seems to be mutating something
+- [ ] default deck title needs a touched check or summint
 
 - [ ] game time entry - UTC/BST!
 - [ ] unauth bootloop

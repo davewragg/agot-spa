@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -13,7 +13,8 @@ import * as deckActions from '../state-management/actions/deck';
 @Component({
   moduleId: module.id,
   selector: 'agot-deck-edit-form',
-  templateUrl: 'deck-edit-form.component.html'
+  templateUrl: 'deck-edit-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeckEditFormComponent implements OnInit, OnDestroy {
   @Input()

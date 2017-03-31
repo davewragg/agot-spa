@@ -1,7 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Deck } from '../../shared/models/deck.model';
+import { Observable } from 'rxjs';
 import { DeckService } from '../../shared/services/deck.service';
 import { NotificationService } from '../../shared/services/notification.service';
+import { Deck } from '../../shared/models/deck.model';
+import * as fromRoot from '../../state-management/reducers/root';
+import { Store } from '@ngrx/store';
 
 @Component({
   moduleId: module.id,
@@ -24,15 +27,18 @@ export class DeckSelectorComponent implements OnInit {
   deckSelection: DeckSelectionType;
   deckSelectionType = DeckSelectionType;
 
-  editDeck: Deck;
+  editDeck$: Observable<Deck>;
 
-  constructor(private deckService: DeckService, private notificationService: NotificationService) {
+  constructor(private store: Store<fromRoot.State>,
+              private deckService: DeckService,
+              private notificationService: NotificationService) {
+    this.editDeck$ = store.select(fromRoot.getDeckForEdit);
   }
 
   ngOnInit() {
     this.setInitialSelectionType();
     // can't edit imported decks
-    this.editDeck = (this.existingDeck && this.existingDeck.thronesDbId) ? new Deck() : this.existingDeck;
+    // this.editDeck$ = (this.existingDeck && this.existingDeck.thronesDbId) ? new Deck() : this.existingDeck;
   }
 
   onDeckSelectTypeChange(deckSelectionType: number) {
@@ -56,23 +62,34 @@ export class DeckSelectorComponent implements OnInit {
           this.existingDeck = existingDeck;
           this.onExistingDeckSelect();
         } else {
-          this.onNewDeckSelect(deck);
+          this.selectNewDeck(deck);
         }
       });
   }
 
-  onNewDeckSelect(deck: Deck) {
+  onNewDeckSelect() {
+    let deck: Deck;
+    this.editDeck$.subscribe(x => deck = x);
+    this.selectNewDeck(deck);
+  }
+
+  private selectNewDeck(deck: Deck) {
     this.existingDeck = null;
+
     // TODO relocate somewhere more appropriate?
-    deck.creatorId = this.playerId;
-    this.updateDeck.emit({ deck: deck, version: this.deckVersion });
+    const updatedDeck = Deck.patchValues(deck, {
+      creatorId: this.playerId,
+    });
+
+    this.updateDeck.emit({ deck: updatedDeck, version: this.deckVersion });
   }
 
   private setInitialSelectionType() {
     if (this.existingDeck) {
-      if (this.existingDeck.thronesDbId) {
-        this.deckSelection = DeckSelectionType.IMPORT;
-      } else if (!this.existingDeck.deckId) {
+      // if (this.existingDeck.thronesDbId) {
+      //   this.deckSelection = DeckSelectionType.IMPORT;
+      // } else
+      if (!this.existingDeck.deckId) {
         this.deckSelection = DeckSelectionType.NEW;
       }
     }
