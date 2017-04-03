@@ -16,14 +16,24 @@ export class GamePlayerRowComponent {
   updatePlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
   @Output()
   removePlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
+  @Output()
+  editPlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
+  @Output()
+  cancelEditPlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
+  @Input()
   editing: boolean = false;
 
   onUpdateDeck({ deck, version }: any) {
-    this.gamePlayer.deck = deck;
-    this.gamePlayer.thronesDbVersion = version;
-    this.updatePlayer.emit(this.gamePlayer);
-    this.editing = false;
+    // this.gamePlayer.deck = deck;
+    // this.gamePlayer.thronesDbVersion = version;
+    // TODO emit set_deck? this is duplication
+    this.updatePlayer.emit(GamePlayer.patchValues(this.gamePlayer, {
+      deck,
+      deckId: deck.deckId,
+      thronesDbVersion: version,
+    }));
+    // this.editing = false;
   }
 
   onRemove() {
@@ -31,6 +41,10 @@ export class GamePlayerRowComponent {
   }
 
   toggleEditing() {
-    this.editing = !this.editing;
+    if (this.editing) {
+      this.cancelEditPlayer.emit(this.gamePlayer);
+    } else {
+      this.editPlayer.emit(this.gamePlayer);
+    }
   }
 }

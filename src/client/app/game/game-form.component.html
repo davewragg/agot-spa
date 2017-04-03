@@ -16,8 +16,7 @@
     <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
   </fieldset>
 
-  <agot-game-players [gamePlayers]="gamePlayers$ | async" [readOnly]="false"
-                     (playerChange)="onPlayerChange()"></agot-game-players>
+  <agot-game-players [gamePlayers]="gamePlayers$ | async" [readOnly]="false"></agot-game-players>
 
   <div class="form-group">
     <button type="submit" [disabled]="!gameForm.valid"

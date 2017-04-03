@@ -19,15 +19,15 @@ export class GamePlayersComponent {
   gamePlayers: GamePlayer[];
 
   playerToAdd$: Observable<GamePlayer>;
+  editPlayerId$: Observable<string>;
 
   @Input()
   readOnly: boolean = false;
-  @Output()
-  playerChange: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
   constructor(private store: Store<fromRoot.State>,
               private notificationService: NotificationService) {
     this.playerToAdd$ = store.select(fromRoot.getGamePlayerForEdit);
+    this.editPlayerId$ = store.select(fromRoot.getGameForEditPlayerId);
   }
 
   onWinnerChange(newWinner?: GamePlayer) {
@@ -39,7 +39,16 @@ export class GamePlayersComponent {
   }
 
   onPlayerEdit(updatedPlayer: GamePlayer) {
-    this.playerChange.emit(updatedPlayer);
+    // TODO emit set_deck? this is duplication
+    this.store.dispatch(new gameActions.UpdatePlayerAction(updatedPlayer));
+  }
+
+  onEditPlayer(gamePlayer: GamePlayer) {
+    this.store.dispatch(new gameActions.EditPlayerAction(gamePlayer));
+  }
+
+  onCancelEditPlayer() {
+    this.store.dispatch(new gameActions.CancelEditPlayerAction());
   }
 
   onNewPlayerAdd(player: Player) {

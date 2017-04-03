@@ -2,23 +2,25 @@
      class="text-xs-center faction-body"
      [style.backgroundImage]="gamePlayer.deck?.agendaId && ('url(./assets/img/agenda' + gamePlayer.deck?.agendaId + '.png)')">
   <div class="card-header">
-    <img class="card-image-top" src="./assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
+    <img class="card-image-top"
+         *ngIf="gamePlayer.deck.factionId"
+         src="./assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
          alt="{{ gamePlayer.deck?.faction?.name }}">
   </div>
-  <div class="card-block player-header">
+  <div class="card-block player-header" [style.backgroundColor]="!gamePlayer.deck?.factionId && 'silver'">
     <h4 class="card-title player-title">{{ gamePlayer.player?.name }}</h4>
   </div>
   <ul class="list-group list-group-flush" *ngIf="!editing">
     <li class="list-group-item font-weight-bold">
       <agot-deck-link [deck]="gamePlayer.deck" *ngIf="gamePlayer.deck.deckId"></agot-deck-link>
-      <span *ngIf="!gamePlayer.deck.deckId">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle }}*</span>
+      <span *ngIf="!gamePlayer.deck.deckId">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle || 'New Deck' }}*</span>
       <span *ngIf="gamePlayer.thronesDbVersion">({{ gamePlayer.thronesDbVersion }})</span>
       <!--TODO fancy icon?-->
       <a *ngIf="gamePlayer.deck.thronesDbLink" [href]="gamePlayer.deck.thronesDbLink" rel="noopener" target="_blank"
          [title]="gamePlayer.deck.thronesDbLink">TDB</a>
     </li>
     <li class="list-group-item">
-      <span>{{ gamePlayer.deck.faction?.name }}</span> /
+      <span>{{ gamePlayer.deck.faction?.name || 'No Faction' }}</span> /
       {{ gamePlayer.deck.agenda?.title || 'No Agenda' }}
     </li>
   </ul>

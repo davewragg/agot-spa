@@ -9,7 +9,9 @@
     <div class="card-deck-wrapper">
       <div class="card-deck">
         <agot-game-player-row *ngFor="let gamePlayer of gamePlayers" [gamePlayer]="gamePlayer" class="card"
+                              [editing]="(editPlayerId$ | async) === gamePlayer.playerId"
                               [readOnly]="readOnly"
+                              (editPlayer)="onEditPlayer($event)" (cancelEditPlayer)="onCancelEditPlayer()"
                               (updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">
         </agot-game-player-row>
       </div>

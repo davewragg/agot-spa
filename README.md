@@ -60,12 +60,14 @@
 - [x] on save game it seems to submit the form (isWinner=true)
 - [x] clear game player does not clear the add new player form
 - [ ] edit player from in game... eek
+  - [ ] decks into deck selector - all and everyone?
+  - [ ] set deck to edit on player edit change
 - [ ] edit game
 - [ ] no times being saved on games?
 - [x] error on creating a game you're not a member of - seems to be mutating something
 - [ ] default deck title needs a touched check or summint
 
-- [ ] game time entry - UTC/BST!
+- [x] game time entry - UTC/BST!
 - [ ] unauth bootloop
 
 - [ ] update charts to 5.5

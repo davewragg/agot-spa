@@ -74,10 +74,6 @@ export class GameFormComponent implements OnInit, OnDestroy {
     this.changesSub.unsubscribe();
   }
 
-  onPlayerChange() {
-    // TODO ??
-  }
-
   onSubmit() {
     if (!this.validateGame()) {
       return;

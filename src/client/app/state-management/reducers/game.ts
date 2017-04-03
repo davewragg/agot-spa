@@ -12,7 +12,7 @@ export interface State {
   gameToEdit: {
     game: Game,
     dirty: boolean,
-    editPlayerId: number,
+    editPlayerId: string,
   };
 }
 
@@ -87,6 +87,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
         gameToEdit: {
           game: new Game(),
           dirty: false,
+          editPlayerId: null,
         },
       });
     }
@@ -98,6 +99,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
         gameToEdit: {
           game: gameCopy,
           dirty: false,
+          editPlayerId: null,
         },
       });
     }
@@ -114,6 +116,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
         gameToEdit: {
           game: null,
           dirty: false,
+          editPlayerId: null,
         },
       });
     }
@@ -131,6 +134,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
         gameToEdit: {
           game: Game.patchValues(state.gameToEdit.game, changes),
           dirty: true,
+          editPlayerId: state.gameToEdit.editPlayerId,
         },
       });
     }
@@ -150,6 +154,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
         gameToEdit: {
           game: Game.patchValues(state.gameToEdit.game, changes),
           dirty: true,
+          editPlayerId: state.gameToEdit.editPlayerId,
         },
       });
     }
@@ -179,9 +184,12 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
   }
 
     case gameActions.ActionTypes.EDIT_PLAYER: {
+      const player = action.payload;
       return Object.assign({}, state, {
         gameToEdit: {
-          editPlayerId: action.payload,
+          game: state.gameToEdit.game,
+          dirty: state.gameToEdit.dirty,
+          editPlayerId: player.playerId,
         }
       });
     }
@@ -189,6 +197,8 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
     case gameActions.ActionTypes.CANCEL_EDIT_PLAYER: {
       return Object.assign({}, state, {
         gameToEdit: {
+          game: state.gameToEdit.game,
+          dirty: state.gameToEdit.dirty,
           editPlayerId: null,
         }
       });
@@ -226,7 +236,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
         gameToEdit: {
           game: Game.patchValues(state.gameToEdit.game, changes),
           dirty: true,
-          // editPlayerId: null,
+          editPlayerId: state.gameToEdit.editPlayerId,
         },
       });
     }
@@ -256,3 +266,4 @@ export const getSelectedId = (state: State) => state.selectedGameId;
 
 export const getGameForEdit = (state: State) => state.gameToEdit.game;
 export const getGameForEditDirty = (state: State) => state.gameToEdit.dirty;
+export const getGameForEditPlayerId = (state: State) => state.gameToEdit.editPlayerId;
