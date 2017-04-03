@@ -1,21 +1,23 @@
-<form [formGroup]="gamePlayerForm" class="form">
+<form [formGroup]="gamePlayerForm" class="form" (submit)="onSubmit()">
   <div class="container row">
     <div class="form-group col-md-4 col-xs-12">
       <agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
                                   (playerGroupChange)="onSelectedGroupChange($event)">
       </agot-player-group-selector>
 
+      <!--TODO disable if no group selected?-->
       <select class="form-control"
               formControlName="playerId" (change)="onPlayerSelectChange($event.target.value)">
         <option value="">--{{ (loading$ | async) ? 'Loading players' : 'Select player' }}--</option>
         <option *ngFor="let player of players$ | async" [value]="player.playerId">{{ player.name }}</option>
       </select>
+      <button type="submit" class="btn btn-primary btn-success">Add</button>
     </div>
 
-    <agot-deck-selector *ngIf="gamePlayerForm.controls['playerId'].value[0]"
-                        [creating]="true" (updateDeck)="onUpdateDeck($event)"
-                        class="col-md-8" [existingDeck]="playerDeck"
-                        [playerId]="gamePlayerForm.controls['playerId'].value"></agot-deck-selector>
+    <!--<agot-deck-selector *ngIf="gamePlayerForm.controls['playerId'].value[0]"-->
+                        <!--[creating]="true" (updateDeck)="onUpdateDeck($event)"-->
+                        <!--class="col-md-8" [existingDeck]="playerDeck"-->
+                        <!--[playerId]="gamePlayerForm.controls['playerId'].value"></agot-deck-selector>-->
   </div>
   <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 </form>

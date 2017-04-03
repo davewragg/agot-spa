@@ -1,7 +1,8 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, findIndex } from 'lodash';
 import * as gameActions from '../actions/game';
 import { Game } from '../../shared/models/game.model';
 import { GamePlayer } from '../../shared/models/game-player.model';
+import { Deck } from '../../shared/models/deck.model';
 
 export interface State {
   ids: number[];
@@ -11,6 +12,7 @@ export interface State {
   gameToEdit: {
     game: Game,
     dirty: boolean,
+    editPlayerId: number,
   };
 }
 
@@ -22,6 +24,7 @@ const initialState: State = {
   gameToEdit: {
     game: null,
     dirty: false,
+    editPlayerId: null,
   },
 };
 
@@ -134,7 +137,8 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
 
     case gameActions.ActionTypes.SET_WINNER: {
       const winner = action.payload;
-      const updatePlayers = state.gameToEdit.game.gamePlayers.map((gamePlayer: GamePlayer) =>
+      const gamePlayers = state.gameToEdit.game.gamePlayers;
+      const updatePlayers = gamePlayers.map((gamePlayer: GamePlayer) =>
         GamePlayer.patchValues(gamePlayer, {
           isWinner: (gamePlayer.playerId === (winner && winner.playerId))
         }));
@@ -152,15 +156,53 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
 
     case gameActions.ActionTypes.ADD_PLAYER: {
       let player = action.payload;
-      if (!state.gameToEdit.game.gamePlayers.length) {
-        player = GamePlayer.patchValues(player, {
-          isWinner: true,
-        });
-      }
+      const gamePlayers = state.gameToEdit.game.gamePlayers;
+      const gamePlayer = GamePlayer.patchValues(new GamePlayer(), {
+        isWinner: !gamePlayers.length,
+        player,
+        playerId: player.playerId,
+        deck: new Deck(),
+      });
       const changes = {
         gamePlayers: [
-          ...state.gameToEdit.game.gamePlayers,
+          ...gamePlayers,
+          gamePlayer,
+        ]
+      };
+      return Object.assign({}, state, {
+        gameToEdit: {
+          game: Game.patchValues(state.gameToEdit.game, changes),
+          dirty: true,
+          editPlayerId: gamePlayer.playerId,
+        },
+      });
+  }
+
+    case gameActions.ActionTypes.EDIT_PLAYER: {
+      return Object.assign({}, state, {
+        gameToEdit: {
+          editPlayerId: action.payload,
+        }
+      });
+    }
+
+    case gameActions.ActionTypes.CANCEL_EDIT_PLAYER: {
+      return Object.assign({}, state, {
+        gameToEdit: {
+          editPlayerId: null,
+        }
+      });
+    }
+
+    case gameActions.ActionTypes.UPDATE_PLAYER: {
+      let player = action.payload;
+      const gamePlayers = state.gameToEdit.game.gamePlayers;
+      const index = findIndex(gamePlayers, { playerId: player.playerId });
+      const changes = {
+        gamePlayers: [
+          ...gamePlayers.slice(0, index),
           player,
+          ...gamePlayers.slice(index + 1),
         ]
       };
       return Object.assign({}, state, {
@@ -168,20 +210,23 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
         gameToEdit: {
           game: Game.patchValues(state.gameToEdit.game, changes),
           dirty: true,
+          editPlayerId: null,
         },
       });
     }
 
     case gameActions.ActionTypes.REMOVE_PLAYER: {
       const player = action.payload;
+      const gamePlayers = state.gameToEdit.game.gamePlayers;
       const changes = {
-        gamePlayers: state.gameToEdit.game.gamePlayers.filter((x) => x !== player),
+        gamePlayers: gamePlayers.filter((x) => x !== player),
       };
       return Object.assign({}, state, {
         loading: false,
         gameToEdit: {
           game: Game.patchValues(state.gameToEdit.game, changes),
           dirty: true,
+          // editPlayerId: null,
         },
       });
     }

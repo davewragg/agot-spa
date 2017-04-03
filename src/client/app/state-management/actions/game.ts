@@ -3,6 +3,7 @@ import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { Game } from '../../shared/models/game.model';
 import { GamePlayer } from '../../shared/models/game-player.model';
+import { Player } from '../../shared/models/player.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -22,6 +23,9 @@ export const ActionTypes = {
   UPDATE: type('[Game] Update'),
   UPDATE_COMPLETE: type('[Game] Update Complete'),
   ADD_PLAYER: type('[Game] Add GamePlayer'),
+  EDIT_PLAYER: type('[Game] Edit GamePlayer'),
+  CANCEL_EDIT_PLAYER: type('[Game] Cancel Edit GamePlayer'),
+  UPDATE_PLAYER: type('[Game] Update GamePlayer'),
   REMOVE_PLAYER: type('[Game] Remove GamePlayer'),
   SET_WINNER: type('[Game] Set Winner'),
   SAVE_UPDATED: type('[Game] Save updated'),
@@ -95,6 +99,24 @@ export class UpdateCompleteAction implements Action {
 export class AddPlayerAction implements Action {
   type = ActionTypes.ADD_PLAYER;
 
+  constructor(public payload: Player) {
+  }
+}
+
+export class EditPlayerAction implements Action {
+  type = ActionTypes.EDIT_PLAYER;
+  // find by playerId
+  constructor(public payload: GamePlayer) {
+  }
+}
+
+export class CancelEditPlayerAction implements Action {
+  type = ActionTypes.CANCEL_EDIT_PLAYER;
+}
+
+export class UpdatePlayerAction implements Action {
+  type = ActionTypes.UPDATE_PLAYER;
+  // find by playerId
   constructor(public payload: GamePlayer) {
   }
 }
@@ -169,6 +191,9 @@ export type Actions
   | UpdateAction
   | UpdateCompleteAction
   | AddPlayerAction
+  | EditPlayerAction
+  | UpdatePlayerAction
+  | CancelEditPlayerAction
   | RemovePlayerAction
   | SetWinnerAction
   | SaveUpdateAction

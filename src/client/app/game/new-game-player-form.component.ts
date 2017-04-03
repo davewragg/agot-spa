@@ -8,7 +8,7 @@ import { GamePlayer } from '../shared/models/game-player.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import * as fromRoot from '../state-management/reducers/root';
 import * as playerActions from '../state-management/actions/player';
-import * as gamePlayerActions from '../state-management/actions/game-player';
+// import * as gamePlayerActions from '../state-management/actions/game-player';
 import { Deck } from '../shared/models/deck.model';
 
 @Component({
@@ -19,7 +19,7 @@ import { Deck } from '../shared/models/deck.model';
 })
 export class NewGamePlayerFormComponent {
   @Output()
-  updatePlayer: EventEmitter<number> = new EventEmitter<number>();
+  updatePlayer: EventEmitter<Player> = new EventEmitter<Player>();
 
   @Input()
   set gamePlayer(gamePlayer: GamePlayer) {
@@ -54,19 +54,28 @@ export class NewGamePlayerFormComponent {
   }
 
   onPlayerSelectChange(playerId: string) {
-    if (!playerId) {
-      return;
-    }
-    // TODO handle this properly, clear deck if !players?
-    // new gamePlayer? player from Players
+    //   if (!playerId) {
+    //     return;
+    //   }
+    //   // TODO handle this properly, clear deck if !players?
+    //   // new gamePlayer? player from Players
+    //   let players: Player[];
+    //   this.players$.subscribe(x => players = x);
+    //   const player = find(players, { playerId });
+    //   this.store.dispatch(new gamePlayerActions.SetPlayerAction(player));
+  }
+
+  onSubmit() {
+    const playerId = this.gamePlayerForm.controls['playerId'].value;
     let players: Player[];
     this.players$.subscribe(x => players = x);
     const player = find(players, { playerId });
-    this.store.dispatch(new gamePlayerActions.SetPlayerAction(player));
+    this.updatePlayer.emit(player);
   }
 
-  onUpdateDeck(deckAndVersion: any) {
-    this.store.dispatch(new gamePlayerActions.SetDeckAction(deckAndVersion));
-    this.updatePlayer.emit(this.gamePlayerForm.controls['playerId'].value);
-  }
+  //
+  // onUpdateDeck(deckAndVersion: any) {
+  //   this.store.dispatch(new gamePlayerActions.SetDeckAction(deckAndVersion));
+  //   this.updatePlayer.emit(this.gamePlayerForm.controls['playerId'].value);
+  // }
 }

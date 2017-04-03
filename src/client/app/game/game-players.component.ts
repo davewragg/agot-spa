@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../shared/services/notification.service';
 import { GamePlayer } from '../shared/models/game-player.model';
+import { Player } from '../shared/models/player.model';
 import * as fromRoot from '../state-management/reducers/root';
 import * as gameActions from '../state-management/actions/game';
 import * as gamePlayerActions from '../state-management/actions/game-player';
@@ -41,13 +42,12 @@ export class GamePlayersComponent {
     this.playerChange.emit(updatedPlayer);
   }
 
-  onNewPlayerAdd(playerId: string) {
-    if (!playerId || !this.validateNewPlayer(playerId)) {
+  onNewPlayerAdd(player: Player) {
+    if (!player || !this.validateNewPlayer(player.playerId)) {
       return;
     }
-    let newPlayer: GamePlayer;
-    this.playerToAdd$.subscribe(x => newPlayer = x);
-    this.store.dispatch(new gameActions.AddPlayerAction(newPlayer));
+    this.store.dispatch(new gameActions.AddPlayerAction(player));
+    // TODO handle this properly
     this.store.dispatch(new gamePlayerActions.ClearAction());
   }
 
