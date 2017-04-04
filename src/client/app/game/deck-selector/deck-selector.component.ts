@@ -33,14 +33,11 @@ export class DeckSelectorComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>,
               private deckService: DeckService,
               private notificationService: NotificationService) {
-    // TODO fromRoot.getGamePlayerDeckToEdit ?
     this.editDeck$ = store.select(fromRoot.getDeckForEdit);
   }
 
   ngOnInit() {
     this.setInitialSelectionType();
-    // can't edit imported decks
-    // this.editDeck$ = (this.existingDeck && this.existingDeck.thronesDbId) ? new Deck() : this.existingDeck;
   }
 
   onDeckSelectTypeChange(deckSelectionType: number) {
@@ -71,7 +68,6 @@ export class DeckSelectorComponent implements OnInit {
 
   onNewDeckChanges(deck: Deck) {
     this.store.dispatch(new deckActions.UpdateAction(deck));
-    // TODO gamePlayerActions.UpdateDeckAction
   }
 
   onNewDeckSelect() {
@@ -83,7 +79,7 @@ export class DeckSelectorComponent implements OnInit {
   private selectNewDeck(deck: Deck) {
     this.existingDeck = null;
 
-    // TODO relocate somewhere more appropriate?
+    // TODO relocate to store?
     const updatedDeck = Deck.patchValues(deck, {
       creatorId: this.playerId,
     });
@@ -93,9 +89,9 @@ export class DeckSelectorComponent implements OnInit {
 
   private setInitialSelectionType() {
     if (this.existingDeck) {
-      // if (this.existingDeck.thronesDbId) {
-      //   this.deckSelection = DeckSelectionType.IMPORT;
-      // } else
+      if (this.existingDeck.thronesDbId) {
+        this.deckSelection = DeckSelectionType.IMPORT;
+      } else
       if (!this.existingDeck.deckId) {
         this.deckSelection = DeckSelectionType.NEW;
       }

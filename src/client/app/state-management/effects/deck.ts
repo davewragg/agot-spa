@@ -13,7 +13,7 @@ import { Agenda } from '../../shared/models/agenda.model';
 import { Faction } from '../../shared/models/faction.model';
 import { DeckClass } from '../../shared/models/deck-class.model';
 import * as deckActions from '../actions/deck';
-import * as gamePlayerActions from '../actions/game-player';
+import * as gameActions from '../actions/game';
 import * as fromRoot from '../reducers/root';
 
 /**
@@ -49,10 +49,10 @@ export class DeckEffects {
 
   @Effect()
   getForPlayer$: Observable<Action> = this.actions$
-    .ofType(gamePlayerActions.ActionTypes.SET_PLAYER)
-    .map((action: gamePlayerActions.SetPlayerAction) => action.payload)
+    .ofType(gameActions.ActionTypes.ADD_PLAYER, gameActions.ActionTypes.EDIT_PLAYER)
+    .map((action: gameActions.EditPlayerAction) => action.payload)
     .switchMap(player => {
-      const nextSearch$ = this.actions$.ofType(gamePlayerActions.ActionTypes.SET_PLAYER).skip(1);
+      const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.EDIT_PLAYER).skip(1);
 
       return this.deckService.getDecksFor(player.playerId)
         .takeUntil(nextSearch$)

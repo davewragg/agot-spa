@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { cloneDeep } from 'lodash';
 import * as deckActions from '../actions/deck';
+import * as gameActions from '../actions/game';
 import { Deck } from '../../shared/models/deck.model';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 
@@ -28,7 +29,7 @@ const initialState: State = {
   },
 };
 
-export function reducer(state = initialState, action: deckActions.Actions): State {
+export function reducer(state = initialState, action: deckActions.Actions | gameActions.Actions): State {
   switch (action.type) {
     case deckActions.ActionTypes.FILTER: {
       const criteria = action.payload;
@@ -106,6 +107,19 @@ export function reducer(state = initialState, action: deckActions.Actions): Stat
 
     case deckActions.ActionTypes.SELECT_FOR_EDIT: {
       const deckCopy = cloneDeep(state.entities[action.payload]);
+      return Object.assign({}, state, {
+        loading: false,
+        deckToEdit: {
+          deck: deckCopy,
+          dirty: false,
+        },
+      });
+    }
+    case gameActions.ActionTypes.EDIT_PLAYER: {
+      const player = action.payload;
+      const deck = player.deck;
+      // can't edit imported decks
+      const deckCopy = deck.thronesDbId ? new Deck() : cloneDeep(deck);
       return Object.assign({}, state, {
         loading: false,
         deckToEdit: {

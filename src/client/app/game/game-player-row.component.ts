@@ -11,7 +11,10 @@ export class GamePlayerRowComponent {
   @Input()
   gamePlayer: GamePlayer;
   @Input()
+  editing: boolean = false;
+  @Input()
   readOnly: boolean = false;
+
   @Output()
   updatePlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
   @Output()
@@ -21,19 +24,13 @@ export class GamePlayerRowComponent {
   @Output()
   cancelEditPlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
-  @Input()
-  editing: boolean = false;
-
   onUpdateDeck({ deck, version }: any) {
-    // this.gamePlayer.deck = deck;
-    // this.gamePlayer.thronesDbVersion = version;
     // TODO emit set_deck? this is duplication
     this.updatePlayer.emit(GamePlayer.patchValues(this.gamePlayer, {
       deck,
       deckId: deck.deckId,
       thronesDbVersion: version,
     }));
-    // this.editing = false;
   }
 
   onRemove() {
