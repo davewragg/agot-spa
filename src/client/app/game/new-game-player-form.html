@@ -5,7 +5,6 @@
                                   (playerGroupChange)="onSelectedGroupChange($event)">
       </agot-player-group-selector>
 
-      <!--TODO disable if no group selected?-->
       <select class="form-control" formControlName="playerId">
         <option value="">--{{ !(selectedGroupId$ | async) ? 'Select a Player Group' : (loading$ | async) ? 'Loading players' : 'Select player' }}--
         </option>
