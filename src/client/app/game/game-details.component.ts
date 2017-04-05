@@ -23,9 +23,9 @@ export class GameDetailsComponent {
   }
 
   onCancel() {
-    // TODO handle cancel on create
-    const idParam = this.route.snapshot.params['id'] || '';
-    this.store.dispatch(go(['games', idParam]));
+    const idParam = this.route.snapshot.params['id'];
+    const destination = idParam ? ['games', idParam] : ['/'];
+    this.store.dispatch(go(destination));
   }
 
   onSubmit() {
