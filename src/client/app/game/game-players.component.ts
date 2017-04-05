@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../shared/services/notification.service';
@@ -6,7 +6,6 @@ import { GamePlayer } from '../shared/models/game-player.model';
 import { Player } from '../shared/models/player.model';
 import * as fromRoot from '../state-management/reducers/root';
 import * as gameActions from '../state-management/actions/game';
-import * as gamePlayerActions from '../state-management/actions/game-player';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +17,6 @@ export class GamePlayersComponent {
   @Input()
   gamePlayers: GamePlayer[];
 
-  playerToAdd$: Observable<GamePlayer>;
   editPlayerId$: Observable<string>;
 
   @Input()
@@ -26,7 +24,6 @@ export class GamePlayersComponent {
 
   constructor(private store: Store<fromRoot.State>,
               private notificationService: NotificationService) {
-    this.playerToAdd$ = store.select(fromRoot.getGamePlayerForEdit);
     this.editPlayerId$ = store.select(fromRoot.getGameForEditPlayerId);
   }
 
@@ -39,7 +36,6 @@ export class GamePlayersComponent {
   }
 
   onPlayerEdit(updatedPlayer: GamePlayer) {
-    // TODO emit set_deck? this is duplication
     this.store.dispatch(new gameActions.UpdatePlayerAction(updatedPlayer));
   }
 
@@ -56,8 +52,6 @@ export class GamePlayersComponent {
       return;
     }
     this.store.dispatch(new gameActions.AddPlayerAction(player));
-    // TODO handle this properly
-    this.store.dispatch(new gamePlayerActions.ClearAction());
   }
 
   private validateNewPlayer(newPlayerId: string) {
