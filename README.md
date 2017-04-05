@@ -59,16 +59,16 @@
 - [ ] ~~i bet player selector can actually select a player, not just an id~~
 - [x] on save game it seems to submit the form (isWinner=true)
 - [x] clear game player does not clear the add new player form
-- [ ] edit player from in game... eek
+- [x] edit player from in game... eek
   - [x] decks into deck selector - all and everyone?
   - [x] set deck to edit on player edit change
   - [x] validate all players have decks on save
-  - [ ] fire changes on blur of deck title
-  - [ ] change default deck titles to be faction only
-- [ ] edit game
+  - [ ] fire changes on blur of deck title - literally (blur)=""
+  - [x] change default deck titles to be faction only
+- [x] edit game
 - [ ] no times being saved on games?
 - [x] error on creating a game you're not a member of - seems to be mutating something
-- [ ] default deck title needs a touched check or summint
+- [ ] ~default deck title needs a touched check or summint~
 
 - [x] game time entry - UTC/BST!
 - [ ] unauth bootloop
