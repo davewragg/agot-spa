@@ -7,7 +7,8 @@
 
       <!--TODO disable if no group selected?-->
       <select class="form-control" formControlName="playerId">
-        <option value="">--{{ (loading$ | async) ? 'Loading players' : 'Select player' }}--</option>
+        <option value="">--{{ !(selectedGroupId$ | async) ? 'Select a Player Group' : (loading$ | async) ? 'Loading players' : 'Select player' }}--
+        </option>
         <option *ngFor="let player of players$ | async" [value]="player.playerId">{{ player.name }}</option>
       </select>
       <button type="submit" class="btn btn-primary btn-success">Add</button>
