@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { get } from 'lodash';
 import { Deck } from '../../shared/models/deck.model';
 import * as fromRoot from '../../state-management/reducers/root';
 
@@ -35,7 +36,8 @@ export class ExistingDeckSelectorComponent implements OnInit {
 
   ngOnInit() {
     // check whether we have a deck already, and whether it's mine
-    if (this.existingDeck && this.existingDeck.creatorId !== this.playerId) {
+    const creatorId = get(this.existingDeck, 'creatorId');
+    if (creatorId && creatorId !== this.playerId) {
       this.showDecksFor = ViewDecksType.EVERYONE;
     }
   }

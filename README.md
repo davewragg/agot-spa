@@ -60,8 +60,11 @@
 - [x] on save game it seems to submit the form (isWinner=true)
 - [x] clear game player does not clear the add new player form
 - [ ] edit player from in game... eek
-  - [ ] decks into deck selector - all and everyone?
-  - [ ] set deck to edit on player edit change
+  - [x] decks into deck selector - all and everyone?
+  - [x] set deck to edit on player edit change
+  - [x] validate all players have decks on save
+  - [ ] fire changes on blur of deck title
+  - [ ] change default deck titles to be faction only
 - [ ] edit game
 - [ ] no times being saved on games?
 - [x] error on creating a game you're not a member of - seems to be mutating something

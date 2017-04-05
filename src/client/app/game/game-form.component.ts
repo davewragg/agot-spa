@@ -2,6 +2,7 @@ import { Component, Input, Output, OnInit, EventEmitter, OnDestroy, ChangeDetect
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
+import { every } from 'lodash';
 import { NotificationService } from '../shared/services/notification.service';
 import { Game } from '../shared/models/game.model';
 import { Venue } from '../shared/models/venue.model';
@@ -99,6 +100,13 @@ export class GameFormComponent implements OnInit, OnDestroy {
       this.notificationService.warn('Nope', 'not enough players');
       return false;
     }
-    return true;
+    return every(gamePlayers, (gamePlayer) => {
+      if (!gamePlayer.deck || !gamePlayer.deck.factionId) {
+        console.warn(`invalid deck for ${gamePlayer.player.name}`);
+        this.notificationService.warn('Nope', `Invalid deck for ${gamePlayer.player.name}`);
+        return false;
+      }
+      return true;
+    });
   };
 }

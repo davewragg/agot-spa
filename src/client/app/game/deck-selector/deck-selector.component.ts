@@ -25,10 +25,20 @@ export class DeckSelectorComponent implements OnInit {
   @Output()
   updateDeck: EventEmitter<{ deck: Deck, version: number }> = new EventEmitter<{ deck: Deck, version: number }>();
 
-  deckSelection: DeckSelectionType;
+  deckSelection: DeckSelectionType = DeckSelectionType.EXISTING;
   deckSelectionType = DeckSelectionType;
 
   editDeck$: Observable<Deck>;
+
+  private static getInitialSelectionType(editDeck: Deck, existingDeck?: Deck) {
+    if (existingDeck && existingDeck.thronesDbId) {
+      return DeckSelectionType.IMPORT;
+    }
+    if (editDeck && !editDeck.deckId) {
+      return DeckSelectionType.NEW;
+    }
+    return DeckSelectionType.EXISTING;
+  }
 
   constructor(private store: Store<fromRoot.State>,
               private deckService: DeckService,
@@ -37,7 +47,9 @@ export class DeckSelectorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setInitialSelectionType();
+    let deck: Deck;
+    this.editDeck$.subscribe(x => deck = x);
+    this.deckSelection = DeckSelectorComponent.getInitialSelectionType(deck, this.existingDeck);
   }
 
   onDeckSelectTypeChange(deckSelectionType: number) {
@@ -85,18 +97,6 @@ export class DeckSelectorComponent implements OnInit {
     });
 
     this.updateDeck.emit({ deck: updatedDeck, version: this.deckVersion });
-  }
-
-  private setInitialSelectionType() {
-    if (this.existingDeck) {
-      if (this.existingDeck.thronesDbId) {
-        this.deckSelection = DeckSelectionType.IMPORT;
-      } else
-      if (!this.existingDeck.deckId) {
-        this.deckSelection = DeckSelectionType.NEW;
-      }
-    }
-    this.deckSelection = this.deckSelection || DeckSelectionType.EXISTING;
   }
 }
 

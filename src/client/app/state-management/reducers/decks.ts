@@ -39,10 +39,6 @@ export function reducer(state = initialState, action: deckActions.Actions | game
           ids: [],
           loading: false,
           criteria,
-          deckToEdit: {
-            deck: null,
-            dirty: false,
-          },
         });
       }
 
@@ -67,10 +63,6 @@ export function reducer(state = initialState, action: deckActions.Actions | game
         ids: decks.map(deck => deck.deckId),
         entities: Object.assign({}, state.entities, newDeckEntities),
         loading: false,
-        deckToEdit: {
-          deck: null,
-          dirty: false,
-        },
       });
     }
 
@@ -87,10 +79,6 @@ export function reducer(state = initialState, action: deckActions.Actions | game
           [deck.deckId]: deck
         }),
         loading: false,
-        deckToEdit: {
-          deck: null,
-          dirty: false,
-        },
       });
     }
 
@@ -98,10 +86,6 @@ export function reducer(state = initialState, action: deckActions.Actions | game
       return Object.assign({}, state, {
         selectedDeckId: action.payload,
         loading: false,
-        deckToEdit: {
-          deck: null,
-          dirty: false,
-        },
       });
     }
 
@@ -115,13 +99,20 @@ export function reducer(state = initialState, action: deckActions.Actions | game
         },
       });
     }
+    case gameActions.ActionTypes.ADD_PLAYER: {
+      return Object.assign({}, state, {
+        deckToEdit: {
+          deck: null,
+          dirty: false,
+        },
+      });
+    }
     case gameActions.ActionTypes.EDIT_PLAYER: {
-      const player = action.payload;
-      const deck = player.deck;
+      const gamePlayer = action.payload;
+      const deck = gamePlayer.deck;
       // can't edit imported decks
       const deckCopy = deck.thronesDbId ? new Deck() : cloneDeep(deck);
       return Object.assign({}, state, {
-        loading: false,
         deckToEdit: {
           deck: deckCopy,
           dirty: false,
@@ -138,7 +129,10 @@ export function reducer(state = initialState, action: deckActions.Actions | game
     case deckActions.ActionTypes.SAVE_UPDATED_COMPLETE: {
       return Object.assign({}, state, {
         loading: false,
-        deckToEdit: null,
+        deckToEdit: {
+          deck: null,
+          dirty: false,
+        },
       });
     }
 
