@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/observable/combineLatest';
+import { some } from 'lodash';
 import * as fromRoot from '../reducers/root';
 import { Game } from '../../shared/models/game.model';
 import { Player } from '../../shared/models/player.model';
@@ -31,9 +32,10 @@ export class CanEditGameGuard implements CanActivate {
       this.getGame(id),
       this.getCurrentPlayer(),
     ])
-      .map(([game, currentPlayer]) => {
+      .map(([game, currentPlayer]: [Game, Player]) => {
         // TODO check whether there are any other permissions
-        const canEdit = game.creatorId === currentPlayer.playerId;
+        const canEdit = some(game.gamePlayers, (gamePlayer) =>
+          gamePlayer.playerId === currentPlayer.playerId);
         if (!canEdit) {
           this.notificationService.error('Not allowed to edit this game');
         }
