@@ -56,14 +56,14 @@
 - [ ] update group chooser to separate My Groups from All, prop for showAll
 - [ ] store all decks in local storage and trigger load afterwards - might fix this with new deck apis
 - [x] select group for player listing on game create
-- [x] ~~i bet player selector can actually select a player, not just an id~~
+- [ ] i bet player selector can actually select a player, not just an id
 - [x] on save game it seems to submit the form (isWinner=true)
 - [x] clear game player does not clear the add new player form
 - [x] edit player from in game... eek
   - [x] decks into deck selector - all and everyone?
   - [x] set deck to edit on player edit change
   - [x] validate all players have decks on save
-  - [ ] fire changes on blur of deck title - literally (blur)=""
+  - [x] ~~fire changes on blur of deck title - literally (blur)=""~~
   - [x] change default deck titles to be faction only
 - [x] edit game
 - [x] ~~no times being saved on games?~~ - API related

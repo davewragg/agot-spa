@@ -5,10 +5,10 @@
                                   (playerGroupChange)="onSelectedGroupChange($event)">
       </agot-player-group-selector>
 
-      <select class="form-control" formControlName="playerId">
+      <select class="form-control" formControlName="player">
         <option value="">--{{ !(selectedGroupId$ | async) ? 'Select a Player Group' : (loading$ | async) ? 'Loading players' : 'Select player' }}--
         </option>
-        <option *ngFor="let player of players$ | async" [value]="player.playerId">{{ player.name }}</option>
+        <option *ngFor="let player of players$ | async" [ngValue]="player">{{ player.name }}</option>
       </select>
       <button type="submit" class="btn btn-primary btn-success">Add</button>
     </div>

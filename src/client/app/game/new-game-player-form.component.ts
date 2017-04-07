@@ -2,7 +2,6 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angul
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { find } from 'lodash';
 import { Player } from '../shared/models/player.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import * as fromRoot from '../state-management/reducers/root';
@@ -19,7 +18,7 @@ export class NewGamePlayerFormComponent {
   updatePlayer: EventEmitter<Player> = new EventEmitter<Player>();
 
   gamePlayerForm: FormGroup = new FormGroup({
-    playerId: new FormControl('', Validators.required),
+    player: new FormControl('', Validators.required),
   });
 
   selectedGroupId$: Observable<number>;
@@ -39,15 +38,12 @@ export class NewGamePlayerFormComponent {
   }
 
   onSubmit() {
-    const playerId = this.gamePlayerForm.controls['playerId'].value;
-    let players: Player[];
-    this.players$.subscribe(x => players = x);
-    const player = find(players, { playerId });
+    const player = this.gamePlayerForm.controls['player'].value;
     this.updatePlayer.emit(player);
     this.clear();
   }
 
   private clear() {
-    this.gamePlayerForm.controls['playerId'].setValue('');
+    this.gamePlayerForm.controls['player'].setValue('');
   }
 }
