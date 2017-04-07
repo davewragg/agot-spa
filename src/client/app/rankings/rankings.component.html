@@ -1,6 +1,12 @@
 <section>
   <h2 [hidden]="loading$ | async">{{ title || 'Rankings' }}</h2>
 
+  <div class="mb-1" *ngIf="!(loading$ | async)">
+    <agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
+                                (playerGroupChange)="onSelectedGroupChange($event)">
+    </agot-player-group-selector>
+  </div>
+
   <agot-date-range [showSort]="false" [criteria]="criteria$ | async"
                    [hidden]="hideFilters"
                    (rangeChange)="onDateRangeChange($event)"></agot-date-range>
