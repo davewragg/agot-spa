@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
-import * as fromRoot from '../state-management/reducers/root';
 import { Player } from '../shared/models/player.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
+import * as fromRoot from '../state-management/reducers/root';
+import * as playerGroupActions from '../state-management/actions/player-group';
 
 @Component({
   moduleId: module.id,
@@ -30,6 +30,6 @@ export class PlayersComponent {
   }
 
   loadPlayers(playerGroupId?: number) {
-    this.store.dispatch(go(['/players', playerGroupId || '']));
+    this.store.dispatch(new playerGroupActions.SelectAction(playerGroupId));
   }
 }

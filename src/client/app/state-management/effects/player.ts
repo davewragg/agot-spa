@@ -6,19 +6,20 @@ import { of } from 'rxjs/observable/of';
 import { PlayerService } from '../../shared/services/player.service';
 import { StatsService } from '../../shared/services/stats.service';
 import * as playerActions from '../actions/player';
+import * as playerGroupActions from '../actions/player-group';
 
 @Injectable()
 export class PlayerEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(playerActions.ActionTypes.GET_FOR_GROUP)
-    .map((action: playerActions.GetForGroupAction) => action.payload)
+    .ofType(playerGroupActions.ActionTypes.SELECT)
+    .map((action: playerGroupActions.SelectAction) => action.payload)
     .switchMap(playerGroupId => {
       if (!playerGroupId || isNaN(playerGroupId)) {
         return of(new playerActions.GetForGroupCompleteAction([]));
       }
 
-      const nextSearch$ = this.actions$.ofType(playerActions.ActionTypes.GET_FOR_GROUP).skip(1);
+      const nextSearch$ = this.actions$.ofType(playerGroupActions.ActionTypes.SELECT).skip(1);
 
       return this.playerService.getPlayers(playerGroupId)
         .takeUntil(nextSearch$)

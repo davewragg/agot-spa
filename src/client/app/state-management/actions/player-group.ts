@@ -16,6 +16,8 @@ export const ActionTypes = {
   FILTER_COMPLETE: type('[PlayerGroup] Filter Complete'),
   LOAD: type('[PlayerGroup] Load'),
   SELECT: type('[PlayerGroup] Select'),
+  GET_SELECTED: type('[PlayerGroup] Get Selected'),
+  APPLY_SELECTED: type('[PlayerGroup] Apply Selected'),
 };
 
 /**
@@ -49,8 +51,12 @@ export class LoadAction implements Action {
 export class SelectAction implements Action {
   type = ActionTypes.SELECT;
 
-  constructor(public payload: string) {
+  constructor(public payload: number) {
   }
+}
+
+export class GetSelectedAction implements Action {
+  type = ActionTypes.GET_SELECTED;
 }
 
 /**
@@ -61,4 +67,5 @@ export type Actions
   = FilterAction
   | FilterCompleteAction
   | LoadAction
-  | SelectAction;
+  | SelectAction
+  | GetSelectedAction;

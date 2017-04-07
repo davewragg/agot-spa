@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
-import * as playerActions from '../actions/player';
 import { PlayerStats } from '../../shared/models/player-stats.model';
 import { Player } from '../../shared/models/player.model';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
+import * as playerActions from '../actions/player';
+import * as playerGroupActions from '../actions/player-group';
 
 export interface State {
   ids: string[];
   entities: { [id: string]: Player };
-  selectedPlayerGroupId: number | null;
   selectedPlayerId: string | null;
   statsFilterCriteria: FilterCriteria;
   loading: boolean;
@@ -17,20 +17,16 @@ export interface State {
 const initialState: State = {
   ids: [],
   entities: {},
-  selectedPlayerGroupId: null,
   selectedPlayerId: null,
   statsFilterCriteria: null,
   loading: false,
   playerStats: null,
 };
 
-export function reducer(state = initialState, action: playerActions.Actions): State {
+export function reducer(state = initialState, action: playerActions.Actions | playerGroupActions.Actions): State {
   switch (action.type) {
-    case playerActions.ActionTypes.GET_FOR_GROUP: {
-      const selectedPlayerGroupId = action.payload;
-
+    case playerGroupActions.ActionTypes.SELECT: {
       return Object.assign({}, state, {
-        selectedPlayerGroupId,
         loading: true
       });
     }
@@ -97,8 +93,6 @@ export function reducer(state = initialState, action: playerActions.Actions): St
 export const getEntities = (state: State) => state.entities;
 
 export const getIds = (state: State) => state.ids;
-
-export const getSelectedGroupId = (state: State) => state.selectedPlayerGroupId;
 
 export const getSelectedId = (state: State) => state.selectedPlayerId;
 

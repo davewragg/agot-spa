@@ -6,7 +6,7 @@ import { find } from 'lodash';
 import { Player } from '../shared/models/player.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import * as fromRoot from '../state-management/reducers/root';
-import * as playerActions from '../state-management/actions/player';
+import * as playerGroupActions from '../state-management/actions/player-group';
 
 @Component({
   moduleId: module.id,
@@ -34,7 +34,7 @@ export class NewGamePlayerFormComponent {
 
   onSelectedGroupChange(criteria: FilterCriteria) {
     const [playerGroupId] = criteria.playerGroupIds;
-    this.store.dispatch(new playerActions.GetForGroupAction(playerGroupId));
+    this.store.dispatch(new playerGroupActions.SelectAction(playerGroupId));
     this.clear();
   }
 

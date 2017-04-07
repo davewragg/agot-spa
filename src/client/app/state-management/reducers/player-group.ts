@@ -5,7 +5,7 @@ import { PlayerGroup } from '../../shared/models/player-group.model';
 export interface State {
   ids: number[];
   entities: { [id: string]: PlayerGroup };
-  selectedPlayerGroupId: string | null;
+  selectedPlayerGroupId: number | null;
 }
 
 const initialState: State = {
@@ -27,11 +27,10 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
         });
       }, {});
 
-      return {
+      return Object.assign({}, state, {
         ids: [...state.ids, ...newPlayerGroupIds],
         entities: Object.assign({}, state.entities, newPlayerGroupEntities),
-        selectedPlayerGroupId: state.selectedPlayerGroupId
-      };
+      });
     }
 
     case playerGroupActions.ActionTypes.LOAD: {
@@ -41,21 +40,18 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
         return state;
       }
 
-      return {
+      return Object.assign({}, state, {
         ids: [...state.ids, playerGroup.id],
         entities: Object.assign({}, state.entities, {
           [playerGroup.id]: playerGroup
         }),
-        selectedPlayerGroupId: state.selectedPlayerGroupId
-      };
+      });
     }
 
     case playerGroupActions.ActionTypes.SELECT: {
-      return {
-        ids: state.ids,
-        entities: state.entities,
+      return Object.assign({}, state, {
         selectedPlayerGroupId: action.payload
-      };
+      });
     }
 
     default: {

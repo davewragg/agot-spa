@@ -121,7 +121,6 @@ export const getCurrentPlayerLoading = createSelector(getCurrentPlayerState, fro
 
 export const getPlayersState = (state: State) => state.players;
 export const getGroupPlayerIds = createSelector(getPlayersState, fromPlayers.getIds);
-export const getSelectedPlayerGroupId = createSelector(getPlayersState, fromPlayers.getSelectedGroupId);
 export const getPlayersLoading = createSelector(getPlayersState, fromPlayers.getLoading);
 export const getPlayerEntities = createSelector(getPlayersState, fromPlayers.getEntities);
 export const getGroupPlayers = createSelector(getPlayerEntities, getGroupPlayerIds, (players, groupIds) => {
@@ -134,6 +133,7 @@ export const getSelectedPlayerStats = createSelector(getPlayersState, fromPlayer
 
 export const getPlayerGroupState = (state: State) => state.playerGroups;
 export const getAllPlayerGroups = createSelector(getPlayerGroupState, fromPlayerGroups.getAll);
+export const getSelectedPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getSelectedId);
 
 export const getDecksState = (state: State) => state.decks;
 export const getFilteredDeckIds = createSelector(getDecksState, fromDecks.getIds);
