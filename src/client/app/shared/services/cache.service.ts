@@ -40,7 +40,7 @@ export class CacheService {
                   filterCriteria: FilterCriteria,
                   scope: any): Observable<any> {
     const key: string = filterCriteria ? JSON.stringify(filterCriteria) : 'ALL';
-    console.log('get data', key);
+    console.log(dataName, 'get data', key);
     const cachedData = this.getValue(dataName, key);
     if (cachedData) {
       console.log('::cached');

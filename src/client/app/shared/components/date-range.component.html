@@ -1,4 +1,4 @@
-<form (ngSubmit)="onExecute()" class="form">
+<form class="form">
   <div class="btn-group pull-sm-right" data-toggle="buttons" *ngIf="showSort">
     <label class="btn btn-secondary" [class.active]="!criteria.ascending">
       <input type="radio" name="sortDir" (change)="onSortChange(false)"

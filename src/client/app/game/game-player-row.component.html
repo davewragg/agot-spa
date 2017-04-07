@@ -7,7 +7,7 @@
          src="./assets/img/icon{{ gamePlayer.deck?.factionId }}.png"
          alt="{{ gamePlayer.deck?.faction?.name }}">
   </div>
-  <div class="card-block player-header" [style.backgroundColor]="!gamePlayer.deck?.factionId && 'silver'">
+  <div class="card-block player-header" [style.backgroundColor]="gamePlayer.deck?.factionId ? '' : 'silver'">
     <h4 class="card-title player-title">{{ gamePlayer.player?.name }}</h4>
   </div>
   <ul class="list-group list-group-flush" *ngIf="!editing">

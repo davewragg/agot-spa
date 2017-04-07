@@ -19,6 +19,6 @@ export class Game {
   }
 
   static getDateAsIsoString(date: Date) {
-    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
   }
 }
