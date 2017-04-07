@@ -66,7 +66,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.changesSub = this.gameForm.valueChanges.debounceTime(0).subscribe((changes) => {
+    this.changesSub = this.gameForm.valueChanges.debounceTime(400).subscribe((changes) => {
       this.store.dispatch(new gameActions.UpdateAction(changes));
     });
   }

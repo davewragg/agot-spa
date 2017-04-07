@@ -45,13 +45,13 @@
 - [x] switch every changeDetectionStrategy to onPush bar containers
 - [x] check autotrack plugins warning (https://github.com/googleanalytics/autotrack/blob/master/docs/upgrading.md#global-changes)
 #### Post-merge
-- [ ] ngrx
+- [x] ngrx
   - [x] update logic to reducers
   - [x] user to store
   - [x] edit can activate guards
   - [x] edit can deactivate guard
   - [ ] handle 403 better on notify
-- [ ] "my player groups" store selector (keep all groups as well)
+- [x] "my player groups" store selector (keep all groups as well)
 - [x] store current meta in local storage and don't read from params
 - [ ] update group chooser to separate My Groups from All, prop for showAll
 - [ ] store all decks in local storage and trigger load afterwards - might fix this with new deck apis
@@ -70,6 +70,8 @@
 - [x] error on creating a game you're not a member of - seems to be mutating something
 - [x] ~~default deck title needs a touched check or summint~~
 
+- [ ] "current season" selected state checker is a bit keen
+
 - [x] game time entry - UTC/BST!
 - [x] unauth bootloop
 
@@ -78,11 +80,11 @@
   - [ ] dynamic interactions on changes (https://github.com/gevgeny/angular2-highcharts#dynamic-interaction-with-chart-object)
 
 - [x] rename rankings -> rankings-table && all-rankings -> rankings 
-- [ ] loading states
+- [x] loading states
   - [x] fudge it for now
-  - [ ] do something at store level
-  - [ ] LOADING ERRORS ON STORE
-- [ ] disabled reactive form controls warning (see below)
+  - [x] do something at store level
+  - [x] LOADING ERRORS ON STORE
+- [x] disabled reactive form controls warning (see below)
 - [x] ~~sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)~~ AOT resolved
   - [ ] sanitise that one thronesdb link that it thinks is unsafe? (non-https?)
 - [x] CURRENT_SEASON by default

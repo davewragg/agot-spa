@@ -12,6 +12,17 @@ export class FilterCriteria {
   agendaIds: number[] = [];
   deckIds: number[] = [];
   playerGroupIds: number[] = [];
+  [key: string]: string | boolean | string[] | number[] | DateRangeType;
+
+  static patchValues(source: FilterCriteria, changes: any) {
+    const updatedCriteria: FilterCriteria = Object.assign({}, source, changes);
+
+    return ['factionIds', 'agendaIds', 'deckIds', 'playerGroupIds']
+      .reduce((memo, numericKey) => {
+        memo[numericKey] = memo[numericKey] && +memo[numericKey];
+        return memo;
+      }, updatedCriteria);
+  }
 
   static serialise(criteria: FilterCriteria): any {
     return cloneDeep(criteria);

@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { subDays, startOfDay, endOfDay } from 'date-fns';
 import { cloneDeep } from 'lodash';
-import { SeasonService } from '../services/season.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Season } from '../models/season.model';
 import { DateRangeType } from '../models/date-range-type.model';
+import * as fromRoot from '../../state-management/reducers/root';
+import { Store } from '@ngrx/store';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +14,7 @@ import { DateRangeType } from '../models/date-range-type.model';
   templateUrl: 'date-range.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateRangeComponent implements OnInit {
+export class DateRangeComponent implements OnChanges {
   @Input()
   criteria: FilterCriteria;
   @Input()
@@ -21,8 +22,9 @@ export class DateRangeComponent implements OnInit {
   @Output()
   rangeChange: EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
+  rangeSelection: DateRangeType;
   dateRangeType = DateRangeType;
-  seasons: Observable<Season[]>;
+  seasons$: Observable<Season[]>;
 
   today: string;
   aWeekAgo: string;
@@ -35,24 +37,24 @@ export class DateRangeComponent implements OnInit {
     });
   };
 
-  constructor(private _seasonService: SeasonService) {
-    this.seasons = _seasonService.seasons;
+  constructor(private store: Store<fromRoot.State>) {
+    this.seasons$ = this.store.select(fromRoot.getSeasons);
     const now = new Date();
     this.today = endOfDay(now).toISOString();
     this.aWeekAgo = startOfDay(subDays(now, 7)).toISOString();
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
       this.criteria = cloneDeep(this.criteria);
     }
+    this.rangeSelection = this.criteria.rangeSelection;
     this.setSelectedSeason(this.criteria);
   }
 
   onSortChange(ascending: boolean) {
-    // this.criteria.ascending = ascending;
     const criteria = Object.assign({}, this.criteria, {
       ascending,
     });
@@ -60,16 +62,14 @@ export class DateRangeComponent implements OnInit {
   }
 
   onSetSeason(season: Season) {
-    // this.criteria.rangeSelection = DateRangeType.CUSTOM;
-    const criteria = Object.assign({}, this.criteria, {
+    const criteria = FilterCriteria.patchValues(this.criteria, {
       rangeSelection: DateRangeType.CUSTOM,
     });
     this.onExecute(DateRangeComponent.setDates(criteria, season.startDate, season.endDate));
   }
 
   onSetRange(range: DateRangeType) {
-    // this.criteria.rangeSelection = range;
-    const criteria = Object.assign({}, this.criteria, {
+    const criteria = FilterCriteria.patchValues(this.criteria, {
       rangeSelection: range,
     });
     this.onExecute(DateRangeComponent.setDates(criteria, null, null));

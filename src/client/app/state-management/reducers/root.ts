@@ -117,7 +117,8 @@ export const getVenuesList = createSelector(getRefDataState, fromRefData.getVenu
 
 export const getCurrentPlayerState = (state: State) => state.currentPlayer;
 export const getCurrentPlayer = createSelector(getCurrentPlayerState, fromCurrentPlayer.getCurrentPlayer);
-export const getCurrentPlayerLoading = createSelector(getCurrentPlayerState, fromCurrentPlayer.getLoading);
+// export const getCurrentPlayerLoading = createSelector(getCurrentPlayerState, fromCurrentPlayer.getLoading);
+export const getCurrentPlayerGroupIds = createSelector(getCurrentPlayerState, fromCurrentPlayer.getCurrentPlayerGroupIds);
 
 export const getPlayersState = (state: State) => state.players;
 export const getGroupPlayerIds = createSelector(getPlayersState, fromPlayers.getIds);
@@ -133,6 +134,9 @@ export const getSelectedPlayerStats = createSelector(getPlayersState, fromPlayer
 
 export const getPlayerGroupState = (state: State) => state.playerGroups;
 export const getAllPlayerGroups = createSelector(getPlayerGroupState, fromPlayerGroups.getAll);
+export const getMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, (ids, groups) => {
+  return groups.filter((group) => ids.includes(group.id));
+});
 export const getSelectedPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getSelectedId);
 
 export const getDecksState = (state: State) => state.decks;
@@ -197,8 +201,8 @@ export const getGameForEditPlayerId = createSelector(getGamesState, fromGames.ge
 export const getGameLoading = createSelector(getGamesState, fromGames.getLoading);
 
 export const getGamePlayerState = (state: State) => state.gamePlayer;
-export const getGamePlayerForEdit = createSelector(getGamePlayerState, fromGamePlayer.getGamePlayerForEdit);
-export const getGamePlayerForEditDirty = createSelector(getGamePlayerState, fromGamePlayer.getGamePlayerForEditDirty);
+// export const getGamePlayerForEdit = createSelector(getGamePlayerState, fromGamePlayer.getGamePlayerForEdit);
+// export const getGamePlayerForEditDirty = createSelector(getGamePlayerState, fromGamePlayer.getGamePlayerForEditDirty);
 
 export const getSearchState = (state: State) => state.search;
 
@@ -232,6 +236,6 @@ export const getImportedDeckLoading = createSelector(getThronesDbState, fromThro
 /**
  * Layout Reducers
  */
-export const getLayoutState = (state: State) => state.layout;
+// export const getLayoutState = (state: State) => state.layout;
 
-export const getShowSidenav = createSelector(getLayoutState, fromLayout.getShowSidenav);
+// export const getShowSidenav = createSelector(getLayoutState, fromLayout.getShowSidenav);
