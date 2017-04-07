@@ -252,7 +252,7 @@ export class DataService {
 
   private handleError(error: Response): any {
     if (error.status === 401 && !this.router.url.startsWith('/401')) {
-      const currentUrl = encodeURIComponent(this.router.url);
+      const currentUrl = this.router.url;
       this.router.navigate(['/401', { q: currentUrl }]);
     }
     return Observable.throw(error);

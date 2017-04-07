@@ -4,6 +4,7 @@
  */
 import { enableProdMode } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
+// tslint:disable-next-line
 import { AppModuleNgFactory } from './app.module.ngfactory';
 
 enableProdMode();

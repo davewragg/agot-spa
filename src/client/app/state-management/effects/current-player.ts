@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import * as currentPlayerActions from '../actions/current-player';
@@ -17,8 +18,10 @@ export class CurrentPlayerEffects {
 
       return this.playerService.getCurrentPlayer()
         .takeUntil(nextLoad$)
-        .map(player => new currentPlayerActions.LoadCompleteAction(player))
-        .catch(() => of(new currentPlayerActions.LoadCompleteAction(undefined)));
+        .map(player => player ?
+          new currentPlayerActions.LoadCompleteAction(player) :
+          go(['/401', { q: window.location.pathname }]))
+        .catch(() => of(go(['/401', { q: window.location.pathname }])));
     });
 
   constructor(private actions$: Actions, private playerService: PlayerService) {
