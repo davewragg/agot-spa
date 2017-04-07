@@ -53,7 +53,7 @@
   - [ ] handle 403 better on notify
 - [x] "my player groups" store selector (keep all groups as well)
 - [x] store current meta in local storage and don't read from params
-- [ ] update group chooser to separate My Groups from All, prop for showAll
+- [x] update group chooser to separate My Groups from All, prop for showAll
 - [ ] store all decks in local storage and trigger load afterwards - might fix this with new deck apis
 - [x] select group for player listing on game create
 - [x] i bet player selector can actually select a player, not just an id
@@ -71,6 +71,7 @@
 - [x] ~~default deck title needs a touched check or summint~~
 
 - [ ] "current season" selected state checker is a bit keen
+- [ ] rebuild date range component as a proper form
 
 - [x] game time entry - UTC/BST!
 - [x] unauth bootloop

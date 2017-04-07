@@ -21,6 +21,9 @@ export class PlayerGroupSelectorComponent implements OnInit {
   @Output()
   playerGroupChange: EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
+  showAll: boolean = false;
+
+  myPlayerGroups$: Observable<PlayerGroup[]>;
   playerGroups$: Observable<PlayerGroup[]>;
 
   private static getCriteria(playerGroup: FilterCriteria | number) {
@@ -34,6 +37,7 @@ export class PlayerGroupSelectorComponent implements OnInit {
 
   constructor(private store: Store<fromRoot.State>) {
     this.playerGroups$ = store.select(fromRoot.getAllPlayerGroups);
+    this.myPlayerGroups$ = store.select(fromRoot.getMyPlayerGroups);
   }
 
   ngOnInit() {
@@ -55,13 +59,12 @@ export class PlayerGroupSelectorComponent implements OnInit {
     this.onExecute();
   }
 
-  onClear() {
-    this.criteria.playerGroupIds.length = 0;
-    this.onExecute();
-  }
+  // onClear() {
+  //   this.criteria.playerGroupIds.length = 0;
+  //   this.onExecute();
+  // }
 
   onExecute() {
-    //.debounceTime(400).distinctUntilChanged()
     this.playerGroupChange.emit(this.criteria);
   }
 
