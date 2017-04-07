@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NotFoundPageComponent } from './layout/not-found-page';
+import { NotAuthorisedPageComponent } from './layout/not-authorised-page';
 
 @NgModule({
   imports: [
@@ -11,6 +12,10 @@ import { NotFoundPageComponent } from './layout/not-found-page';
       {
         path: '404',
         component: NotFoundPageComponent
+      },
+      {
+        path: '401',
+        component: NotAuthorisedPageComponent
       }
     ])
   ],

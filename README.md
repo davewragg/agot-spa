@@ -56,7 +56,7 @@
 - [ ] update group chooser to separate My Groups from All, prop for showAll
 - [ ] store all decks in local storage and trigger load afterwards - might fix this with new deck apis
 - [x] select group for player listing on game create
-- [ ] i bet player selector can actually select a player, not just an id
+- [x] i bet player selector can actually select a player, not just an id
 - [x] on save game it seems to submit the form (isWinner=true)
 - [x] clear game player does not clear the add new player form
 - [x] edit player from in game... eek
@@ -71,7 +71,7 @@
 - [x] ~~default deck title needs a touched check or summint~~
 
 - [x] game time entry - UTC/BST!
-- [ ] unauth bootloop
+- [x] unauth bootloop
 
 - [ ] update charts to 5.5
   - [ ] update imports and check build

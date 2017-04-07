@@ -40,7 +40,6 @@ export class GameExistsGuard implements CanActivate {
       .do((action: game.LoadAction) => this.store.dispatch(action))
       .map(game => !!game)
       .catch(() => {
-      // TODO have a 404
         this.router.navigate(['/404']);
         return of(false);
       });
