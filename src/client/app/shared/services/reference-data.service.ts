@@ -3,9 +3,10 @@ import { isEqual } from 'lodash';
 import { Faction } from '../models/faction.model';
 import { Agenda } from '../models/agenda.model';
 import { DeckClass } from '../models/deck-class.model';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import { Venue } from '../models/venue.model';
 import { RefDataType } from './ref-data.type';
 import { refDataStorage } from './ref-data-storage';
@@ -55,7 +56,7 @@ export class ReferenceDataService {
 
   getDeckClass(deckClassId: number): Observable<DeckClass> {
     const ids = DeckClass.getFactionAndAgendaId(deckClassId);
-    return Observable.combineLatest(
+    return combineLatest(
       this.getFaction(ids.factionId),
       this.getAgenda(ids.agendaId)
     ).map(([faction, agenda]:[Faction, Agenda]) => {

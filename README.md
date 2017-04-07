@@ -52,11 +52,11 @@
   - [x] edit can deactivate guard
   - [ ] handle 403 better on notify
 - [ ] "my player groups" store selector (keep all groups as well)
-- [ ] store current meta in local storage and don't read from params
+- [x] store current meta in local storage and don't read from params
 - [ ] update group chooser to separate My Groups from All, prop for showAll
-- [ ] store all decks in local storage and trigger load afterwards
+- [ ] store all decks in local storage and trigger load afterwards - might fix this with new deck apis
 - [x] select group for player listing on game create
-- [ ] ~~i bet player selector can actually select a player, not just an id~~
+- [x] ~~i bet player selector can actually select a player, not just an id~~
 - [x] on save game it seems to submit the form (isWinner=true)
 - [x] clear game player does not clear the add new player form
 - [x] edit player from in game... eek
@@ -66,9 +66,9 @@
   - [ ] fire changes on blur of deck title - literally (blur)=""
   - [x] change default deck titles to be faction only
 - [x] edit game
-- [ ] no times being saved on games?
+- [x] ~~no times being saved on games?~~ - API related
 - [x] error on creating a game you're not a member of - seems to be mutating something
-- [ ] ~default deck title needs a touched check or summint~
+- [x] ~~default deck title needs a touched check or summint~~
 
 - [x] game time entry - UTC/BST!
 - [ ] unauth bootloop

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import { of } from 'rxjs/observable/of';
 import * as refData from '../actions/ref-data';
 import { ReferenceDataService } from '../../shared/services/reference-data.service';
@@ -18,7 +19,7 @@ export class RefDataEffects {
     .ofType(refData.ActionTypes.LOAD)
     .startWith(new refData.LoadAction())
     .switchMap(() => {
-      return Observable.combineLatest(
+      return combineLatest(
         this.refDataService.factions,
         this.refDataService.agendas,
         this.refDataService.venues,

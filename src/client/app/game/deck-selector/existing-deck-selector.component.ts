@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 import { get } from 'lodash';
 import { Deck } from '../../shared/models/deck.model';
 import * as fromRoot from '../../state-management/reducers/root';

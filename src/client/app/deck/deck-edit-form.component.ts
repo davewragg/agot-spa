@@ -59,7 +59,7 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSub = this.deckForm.valueChanges
-      .debounceTime(200)
+      .debounceTime(420)
       .distinctUntilChanged()
       .subscribe((changes) => this.deckChange.emit(changes));
   }

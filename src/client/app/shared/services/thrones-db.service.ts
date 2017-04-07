@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import { Deck } from '../models/deck.model';
 import { Faction } from '../models/faction.model';
 import { ReferenceDataService } from './reference-data.service';
@@ -25,7 +26,7 @@ export class ThronesDbService {
   }
 
   importAndConvertThronesDbDeck(deckId: number): Observable<Deck> {
-    return Observable.combineLatest(
+    return combineLatest(
       this.referenceDataService.factions,
       this.referenceDataService.agendas,
       this.getThronesDbDeck(deckId)

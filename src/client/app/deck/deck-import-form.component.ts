@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Deck } from '../shared/models/deck.model';
 import * as fromRoot from '../state-management/reducers/root';
 import * as thronesDbActions from '../state-management/actions/thrones-db';

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PlayerGroup } from '../models/player-group.model';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 import { DataService } from './data.service';
 import { playerGroupStorage } from './player-group-storage';
 
@@ -19,11 +20,11 @@ export class PlayerGroupService {
   }
 
   getSelectedPlayerGroupId(): Observable<number> {
-    return Observable.of(this.getFromLocal() || null);
+    return of(this.getFromLocal() || null);
   }
 
   setSelectedPlayerGroupId(playerGroupId: number): Observable<void> {
-    return Observable.of(this.setToLocal(playerGroupId));
+    return of(this.setToLocal(playerGroupId));
   }
 
   private getFromLocal() {

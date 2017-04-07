@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { NotificationService } from '../shared/services/notification.service';
 import { GamePlayer } from '../shared/models/game-player.model';
 import { Player } from '../shared/models/player.model';
