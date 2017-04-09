@@ -3,6 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
 import { of } from 'rxjs/observable/of';
 import * as currentPlayerActions from '../actions/current-player';
 import { PlayerService } from '../../shared/services/player.service';
