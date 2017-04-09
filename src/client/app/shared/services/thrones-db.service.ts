@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/observable/combineLatest';
+import { last } from 'lodash';
 import { Deck } from '../models/deck.model';
 import { Faction } from '../models/faction.model';
 import { ReferenceDataService } from './reference-data.service';
@@ -9,8 +10,24 @@ import { Agenda } from '../models/agenda.model';
 
 @Injectable()
 export class ThronesDbService {
-  private baseUrl = 'https://thronesdb.com';
-  private thronesDbLinkBase = this.baseUrl + '/decklist/view/';
+  private static baseUrl = 'https://thronesdb.com';
+  private static thronesDbLinkBase = `${ThronesDbService.baseUrl}/decklist/view/`;
+  private static privateDeckLink = '/deck/view/';
+  private static thronesDbPrivateDeckLinkBase = ThronesDbService.baseUrl + ThronesDbService.privateDeckLink;
+
+  static sanitiseThronesDbLink(deck: Deck): string {
+    const thronesDbLink = deck.thronesDbLink;
+    if (!thronesDbLink) {
+      return '';
+    }
+    if (thronesDbLink.startsWith(ThronesDbService.thronesDbLinkBase)) {
+      return thronesDbLink;
+    }
+    const id = last(thronesDbLink.split('/'));
+    return thronesDbLink.includes(ThronesDbService.privateDeckLink) ?
+      ThronesDbService.thronesDbPrivateDeckLinkBase + id :
+      ThronesDbService.thronesDbLinkBase + id;
+  }
 
   private static handleResponse(response: Response): any {
     return response.json();
@@ -21,7 +38,7 @@ export class ThronesDbService {
 
   getThronesDbDeck(deckId: number): Observable<ThronesDbDeck> {
     console.log('getThronesDbDeck called', deckId);
-    return this.http.get(this.baseUrl + '/api/public/decklist/' + deckId)
+    return this.http.get(`${ThronesDbService.baseUrl}/api/public/decklist/${deckId}`)
       .map(ThronesDbService.handleResponse);
   }
 
@@ -31,11 +48,11 @@ export class ThronesDbService {
       this.referenceDataService.agendas,
       this.getThronesDbDeck(deckId)
     )
-      .map(([factions, agendas, thronesDeck]:[Faction[], Agenda[], ThronesDbDeck]) => {
+      .map(([factions, agendas, thronesDeck]: [Faction[], Agenda[], ThronesDbDeck]) => {
         const deck = new Deck();
         deck.title = thronesDeck.name;
         deck.thronesDbId = thronesDeck.id;
-        deck.thronesDbLink = this.thronesDbLinkBase + thronesDeck.id;
+        deck.thronesDbLink = ThronesDbService.thronesDbLinkBase + thronesDeck.id;
         // faction
         deck.faction = this.convertFaction(factions, thronesDeck.faction_code);
         deck.factionId = deck.faction.factionId;

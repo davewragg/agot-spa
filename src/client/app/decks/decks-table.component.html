@@ -12,7 +12,7 @@
         <div>
           <small *ngIf="deck.thronesDbId" class="pull-xs-right">[imported]</small>
           <agot-deck-link [deck]="deck"></agot-deck-link>
-          <a class="small" *ngIf="deck.thronesDbLink" [href]="deck.thronesDbLink" rel="noopener" target="_blank"
+          <a class="small" *ngIf="deck.thronesDbLink" [href]="sanitiseThronesDbLink(deck)" rel="noopener" target="_blank"
              [title]="deck.thronesDbLink">[TDB]</a>
         </div>
         <div class="small">
