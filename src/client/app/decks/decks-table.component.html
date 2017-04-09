@@ -27,7 +27,7 @@
               </time></span>
           </span>
           by
-          <agot-player-link *ngIf="!!deck.creatorId" [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
+          <agot-player-link *ngIf="!!deck.creatorId" [player]="deck.creator"></agot-player-link>
         </div>
       </article>
     </td>

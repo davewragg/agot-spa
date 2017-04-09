@@ -31,6 +31,7 @@ import * as fromRoot from '../reducers/root';
 
 @Injectable()
 export class DeckEffects {
+  // TODO need to wait for players to load? what about players who aren't loaded?
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(deckActions.ActionTypes.FILTER)

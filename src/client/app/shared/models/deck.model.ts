@@ -1,5 +1,6 @@
 import { Faction } from './faction.model';
 import { Agenda } from './agenda.model';
+import { Player } from './player.model';
 
 export class Deck {
   deckId: number;
@@ -13,9 +14,10 @@ export class Deck {
   thronesDbId: number;
   thronesDbLink: string;
   creatorId: string;
+  creator?: Player;
   dateCreated: string;
   dateModified: string;
-  [key: string]: string | number | Faction | Agenda;
+  [key: string]: string | number | Faction | Agenda | Player;
 
   static patchValues(source: Deck, changes: any): Deck {
     const updatedDeck: Deck = Object.assign({}, source, changes);
