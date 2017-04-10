@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Config } from './shared/config/env.config';
 import { Player } from './shared/models/player.model';
-import './operators';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './state-management/reducers/root';
 
