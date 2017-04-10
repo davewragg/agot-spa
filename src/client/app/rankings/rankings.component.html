@@ -3,7 +3,8 @@
 
   <div class="mb-1" *ngIf="!(loading$ | async)">
     <agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
-                                (playerGroupChange)="onSelectedGroupChange($event)">
+                                (playerGroupChange)="onSelectedGroupChange($event)"
+                                [hidden]="hideFilters">
     </agot-player-group-selector>
   </div>
 

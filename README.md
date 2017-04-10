@@ -72,9 +72,11 @@
 
 - [ ] "current season" selected state checker is a bit keen
 - [ ] rebuild date range component as a proper form
-- [ ] hide player group selection on home page/games/rankings
+- [x] hide player group selection on home page/games/rankings
 
 - [ ] ditch any "service." in components
+- [ ] rename all the effects files to *-effects.ts
+- [ ] plus others as required
 
 - [ ] start using getPlayer API
 - [ ] start using getDeck API
