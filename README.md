@@ -72,6 +72,15 @@
 
 - [ ] "current season" selected state checker is a bit keen
 - [ ] rebuild date range component as a proper form
+- [ ] hide player group selection on home page/games/rankings
+
+- [ ] ditch any "service." in components
+
+- [ ] start using getPlayer API
+- [ ] start using getDeck API
+- [ ] start using searchDecks API (and cut the "all decks" selector loose)
+
+- [ ] bump typescript to 2.1 [with working code](http://www.typescriptlang.org/play/index.html#src=const%20actionTypeCache%3A%20%7B%20%5Btype%3A%20string%5D%3A%20boolean%20%7D%20%3D%20%7B%7D%3B%0D%0A%0D%0Afunction%20ensureSingletonType%3CT%20extends%20string%3E(actionType%3A%20T)%3A%20T%20%7B%0D%0A%20%20%20%20if%20(actionTypeCache%5B%3Cstring%3EactionType%5D)%20%7B%0D%0A%20%20%20%20%20%20%20%20throw%20new%20Error(%60Action%20type%20%22%24%7BactionType%7D%22%20is%20not%20unique%22%60)%3B%0D%0A%20%20%20%20%7D%0D%0A%20%20%20%20actionTypeCache%5B%3Cstring%3EactionType%5D%20%3D%20true%3B%0D%0A%20%20%20%20return%20actionType%3B%0D%0A%7D%0D%0A%0D%0A%2F**%20placeholders%20*%2F%0D%0Ainterface%20Action%20%7B%20type%3A%20string%3B%20payload%3F%3A%20any%3B%20%7D%0D%0Ainterface%20Book%20%7B%20id%3A%20string%3B%20%7D%0D%0Ainterface%20State%20%7B%20%7D%0D%0Afunction%20reduceSearch(state%3A%20State%2C%20id%3A%20string)%3A%20State%20%7B%20return%20state%3B%20%7D%0D%0Afunction%20reduceLoad(state%3A%20State%2C%20book%3A%20Book)%3A%20State%20%7B%20return%20state%3B%20%7D%0D%0A%0D%0A%2F********************%20BEGIN%20BROKEN%20********************%2F%0D%0A%0D%0A%2F%2F%20In%20TS%202.1%2B%20these%20properties%20are%20only%20strings%20instead%20of%20literals%2C%0D%0A%2F%2F%20even%20though%20%60ensureSingletonType%60%20returns%20them%20as%20literals.%0D%0Aconst%20ActionTypesBROKEN%20%3D%20%7B%0D%0A%20%20%20%20SEARCH%3A%20ensureSingletonType('%5BBook%5D%20Search')%2C%0D%0A%20%20%20%20LOAD%3A%20ensureSingletonType('%5BBook%5D%20Load')%0D%0A%7D%3B%0D%0A%0D%0Aclass%20SearchActionBROKEN%20implements%20Action%20%7B%0D%0A%20%20%20%20%2F%2F%20In%20TS%202.1%2B%20this%20is%20only%20a%20string%20instead%20of%20a%20string%20literal%0D%0A%20%20%20%20type%20%3D%20ActionTypesBROKEN.SEARCH%3B%20%0D%0A%20%20%20%20constructor(public%20payload%3A%20string)%20%7B%20%7D%0D%0A%7D%0D%0A%0D%0Aclass%20LoadActionBROKEN%20implements%20Action%20%7B%0D%0A%20%20%20%20%2F%2F%20In%20TS%202.1%2B%20this%20is%20only%20a%20string%20instead%20of%20a%20string%20literal%0D%0A%20%20%20%20type%20%3D%20ActionTypesBROKEN.LOAD%3B%0D%0A%20%20%20%20constructor(public%20payload%3A%20Book)%20%7B%20%7D%0D%0A%7D%0D%0A%0D%0Atype%20ActionsBROKEN%20%3D%20SearchActionBROKEN%20%7C%20LoadActionBROKEN%3B%0D%0A%0D%0Afunction%20reducerBROKEN(state%20%3D%20%7B%7D%2C%20action%3A%20ActionsBROKEN)%3A%20State%20%7B%0D%0A%20%20%20%20switch%20(action.type)%20%7B%0D%0A%20%20%20%20%20%20%20%20case%20ActionTypesWORKS.SEARCH%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20id%20%3D%20action.payload%3B%20%2F%2F%20still%20string%20%7C%20Book%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20reduceSearch(state%2C%20id)%3B%20%2F%2F%20type%20narrowing%20is%20BROKEN!%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%20%20case%20ActionTypesWORKS.LOAD%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20book%20%3D%20action.payload%3B%20%2F%2F%20still%20string%20%7C%20Book%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20reduceLoad(state%2C%20book)%3B%20%2F%2F%20type%20narrowing%20is%20BROKEN!%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%20%20default%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20state%3B%0D%0A%20%20%20%20%7D%0D%0A%7D%0D%0A%0D%0A%2F********************%20END%20BROKEN%20********************%2F%0D%0A%0D%0A%2F********************%20BEGIN%20WORKS%20********************%2F%0D%0A%0D%0A%2F**%20%0D%0A%20*%20Let's%20declare%20our%20string%20literals%20in%20one%20place%20to%20avoid%20errors.%0D%0A%20*%20Regardless%2C%20duplicating%20string%20literals%20everywhere%20works%20the%20same%20way.%0D%0A%20*%2F%0D%0Aconst%20SEARCH_ACTION%20%3D%20ensureSingletonType('%5BBook%5D%20Search')%3B%0D%0Aconst%20LOAD_ACTION%20%3D%20ensureSingletonType('%5BBook%5D%20Load')%3B%0D%0A%0D%0A%2F%2F%20In%20TS%202.1%2B%20these%20crufty%20declarations%20are%20required%20to%20preserve%20string%20literals!%0D%0Aconst%20ActionTypesWORKS%20%3D%20%7B%20%0D%0A%20%20%20%20SEARCH%3A%20%3Ctypeof%20SEARCH_ACTION%3ESEARCH_ACTION%2C%20%2F%2F%20TS%202.1%2B%20required%20cruft%0D%0A%20%20%20%20LOAD%3A%20%3Ctypeof%20LOAD_ACTION%3ELOAD_ACTION%2C%20%2F%2F%20TS%202.1%2B%20required%20cruft%0D%0A%7D%3B%0D%0A%0D%0Aclass%20SearchActionWORKS%20implements%20Action%20%7B%0D%0A%20%20%20%20%2F%2F%20TS%202.1%2B%20required%20cruft%0D%0A%20%20%20%20type%3A%20typeof%20ActionTypesWORKS.SEARCH%20%3D%20ActionTypesWORKS.SEARCH%3B%20%0D%0A%20%20%20%20constructor(public%20payload%3A%20string)%20%7B%20%7D%0D%0A%7D%0D%0A%0D%0Aclass%20LoadActionWORKS%20implements%20Action%20%7B%0D%0A%20%20%20%20%2F%2F%20TS%202.1%2B%20required%20cruft%0D%0A%20%20%20%20type%3A%20typeof%20ActionTypesWORKS.LOAD%20%3D%20ActionTypesWORKS.LOAD%3B%0D%0A%20%20%20%20constructor(public%20payload%3A%20Book)%20%7B%20%7D%0D%0A%7D%0D%0A%0D%0Atype%20ActionsWORKS%20%3D%20SearchActionWORKS%20%7C%20LoadActionWORKS%3B%0D%0A%0D%0Afunction%20reducerWORKS(state%20%3D%20%7B%7D%2C%20action%3A%20ActionsWORKS)%3A%20State%20%7B%0D%0A%20%20%20%20switch%20(action.type)%20%7B%0D%0A%20%20%20%20%20%20%20%20case%20ActionTypesWORKS.SEARCH%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20id%20%3D%20action.payload%3B%20%2F%2F%20string%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20reduceSearch(state%2C%20id)%3B%20%2F%2F%20type%20narrowing%20WORKS!%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%20%20case%20ActionTypesWORKS.LOAD%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20const%20book%20%3D%20action.payload%3B%20%2F%2F%20Book%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20reduceLoad(state%2C%20book)%3B%20%2F%2F%20type%20narrowing%20WORKS!%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%20%20default%3A%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20state%3B%0D%0A%20%20%20%20%7D%0D%0A%7D%0D%0A%0D%0A%2F********************%20END%20WORKS%20********************%2F%0D%0A)
 
 - [x] game time entry - UTC/BST!
 - [x] unauth bootloop
@@ -87,7 +96,7 @@
   - [x] LOADING ERRORS ON STORE
 - [x] disabled reactive form controls warning (see below)
 - [x] ~~sanitise external links (https://angular.io/docs/ts/latest/guide/security.html#!#xss)~~ AOT resolved
-  - [ ] sanitise that one thronesdb link that it thinks is unsafe? (non-https?)
+  - [x] sanitise that one thronesdb link that it thinks is unsafe? (non-https?)
 - [x] CURRENT_SEASON by default
   - [x] check custom date range against seasons to see if they're selected 
 - [x] make "Show Games" on player details a link to pre-filtered games search (and remove gamesModule dep)
@@ -107,26 +116,13 @@
 - [ ] material
   - [ ] layout module
   - [ ] convert filters bars to single/multi-select dropdowns
-- [ ] improve deck selector
+- [ ] improve deck selector - search by name, by recent, more details
 - [ ] deck date range filtering?
 - [ ] unsubscriptions for containers?
 - [ ] route change transitions
 - [ ] fix that memory leak - decks page?
 - [ ] app shell
 - [ ] service worker
-
-Reactive forms warning:
-  It looks like you're using the disabled attribute with a reactive form directive. If you set disabled to true
-  when you set up this control in your component class, the disabled attribute will actually be set in the DOM for
-  you. We recommend using this approach to avoid 'changed after checked' errors.
-  
-  Example:
-  ```
-  form = new FormGroup({
-    first: new FormControl({value: 'Nancy', disabled: true}, Validators.required),
-    last: new FormControl('Drew', Validators.required)
-  });
-  ```
 
 # Introduction
 
