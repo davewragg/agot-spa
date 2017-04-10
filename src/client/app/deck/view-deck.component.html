@@ -12,8 +12,7 @@
       </li>
       <li class="list-group-item small" *ngIf="deck.thronesDbLink">
         <span *ngIf="deck.thronesDbId">Imported from</span>
-        <a [href]="deck.thronesDbLink" rel="noopener" target="_blank"
-           [title]="deck.thronesDbLink">Thrones DB</a>
+        <agot-thrones-db-link [deck]="deck" [text]="'Thrones DB'" [classname]="''"></agot-thrones-db-link>
       </li>
     </ul>
     <div class="card-footer text-muted">

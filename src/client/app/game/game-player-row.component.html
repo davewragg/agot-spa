@@ -15,9 +15,7 @@
       <agot-deck-link [deck]="gamePlayer.deck" *ngIf="gamePlayer.deck.deckId"></agot-deck-link>
       <span *ngIf="!gamePlayer.deck.deckId">{{ gamePlayer.deck.title || gamePlayer.deck.fallbackTitle || 'New Deck' }}*</span>
       <span *ngIf="gamePlayer.thronesDbVersion">({{ gamePlayer.thronesDbVersion }})</span>
-      <!--TODO fancy icon?-->
-      <a *ngIf="gamePlayer.deck.thronesDbLink" [href]="gamePlayer.deck.thronesDbLink" rel="noopener" target="_blank"
-         [title]="gamePlayer.deck.thronesDbLink">TDB</a>
+      <agot-thrones-db-link [deck]="gamePlayer.deck"></agot-thrones-db-link>
     </li>
     <li class="list-group-item">
       <span>{{ gamePlayer.deck.faction?.name || 'No Faction' }}</span> /

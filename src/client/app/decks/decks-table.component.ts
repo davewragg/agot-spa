@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ThronesDbService } from '../shared/services/thrones-db.service';
 import { Deck } from '../shared/models/deck.model';
 
 @Component({
@@ -11,8 +10,4 @@ import { Deck } from '../shared/models/deck.model';
 export class DecksTableComponent {
   @Input()
   decks: Deck[];
-
-  sanitiseThronesDbLink(deck: Deck) {
-    return ThronesDbService.sanitiseThronesDbLink(deck);
-  }
 }

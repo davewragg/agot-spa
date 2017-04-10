@@ -39,6 +39,7 @@ import {
 } from './services/index';
 import { PlayerGroupService } from './services/player-group.service';
 import { PlayerGroupSelectorComponent } from './components/player-group-selector.component';
+import { ThronesDbLinkComponent } from './components/thrones-db-link.component';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -66,6 +67,7 @@ import { PlayerGroupSelectorComponent } from './components/player-group-selector
     PlayerFilterComponent,
     PlayerGroupSelectorComponent,
     PlayerLinkComponent,
+    ThronesDbLinkComponent,
     SpinnerComponent
   ],
   exports: [
@@ -93,6 +95,7 @@ import { PlayerGroupSelectorComponent } from './components/player-group-selector
     PlayerFilterComponent,
     PlayerGroupSelectorComponent,
     PlayerLinkComponent,
+    ThronesDbLinkComponent,
     SpinnerComponent
   ],
 })
@@ -101,7 +104,6 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        // NameListService,
         CacheService,
         DataService,
         DeckService,
