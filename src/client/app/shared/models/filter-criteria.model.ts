@@ -19,7 +19,10 @@ export class FilterCriteria {
 
     return ['factionIds', 'agendaIds', 'deckIds', 'playerGroupIds']
       .reduce((memo, numericKey) => {
-        memo[numericKey] = memo[numericKey] && +memo[numericKey];
+        const numericArrayProperty = <Array<number>>memo[numericKey];
+        if (numericArrayProperty && numericArrayProperty.length) {
+          memo[numericKey] = numericArrayProperty.map(x => +x);
+        }
         return memo;
       }, updatedCriteria);
   }
