@@ -25,7 +25,8 @@ export class HomeComponent implements OnInit {
       ascending: true,
       rangeSelection: DateRangeType.THIS_WEEK
     });
-    this.store.dispatch(new rankingActions.FilterAction(rankingFilterCriteria));
-    this.store.dispatch(new gameActions.FilterAction(gameFilterCriteria));
+    // TODO get player group before dispatch
+    this.store.dispatch(new rankingActions.SetFilterAction(rankingFilterCriteria));
+    this.store.dispatch(new gameActions.SetFilterAction(gameFilterCriteria));
   }
 }

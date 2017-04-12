@@ -70,16 +70,17 @@
 - [x] error on creating a game you're not a member of - seems to be mutating something
 - [x] ~~default deck title needs a touched check or summint~~
 
-- [ ] "current season" selected state checker is a bit keen
+- [x] "current season" selected state checker is a bit keen
 - [ ] rebuild date range component as a proper form
 - [x] hide player group selection on home page/games/rankings
+- [ ] do all date range manipulation via date-service in respective effects
 
 - [ ] ditch any "service." in components
-- [ ] rename all the effects files to *-effects.ts
-- [ ] plus others as required
+- [x] rename all the effects files to *-effects.ts
+- [x] plus others as required
 
 - [ ] start using getPlayer API
-- [ ] start using getDeck API
+- [x] start using getDeck API
 - [ ] start using searchDecks API (and cut the "all decks" selector loose) - deckTitle=?
 - [ ] start using searchPlayers API 
 - [ ] use deck.creator

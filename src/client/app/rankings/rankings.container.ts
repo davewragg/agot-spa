@@ -30,7 +30,7 @@ export class RankingsContainerComponent implements OnDestroy {
   constructor(private store: Store<fromRoot.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params
       .map(params => isEmpty(params) ? new FilterCriteria() : FilterCriteria.deserialise(params))
-      .map(criteria => new rankingActions.FilterAction(criteria))
+      .map(criteria => new rankingActions.SetFilterAction(criteria))
       .subscribe(store);
   }
 

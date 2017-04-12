@@ -30,7 +30,7 @@ export class DecksContainerComponent implements OnDestroy {
   constructor(private store: Store<fromRoot.State>, route: ActivatedRoute) {
     this.actionsSubscription = route.params
       .map(params => isEmpty(params) ? new FilterCriteria() : FilterCriteria.deserialise(params))
-      .map(criteria => new deckActions.FilterAction(criteria))
+      .map(criteria => new deckActions.SetFilterAction(criteria))
       .subscribe(store);
   }
 
