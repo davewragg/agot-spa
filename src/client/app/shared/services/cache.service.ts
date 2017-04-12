@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Observable } from 'rxjs/Observable';
-import { DeckService } from './deck.service';
 
 @Injectable()
 export class CacheService {
   private _caches: Map<string, Map<string, any>> = new Map<string, Map<string, any>>();
 
-  constructor(private deckService: DeckService) {
-  }
-
   invalidate() {
     console.log('!::invalidate caches');
-    this.deckService.invalidate();
     this._caches.forEach((cache) => {
       cache.clear();
     });

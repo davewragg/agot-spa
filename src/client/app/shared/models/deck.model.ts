@@ -27,4 +27,12 @@ export class Deck {
         return memo;
       }, updatedDeck);
   }
+
+  static validateDeck(deck: Deck): string {
+    // validate banner is not the same as main faction
+    if (+deck.agendaId === +deck.factionId) {
+      return 'invalid banner';
+    }
+    return null;
+  }
 }

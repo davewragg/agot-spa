@@ -55,7 +55,7 @@ export class DataService {
     // yes I know this is backwards but it's a quick fix here
     params.set('sortBy', filterCriteria.ascending ? 'desc' : 'asc');
     if (filterCriteria.playerIds) {
-      filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId + ''));
+      filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId));
     }
     if (filterCriteria.factionIds) {
       filterCriteria.factionIds.forEach((factionId) => params.append('factionIds', factionId + ''));
@@ -95,7 +95,6 @@ export class DataService {
   }
 
   private static _prepareDeckData(deck: Deck) {
-    //noinspection TypeScriptUnresolvedFunction
     return omit(cloneDeep(deck), [
       'faction', 'agenda', 'fallbackTitle', 'dateCreated', 'dateModified'
     ]);
@@ -220,6 +219,28 @@ export class DataService {
   getCurrentPlayer(): Observable<Player> {
     console.log('getCurrentPlayer called');
     return this.http.get(`${this.baseUrl}api/players/currentplayer`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getDeck(deckId: number): Observable<Deck> {
+    console.log('getdeck called', deckId);
+    return this.http.get(`${this.baseUrl}api/decks/get/${deckId}`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getDecks(filterCriteria: FilterCriteria) {
+    const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+    return this.getFilteredDecks(criteria);
+  }
+
+  getFilteredDecks(filterCriteria: FilterCriteria) {
+    console.log('getfiltereddecks called');
+    const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
+    return this.http.get(`${this.baseUrl}api/decks/searchdecks`, {
+      search: params
+    })
       .map(DataService.handleResponse)
       .catch(this.handleError.bind(this));
   }

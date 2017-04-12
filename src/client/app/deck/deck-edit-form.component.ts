@@ -6,7 +6,6 @@ import { NotificationService } from '../shared/services/notification.service';
 import { Agenda } from '../shared/models/agenda.model';
 import { Faction } from '../shared/models/faction.model';
 import { Deck } from '../shared/models/deck.model';
-import { DeckService } from '../shared/services/deck.service';
 import * as fromRoot from '../state-management/reducers/root';
 
 @Component({
@@ -75,7 +74,7 @@ export class DeckEditFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const deckValues = this.deckForm.value;
-    const error = DeckService.validateDeck(deckValues);
+    const error = Deck.validateDeck(deckValues);
     if (error) {
       this._notificationService.warn('Nope', error);
       console.warn(error);
