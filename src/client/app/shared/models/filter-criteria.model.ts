@@ -3,6 +3,9 @@ import { cloneDeep, pick } from 'lodash';
 import { DateRangeType } from './date-range-type.model';
 
 export class FilterCriteria {
+  private static NUMBER_ARRAY_PARAM_KEYS = ['factionIds', 'agendaIds', 'deckIds', 'playerGroupIds'];
+  private static ARRAY_PARAM_KEYS = ['playerIds', ...FilterCriteria.NUMBER_ARRAY_PARAM_KEYS];
+
   fromDate: string; //iso
   toDate: string; //iso
   ascending: boolean = true;
@@ -17,7 +20,7 @@ export class FilterCriteria {
   static patchValues(source: FilterCriteria, changes: any) {
     const updatedCriteria: FilterCriteria = Object.assign({}, source, changes);
 
-    return ['factionIds', 'agendaIds', 'deckIds', 'playerGroupIds']
+    return FilterCriteria.NUMBER_ARRAY_PARAM_KEYS
       .reduce((memo, numericKey) => {
         const numericArrayProperty = <Array<number>>memo[numericKey];
         if (numericArrayProperty && numericArrayProperty.length) {
@@ -44,22 +47,16 @@ export class FilterCriteria {
       criteria.ascending = routeParams['ascending'] === 'true';
     }
 
-    const arrayParamKeys = [
-      'playerIds',
-      'factionIds',
-      'agendaIds',
-      'deckIds',
-      'playerGroupIds',
-    ];
-    return arrayParamKeys.reduce((memo: any, key: string) => {
+    return FilterCriteria.ARRAY_PARAM_KEYS.reduce((memo: any, key: string) => {
       if (routeParams[key]) {
-        memo[key] = extractNumberArray(routeParams[key]);
+        memo[key] = extractArray(routeParams[key]);
       }
       return memo;
     }, criteria);
 
-    function extractNumberArray(param: string): number[] {
-      return param ? param.split(',').map((id) => +id) : [];
+    function extractArray(param: string): (number|string)[] {
+      return param ? param.split(',').map((id) =>
+        FilterCriteria.NUMBER_ARRAY_PARAM_KEYS.includes(param) ? +id : id) : [];
     }
   }
 }
