@@ -23,7 +23,7 @@
         </time>
         by
         <agot-player-link *ngIf="!!deck.creatorId"
-                          [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
+                          [player]="deck.creator"></agot-player-link>
         <span *ngIf="deck.dateCreated !== deck.dateModified"><br>
           Modified <time [attr.datetime]="deck.dateModified" title="{{ deck.dateModified | amDateFormat: 'LLLL' }}">
               {{ deck.dateModified | amTimeAgo }}
