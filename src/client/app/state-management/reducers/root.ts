@@ -31,18 +31,18 @@ import { storeFreeze } from 'ngrx-store-freeze';
  * the state of the reducer plus any selector functions. The `* as`
  * notation packages up all of the exports into a single object.
  */
-import * as fromCurrentPlayer from './current-player';
-import * as fromSearchGames from './search-games';
-import * as fromGames from './game';
-import * as fromGamePlayer from './game-player';
-import * as fromPlayers from './player';
-import * as fromPlayerGroups from './player-group';
-import * as fromRefData from './ref-data';
-import * as fromRankings from './rankings';
-import * as fromDecks from './decks';
-import * as fromDeck from './deck';
-import * as fromThronesDb from './thrones-db';
-import * as fromLayout from './layout';
+import * as fromCurrentPlayer from './current-player.reducer';
+import * as fromSearchGames from './search-games.reducer';
+import * as fromGames from './game.reducer';
+import * as fromGamePlayer from './game-player.reducer';
+import * as fromPlayers from './player.reducer';
+import * as fromPlayerGroups from './player-group.reducer';
+import * as fromRefData from './ref-data.reducer';
+import * as fromRankings from './rankings.reducer';
+import * as fromDecks from './decks.reducer';
+import * as fromDeck from './deck.reducer';
+import * as fromThronesDb from './thrones-db.reducer';
+import * as fromLayout from './layout.reducer';
 import { Game } from '../../shared/models/game.model';
 import { Deck } from '../../shared/models/deck.model';
 
