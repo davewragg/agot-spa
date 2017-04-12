@@ -1,12 +1,11 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { subDays, startOfDay, endOfDay } from 'date-fns';
-import { cloneDeep } from 'lodash';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Season } from '../models/season.model';
 import { DateRangeType } from '../models/date-range-type.model';
 import * as fromRoot from '../../state-management/reducers/root';
-import { Store } from '@ngrx/store';
 
 @Component({
   moduleId: module.id,
@@ -14,9 +13,23 @@ import { Store } from '@ngrx/store';
   templateUrl: 'date-range.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateRangeComponent implements OnChanges {
+export class DateRangeComponent {
+  dateForm: FormGroup = new FormGroup({
+    rangeSelection: new FormControl('', Validators.required),
+    ascending: new FormControl(''),
+    fromDate: new FormControl(''),
+    toDate: new FormControl(''),
+  });
+
   @Input()
-  criteria: FilterCriteria;
+  set criteria(criteria: FilterCriteria) {
+    if (criteria) {
+      this.setSelectedSeason(criteria);
+      this.setShowCustomDates(criteria);
+      this.dateForm.patchValue(criteria, { emitEvent: false });
+    }
+  }
+
   @Input()
   showSort: boolean = true;
   @Output()
@@ -26,58 +39,30 @@ export class DateRangeComponent implements OnChanges {
   dateRangeType = DateRangeType;
   seasons$: Observable<Season[]>;
 
-  today: string;
-  aWeekAgo: string;
   selectedSeason: string;
-
-  private static setDates(criteria: FilterCriteria, fromDate?: string, toDate?: string) {
-    return Object.assign({}, criteria, {
-      fromDate,
-      toDate,
-    });
-  };
+  showCustomDates: boolean;
 
   constructor(private store: Store<fromRoot.State>) {
     this.seasons$ = this.store.select(fromRoot.getSeasons);
-    const now = new Date();
-    this.today = endOfDay(now).toISOString();
-    this.aWeekAgo = startOfDay(subDays(now, 7)).toISOString();
-  }
-
-  ngOnChanges() {
-    if (!this.criteria) {
-      this.criteria = new FilterCriteria();
-    } else {
-      this.criteria = cloneDeep(this.criteria);
-    }
-    this.rangeSelection = this.criteria.rangeSelection;
-    this.setSelectedSeason(this.criteria);
-  }
-
-  onSortChange(ascending: boolean) {
-    const criteria = Object.assign({}, this.criteria, {
-      ascending,
-    });
-    this.onExecute(criteria);
   }
 
   onSetSeason(season: Season) {
-    const criteria = FilterCriteria.patchValues(this.criteria, {
+    const { startDate, endDate } = season;
+    this.dateForm.patchValue({
       rangeSelection: DateRangeType.CUSTOM,
+      fromDate: startDate,
+      toDate: endDate,
     });
-    this.onExecute(DateRangeComponent.setDates(criteria, season.startDate, season.endDate));
+    this.onExecute();
   }
 
-  onSetRange(range: DateRangeType) {
-    const criteria = FilterCriteria.patchValues(this.criteria, {
-      rangeSelection: range,
-    });
-    this.onExecute(DateRangeComponent.setDates(criteria, null, null));
+  onExecute() {
+    const values = this.dateForm.value;
+    return this.rangeChange.emit(values);
   }
 
-  onExecute(criteria: FilterCriteria) {
-    this.setSelectedSeason(criteria);
-    this.rangeChange.emit(criteria);
+  private setShowCustomDates(criteria: FilterCriteria) {
+    this.showCustomDates = criteria.rangeSelection === DateRangeType.CUSTOM;
   }
 
   private setSelectedSeason(criteria: FilterCriteria) {

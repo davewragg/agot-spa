@@ -14,6 +14,7 @@ import { Player } from '../../shared/models/player.model';
  * action types in the application are unique.
  */
 export const ActionTypes = {
+  SET_FILTER: type('[Game] Set Filter'),
   FILTER: type('[Game] Filter'),
   FILTER_COMPLETE: type('[Game] Filter Complete'),
   LOAD: type('[Game] Load'),
@@ -43,6 +44,13 @@ export const ActionTypes = {
  *
  * See Discriminated Unions: https://www.typescriptlang.org/docs/handgame/advanced-types.html#discriminated-unions
  */
+export class SetFilterAction implements Action {
+  type = ActionTypes.SET_FILTER;
+
+  constructor(public payload: FilterCriteria) {
+  }
+}
+
 export class FilterAction implements Action {
   type = ActionTypes.FILTER;
 
@@ -182,7 +190,8 @@ export class DeleteFailureAction implements Action {
  * so that reducers can easily compose action types
  */
 export type Actions
-  = FilterAction
+  = SetFilterAction
+  | FilterAction
   | FilterCompleteAction
   | LoadAction
   | SelectAction

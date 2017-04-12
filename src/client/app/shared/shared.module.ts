@@ -37,6 +37,7 @@ import {
   StatsService,
   ThronesDbService
 } from './services/index';
+import { DateService } from './services/date.service';
 import { PlayerGroupService } from './services/player-group.service';
 import { PlayerGroupSelectorComponent } from './components/player-group-selector.component';
 import { ThronesDbLinkComponent } from './components/thrones-db-link.component';
@@ -106,6 +107,7 @@ export class SharedModule {
       providers: [
         CacheService,
         DataService,
+        DateService,
         DeckService,
         GameService,
         NotificationService,

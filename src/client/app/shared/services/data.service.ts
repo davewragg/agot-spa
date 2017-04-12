@@ -6,7 +6,6 @@ import { cloneDeep, pick, omit } from 'lodash';
 import { Config } from '../config/env.config';
 import { Game } from '../models/game.model';
 import { FilterCriteria } from '../models/filter-criteria.model';
-import { DateRangeType } from '../models/date-range-type.model';
 import { SetOfResults } from '../models/set-of-results.model';
 import { Deck } from '../models/deck.model';
 import { Player } from '../models/player.model';
@@ -18,35 +17,7 @@ declare let Rollbar: any;
 
 @Injectable()
 export class DataService {
-  private today: string;
-  private aWeekAgo: string;
-
   private baseUrl = Config.API;
-
-  private static setAllTime(criteria: FilterCriteria) {
-    return DataService.setDates(criteria, null, null);
-  }
-
-  private static setCurrentSeason(criteria: FilterCriteria) {
-    const currentSeason = DataService.getCurrentSeason();
-    return DataService.setDates(criteria, currentSeason.startDate, currentSeason.endDate);
-  }
-
-  private static getCurrentSeason(): any {
-    // TODO this is a bit of a cheat
-    const now = new Date();
-    return {
-      startDate: startOfQuarter(now).toISOString().slice(0, 10),
-      endDate: endOfQuarter(now).toISOString().slice(0, 10),
-    };
-  }
-
-  private static setDates(criteria: FilterCriteria, fromDate?: string, toDate?: string) {
-    return Object.assign(criteria, {
-      fromDate: fromDate,
-      toDate: toDate,
-    });
-  }
 
   private static convertFilterCriteriaToSearchParams(filterCriteria: FilterCriteria) {
     const params: URLSearchParams = new URLSearchParams();
@@ -115,16 +86,12 @@ export class DataService {
   }
 
   constructor(private http: Http, private router: Router) {
-    const now = new Date();
-    this.today = endOfDay(now).toISOString();
-    this.aWeekAgo = startOfDay(subDays(now, 7)).toISOString();
   }
 
-  getRankings(filterCriteria: FilterCriteria): Observable<SetOfResults> {
+  getRankings(criteria: FilterCriteria): Observable<SetOfResults> {
     console.log('getRankings called');
-    const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
     const params = DataService.convertFilterCriteriaToSearchParams(criteria);
-    const playerGroup = (criteria && criteria.playerGroupIds[0]) || 1; // TODO cough
+    const playerGroup = (criteria && criteria.playerGroupIds[0]);
 
     return this.http.get(`${this.baseUrl}api/rankings/get/${playerGroup}`, {
       search: params
@@ -157,8 +124,7 @@ export class DataService {
       .catch(this.handleError.bind(this));
   }
 
-  getGames(filterCriteria: FilterCriteria) {
-    const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+  getGames(criteria: FilterCriteria) {
     return this.getFilteredGames(criteria);
   }
 
@@ -230,8 +196,7 @@ export class DataService {
       .catch(this.handleError.bind(this));
   }
 
-  getDecks(filterCriteria: FilterCriteria) {
-    const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+  getDecks(criteria: FilterCriteria) {
     return this.getFilteredDecks(criteria);
   }
 
@@ -252,23 +217,6 @@ export class DataService {
       DataService._getContentHeaders())
       .map(DataService.handleResponse)
       .catch(this.handleError.bind(this));
-  }
-
-  private setDatesFromRangeType(criteria: FilterCriteria) {
-    const updatedCriteria = Object.assign({}, criteria);
-    const range = updatedCriteria.rangeSelection;
-    if (range === DateRangeType.THIS_WEEK) {
-      this.setAWeekAgo(updatedCriteria);
-    } else if (range === DateRangeType.CURRENT_SEASON) {
-      DataService.setCurrentSeason(updatedCriteria);
-    } else if (range === DateRangeType.ALL_TIME) {
-      DataService.setAllTime(updatedCriteria);
-    }
-    return updatedCriteria;
-  }
-
-  private setAWeekAgo(criteria: FilterCriteria) {
-    return DataService.setDates(criteria, this.aWeekAgo, this.today);
   }
 
   private handleError(error: Response): any {

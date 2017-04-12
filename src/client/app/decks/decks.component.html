@@ -1,13 +1,10 @@
 <h2>Decks</h2>
-<!--
-<div class="mb-1">
-  &lt;!&ndash;TODO create new&ndash;&gt;
-  <button type="button" [disabled]="true" class="btn btn-primary" [routerLink]="['/NewGameDetails']">Create new deck</button>
-  &lt;!&ndash;TODO import&ndash;&gt;
-  <button type="button" [disabled]="true" class="btn btn-primary" [routerLink]="['/NewGameDetails']">Import new deck</button>
-</div>
--->
 
+<agot-date-range [criteria]="criteria$ | async" [showSort]="false"
+                 (rangeChange)="onFilterChange($event)"></agot-date-range>
+<agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
+                            (playerGroupChange)="onSelectedGroupChange($event)">
+</agot-player-group-selector>
 <agot-player-filter [criteria]="criteria$ | async" (playerChange)="onFilterChange($event)"></agot-player-filter>
 <agot-faction-filter [criteria]="criteria$ | async" (factionChange)="onFilterChange($event)"></agot-faction-filter>
 <agot-agenda-filter [criteria]="criteria$ | async" (agendaChange)="onFilterChange($event)"></agot-agenda-filter>

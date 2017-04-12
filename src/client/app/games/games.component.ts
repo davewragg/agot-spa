@@ -17,8 +17,6 @@ export class GamesComponent {
   @Input()
   title: string;
   @Input()
-  criteria: FilterCriteria; // TODO remove/refactor
-  @Input()
   hideFilters: boolean = false;
 
   selectedGroupId$: Observable<number>;
@@ -28,27 +26,26 @@ export class GamesComponent {
 
   constructor(private store: Store<fromRoot.State>) {
     this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
-    this.searchQuery$ = store.select(fromRoot.getSearchQuery).take(1);
+    this.searchQuery$ = store.select(fromRoot.getSearchQuery);
     this.games$ = store.select(fromRoot.getSearchResults);
     this.loading$ = store.select(fromRoot.getSearchLoading);
   }
 
-  onSelectedGroupChange(criteria: FilterCriteria) {
-    const [playerGroupId] = criteria.playerGroupIds;
+  onSelectedGroupChange(partialCriteria: FilterCriteria) {
+    const [playerGroupId] = partialCriteria.playerGroupIds;
     this.store.dispatch(new playerGroupActions.SelectAction(playerGroupId));
-    this.loadGames(criteria);
+
+    this.loadGames(partialCriteria);
   }
 
-  onDateRangeChange(criteria: FilterCriteria) {
-    this.loadGames(criteria);
+  onDateRangeChange(partialCriteria: FilterCriteria) {
+    this.loadGames(partialCriteria);
   }
 
-  loadGames(criteria?: FilterCriteria) {
-    let playerGroupId: number;
-    this.selectedGroupId$.subscribe(x => x = playerGroupId);
-    const patchedCriteria = FilterCriteria.patchValues(criteria, {
-      playerGroups: [playerGroupId],
-    });
+  loadGames(changedCriteria?: FilterCriteria) {
+    let existingCriteria: FilterCriteria;
+    this.searchQuery$.subscribe(x => x = existingCriteria);
+    const patchedCriteria = FilterCriteria.patchValues(existingCriteria, changedCriteria);
     this.store.dispatch(go(['/games', FilterCriteria.serialise(patchedCriteria)]));
   }
 }

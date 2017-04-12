@@ -5,6 +5,7 @@ import { go } from '@ngrx/router-store';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import { Deck } from '../shared/models/deck.model';
 import * as fromRoot from '../state-management/reducers/root';
+import * as playerGroupActions from '../state-management/actions/player-group';
 
 @Component({
   moduleId: module.id,
@@ -15,26 +16,34 @@ import * as fromRoot from '../state-management/reducers/root';
 export class DecksComponent {
   @Input()
   title: string;
-  @Input()
-  hideFilters: boolean = false;
-  @Input()
-  criteria: FilterCriteria; // TODO remove/refactor
 
+  selectedGroupId$: Observable<number>;
   criteria$: Observable<FilterCriteria>;
   decks$: Observable<Deck[]>;
   loading$: Observable<boolean>;
 
   constructor(private store: Store<fromRoot.State>) {
-    this.criteria$ = store.select(fromRoot.getDecksCriteria).take(1);
+    this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
+    this.criteria$ = store.select(fromRoot.getDecksCriteria);
     this.decks$ = store.select(fromRoot.getFilteredDecks);
     this.loading$ = store.select(fromRoot.getDecksLoading);
   }
 
-  onFilterChange(criteria: FilterCriteria) {
-    this.loadDecks(criteria);
+  onSelectedGroupChange(partialCriteria: FilterCriteria) {
+    const [playerGroupId] = partialCriteria.playerGroupIds;
+    this.store.dispatch(new playerGroupActions.SelectAction(playerGroupId));
+
+    this.loadDecks(partialCriteria);
   }
 
-  loadDecks(criteria?: FilterCriteria) {
-    this.store.dispatch(go(['/decks', FilterCriteria.serialise(criteria)]));
+  onFilterChange(partialCriteria: FilterCriteria) {
+    this.loadDecks(partialCriteria);
+  }
+
+  loadDecks(changedCriteria?: FilterCriteria) {
+    let existingCriteria: FilterCriteria;
+    this.criteria$.subscribe(x => x = existingCriteria);
+    const patchedCriteria = FilterCriteria.patchValues(existingCriteria, changedCriteria);
+    this.store.dispatch(go(['/decks', FilterCriteria.serialise(patchedCriteria)]));
   }
 }
