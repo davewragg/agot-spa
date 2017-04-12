@@ -3,7 +3,7 @@ import 'rxjs/add/operator/map';
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../state-management/reducers/root';
-import * as game from '../state-management/actions/game';
+import * as game from '../state-management/actions/game.actions';
 
 /**
  * Note: Container components are also reusable. Whether or not

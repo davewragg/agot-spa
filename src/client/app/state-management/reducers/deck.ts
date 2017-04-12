@@ -1,4 +1,4 @@
-import * as deckActions from '../actions/deck';
+import * as deckActions from '../actions/deck.actions';
 import { DeckStats } from '../../shared/models/deck-stats.model';
 
 export interface State {

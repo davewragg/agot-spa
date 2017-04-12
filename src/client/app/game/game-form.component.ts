@@ -8,7 +8,7 @@ import { Game } from '../shared/models/game.model';
 import { Venue } from '../shared/models/venue.model';
 import { GamePlayer } from '../shared/models/game-player.model';
 import * as fromRoot from '../state-management/reducers/root';
-import * as gameActions from '../state-management/actions/game';
+import * as gameActions from '../state-management/actions/game.actions';
 
 @Component({
   moduleId: module.id,

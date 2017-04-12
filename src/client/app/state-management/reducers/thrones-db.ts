@@ -1,5 +1,5 @@
-import * as thronesDbActions from '../actions/thrones-db';
-import * as gameActions from '../actions/game';
+import * as thronesDbActions from '../actions/thrones-db.actions';
+import * as gameActions from '../actions/game.actions';
 import { Deck } from '../../shared/models/deck.model';
 
 export interface State {

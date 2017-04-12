@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { cloneDeep } from 'lodash';
-import * as deckActions from '../actions/deck';
-import * as gameActions from '../actions/game';
+import * as deckActions from '../actions/deck.actions';
+import * as gameActions from '../actions/game.actions';
 import { Deck } from '../../shared/models/deck.model';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 

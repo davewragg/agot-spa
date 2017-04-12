@@ -5,7 +5,7 @@ import { go } from '@ngrx/router-store';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import { Deck } from '../shared/models/deck.model';
 import * as fromRoot from '../state-management/reducers/root';
-import * as playerGroupActions from '../state-management/actions/player-group';
+import * as playerGroupActions from '../state-management/actions/player-group.actions';
 
 @Component({
   moduleId: module.id,

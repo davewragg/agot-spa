@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
-import * as rankingsActions from '../actions/rankings';
+import * as rankingsActions from '../actions/rankings.actions';
 import { RankingService } from '../../shared/services/ranking.service';
 
 /**

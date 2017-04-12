@@ -1,5 +1,5 @@
 import { GamePlayer } from '../../shared/models/game-player.model';
-import * as gamePlayerActions from '../actions/game-player';
+import * as gamePlayerActions from '../actions/game-player.actions';
 
 export interface State {
   dirty: boolean;

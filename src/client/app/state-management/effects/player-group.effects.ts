@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { PlayerGroupService } from '../../shared/services/player-group.service';
 import { of } from 'rxjs/observable/of';
-import * as playerGroup from '../actions/player-group';
+import * as playerGroup from '../actions/player-group.actions';
 
 @Injectable()
 export class PlayerGroupEffects {

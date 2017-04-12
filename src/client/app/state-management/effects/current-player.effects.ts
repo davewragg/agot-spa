@@ -7,7 +7,7 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/takeUntil';
 import { of } from 'rxjs/observable/of';
-import * as currentPlayerActions from '../actions/current-player';
+import * as currentPlayerActions from '../actions/current-player.actions';
 import { PlayerService } from '../../shared/services/player.service';
 
 @Injectable()

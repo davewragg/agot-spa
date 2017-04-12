@@ -4,7 +4,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import * as fromRoot from '../reducers/root';
-import * as player from '../actions/player';
+import * as player from '../actions/player.actions';
 import { PlayerService } from '../../shared/services/player.service';
 
 @Injectable()

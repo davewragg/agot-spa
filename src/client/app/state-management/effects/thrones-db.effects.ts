@@ -3,7 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import * as thronesDbActions from '../actions/thrones-db';
+import * as thronesDbActions from '../actions/thrones-db.actions';
 import { NotificationService } from '../../shared/services/notification.service';
 import { ThronesDbService } from '../../shared/services/thrones-db.service';
 

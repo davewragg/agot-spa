@@ -4,7 +4,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import * as fromRoot from '../reducers/root';
-import * as game from '../actions/game';
+import * as game from '../actions/game.actions';
 import { GameService } from '../../shared/services/game.service';
 
 /**

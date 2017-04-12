@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { isEmpty } from 'lodash';
 import * as fromRoot from '../state-management/reducers/root';
-import * as deckActions from '../state-management/actions/deck';
+import * as deckActions from '../state-management/actions/deck.actions';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 
 /**

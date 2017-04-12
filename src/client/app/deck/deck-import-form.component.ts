@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Deck } from '../shared/models/deck.model';
 import * as fromRoot from '../state-management/reducers/root';
-import * as thronesDbActions from '../state-management/actions/thrones-db';
+import * as thronesDbActions from '../state-management/actions/thrones-db.actions';
 
 @Component({
   moduleId: module.id,

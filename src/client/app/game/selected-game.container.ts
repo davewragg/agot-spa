@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { go } from '@ngrx/router-store';
 import * as fromRoot from '../state-management/reducers/root';
-import * as gameActions from '../state-management/actions/game';
+import * as gameActions from '../state-management/actions/game.actions';
 import { Game } from '../shared/models/game.model';
 
 @Component({

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { keyBy, values } from 'lodash';
-import * as refDataActions from '../actions/ref-data';
+import * as refDataActions from '../actions/ref-data.actions';
 import { Agenda } from '../../shared/models/agenda.model';
 import { Faction } from '../../shared/models/faction.model';
 import { Venue } from '../../shared/models/venue.model';

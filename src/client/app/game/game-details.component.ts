@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { go } from '@ngrx/router-store';
 import * as fromRoot from '../state-management/reducers/root';
 import { Game } from '../shared/models/game.model';
-import * as gameActions from '../state-management/actions/game';
+import * as gameActions from '../state-management/actions/game.actions';
 
 @Component({
   moduleId: module.id,

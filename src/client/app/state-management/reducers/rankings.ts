@@ -1,4 +1,4 @@
-import * as rankingsActions from '../actions/rankings';
+import * as rankingsActions from '../actions/rankings.actions';
 import { SetOfResults } from '../../shared/models/set-of-results.model';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import * as playerGroupActions from '../actions/player-group';
+import * as playerGroupActions from '../actions/player-group.actions';
 import { PlayerGroup } from '../../shared/models/player-group.model';
 
 export interface State {

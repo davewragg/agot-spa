@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { go } from '@ngrx/router-store';
 import { Deck } from '../shared/models/deck.model';
-import * as deckActions from '../state-management/actions/deck';
+import * as deckActions from '../state-management/actions/deck.actions';
 import * as fromRoot from '../state-management/reducers/root';
 
 @Component({

@@ -5,7 +5,7 @@ import { go } from '@ngrx/router-store';
 import { SetOfResults } from '../shared/models/set-of-results.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import * as fromRoot from '../state-management/reducers/root';
-import * as playerGroupActions from '../state-management/actions/player-group';
+import * as playerGroupActions from '../state-management/actions/player-group.actions';
 
 @Component({
   moduleId: module.id,

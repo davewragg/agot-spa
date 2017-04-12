@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { isEmpty } from 'lodash';
 import * as fromRoot from '../state-management/reducers/root';
-import * as rankingActions from '../state-management/actions/rankings';
+import * as rankingActions from '../state-management/actions/rankings.actions';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 
 /**

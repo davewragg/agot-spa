@@ -1,4 +1,4 @@
-import * as game from '../actions/game';
+import * as game from '../actions/game.actions';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 
 export interface State {

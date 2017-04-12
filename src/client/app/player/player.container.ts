@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import * as fromRoot from '../state-management/reducers/root';
-import * as player from '../state-management/actions/player';
+import * as player from '../state-management/actions/player.actions';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 
 @Component({

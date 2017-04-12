@@ -11,8 +11,8 @@ import { NotificationService } from '../../shared/services/notification.service'
 import { Deck } from '../../shared/models/deck.model';
 import { Agenda } from '../../shared/models/agenda.model';
 import { Faction } from '../../shared/models/faction.model';
-import * as deckActions from '../actions/deck';
-import * as gameActions from '../actions/game';
+import * as deckActions from '../actions/deck.actions';
+import * as gameActions from '../actions/game.actions';
 import * as fromRoot from '../reducers/root';
 
 /**

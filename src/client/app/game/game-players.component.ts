@@ -5,7 +5,7 @@ import { NotificationService } from '../shared/services/notification.service';
 import { GamePlayer } from '../shared/models/game-player.model';
 import { Player } from '../shared/models/player.model';
 import * as fromRoot from '../state-management/reducers/root';
-import * as gameActions from '../state-management/actions/game';
+import * as gameActions from '../state-management/actions/game.actions';
 
 @Component({
   moduleId: module.id,

@@ -1,5 +1,5 @@
 import { cloneDeep, findIndex } from 'lodash';
-import * as gameActions from '../actions/game';
+import * as gameActions from '../actions/game.actions';
 import { Game } from '../../shared/models/game.model';
 import { GamePlayer } from '../../shared/models/game-player.model';
 import { Deck } from '../../shared/models/deck.model';

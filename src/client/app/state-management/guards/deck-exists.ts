@@ -4,7 +4,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import * as fromRoot from '../reducers/root';
-import * as deck from '../actions/deck';
+import * as deck from '../actions/deck.actions';
 import { DeckService } from '../../shared/services/deck.service';
 
 /**

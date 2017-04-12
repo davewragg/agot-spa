@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import * as fromRoot from '../state-management/reducers/root';
-import * as game from '../state-management/actions/game';
+import * as game from '../state-management/actions/game.actions';
 
 /**
  * Note: Container components are also reusable. Whether or not

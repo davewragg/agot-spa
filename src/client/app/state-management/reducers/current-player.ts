@@ -1,4 +1,4 @@
-import * as currentPlayerActions from '../actions/current-player';
+import * as currentPlayerActions from '../actions/current-player.actions';
 import { Player } from '../../shared/models/player.model';
 
 export interface State {

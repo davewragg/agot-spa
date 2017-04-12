@@ -5,7 +5,7 @@ import { DeckService } from '../../shared/services/deck.service';
 import { NotificationService } from '../../shared/services/notification.service';
 import { Deck } from '../../shared/models/deck.model';
 import * as fromRoot from '../../state-management/reducers/root';
-import * as deckActions from '../../state-management/actions/deck';
+import * as deckActions from '../../state-management/actions/deck.actions';
 
 @Component({
   moduleId: module.id,

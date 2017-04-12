@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 import { PlayerStats } from '../../shared/models/player-stats.model';
 import { Player } from '../../shared/models/player.model';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
-import * as playerActions from '../actions/player';
-import * as playerGroupActions from '../actions/player-group';
+import * as playerActions from '../actions/player.actions';
+import * as playerGroupActions from '../actions/player-group.actions';
 
 export interface State {
   ids: string[];

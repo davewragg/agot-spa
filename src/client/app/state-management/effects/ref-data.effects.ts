@@ -4,7 +4,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { of } from 'rxjs/observable/of';
-import * as refData from '../actions/ref-data';
+import * as refData from '../actions/ref-data.actions';
 import { ReferenceDataService } from '../../shared/services/reference-data.service';
 import { SeasonService } from '../../shared/services/season.service';
 

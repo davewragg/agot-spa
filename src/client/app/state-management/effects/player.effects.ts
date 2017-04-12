@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { PlayerService } from '../../shared/services/player.service';
 import { StatsService } from '../../shared/services/stats.service';
-import * as playerActions from '../actions/player';
-import * as playerGroupActions from '../actions/player-group';
+import * as playerActions from '../actions/player.actions';
+import * as playerGroupActions from '../actions/player-group.actions';
 
 @Injectable()
 export class PlayerEffects {

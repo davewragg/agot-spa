@@ -91,7 +91,7 @@ export class DataService {
   getRankings(criteria: FilterCriteria): Observable<SetOfResults> {
     console.log('getRankings called');
     const params = DataService.convertFilterCriteriaToSearchParams(criteria);
-    const playerGroup = (criteria && criteria.playerGroupIds[0]);
+    const playerGroup = (criteria && criteria.playerGroupIds[0]) || 1; // TODO cough
 
     return this.http.get(`${this.baseUrl}api/rankings/get/${playerGroup}`, {
       search: params

@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../state-management/reducers/root';
-import * as rankingActions from '../state-management/actions/rankings';
-import * as gameActions from '../state-management/actions/game';
+import * as rankingActions from '../state-management/actions/rankings.actions';
+import * as gameActions from '../state-management/actions/game.actions';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import { DateRangeType } from '../shared/models/date-range-type.model';
 
