@@ -1,29 +1,31 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { pull, cloneDeep } from 'lodash';
-import { ReferenceDataService } from '../services/reference-data.service';
+import { without, cloneDeep } from 'lodash';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Faction } from '../models/faction.model';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-faction-filter',
   templateUrl: 'faction-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FactionFilterComponent implements OnInit {
+export class FactionFilterComponent implements OnChanges {
   @Input()
   criteria: FilterCriteria;
   @Output()
   factionChange: EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
-  factions: Observable<Faction[]>;
+  factions$: Observable<Faction[]>;
   expanded: boolean = false;
 
-  constructor(private referenceDataService: ReferenceDataService) {
-    this.factions = referenceDataService.factions;
+  constructor(private store: Store<fromRoot.State>) {
+    this.factions$ = store.select(fromRoot.getFactionsList);
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
@@ -40,22 +42,34 @@ export class FactionFilterComponent implements OnInit {
     //.debounceTime(400).distinctUntilChanged()
     const checked = $event.target.checked;
     const factionId = +$event.target.value;
+
+    let updatedCriteria: FilterCriteria;
+
     if (checked && !this.criteria.factionIds.includes(factionId)) {
-      this.criteria.factionIds.push(factionId);
+      updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+        factionIds: [
+          ...this.criteria.factionIds,
+          factionId,
+        ]
+      });
     } else if (!checked) {
-      pull(this.criteria.factionIds, factionId);
+      updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+        factionIds: without(this.criteria.factionIds, factionId),
+      });
     }
     console.log(factionId);
-    this.onExecute();
+    this.onExecute(updatedCriteria);
   }
 
   onClear() {
-    this.criteria.factionIds.length = 0;
-    this.onExecute();
+    const updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+      factionIds: [],
+    });
+    this.onExecute(updatedCriteria);
   }
 
-  onExecute() {
+  onExecute(criteria: FilterCriteria) {
     //.debounceTime(400).distinctUntilChanged()
-    this.factionChange.emit(this.criteria);
+    this.factionChange.emit(criteria);
   }
 }
