@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Game } from '../models/game.model';
 import { Observable } from 'rxjs/Observable';
 import { DataService } from './data.service';
-import { FilterCriteria } from '../models/filter-criteria.model';
 import { CacheService } from './cache.service';
+import { FilterCriteria } from '../models/filter-criteria.model';
+import { Game } from '../models/game.model';
 
 @Injectable()
 export class GameService {
