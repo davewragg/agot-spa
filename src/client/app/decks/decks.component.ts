@@ -42,7 +42,7 @@ export class DecksComponent {
 
   loadDecks(changedCriteria?: FilterCriteria) {
     let existingCriteria: FilterCriteria;
-    this.criteria$.subscribe(x => x = existingCriteria);
+    this.criteria$.subscribe(x => existingCriteria = x);
     const patchedCriteria = FilterCriteria.patchValues(existingCriteria, changedCriteria);
     this.store.dispatch(go(['/decks', FilterCriteria.serialise(patchedCriteria)]));
   }

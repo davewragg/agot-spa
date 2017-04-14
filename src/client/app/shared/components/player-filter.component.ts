@@ -24,7 +24,7 @@ export class PlayerFilterComponent implements OnChanges {
     this.players$ = store.select(fromRoot.getGroupPlayers);
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes?: any) {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {

@@ -44,7 +44,7 @@ export class GamesComponent {
 
   loadGames(changedCriteria?: FilterCriteria) {
     let existingCriteria: FilterCriteria;
-    this.searchQuery$.subscribe(x => x = existingCriteria);
+    this.searchQuery$.subscribe(x => existingCriteria = x);
     const patchedCriteria = FilterCriteria.patchValues(existingCriteria, changedCriteria);
     this.store.dispatch(go(['/games', FilterCriteria.serialise(patchedCriteria)]));
   }

@@ -25,7 +25,7 @@ export class FactionFilterComponent implements OnChanges {
     this.factions$ = store.select(fromRoot.getFactionsList);
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes?: any) {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {

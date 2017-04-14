@@ -1,5 +1,5 @@
 import { Params } from '@angular/router';
-import { cloneDeep, pick } from 'lodash';
+import { cloneDeep, merge, pick } from 'lodash';
 import { DateRangeType } from './date-range-type.model';
 
 export class FilterCriteria {
@@ -18,7 +18,7 @@ export class FilterCriteria {
   [key: string]: string | boolean | string[] | number[] | DateRangeType;
 
   static patchValues(source: FilterCriteria, changes: any) {
-    const updatedCriteria: FilterCriteria = Object.assign({}, source, changes);
+    const updatedCriteria: FilterCriteria = merge({}, source, changes);
 
     return FilterCriteria.NUMBER_ARRAY_PARAM_KEYS
       .reduce((memo, numericKey) => {

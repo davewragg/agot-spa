@@ -18,8 +18,6 @@ export class RankingsComponent {
   title: string;
   @Input()
   hideFilters: boolean = false;
-  @Input()
-  criteria: FilterCriteria; // TODO remove/refactor
 
   selectedGroupId$: Observable<number>;
   criteria$: Observable<FilterCriteria>;
@@ -28,7 +26,7 @@ export class RankingsComponent {
 
   constructor(private store: Store<fromRoot.State>) {
     this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
-    this.criteria$ = store.select(fromRoot.getRankingsCriteria).take(1);
+    this.criteria$ = store.select(fromRoot.getRankingsCriteria);
     this.rankings$ = store.select(fromRoot.getFilteredRankings);
     this.loading$ = store.select(fromRoot.getRankingsLoading);
   }
@@ -45,7 +43,7 @@ export class RankingsComponent {
 
   loadRankings(criteria?: FilterCriteria) {
     let playerGroupId: number;
-    this.selectedGroupId$.subscribe(x => x = playerGroupId);
+    this.selectedGroupId$.subscribe(x => playerGroupId = x);
     const patchedCriteria = FilterCriteria.patchValues(criteria, {
       playerGroups: [playerGroupId],
     });

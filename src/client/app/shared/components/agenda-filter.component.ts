@@ -25,7 +25,7 @@ export class AgendaFilterComponent implements OnChanges {
     this.agendas$ = store.select(fromRoot.getAgendasList);
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes?: any) {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
