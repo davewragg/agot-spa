@@ -172,6 +172,13 @@ export class DataService {
       .catch(this.handleError.bind(this));
   }
 
+  getPlayer(playerId: string): Observable<Player> {
+    console.log('getPlayer called');
+    return this.http.get(this.baseUrl + `api/players/get/${playerId}`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
   getPlayers(criteria: FilterCriteria): Observable<Player[]> {
     console.log('getPlayers called');
     const playerGroup = (criteria && criteria.playerGroupIds[0]) || 1; // TODO cough
