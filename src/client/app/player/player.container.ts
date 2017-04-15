@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import * as fromRoot from '../state-management/reducers/root';
-import * as player from '../state-management/actions/player.actions';
+import * as playerActions from '../state-management/actions/player.actions';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class ViewPlayerPageComponent implements OnDestroy {
         const criteria = FilterCriteria.deserialise(params);
         return { playerId: id, criteria };
       })
-      .map(payload => new player.SelectAction(payload))
+      .map(payload => new playerActions.SetSelectAction(payload))
       .subscribe(store);
   }
 

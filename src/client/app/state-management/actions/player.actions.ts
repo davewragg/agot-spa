@@ -7,6 +7,7 @@ import { PlayerStats } from '../../shared/models/player-stats.model';
 export const ActionTypes = {
   GET_FOR_GROUP_COMPLETE: type('[Player] Get for Player Group Complete'),
   LOAD: type('[Player] Load'),
+  SET_SELECT: type('[Player] Set Select'),
   SELECT: type('[Player] Select'),
   SELECT_COMPLETE: type('[Player] Select Complete'),
 };
@@ -22,6 +23,13 @@ export class LoadAction implements Action {
   type = ActionTypes.LOAD;
 
   constructor(public payload: Player) {
+  }
+}
+
+export class SetSelectAction implements Action {
+  type = ActionTypes.SET_SELECT;
+
+  constructor(public payload: { playerId: string, criteria: FilterCriteria }) {
   }
 }
 
@@ -46,5 +54,6 @@ export class SelectCompleteAction implements Action {
 export type Actions
   = GetForGroupCompleteAction
   | LoadAction
+  | SetSelectAction
   | SelectAction
   | SelectCompleteAction;

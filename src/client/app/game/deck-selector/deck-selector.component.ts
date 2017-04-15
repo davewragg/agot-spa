@@ -65,7 +65,7 @@ export class DeckSelectorComponent implements OnInit {
   }
 
   onImportedDeckSelect(deck: Deck) {
-    this.deckService.getDeckBy('thronesDbId', deck.thronesDbId).subscribe(
+    this.deckService.getDeckBy('thronesDbId', deck.thronesDbId).take(1).subscribe(
       (existingDeck: Deck) => {
         if (existingDeck) {
           this.notificationService.warn('Already imported', 'Deck has already been imported, selecting existing');
