@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { cloneDeep, first, chain } from 'lodash';
+import { cloneDeep, first, chain, values } from 'lodash';
+import { Store } from '@ngrx/store';
 import { GameService } from './game.service';
-import { ReferenceDataService } from './reference-data.service';
+import { CacheService } from './cache.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Game } from '../models/game.model';
 import { DeckStats } from '../models/deck-stats.model';
@@ -16,13 +17,13 @@ import { DeckClass } from '../models/deck-class.model';
 import { Stats } from '../models/stats.model';
 import { PlayerInsights } from '../models/player-insights.model';
 import { DeckClassStats } from '../models/deck-class-stats.model';
-import { CacheService } from './cache.service';
 import { DateRangeType } from '../models/date-range-type.model';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Injectable()
 export class StatsService {
-  private _factions: Faction[];
-  private _agendas: Agenda[];
+  private _agendas: { [id: number]: Agenda };
+  private _factions: { [id: number]: Faction };
 
   static getResultForPlayer(game: Game, playerId: string): Result {
     const winner: GamePlayer = game.gamePlayers.find((gamePlayer: GamePlayer) => gamePlayer.isWinner);
@@ -68,10 +69,10 @@ export class StatsService {
   }
 
   constructor(private gameService: GameService,
-              private _referenceDataService: ReferenceDataService,
+              private store: Store<fromRoot.State>,
               private cacheService: CacheService) {
-    _referenceDataService.factions.subscribe((factions) => this._factions = factions);
-    _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
+    this.store.select(fromRoot.getAgendas).subscribe(x => this._agendas = x);
+    this.store.select(fromRoot.getFactions).subscribe(x => this._factions = x);
   }
 
   getTimelineSortedGames(games: Game[]): any[] {
@@ -284,11 +285,11 @@ export class StatsService {
   }
 
   private filterOutPlayedFactions(factionsMap: Map<number, Stats>): Faction[] {
-    return <Faction[]>this.filterPlayed(this._factions, factionsMap, 'factionId');
+    return <Faction[]>this.filterPlayed(values(this._factions), factionsMap, 'factionId');
   }
 
   private filterOutPlayedAgendas(agendasMap: Map<number, Stats>): Agenda[] {
-    return <Agenda[]>this.filterPlayed(this._agendas, agendasMap, 'agendaId');
+    return <Agenda[]>this.filterPlayed(values(this._agendas), agendasMap, 'agendaId');
   }
 
   private filterPlayed(allValues: Array<any>, playedValuesMap: Map<number, Stats>, idField: string) {
@@ -300,17 +301,14 @@ export class StatsService {
     return allValuesCopy;
   }
 
-  // TODO legacy sticking plaster
   private getFaction(factionId: number): Faction {
-    return this._factions.find((faction) => faction.factionId === factionId);
+    return this._factions[factionId];
   }
 
-  // TODO legacy sticking plaster
   private getAgenda(agendaId: number): Agenda {
-    return this._agendas.find((agenda) => agenda.agendaId === agendaId);
+    return this._agendas[agendaId];
   }
 
-  // TODO legacy sticking plaster
   private getDeckClass(deckClassId: number): DeckClass {
     const ids = DeckClass.getFactionAndAgendaId(deckClassId);
     return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));
