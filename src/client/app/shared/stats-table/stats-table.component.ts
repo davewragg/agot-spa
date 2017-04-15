@@ -1,12 +1,11 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { ReferenceDataService } from '../services/reference-data.service';
-import { PlayerService } from '../services/player.service';
+import { Store } from '@ngrx/store';
 import { Faction } from '../models/faction.model';
 import { Player } from '../models/player.model';
 import { Agenda } from '../models/agenda.model';
 import { DeckClass } from '../models/deck-class.model';
 import { StatsSet } from '../models/stats-set.model';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
@@ -20,22 +19,32 @@ export class StatsTableComponent {
   @Input()
   statsSet: StatsSet;
 
-  constructor(private _referenceDataService: ReferenceDataService, private _playerService: PlayerService) {
+  players: { [id: string]: Player };
+  agendas: { [id: number]: Agenda };
+  factions: { [id: number]: Faction };
+
+  constructor(private store: Store<fromRoot.State>) {
+    this.store.select(fromRoot.getPlayerEntities).subscribe(x => this.players = x);
+    this.store.select(fromRoot.getAgendas).subscribe(x => this.agendas = x);
+    this.store.select(fromRoot.getFactions).subscribe(x => this.factions = x);
   }
 
-  getFaction(factionId: number): Observable<Faction> {
-    return this._referenceDataService.getFaction(factionId);
+  getFaction(factionId: number): Faction {
+    return this.factions[factionId];
   }
 
-  getAgenda(agendaId: number): Observable<Agenda> {
-    return this._referenceDataService.getAgenda(agendaId);
+  getAgenda(agendaId: number): Agenda {
+    return this.agendas[agendaId];
   }
 
-  getPlayer(playerId: string): Observable<Player> {
-    return this._playerService.getPlayer(playerId);
+  getPlayer(playerId: string): Player {
+    return this.players[playerId];
   }
 
-  getDeckClass(deckClassId: number): Observable<DeckClass> {
-    return this._referenceDataService.getDeckClass(deckClassId);
+  getDeckClass(deckClassId: number): DeckClass {
+    const ids = DeckClass.getFactionAndAgendaId(deckClassId);
+    const faction = this.getFaction(ids.factionId);
+    const agenda = this.getAgenda(ids.agendaId);
+    return new DeckClass(faction, agenda);
   }
 }

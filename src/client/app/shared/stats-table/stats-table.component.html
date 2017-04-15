@@ -15,7 +15,7 @@
   </tr>
   <tr *ngFor="let entry of statsSet?.players?.entries()">
     <td>
-      <agot-player-link [player]="getPlayer(entry[0]) | async"></agot-player-link>
+      <agot-player-link [player]="getPlayer(entry[0])"></agot-player-link>
     </td>
     <td>{{ entry[1].played }}</td>
     <td>{{ entry[1].won }}</td>
@@ -28,7 +28,7 @@
   </tr>
   <tr *ngFor="let entry of statsSet?.deckClass?.entries()">
     <td>
-      <agot-deck-class-badge [deckClass]="getDeckClass(entry[0]) | async"></agot-deck-class-badge>
+      <agot-deck-class-badge [deckClass]="getDeckClass(entry[0])"></agot-deck-class-badge>
     </td>
     <td>{{ entry[1].played }}</td>
     <td>{{ entry[1].won }}</td>
@@ -41,7 +41,7 @@
   </tr>
   <tr *ngFor="let entry of statsSet?.factions?.entries()">
     <td>
-      <agot-faction-badge [faction]="getFaction(entry[0]) | async"></agot-faction-badge>
+      <agot-faction-badge [faction]="getFaction(entry[0])"></agot-faction-badge>
     </td>
     <td>{{ entry[1].played }}</td>
     <td>{{ entry[1].won }}</td>
@@ -54,7 +54,7 @@
   </tr>
   <tr *ngFor="let entry of statsSet?.agendas?.entries()">
     <td>
-      <agot-agenda-badge [agenda]="getAgenda(entry[0]) | async"></agot-agenda-badge>
+      <agot-agenda-badge [agenda]="getAgenda(entry[0])"></agot-agenda-badge>
     </td>
     <td>{{ entry[1].played }}</td>
     <td>{{ entry[1].won }}</td>
