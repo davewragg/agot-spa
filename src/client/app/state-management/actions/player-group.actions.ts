@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { PlayerGroup } from '../../shared/models/player-group.model';
+import { Deck } from '../../shared/models/deck.model';
 
 /**
  * For each action type in an action group, make a simple

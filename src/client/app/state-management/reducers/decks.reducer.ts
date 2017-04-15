@@ -7,6 +7,7 @@ import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 
 export interface State {
   ids: number[];
+  groupIds: number[];
   entities: { [id: number]: Deck };
   selectedDeckId: number;
   loading: boolean;
@@ -19,6 +20,7 @@ export interface State {
 
 const initialState: State = {
   ids: [],
+  groupIds: [],
   entities: {},
   selectedDeckId: null,
   loading: false,
@@ -61,6 +63,23 @@ export function reducer(state = initialState, action: deckActions.Actions | game
 
       return Object.assign({}, state, {
         ids: decks.map(deck => deck.deckId),
+        entities: Object.assign({}, state.entities, newDeckEntities),
+        loading: false,
+      });
+    }
+    case deckActions.ActionTypes.LOAD_FOR_GROUP: {
+      const decks = action.payload;
+      const newDecks = decks.filter(deck => !state.entities[deck.deckId]);
+
+      // const newDeckIds = newDecks.map(deck => deck.deckId);
+      const newDeckEntities = newDecks.reduce((entities: { [id: string]: Deck }, deck: Deck) => {
+        return Object.assign(entities, {
+          [deck.deckId]: deck
+        });
+      }, {});
+
+      return Object.assign({}, state, {
+        groupIds: decks.map(deck => deck.deckId),
         entities: Object.assign({}, state.entities, newDeckEntities),
         loading: false,
       });
@@ -171,6 +190,7 @@ export function reducer(state = initialState, action: deckActions.Actions | game
 export const getEntities = (state: State) => state.entities;
 
 export const getIds = (state: State) => state.ids;
+export const getGroupIds = (state: State) => state.groupIds;
 
 export const getSelectedId = (state: State) => state.selectedDeckId;
 
@@ -180,6 +200,10 @@ export const getLoading = (state: State) => state.loading;
 
 export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
   return entities[selectedId];
+});
+
+export const getGroupDecks = createSelector(getEntities, getGroupIds, (entities, ids) => {
+  return ids.map(id => entities[id]);
 });
 
 export const getDeckForEdit = (state: State) => state.deckToEdit.deck;

@@ -18,10 +18,13 @@ export class DeckService {
     return this.getDecks(criteria);
   }
 
-  getDeckBy(field: string, value: string | number): Observable<Deck> {
-    const criteria = new FilterCriteria();
-    criteria[field] = value;
-    return this.getDecks(criteria).map((([deck]) => deck));
+  getDecksBy(config: Object): Observable<Deck[]> {
+    const criteria = FilterCriteria.patchValues(undefined, config);
+    return this.getDecks(criteria);
+  }
+
+  getDeckBy(config: Object): Observable<Deck> {
+    return this.getDecksBy(config).map(([deck]) => deck);
   }
 
   getDeck(deckId: number): Observable<Deck> {

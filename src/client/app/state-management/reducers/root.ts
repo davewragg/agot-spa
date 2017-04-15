@@ -146,13 +146,11 @@ export const getDecksLoading = createSelector(getDecksState, fromDecks.getLoadin
 export const getDeckEntities = createSelector(getDecksState, fromDecks.getEntities);
 export const getFilteredDecks = createSelector(getDeckEntities, getFilteredDeckIds,
   (decks, searchIds) => searchIds.map(id => decks[id]));
-export const getAllDecks = createSelector(getDeckEntities, (decks) => {
-  // relies on all deck entities having been loaded on boot
-  return values(decks);
-});
-export const getGroupDecks = createSelector(getAllDecks, getGroupPlayerIds, (decks, playerIds) => {
-  return decks.filter((deck: Deck) => playerIds.includes(deck.creatorId));
-});
+// export const getAllDecks = createSelector(getDeckEntities, (decks) => {
+//   // relies on all deck entities having been loaded on boot
+//   return values(decks);
+// });
+export const getGroupDecks = createSelector(getDecksState, fromDecks.getGroupDecks);
 // export const getSelectedDeckId = createSelector(getDecksState, fromDecks.getSelectedId);
 export const getSelectedDeck = createSelector(getDecksState, fromDecks.getSelected);
 

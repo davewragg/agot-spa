@@ -25,6 +25,7 @@ export const ActionTypes = {
   SAVE_UPDATED_FAILURE: type('[Deck] Save failure'),
   SELECT: type('[Deck] Select'),
   SELECT_COMPLETE: type('[Deck] Select Complete'),
+  LOAD_FOR_GROUP: type('[Deck] Load for Group'),
 };
 
 /**
@@ -118,6 +119,13 @@ export class SelectCompleteAction implements Action {
   }
 }
 
+export class LoadForGroupAction implements Action {
+  type = ActionTypes.LOAD_FOR_GROUP;
+
+  constructor(public payload: Deck[]) {
+  }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -134,4 +142,5 @@ export type Actions
   | SaveUpdateCompleteAction
   | SaveUpdateFailureAction
   | SelectAction
-  | SelectCompleteAction;
+  | SelectCompleteAction
+  | LoadForGroupAction;

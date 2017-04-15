@@ -7,10 +7,10 @@
     <input type="radio" name="showAllDecks" value="true" autocomplete="off"
            (change)="setShowDecks(viewDecksType.GROUP)"> Player Group ({{ (groupDecks$ | async)?.length }})
   </label>
-  <label class="btn btn-outline-secondary" [class.active]="showDecksFor === viewDecksType.EVERYONE">
-    <input type="radio" name="showAllDecks" value="true" autocomplete="off"
-           (change)="setShowDecks(viewDecksType.EVERYONE)"> All ({{ (allDecks$ | async)?.length }})
-  </label>
+  <!--<label class="btn btn-outline-secondary" [class.active]="showDecksFor === viewDecksType.EVERYONE">-->
+    <!--<input type="radio" name="showAllDecks" value="true" autocomplete="off"-->
+           <!--(change)="setShowDecks(viewDecksType.EVERYONE)"> All ({{ (allDecks$ | async)?.length }})-->
+  <!--</label>-->
 </div>
 <!--my decks selector-->
 <div *ngIf="showDecksFor === viewDecksType.ME" class="form-group">
@@ -25,8 +25,8 @@
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <!--all decks selector-->
-<div *ngIf="showDecksFor === viewDecksType.EVERYONE" class="form-group">
-  <agot-deck-chooser [decks]="allDecks$ | async" [isLoading]="loading$ | async"
-                     [existingDeck]="existingDeck"
-                     (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
-</div>
+<!--<div *ngIf="showDecksFor === viewDecksType.EVERYONE" class="form-group">-->
+  <!--<agot-deck-chooser [decks]="allDecks$ | async" [isLoading]="loading$ | async"-->
+                     <!--[existingDeck]="existingDeck"-->
+                     <!--(selectDeck)="onDeckSelect($event)"></agot-deck-chooser>-->
+<!--</div>-->

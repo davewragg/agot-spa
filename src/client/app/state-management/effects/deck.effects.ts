@@ -14,6 +14,7 @@ import { Agenda } from '../../shared/models/agenda.model';
 import { Faction } from '../../shared/models/faction.model';
 import * as deckActions from '../actions/deck.actions';
 import * as gameActions from '../actions/game.actions';
+import * as playerGroupActions from '../actions/player-group.actions';
 import * as fromRoot from '../reducers/root';
 
 @Injectable()
@@ -59,6 +60,21 @@ export class DeckEffects {
         .takeUntil(nextSearch$)
         .map(decks => new deckActions.FilterCompleteAction(decks))
         .catch(() => of(new deckActions.FilterCompleteAction([])));
+    });
+
+  @Effect()
+  getForPlayerGroup$: Observable<Action> = this.actions$
+    .ofType(playerGroupActions.ActionTypes.SELECT)
+    .map((action: playerGroupActions.SelectAction) => action.payload)
+    .switchMap(playerGroupId => {
+      const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.EDIT_PLAYER).skip(1);
+
+      return this.deckService.getDecksBy({
+        playerGroupId,
+      })
+        .takeUntil(nextSearch$)
+        .map(decks => new deckActions.LoadForGroupAction(decks))
+        .catch(() => of(new deckActions.LoadForGroupAction([])));
     });
 
   @Effect()

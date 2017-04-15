@@ -24,13 +24,13 @@ export class ExistingDeckSelectorComponent implements OnInit {
 
   myDecks$: Observable<Deck[]>;
   groupDecks$: Observable<Deck[]>;
-  allDecks$: Observable<Deck[]>;
+  // allDecks$: Observable<Deck[]>;
   loading$: Observable<boolean>;
 
   constructor(private store: Store<fromRoot.State>) {
     this.myDecks$ = store.select(fromRoot.getFilteredDecks);
     this.groupDecks$ = store.select(fromRoot.getGroupDecks);
-    this.allDecks$ = store.select(fromRoot.getAllDecks);
+    // this.allDecks$ = store.select(fromRoot.getAllDecks);
     this.loading$ = store.select(fromRoot.getDecksLoading);
   }
 
@@ -38,7 +38,7 @@ export class ExistingDeckSelectorComponent implements OnInit {
     // check whether we have a deck already, and whether it's mine
     const creatorId = get(this.existingDeck, 'creatorId');
     if (creatorId && creatorId !== this.playerId) {
-      this.showDecksFor = ViewDecksType.EVERYONE;
+      this.showDecksFor = ViewDecksType.GROUP;
     }
   }
 

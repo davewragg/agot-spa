@@ -17,7 +17,7 @@ export class FilterCriteria {
   playerGroupIds: number[] = [];
   [key: string]: string | boolean | string[] | number[] | DateRangeType;
 
-  static patchValues(source: FilterCriteria, changes: any) {
+  static patchValues(source: FilterCriteria = new FilterCriteria(), changes: any) {
     const updatedCriteria: FilterCriteria = merge({}, source, changes);
 
     return FilterCriteria.NUMBER_ARRAY_PARAM_KEYS
