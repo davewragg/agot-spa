@@ -15,18 +15,24 @@
 <!--my decks selector-->
 <div *ngIf="showDecksFor === viewDecksType.ME" class="form-group">
   <agot-deck-chooser [decks]="myDecks$ | async" [isLoading]="loading$ | async"
-                     [existingDeck]="existingDeck"
+                     [existingDeck]="chosenDeck"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <!--group decks selector-->
 <div *ngIf="showDecksFor === viewDecksType.GROUP" class="form-group">
   <agot-deck-chooser [decks]="groupDecks$ | async" [isLoading]="loading$ | async"
-                     [existingDeck]="existingDeck"
+                     [existingDeck]="chosenDeck"
                      (selectDeck)="onDeckSelect($event)"></agot-deck-chooser>
 </div>
 <!--all decks selector-->
 <!--<div *ngIf="showDecksFor === viewDecksType.EVERYONE" class="form-group">-->
   <!--<agot-deck-chooser [decks]="allDecks$ | async" [isLoading]="loading$ | async"-->
-                     <!--[existingDeck]="existingDeck"-->
+                     <!--[existingDeck]="chosenDeck"-->
                      <!--(selectDeck)="onDeckSelect($event)"></agot-deck-chooser>-->
 <!--</div>-->
+
+<div class="form-group">
+  <button type="button" (click)="onConfirm()" class="btn btn-success" [disabled]="!chosenDeck">
+    Set Deck
+  </button>
+</div>

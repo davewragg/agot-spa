@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/observable';
-import { get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import { Deck } from '../../shared/models/deck.model';
 import * as fromRoot from '../../state-management/reducers/root';
 
@@ -14,8 +14,12 @@ import * as fromRoot from '../../state-management/reducers/root';
 export class ExistingDeckSelectorComponent implements OnInit {
   @Input()
   playerId: string;
+
   @Input()
-  existingDeck: Deck;
+  set existingDeck(deck: Deck) {
+    this.chosenDeck = cloneDeep(deck);
+  }
+
   @Output()
   selectDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
 
@@ -26,6 +30,8 @@ export class ExistingDeckSelectorComponent implements OnInit {
   groupDecks$: Observable<Deck[]>;
   // allDecks$: Observable<Deck[]>;
   loading$: Observable<boolean>;
+
+  chosenDeck: Deck;
 
   constructor(private store: Store<fromRoot.State>) {
     this.myDecks$ = store.select(fromRoot.getFilteredDecks);
@@ -48,10 +54,14 @@ export class ExistingDeckSelectorComponent implements OnInit {
 
   onDeckSelect(deck: Deck) {
     console.log(deck);
-    this.selectDeck.emit(deck);
+    this.chosenDeck = deck;
+  }
+
+  onConfirm() {
+    this.selectDeck.emit(this.chosenDeck);
   }
 }
 
 enum ViewDecksType {
-  ME, GROUP, EVERYONE
+  ME, GROUP/*, EVERYONE*/
 }

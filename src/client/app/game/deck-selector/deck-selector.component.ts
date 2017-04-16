@@ -56,12 +56,8 @@ export class DeckSelectorComponent implements OnInit {
     this.deckSelection = deckSelectionType;
   }
 
-  onExistingDeckUpdate(deck: Deck) {
-    this.existingDeck = deck;
-  }
-
-  onExistingDeckSelect() {
-    this.updateDeck.emit({ deck: this.existingDeck, version: this.deckVersion });
+  onExistingDeckSelect(deck: Deck) {
+    this.updateDeck.emit({ deck: deck, version: this.deckVersion });
   }
 
   onImportedDeckSelect(deck: Deck) {
@@ -73,7 +69,7 @@ export class DeckSelectorComponent implements OnInit {
           this.notificationService.warn('Already imported', 'Deck has already been imported, selecting existing');
           console.warn('Deck has already been imported', deck, existingDeck);
           this.existingDeck = existingDeck;
-          this.onExistingDeckSelect();
+          this.onExistingDeckSelect(deck);
         } else {
           this.selectNewDeck(deck);
         }
