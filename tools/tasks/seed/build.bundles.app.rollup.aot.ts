@@ -22,23 +22,9 @@ const config = {
     nodeResolve({
       jsnext: true, main: true, module: true
     }),
-    commonjs({
-      include: 'node_modules/**',
-      // TODO until commonjs plugin is updated
-      namedExports: {
-        'node_modules/date-fns/index.js': [
-          'endOfDay',
-          'format',
-          'startOfQuarter',
-          'endOfQuarter',
-          'differenceInMinutes',
-          'distanceInWordsToNow',
-          'subDays',
-          'startOfDay',
-        ],
-        'node_modules/lodash/lodash.js': Object.keys(require('lodash')), // TODO get specific
-        'node_modules/angular2-highcharts/index.js': Object.keys(require('angular2-highcharts'))
-      }
+    commonjs({ //See project.config.ts to extend
+      include: Config.ROLLUP_INCLUDE_DIR,
+      namedExports: Config.getRollupNamedExports()
     })
   ]
 };
