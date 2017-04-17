@@ -15,7 +15,7 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: game.Actions): State {
   switch (action.type) {
-    case game.ActionTypes.FILTER: {
+    case game.FILTER: {
       const criteria = action.payload;
 
       if (!criteria) {
@@ -32,7 +32,7 @@ export function reducer(state = initialState, action: game.Actions): State {
       });
     }
 
-    case game.ActionTypes.FILTER_COMPLETE: {
+    case game.FILTER_COMPLETE: {
       const games = action.payload;
 
       return {

@@ -30,7 +30,7 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: gameActions.Actions): State {
   switch (action.type) {
-    case gameActions.ActionTypes.FILTER_COMPLETE: {
+    case gameActions.FILTER_COMPLETE: {
       const games = action.payload;
       const newGames = games.filter(game => !state.entities[game.gameId]);
 
@@ -47,7 +47,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.LOAD: {
+    case gameActions.LOAD: {
       const game = action.payload;
 
       if (state.ids.indexOf(game.gameId) > -1) {
@@ -62,13 +62,13 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.SELECT: {
+    case gameActions.SELECT: {
       return Object.assign({}, state, {
         selectedGameId: action.payload
       });
     }
 
-    case gameActions.ActionTypes.DELETE_COMPLETE: {
+    case gameActions.DELETE_COMPLETE: {
       const game = action.payload;
       const newEntities = Object.assign({}, state.entities);
       // TODO confirm this works (and is necessary)
@@ -81,7 +81,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.CREATE_NEW: {
+    case gameActions.CREATE_NEW: {
       return Object.assign({}, state, {
         loading: false,
         gameToEdit: {
@@ -92,7 +92,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.SELECT_FOR_EDIT: {
+    case gameActions.SELECT_FOR_EDIT: {
       const gameCopy = cloneDeep(state.entities[action.payload]);
       return Object.assign({}, state, {
         loading: false,
@@ -104,13 +104,13 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.SAVE_UPDATED: {
+    case gameActions.SAVE_UPDATED: {
       return Object.assign({}, state, {
         loading: true,
       });
     }
 
-    case gameActions.ActionTypes.SAVE_UPDATED_COMPLETE: {
+    case gameActions.SAVE_UPDATED_COMPLETE: {
       return Object.assign({}, state, {
         loading: false,
         gameToEdit: {
@@ -121,13 +121,13 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.SAVE_UPDATED_FAILURE: {
+    case gameActions.SAVE_UPDATED_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
       });
     }
 
-    case gameActions.ActionTypes.UPDATE_COMPLETE: {
+    case gameActions.UPDATE_COMPLETE: {
       const changes = action.payload;
       return Object.assign({}, state, {
         loading: false,
@@ -139,7 +139,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.SET_WINNER: {
+    case gameActions.SET_WINNER: {
       const winner = action.payload;
       const gamePlayers = state.gameToEdit.game.gamePlayers;
       const updatePlayers = gamePlayers.map((gamePlayer: GamePlayer) =>
@@ -159,7 +159,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.ADD_PLAYER: {
+    case gameActions.ADD_PLAYER: {
       let player = action.payload;
       const gamePlayers = state.gameToEdit.game.gamePlayers;
       const gamePlayer = GamePlayer.patchValues(new GamePlayer(), {
@@ -183,7 +183,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
   }
 
-    case gameActions.ActionTypes.EDIT_PLAYER: {
+    case gameActions.EDIT_PLAYER: {
       const player = action.payload;
       return Object.assign({}, state, {
         gameToEdit: {
@@ -194,7 +194,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.CANCEL_EDIT_PLAYER: {
+    case gameActions.CANCEL_EDIT_PLAYER: {
       return Object.assign({}, state, {
         gameToEdit: {
           game: state.gameToEdit.game,
@@ -204,7 +204,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.UPDATE_PLAYER: {
+    case gameActions.UPDATE_PLAYER: {
       let player = action.payload;
       const gamePlayers = state.gameToEdit.game.gamePlayers;
       const index = findIndex(gamePlayers, { playerId: player.playerId });
@@ -225,7 +225,7 @@ export function reducer(state = initialState, action: gameActions.Actions): Stat
       });
     }
 
-    case gameActions.ActionTypes.REMOVE_PLAYER: {
+    case gameActions.REMOVE_PLAYER: {
       const player = action.payload;
       const gamePlayers = state.gameToEdit.game.gamePlayers;
       const changes = {

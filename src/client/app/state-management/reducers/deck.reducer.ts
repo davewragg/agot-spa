@@ -15,14 +15,14 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: deckActions.Actions): State {
   switch (action.type) {
-    case deckActions.ActionTypes.SELECT: {
+    case deckActions.SELECT: {
       return Object.assign({}, state, {
         selectedDeckId: action.payload,
         loading: true,
         deckStats: state.deckStats,
       });
     }
-    case deckActions.ActionTypes.SELECT_COMPLETE: {
+    case deckActions.SELECT_COMPLETE: {
       const stats = action.payload;
 
       return Object.assign({}, state, {

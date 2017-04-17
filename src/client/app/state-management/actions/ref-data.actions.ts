@@ -1,37 +1,34 @@
 import { Action } from '@ngrx/store';
-import { type } from '../util';
 import { Faction } from '../../shared/models/faction.model';
 import { Agenda } from '../../shared/models/agenda.model';
 import { Venue } from '../../shared/models/venue.model';
 import { Season } from '../../shared/models/season.model';
 
-export const ActionTypes = {
-  LOAD: type('[RefData] Load'),
-  LOAD_SUCCESS: type('[RefData] Load Success'),
-  LOAD_FAIL: type('[RefData] Load Fail'),
-};
+export const LOAD = '[RefData] Load';
+export const LOAD_SUCCESS = '[RefData] Load Success';
+export const LOAD_FAIL = '[RefData] Load Fail';
 
 /**
  * Load RefData Actions
  */
 export class LoadAction implements Action {
-  type = ActionTypes.LOAD;
+  readonly type = LOAD;
 }
 
 export class LoadSuccessAction implements Action {
-  type = ActionTypes.LOAD_SUCCESS;
+  readonly type = LOAD_SUCCESS;
 
   constructor(public payload: [
-    Faction[],
-    Agenda[],
-    Venue[],
-    Season[]
-    ]) {
+                Faction[],
+                Agenda[],
+                Venue[],
+                Season[]
+                ]) {
   }
 }
 
 export class LoadFailAction implements Action {
-  type = ActionTypes.LOAD_FAIL;
+  readonly type = LOAD_FAIL;
 
   constructor(public payload: any) {
   }

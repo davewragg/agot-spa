@@ -21,11 +21,11 @@ import * as fromRoot from '../reducers/root';
 export class DeckEffects {
   @Effect()
   setDates$: Observable<Action> = this.actions$
-    .ofType(deckActions.ActionTypes.SET_FILTER)
+    .ofType(deckActions.SET_FILTER)
     .debounceTime(300)
     .map((action: deckActions.SetFilterAction) => action.payload)
     .switchMap(criteria => {
-      const nextSearch$ = this.actions$.ofType(deckActions.ActionTypes.SET_FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(deckActions.SET_FILTER).skip(1);
 
       return of(this.dateService.setDatesFromRangeType(criteria))
         .takeUntil(nextSearch$)
@@ -36,12 +36,12 @@ export class DeckEffects {
   // TODO need to wait for players to load? what about players who aren't loaded?
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(deckActions.ActionTypes.FILTER)
+    .ofType(deckActions.FILTER)
     // .debounceTime(300)
     // .startWith(new deckActions.FilterAction(null)) // load all decks from the off (!?)
     .map((action: deckActions.FilterAction) => action.payload)
     .switchMap(criteria => {
-      const nextSearch$ = this.actions$.ofType(deckActions.ActionTypes.FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(deckActions.FILTER).skip(1);
 
       return this.deckService.getDecks(criteria)
         .takeUntil(nextSearch$)
@@ -51,10 +51,10 @@ export class DeckEffects {
 
   @Effect()
   getForPlayer$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.ADD_PLAYER, gameActions.ActionTypes.EDIT_PLAYER)
+    .ofType(gameActions.ADD_PLAYER, gameActions.EDIT_PLAYER)
     .map((action: gameActions.EditPlayerAction) => action.payload)
     .switchMap(player => {
-      const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.EDIT_PLAYER).skip(1);
+      const nextSearch$ = this.actions$.ofType(gameActions.EDIT_PLAYER).skip(1);
 
       return this.deckService.getDecksFor(player.playerId)
         .takeUntil(nextSearch$)
@@ -64,10 +64,10 @@ export class DeckEffects {
 
   @Effect()
   getForPlayerGroup$: Observable<Action> = this.actions$
-    .ofType(playerGroupActions.ActionTypes.SELECT)
+    .ofType(playerGroupActions.SELECT)
     .map((action: playerGroupActions.SelectAction) => action.payload)
     .switchMap(playerGroupId => {
-      const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.EDIT_PLAYER).skip(1);
+      const nextSearch$ = this.actions$.ofType(gameActions.EDIT_PLAYER).skip(1);
 
       return this.deckService.getDecksBy({
         playerGroupId,
@@ -79,7 +79,7 @@ export class DeckEffects {
 
   @Effect()
   updateDeck$: Observable<Action> = this.actions$
-    .ofType(deckActions.ActionTypes.UPDATE)
+    .ofType(deckActions.UPDATE)
     .map((action: deckActions.UpdateAction) => action.payload)
     .map(deck => {
         const populatedDeck = this.populateDeck(deck);
@@ -89,7 +89,7 @@ export class DeckEffects {
 
   @Effect()
   saveUpdatedDeck$: Observable<Action> = this.actions$
-    .ofType(deckActions.ActionTypes.SAVE_UPDATED)
+    .ofType(deckActions.SAVE_UPDATED)
     .map((action: deckActions.SaveUpdateAction) => action.payload)
     .mergeMap(deck =>
       this.deckService.updateDeck(deck)
@@ -99,13 +99,13 @@ export class DeckEffects {
 
   @Effect()
   saveUpdatedDeckSuccess$: Observable<Action> = this.actions$
-    .ofType(deckActions.ActionTypes.SAVE_UPDATED_COMPLETE)
+    .ofType(deckActions.SAVE_UPDATED_COMPLETE)
     .map((action: deckActions.SaveUpdateCompleteAction) => action.payload)
     .map(deck => go(['decks', deck.deckId]));
 
   @Effect({ dispatch: false })
   saveUpdatedDeckError$ = this.actions$
-    .ofType(deckActions.ActionTypes.SAVE_UPDATED_FAILURE)
+    .ofType(deckActions.SAVE_UPDATED_FAILURE)
     .map((action: deckActions.SaveUpdateFailureAction) => action.payload)
     .do(error =>
       // TODO check error code for 403 here and admonish
@@ -114,7 +114,7 @@ export class DeckEffects {
 
   @Effect()
   getStats$: Observable<Action> = this.actions$
-    .ofType(deckActions.ActionTypes.SELECT)
+    .ofType(deckActions.SELECT)
     // .debounceTime(300)
     .map((action: deckActions.SelectAction) => action.payload)
     .switchMap(deckId => {
@@ -122,7 +122,7 @@ export class DeckEffects {
         return empty();
       }
 
-      const nextStats$ = this.actions$.ofType(deckActions.ActionTypes.SELECT).skip(1);
+      const nextStats$ = this.actions$.ofType(deckActions.SELECT).skip(1);
 
       return this.statsService.getDeckStats(deckId)
         .takeUntil(nextStats$)

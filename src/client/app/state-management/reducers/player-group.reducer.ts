@@ -16,7 +16,7 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: playerGroupActions.Actions): State {
   switch (action.type) {
-    case playerGroupActions.ActionTypes.FILTER_COMPLETE: {
+    case playerGroupActions.FILTER_COMPLETE: {
       const playerGroups = action.payload;
       const newPlayerGroups = playerGroups.filter(playerGroup => !state.entities[playerGroup.id]);
 
@@ -33,7 +33,7 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
       });
     }
 
-    case playerGroupActions.ActionTypes.LOAD: {
+    case playerGroupActions.LOAD: {
       const playerGroup = action.payload;
 
       if (state.ids.indexOf(playerGroup.id) > -1) {
@@ -48,7 +48,7 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
       });
     }
 
-    case playerGroupActions.ActionTypes.SELECT: {
+    case playerGroupActions.SELECT: {
       return Object.assign({}, state, {
         selectedPlayerGroupId: action.payload
       });

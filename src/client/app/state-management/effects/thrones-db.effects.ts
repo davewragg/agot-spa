@@ -11,7 +11,7 @@ import { ThronesDbService } from '../../shared/services/thrones-db.service';
 export class ThronesDbEffects {
   @Effect()
   importDeck$: Observable<Action> = this.actions$
-    .ofType(thronesDbActions.ActionTypes.IMPORT_DECK)
+    .ofType(thronesDbActions.IMPORT_DECK)
     .map((action: thronesDbActions.ImportDeckAction) => action.payload)
     .mergeMap(thronesDbId =>
       this.thronesDbService.importAndConvertThronesDbDeck(thronesDbId)
@@ -21,7 +21,7 @@ export class ThronesDbEffects {
 
   @Effect({ dispatch: false })
   importDeckError$ = this.actions$
-    .ofType(thronesDbActions.ActionTypes.IMPORT_DECK_FAILURE)
+    .ofType(thronesDbActions.IMPORT_DECK_FAILURE)
     .map((action: thronesDbActions.ImportDeckFailureAction) => action.payload)
     .do(error =>
       // TODO check error code for 403 here and admonish

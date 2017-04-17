@@ -15,12 +15,12 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: currentPlayerActions.Actions): State {
   switch (action.type) {
-    case currentPlayerActions.ActionTypes.LOAD: {
+    case currentPlayerActions.LOAD: {
       return Object.assign({}, state, {
         loading: true,
       });
     }
-    case currentPlayerActions.ActionTypes.LOAD_COMPLETE: {
+    case currentPlayerActions.LOAD_COMPLETE: {
       const player = action.payload;
       const ids = player.playerGroups.map(x => x.id);
 

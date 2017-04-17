@@ -10,7 +10,7 @@ import * as playerGroup from '../actions/player-group.actions';
 export class PlayerGroupEffects {
   @Effect()
   loadSelected$: Observable<Action> = this.actions$
-    .ofType(playerGroup.ActionTypes.GET_SELECTED)
+    .ofType(playerGroup.GET_SELECTED)
     .startWith(new playerGroup.GetSelectedAction())
     .switchMap(() => {
 
@@ -20,7 +20,7 @@ export class PlayerGroupEffects {
 
   @Effect({ dispatch: false })
   setSelected$ = this.actions$
-    .ofType(playerGroup.ActionTypes.SELECT)
+    .ofType(playerGroup.SELECT)
     .map((action: playerGroup.SelectAction) => action.payload)
     .do((selectedPlayerGroupId) => {
       return this.playerGroupService.setSelectedPlayerGroupId(selectedPlayerGroupId);
@@ -28,11 +28,11 @@ export class PlayerGroupEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(playerGroup.ActionTypes.FILTER)
+    .ofType(playerGroup.FILTER)
     .startWith(new playerGroup.FilterAction(null))
     .map((action: playerGroup.FilterAction) => action.payload)
     .switchMap(() => { // TODO filter some day?
-      const nextSearch$ = this.actions$.ofType(playerGroup.ActionTypes.FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(playerGroup.FILTER).skip(1);
 
       return this.playerGroupService.getPlayerGroups() // TODO filter
         .takeUntil(nextSearch$)

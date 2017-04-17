@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { Game } from '../../shared/models/game.model';
 import { GamePlayer } from '../../shared/models/game-player.model';
@@ -13,29 +12,27 @@ import { Player } from '../../shared/models/player.model';
  * literal types and runs a simple check to guarantee all
  * action types in the application are unique.
  */
-export const ActionTypes = {
-  SET_FILTER: type('[Game] Set Filter'),
-  FILTER: type('[Game] Filter'),
-  FILTER_COMPLETE: type('[Game] Filter Complete'),
-  LOAD: type('[Game] Load'),
-  SELECT: type('[Game] Select'),
-  SELECT_FOR_EDIT: type('[Game] Select for Edit'),
-  CREATE_NEW: type('[Game] Create New'),
-  UPDATE: type('[Game] Update'),
-  UPDATE_COMPLETE: type('[Game] Update Complete'),
-  ADD_PLAYER: type('[Game] Add GamePlayer'),
-  EDIT_PLAYER: type('[Game] Edit GamePlayer'),
-  CANCEL_EDIT_PLAYER: type('[Game] Cancel Edit GamePlayer'),
-  UPDATE_PLAYER: type('[Game] Update GamePlayer'),
-  REMOVE_PLAYER: type('[Game] Remove GamePlayer'),
-  SET_WINNER: type('[Game] Set Winner'),
-  SAVE_UPDATED: type('[Game] Save updated'),
-  SAVE_UPDATED_COMPLETE: type('[Game] Save complete'),
-  SAVE_UPDATED_FAILURE: type('[Game] Save failure'),
-  DELETE: type('[Game] Delete'),
-  DELETE_COMPLETE: type('[Game] Delete Complete'),
-  DELETE_FAILURE: type('[Game] Delete Failure'),
-};
+export const SET_FILTER = '[Game] Set Filter';
+export const FILTER = '[Game] Filter';
+export const FILTER_COMPLETE = '[Game] Filter Complete';
+export const LOAD = '[Game] Load';
+export const SELECT = '[Game] Select';
+export const SELECT_FOR_EDIT = '[Game] Select for Edit';
+export const CREATE_NEW = '[Game] Create New';
+export const UPDATE = '[Game] Update';
+export const UPDATE_COMPLETE = '[Game] Update Complete';
+export const ADD_PLAYER = '[Game] Add GamePlayer';
+export const EDIT_PLAYER = '[Game] Edit GamePlayer';
+export const CANCEL_EDIT_PLAYER = '[Game] Cancel Edit GamePlayer';
+export const UPDATE_PLAYER = '[Game] Update GamePlayer';
+export const REMOVE_PLAYER = '[Game] Remove GamePlayer';
+export const SET_WINNER = '[Game] Set Winner';
+export const SAVE_UPDATED = '[Game] Save updated';
+export const SAVE_UPDATED_COMPLETE = '[Game] Save complete';
+export const SAVE_UPDATED_FAILURE = '[Game] Save failure';
+export const DELETE = '[Game] Delete';
+export const DELETE_COMPLETE = '[Game] Delete Complete';
+export const DELETE_FAILURE = '[Game] Delete Failure';
 
 /**
  * Every action is comprised of at least a type and an optional
@@ -45,141 +42,141 @@ export const ActionTypes = {
  * See Discriminated Unions: https://www.typescriptlang.org/docs/handgame/advanced-types.html#discriminated-unions
  */
 export class SetFilterAction implements Action {
-  type = ActionTypes.SET_FILTER;
+  readonly type = SET_FILTER;
 
   constructor(public payload: FilterCriteria) {
   }
 }
 
 export class FilterAction implements Action {
-  type = ActionTypes.FILTER;
+  readonly type = FILTER;
 
   constructor(public payload: FilterCriteria) {
   }
 }
 
 export class FilterCompleteAction implements Action {
-  type = ActionTypes.FILTER_COMPLETE;
+  readonly type = FILTER_COMPLETE;
 
   constructor(public payload: Game[]) {
   }
 }
 
 export class LoadAction implements Action {
-  type = ActionTypes.LOAD;
+  readonly type = LOAD;
 
   constructor(public payload: Game) {
   }
 }
 
 export class SelectAction implements Action {
-  type = ActionTypes.SELECT;
+  readonly type = SELECT;
 
   constructor(public payload: number) {
   }
 }
 
 export class SelectForEditAction implements Action {
-  type = ActionTypes.SELECT_FOR_EDIT;
+  readonly type = SELECT_FOR_EDIT;
 
   constructor(public payload: number) {
   }
 }
 
 export class CreateNewAction implements Action {
-  type = ActionTypes.CREATE_NEW;
+  readonly type = CREATE_NEW;
 }
 
 export class UpdateAction implements Action {
-  type = ActionTypes.UPDATE;
+  readonly type = UPDATE;
 
   constructor(public payload: Game) {
   }
 }
 
 export class UpdateCompleteAction implements Action {
-  type = ActionTypes.UPDATE_COMPLETE;
+  readonly type = UPDATE_COMPLETE;
 
   constructor(public payload: Game) {
   }
 }
 
 export class AddPlayerAction implements Action {
-  type = ActionTypes.ADD_PLAYER;
+  readonly type = ADD_PLAYER;
 
   constructor(public payload: Player) {
   }
 }
 
 export class EditPlayerAction implements Action {
-  type = ActionTypes.EDIT_PLAYER;
+  readonly type = EDIT_PLAYER;
   // find by playerId
   constructor(public payload: GamePlayer) {
   }
 }
 
 export class CancelEditPlayerAction implements Action {
-  type = ActionTypes.CANCEL_EDIT_PLAYER;
+  readonly type = CANCEL_EDIT_PLAYER;
 }
 
 export class UpdatePlayerAction implements Action {
-  type = ActionTypes.UPDATE_PLAYER;
+  readonly type = UPDATE_PLAYER;
   // find by playerId
   constructor(public payload: GamePlayer) {
   }
 }
 
 export class RemovePlayerAction implements Action {
-  type = ActionTypes.REMOVE_PLAYER;
+  readonly type = REMOVE_PLAYER;
 
   constructor(public payload: GamePlayer) {
   }
 }
 
 export class SetWinnerAction implements Action {
-  type = ActionTypes.SET_WINNER;
+  readonly type = SET_WINNER;
 
   constructor(public payload: GamePlayer) {
   }
 }
 
 export class SaveUpdateAction implements Action {
-  type = ActionTypes.SAVE_UPDATED;
+  readonly type = SAVE_UPDATED;
 
   constructor(public payload: Game) {
   }
 }
 
 export class SaveUpdateCompleteAction implements Action {
-  type = ActionTypes.SAVE_UPDATED_COMPLETE;
+  readonly type = SAVE_UPDATED_COMPLETE;
 
   constructor(public payload: Game) {
   }
 }
 
 export class SaveUpdateFailureAction implements Action {
-  type = ActionTypes.SAVE_UPDATED_FAILURE;
+  readonly type = SAVE_UPDATED_FAILURE;
 
   constructor(public payload: Error | any) {
   }
 }
 
 export class DeleteAction implements Action {
-  type = ActionTypes.DELETE;
+  readonly type = DELETE;
 
   constructor(public payload: Game) {
   }
 }
 
 export class DeleteCompleteAction implements Action {
-  type = ActionTypes.DELETE_COMPLETE;
+  readonly type = DELETE_COMPLETE;
 
   constructor(public payload: Game) {
   }
 }
 
 export class DeleteFailureAction implements Action {
-  type = ActionTypes.DELETE_FAILURE;
+  readonly type = DELETE_FAILURE;
 
   constructor(public payload: Error | any) {
   }

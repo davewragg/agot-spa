@@ -18,11 +18,11 @@ import * as fromRoot from '../reducers/root';
 export class GameEffects {
   @Effect()
   setDates$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.SET_FILTER)
+    .ofType(gameActions.SET_FILTER)
     .debounceTime(300)
     .map((action: gameActions.SetFilterAction) => action.payload)
     .switchMap(criteria => {
-      const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.SET_FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(gameActions.SET_FILTER).skip(1);
 
       return of(this.dateService.setDatesFromRangeType(criteria))
         .takeUntil(nextSearch$)
@@ -32,7 +32,7 @@ export class GameEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.FILTER)
+    .ofType(gameActions.FILTER)
     // .debounceTime(300)
     .map((action: gameActions.FilterAction) => action.payload)
     .switchMap(criteria => {
@@ -40,7 +40,7 @@ export class GameEffects {
         return empty();
       }
 
-      const nextSearch$ = this.actions$.ofType(gameActions.ActionTypes.FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(gameActions.FILTER).skip(1);
 
       return this.waitForRefDataToLoad().switchMap(() =>
         this.gameService.getGames(criteria)
@@ -52,7 +52,7 @@ export class GameEffects {
 
   @Effect()
   updateGame$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.UPDATE)
+    .ofType(gameActions.UPDATE)
     .map((action: gameActions.UpdateAction) => action.payload)
     .map(game => {
         const populatedGame = this.populateGame(game);
@@ -62,7 +62,7 @@ export class GameEffects {
 
   @Effect()
   saveUpdatedGame$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.SAVE_UPDATED)
+    .ofType(gameActions.SAVE_UPDATED)
     .map((action: gameActions.SaveUpdateAction) => action.payload)
     .mergeMap(game =>
       this.gameService.updateGame(game)
@@ -72,13 +72,13 @@ export class GameEffects {
 
   @Effect()
   saveUpdatedGameSuccess$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.SAVE_UPDATED_COMPLETE)
+    .ofType(gameActions.SAVE_UPDATED_COMPLETE)
     .map((action: gameActions.SaveUpdateCompleteAction) => action.payload)
     .map(game => go(['games', game.gameId]));
 
   @Effect({ dispatch: false })
   saveUpdatedGameError$ = this.actions$
-    .ofType(gameActions.ActionTypes.SAVE_UPDATED_FAILURE)
+    .ofType(gameActions.SAVE_UPDATED_FAILURE)
     .map((action: gameActions.SaveUpdateFailureAction) => action.payload)
     .do(error =>
       // TODO check error code for 403 here and admonish
@@ -87,7 +87,7 @@ export class GameEffects {
 
   @Effect()
   delete$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.DELETE)
+    .ofType(gameActions.DELETE)
     .map((action: gameActions.DeleteAction) => action.payload)
     .mergeMap(game =>
       this.gameService.deleteGame(game.gameId)
@@ -97,7 +97,7 @@ export class GameEffects {
 
   @Effect()
   deleteGameSuccess$: Observable<Action> = this.actions$
-    .ofType(gameActions.ActionTypes.DELETE_COMPLETE)
+    .ofType(gameActions.DELETE_COMPLETE)
     .map((action: gameActions.DeleteCompleteAction) => action.payload)
     .do(() =>
       this.notificationService.success('There', `I hope you're happy`)
@@ -106,7 +106,7 @@ export class GameEffects {
 
   @Effect({ dispatch: false })
   deleteGameError$ = this.actions$
-    .ofType(gameActions.ActionTypes.DELETE_FAILURE)
+    .ofType(gameActions.DELETE_FAILURE)
     .map((action: gameActions.DeleteFailureAction) => action.payload)
     .do(error =>
       // TODO check error code for 403 here and admonish

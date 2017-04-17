@@ -25,13 +25,13 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: playerActions.Actions | playerGroupActions.Actions): State {
   switch (action.type) {
-    case playerGroupActions.ActionTypes.SELECT: {
+    case playerGroupActions.SELECT: {
       return Object.assign({}, state, {
         loading: true
       });
     }
 
-    case playerActions.ActionTypes.GET_FOR_GROUP_COMPLETE: {
+    case playerActions.GET_FOR_GROUP_COMPLETE: {
       const players = action.payload;
       const newPlayers = players.filter(player => !state.entities[player.playerId]);
 
@@ -49,7 +49,7 @@ export function reducer(state = initialState, action: playerActions.Actions | pl
       });
     }
 
-    case playerActions.ActionTypes.LOAD: {
+    case playerActions.LOAD: {
       const player = action.payload;
 
       if (state.ids.indexOf(player.playerId) > -1) {
@@ -66,7 +66,7 @@ export function reducer(state = initialState, action: playerActions.Actions | pl
     }
 
 
-    case playerActions.ActionTypes.SELECT: {
+    case playerActions.SELECT: {
       const { playerId, criteria } = action.payload;
       return Object.assign({}, state, {
         selectedPlayerId: playerId,
@@ -75,7 +75,7 @@ export function reducer(state = initialState, action: playerActions.Actions | pl
       });
     }
 
-    case playerActions.ActionTypes.SELECT_COMPLETE: {
+    case playerActions.SELECT_COMPLETE: {
       const stats = action.payload;
 
       return Object.assign({}, state, {

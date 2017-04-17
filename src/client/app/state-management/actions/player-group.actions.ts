@@ -1,8 +1,6 @@
 import { Action } from '@ngrx/store';
-import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { PlayerGroup } from '../../shared/models/player-group.model';
-import { Deck } from '../../shared/models/deck.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -12,14 +10,12 @@ import { Deck } from '../../shared/models/deck.model';
  * literal types and runs a simple check to guarantee all
  * action types in the application are unique.
  */
-export const ActionTypes = {
-  FILTER: type('[PlayerGroup] Filter'),
-  FILTER_COMPLETE: type('[PlayerGroup] Filter Complete'),
-  LOAD: type('[PlayerGroup] Load'),
-  SELECT: type('[PlayerGroup] Select'),
-  GET_SELECTED: type('[PlayerGroup] Get Selected'),
-  APPLY_SELECTED: type('[PlayerGroup] Apply Selected'),
-};
+export const FILTER = '[PlayerGroup] Filter';
+export const FILTER_COMPLETE = '[PlayerGroup] Filter Complete';
+export const LOAD = '[PlayerGroup] Load';
+export const SELECT = '[PlayerGroup] Select';
+export const GET_SELECTED = '[PlayerGroup] Get Selected';
+export const APPLY_SELECTED = '[PlayerGroup] Apply Selected';
 
 /**
  * Every action is comprised of at least a type and an optional
@@ -29,35 +25,35 @@ export const ActionTypes = {
  * See Discriminated Unions: https://www.typescriptlang.org/docs/handplayerGroup/advanced-types.html#discriminated-unions
  */
 export class FilterAction implements Action {
-  type = ActionTypes.FILTER;
+  readonly type = FILTER;
 
   constructor(public payload: FilterCriteria) {
   }
 }
 
 export class FilterCompleteAction implements Action {
-  type = ActionTypes.FILTER_COMPLETE;
+  readonly type = FILTER_COMPLETE;
 
   constructor(public payload: PlayerGroup[]) {
   }
 }
 
 export class LoadAction implements Action {
-  type = ActionTypes.LOAD;
+  readonly type = LOAD;
 
   constructor(public payload: PlayerGroup) {
   }
 }
 
 export class SelectAction implements Action {
-  type = ActionTypes.SELECT;
+  readonly type = SELECT;
 
   constructor(public payload: number) {
   }
 }
 
 export class GetSelectedAction implements Action {
-  type = ActionTypes.GET_SELECTED;
+  readonly type = GET_SELECTED;
 }
 
 /**

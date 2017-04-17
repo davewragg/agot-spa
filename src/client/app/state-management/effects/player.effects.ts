@@ -14,10 +14,10 @@ import * as playerGroupActions from '../actions/player-group.actions';
 export class PlayerEffects {
   @Effect()
   setDates$: Observable<Action> = this.actions$
-    .ofType(playerActions.ActionTypes.SET_SELECT)
+    .ofType(playerActions.SET_SELECT)
     .map((action: playerActions.SetSelectAction) => action.payload)
     .switchMap(({playerId, criteria}) => {
-      const nextSearch$ = this.actions$.ofType(playerActions.ActionTypes.SET_SELECT).skip(1);
+      const nextSearch$ = this.actions$.ofType(playerActions.SET_SELECT).skip(1);
 
       return of(this.dateService.setDatesFromRangeType(criteria))
         .takeUntil(nextSearch$)
@@ -30,14 +30,14 @@ export class PlayerEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(playerGroupActions.ActionTypes.SELECT)
+    .ofType(playerGroupActions.SELECT)
     .map((action: playerGroupActions.SelectAction) => action.payload)
     .switchMap(playerGroupId => {
       if (!playerGroupId || isNaN(playerGroupId)) {
         return of(new playerActions.GetForGroupCompleteAction([]));
       }
 
-      const nextSearch$ = this.actions$.ofType(playerGroupActions.ActionTypes.SELECT).skip(1);
+      const nextSearch$ = this.actions$.ofType(playerGroupActions.SELECT).skip(1);
 
       return this.playerService.getPlayers(playerGroupId)
         .takeUntil(nextSearch$)
@@ -47,10 +47,10 @@ export class PlayerEffects {
 
   @Effect()
   getStats$: Observable<Action> = this.actions$
-    .ofType(playerActions.ActionTypes.SELECT)
+    .ofType(playerActions.SELECT)
     .map((action: playerActions.SelectAction) => action.payload)
     .switchMap(({ playerId, criteria }) => {
-      const nextStats$ = this.actions$.ofType(playerActions.ActionTypes.SELECT).skip(1);
+      const nextStats$ = this.actions$.ofType(playerActions.SELECT).skip(1);
 
       return this.statsService.getPlayerStats(playerId, criteria)
         .takeUntil(nextStats$)

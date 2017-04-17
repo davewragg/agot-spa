@@ -34,13 +34,13 @@ function extractById(array: any[], baseKey: string): { [id: string]: any } {
 
 export function reducer(state = initialState, action: refDataActions.Actions): State {
   switch (action.type) {
-    case refDataActions.ActionTypes.LOAD: {
+    case refDataActions.LOAD: {
       return Object.assign({}, state, {
         loading: true
       });
     }
 
-    case refDataActions.ActionTypes.LOAD_SUCCESS: {
+    case refDataActions.LOAD_SUCCESS: {
       const [
         factions,
         agendas,

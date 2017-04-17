@@ -30,7 +30,6 @@ import { reducer } from './state-management/reducers/root';
 import { LayoutModule } from './layout/layout.module';
 // import { schema } from './db';
 
-
 @NgModule({
   imports: [
     BrowserModule,

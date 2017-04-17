@@ -1,47 +1,44 @@
 import { Action } from '@ngrx/store';
-import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { Player } from '../../shared/models/player.model';
 import { PlayerStats } from '../../shared/models/player-stats.model';
 
-export const ActionTypes = {
-  GET_FOR_GROUP_COMPLETE: type('[Player] Get for Player Group Complete'),
-  LOAD: type('[Player] Load'),
-  SET_SELECT: type('[Player] Set Select'),
-  SELECT: type('[Player] Select'),
-  SELECT_COMPLETE: type('[Player] Select Complete'),
-};
+  export const GET_FOR_GROUP_COMPLETE = '[Player] Get for Player Group Complete';
+  export const LOAD = '[Player] Load';
+  export const SET_SELECT = '[Player] Set Select';
+  export const SELECT = '[Player] Select';
+  export const SELECT_COMPLETE = '[Player] Select Complete';
 
 export class GetForGroupCompleteAction implements Action {
-  type = ActionTypes.GET_FOR_GROUP_COMPLETE;
+  readonly type = GET_FOR_GROUP_COMPLETE;
 
   constructor(public payload: Player[]) {
   }
 }
 
 export class LoadAction implements Action {
-  type = ActionTypes.LOAD;
+  readonly type = LOAD;
 
   constructor(public payload: Player) {
   }
 }
 
 export class SetSelectAction implements Action {
-  type = ActionTypes.SET_SELECT;
+  readonly type = SET_SELECT;
 
   constructor(public payload: { playerId: string, criteria: FilterCriteria }) {
   }
 }
 
 export class SelectAction implements Action {
-  type = ActionTypes.SELECT;
+  readonly type = SELECT;
 
   constructor(public payload: { playerId: string, criteria: FilterCriteria }) {
   }
 }
 
 export class SelectCompleteAction implements Action {
-  type = ActionTypes.SELECT_COMPLETE;
+  readonly type = SELECT_COMPLETE;
 
   constructor(public payload: PlayerStats) {
   }

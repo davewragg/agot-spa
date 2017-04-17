@@ -1,29 +1,26 @@
 import { Action } from '@ngrx/store';
-import { type } from '../util';
 import { Deck } from '../../shared/models/deck.model';
 
-export const ActionTypes = {
-  IMPORT_DECK: type('[ThronesDB] Import Deck'),
-  IMPORT_DECK_SUCCESS: type('[ThronesDB] Import Deck Success'),
-  IMPORT_DECK_FAILURE: type('[ThronesDB] Import Deck Failure'),
-};
+  export const IMPORT_DECK = '[ThronesDB] Import Deck';
+  export const IMPORT_DECK_SUCCESS = '[ThronesDB] Import Deck Success';
+  export const IMPORT_DECK_FAILURE = '[ThronesDB] Import Deck Failure';
 
 export class ImportDeckAction implements Action {
-  type = ActionTypes.IMPORT_DECK;
+  readonly type = IMPORT_DECK;
 
   constructor(public payload: number) {
   }
 }
 
 export class ImportDeckSuccessAction implements Action {
-  type = ActionTypes.IMPORT_DECK_SUCCESS;
+  readonly type = IMPORT_DECK_SUCCESS;
 
   constructor(public payload: Deck) {
   }
 }
 
 export class ImportDeckFailureAction implements Action {
-  type = ActionTypes.IMPORT_DECK_FAILURE;
+  readonly type = IMPORT_DECK_FAILURE;
 
   constructor(public payload: Error | any) {
   }

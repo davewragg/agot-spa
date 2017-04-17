@@ -14,10 +14,10 @@ import { PlayerService } from '../../shared/services/player.service';
 export class CurrentPlayerEffects {
   @Effect()
   load$: Observable<Action> = this.actions$
-    .ofType(currentPlayerActions.ActionTypes.LOAD)
+    .ofType(currentPlayerActions.LOAD)
     .startWith(new currentPlayerActions.LoadAction())
     .switchMap(() => {
-      const nextLoad$ = this.actions$.ofType(currentPlayerActions.ActionTypes.LOAD).skip(1);
+      const nextLoad$ = this.actions$.ofType(currentPlayerActions.LOAD).skip(1);
 
       return this.playerService.getCurrentPlayer()
         .takeUntil(nextLoad$)

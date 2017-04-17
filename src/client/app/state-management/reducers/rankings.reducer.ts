@@ -16,7 +16,7 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: rankingsActions.Actions): State {
   switch (action.type) {
-    case rankingsActions.ActionTypes.FILTER: {
+    case rankingsActions.FILTER: {
       const criteria = action.payload;
 
       if (!criteria) {
@@ -34,7 +34,7 @@ export function reducer(state = initialState, action: rankingsActions.Actions): 
       });
     }
 
-    case rankingsActions.ActionTypes.FILTER_COMPLETE: {
+    case rankingsActions.FILTER_COMPLETE: {
       const rankings = action.payload;
       return {
         loading: false,

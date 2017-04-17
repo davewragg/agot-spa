@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { type } from '../util';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { Deck } from '../../shared/models/deck.model';
 import { DeckStats } from '../../shared/models/deck-stats.model';
@@ -12,21 +11,19 @@ import { DeckStats } from '../../shared/models/deck-stats.model';
  * literal types and runs a simple check to guarantee all
  * action types in the application are unique.
  */
-export const ActionTypes = {
-  SET_FILTER: type('[Deck] Set Filter'),
-  FILTER: type('[Deck] Filter'),
-  FILTER_COMPLETE: type('[Deck] Filter Complete'),
-  LOAD: type('[Deck] Load'),
-  SELECT_FOR_EDIT: type('[Deck] Select for Edit'),
-  UPDATE: type('[Deck] Update'),
-  UPDATE_COMPLETE: type('[Deck] Update Complete'),
-  SAVE_UPDATED: type('[Deck] Save updated'),
-  SAVE_UPDATED_COMPLETE: type('[Deck] Save complete'),
-  SAVE_UPDATED_FAILURE: type('[Deck] Save failure'),
-  SELECT: type('[Deck] Select'),
-  SELECT_COMPLETE: type('[Deck] Select Complete'),
-  LOAD_FOR_GROUP: type('[Deck] Load for Group'),
-};
+export const SET_FILTER = '[Deck] Set Filter';
+export const FILTER = '[Deck] Filter';
+export const FILTER_COMPLETE = '[Deck] Filter Complete';
+export const LOAD = '[Deck] Load';
+export const SELECT_FOR_EDIT = '[Deck] Select for Edit';
+export const UPDATE = '[Deck] Update';
+export const UPDATE_COMPLETE = '[Deck] Update Complete';
+export const SAVE_UPDATED = '[Deck] Save updated';
+export const SAVE_UPDATED_COMPLETE = '[Deck] Save complete';
+export const SAVE_UPDATED_FAILURE = '[Deck] Save failure';
+export const SELECT = '[Deck] Select';
+export const SELECT_COMPLETE = '[Deck] Select Complete';
+export const LOAD_FOR_GROUP = '[Deck] Load for Group';
 
 /**
  * Every action is comprised of at least a type and an optional
@@ -36,91 +33,91 @@ export const ActionTypes = {
  * See Discriminated Unions: https://www.typescriptlang.org/docs/handdeck/advanced-types.html#discriminated-unions
  */
 export class SetFilterAction implements Action {
-  type = ActionTypes.SET_FILTER;
+  readonly type = SET_FILTER;
 
   constructor(public payload: FilterCriteria) {
   }
 }
 
 export class FilterAction implements Action {
-  type = ActionTypes.FILTER;
+  readonly type = FILTER;
 
   constructor(public payload: FilterCriteria) {
   }
 }
 
 export class FilterCompleteAction implements Action {
-  type = ActionTypes.FILTER_COMPLETE;
+  readonly type = FILTER_COMPLETE;
 
   constructor(public payload: Deck[]) {
   }
 }
 
 export class LoadAction implements Action {
-  type = ActionTypes.LOAD;
+  readonly type = LOAD;
 
   constructor(public payload: Deck) {
   }
 }
 
 export class SelectForEditAction implements Action {
-  type = ActionTypes.SELECT_FOR_EDIT;
+  readonly type = SELECT_FOR_EDIT;
 
   constructor(public payload: number) {
   }
 }
 
 export class UpdateAction implements Action {
-  type = ActionTypes.UPDATE;
+  readonly type = UPDATE;
 
   constructor(public payload: Deck) {
   }
 }
 
 export class UpdateCompleteAction implements Action {
-  type = ActionTypes.UPDATE_COMPLETE;
+  readonly type = UPDATE_COMPLETE;
 
   constructor(public payload: Deck) {
   }
 }
 
 export class SaveUpdateAction implements Action {
-  type = ActionTypes.SAVE_UPDATED;
+  readonly type = SAVE_UPDATED;
 
   constructor(public payload: Deck) {
   }
 }
 
 export class SaveUpdateCompleteAction implements Action {
-  type = ActionTypes.SAVE_UPDATED_COMPLETE;
+  readonly type = SAVE_UPDATED_COMPLETE;
 
   constructor(public payload: Deck) {
   }
 }
 
 export class SaveUpdateFailureAction implements Action {
-  type = ActionTypes.SAVE_UPDATED_FAILURE;
+  readonly type = SAVE_UPDATED_FAILURE;
 
   constructor(public payload: Error | any) {
   }
 }
 
 export class SelectAction implements Action {
-  type = ActionTypes.SELECT;
+  readonly type = SELECT;
 
   constructor(public payload: number) {
   }
 }
 
 export class SelectCompleteAction implements Action {
-  type = ActionTypes.SELECT_COMPLETE;
+  readonly type = SELECT_COMPLETE;
 
   constructor(public payload: DeckStats) {
   }
 }
 
 export class LoadForGroupAction implements Action {
-  type = ActionTypes.LOAD_FOR_GROUP;
+  readonly type = LOAD_FOR_GROUP;
 
   constructor(public payload: Deck[]) {
   }

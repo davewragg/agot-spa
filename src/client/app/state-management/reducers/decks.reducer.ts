@@ -33,7 +33,7 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: deckActions.Actions | gameActions.Actions): State {
   switch (action.type) {
-    case deckActions.ActionTypes.FILTER: {
+    case deckActions.FILTER: {
       const criteria = action.payload;
 
       if (!criteria) {
@@ -50,7 +50,7 @@ export function reducer(state = initialState, action: deckActions.Actions | game
       });
     }
 
-    case deckActions.ActionTypes.FILTER_COMPLETE: {
+    case deckActions.FILTER_COMPLETE: {
       const decks = action.payload;
       const newDecks = decks.filter(deck => !state.entities[deck.deckId]);
 
@@ -67,7 +67,7 @@ export function reducer(state = initialState, action: deckActions.Actions | game
         loading: false,
       });
     }
-    case deckActions.ActionTypes.LOAD_FOR_GROUP: {
+    case deckActions.LOAD_FOR_GROUP: {
       const decks = action.payload;
       const newDecks = decks.filter(deck => !state.entities[deck.deckId]);
 
@@ -85,7 +85,7 @@ export function reducer(state = initialState, action: deckActions.Actions | game
       });
     }
 
-    case deckActions.ActionTypes.LOAD: {
+    case deckActions.LOAD: {
       const deck = action.payload;
 
       if (state.ids.indexOf(deck.deckId) > -1) {
@@ -101,14 +101,14 @@ export function reducer(state = initialState, action: deckActions.Actions | game
       });
     }
 
-    case deckActions.ActionTypes.SELECT: {
+    case deckActions.SELECT: {
       return Object.assign({}, state, {
         selectedDeckId: action.payload,
         loading: false,
       });
     }
 
-    case deckActions.ActionTypes.SELECT_FOR_EDIT: {
+    case deckActions.SELECT_FOR_EDIT: {
       const deckCopy = cloneDeep(state.entities[action.payload]);
       return Object.assign({}, state, {
         loading: false,
@@ -118,7 +118,7 @@ export function reducer(state = initialState, action: deckActions.Actions | game
         },
       });
     }
-    case gameActions.ActionTypes.ADD_PLAYER: {
+    case gameActions.ADD_PLAYER: {
       return Object.assign({}, state, {
         deckToEdit: {
           deck: null,
@@ -126,7 +126,7 @@ export function reducer(state = initialState, action: deckActions.Actions | game
         },
       });
     }
-    case gameActions.ActionTypes.EDIT_PLAYER: {
+    case gameActions.EDIT_PLAYER: {
       const gamePlayer = action.payload;
       const deck = gamePlayer.deck;
       // can't edit imported decks
@@ -139,13 +139,13 @@ export function reducer(state = initialState, action: deckActions.Actions | game
       });
     }
 
-    case deckActions.ActionTypes.SAVE_UPDATED: {
+    case deckActions.SAVE_UPDATED: {
       return Object.assign({}, state, {
         loading: true,
       });
     }
 
-    case deckActions.ActionTypes.SAVE_UPDATED_COMPLETE: {
+    case deckActions.SAVE_UPDATED_COMPLETE: {
       return Object.assign({}, state, {
         loading: false,
         deckToEdit: {
@@ -155,13 +155,13 @@ export function reducer(state = initialState, action: deckActions.Actions | game
       });
     }
 
-    case deckActions.ActionTypes.SAVE_UPDATED_FAILURE: {
+    case deckActions.SAVE_UPDATED_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
       });
     }
 
-    case deckActions.ActionTypes.UPDATE_COMPLETE: {
+    case deckActions.UPDATE_COMPLETE: {
       const changes = action.payload;
       return Object.assign({}, state, {
         loading: false,

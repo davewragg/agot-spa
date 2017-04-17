@@ -1,18 +1,15 @@
 import { Action } from '@ngrx/store';
-import { type } from '../util';
 import { Player } from '../../shared/models/player.model';
 
-export const ActionTypes = {
-  LOAD: type('[CurrentPlayer] Load'),
-  LOAD_COMPLETE: type('[CurrentPlayer] Load Complete'),
-};
+export const LOAD = '[CurrentPlayer] Load';
+export const   LOAD_COMPLETE = '[CurrentPlayer] Load Complete';
 
 export class LoadAction implements Action {
-  type = ActionTypes.LOAD;
+  readonly type = LOAD;
 }
 
 export class LoadCompleteAction implements Action {
-  type = ActionTypes.LOAD_COMPLETE;
+  readonly type = LOAD_COMPLETE;
 
   constructor(public payload: Player) {
   }

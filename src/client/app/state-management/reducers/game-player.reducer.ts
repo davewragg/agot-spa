@@ -13,7 +13,7 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: gamePlayerActions.Actions): State {
   switch (action.type) {
-    case gamePlayerActions.ActionTypes.UPDATE_COMPLETE: {
+    case gamePlayerActions.UPDATE_COMPLETE: {
       const changes = action.payload;
       return Object.assign({}, state, {
         playerToEdit: GamePlayer.patchValues(state.playerToEdit, changes),

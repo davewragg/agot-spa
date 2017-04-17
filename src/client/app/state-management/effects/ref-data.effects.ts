@@ -16,7 +16,7 @@ export class RefDataEffects {
    */
   @Effect()
   loadRefData$: Observable<Action> = this.actions$
-    .ofType(refData.ActionTypes.LOAD)
+    .ofType(refData.LOAD)
     .startWith(new refData.LoadAction())
     .switchMap(() => {
       return combineLatest(

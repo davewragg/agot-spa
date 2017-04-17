@@ -12,11 +12,11 @@ import * as rankingsActions from '../actions/rankings.actions';
 export class RankingsEffects {
   @Effect()
   setDates$: Observable<Action> = this.actions$
-    .ofType(rankingsActions.ActionTypes.SET_FILTER)
+    .ofType(rankingsActions.SET_FILTER)
     .debounceTime(300)
     .map((action: rankingsActions.SetFilterAction) => action.payload)
     .switchMap(criteria => {
-      const nextSearch$ = this.actions$.ofType(rankingsActions.ActionTypes.SET_FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(rankingsActions.SET_FILTER).skip(1);
 
       return of(this.dateService.setDatesFromRangeType(criteria))
         .takeUntil(nextSearch$)
@@ -26,7 +26,7 @@ export class RankingsEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(rankingsActions.ActionTypes.FILTER)
+    .ofType(rankingsActions.FILTER)
     // .debounceTime(300)
     .map((action: rankingsActions.FilterAction) => action.payload)
     .switchMap(criteria => {
@@ -34,7 +34,7 @@ export class RankingsEffects {
         return empty();
       }
 
-      const nextSearch$ = this.actions$.ofType(rankingsActions.ActionTypes.FILTER).skip(1);
+      const nextSearch$ = this.actions$.ofType(rankingsActions.FILTER).skip(1);
 
       return this.rankingService.getRankings(criteria)
         .takeUntil(nextSearch$)
