@@ -137,7 +137,11 @@ export const getAllPlayerGroups = createSelector(getPlayerGroupState, fromPlayer
 export const getMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, (ids, groups) => {
   return groups.filter((group) => ids.includes(group.id));
 });
+export const getAllButMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, (ids, groups) => {
+  return groups.filter((group) => !ids.includes(group.id));
+});
 export const getSelectedPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getSelectedId);
+export const getPlayerGroupsLoading = createSelector(getPlayerGroupState, fromPlayerGroups.getLoading);
 
 export const getDecksState = (state: State) => state.decks;
 export const getFilteredDeckIds = createSelector(getDecksState, fromDecks.getIds);

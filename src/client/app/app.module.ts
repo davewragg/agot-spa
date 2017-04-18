@@ -29,6 +29,7 @@ import { CurrentPlayerEffects } from './state-management/effects/current-player.
 import { ThronesDbEffects } from './state-management/effects/thrones-db.effects';
 import { reducer } from './state-management/reducers/root';
 import { LayoutModule } from './layout/layout.module';
+import { GroupsModule } from './groups/groups.module';
 // import { schema } from './db';
 
 @NgModule({
@@ -95,7 +96,8 @@ import { LayoutModule } from './layout/layout.module';
     DecksModule,
     DeckModule,
     PlayersModule,
-    PlayerModule
+    PlayerModule,
+    GroupsModule,
   ],
   declarations: [AppComponent],
   providers: [

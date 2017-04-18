@@ -6,6 +6,7 @@ import * as rankingActions from '../state-management/actions/rankings.actions';
 import * as gameActions from '../state-management/actions/game.actions';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
 import { DateRangeType } from '../shared/models/date-range-type.model';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   moduleId: module.id,

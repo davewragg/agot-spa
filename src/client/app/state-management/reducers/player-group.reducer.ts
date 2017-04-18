@@ -6,12 +6,14 @@ export interface State {
   ids: number[];
   entities: { [id: string]: PlayerGroup };
   selectedPlayerGroupId: number | null;
+  loading: boolean;
 }
 
 const initialState: State = {
   ids: [],
   entities: {},
   selectedPlayerGroupId: null,
+  loading: false,
 };
 
 export function reducer(state = initialState, action: playerGroupActions.Actions): State {
@@ -30,6 +32,7 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
       return Object.assign({}, state, {
         ids: [...state.ids, ...newPlayerGroupIds],
         entities: Object.assign({}, state.entities, newPlayerGroupEntities),
+        loading: false,
       });
     }
 
@@ -48,6 +51,12 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
       });
     }
 
+    case playerGroupActions.FILTER: {
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    }
+
     case playerGroupActions.SELECT: {
       return Object.assign({}, state, {
         selectedPlayerGroupId: action.payload
@@ -60,20 +69,13 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
   }
 }
 
-/**
- * Because the data structure is defined within the reducer it is optimal to
- * locate our selector functions at this level. If store is to be thought of
- * as a database, and reducers the tables, selectors can be considered the
- * queries into said database. Remember to keep your selectors small and
- * focused so they can be combined and composed to fit each particular
- * use-case.
- */
-
 export const getEntities = (state: State) => state.entities;
 
 export const getIds = (state: State) => state.ids;
 
 export const getSelectedId = (state: State) => state.selectedPlayerGroupId;
+
+export const getLoading = (state: State) => state.loading;
 
 export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
   return entities[selectedId];
