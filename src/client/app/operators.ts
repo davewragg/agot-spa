@@ -15,4 +15,5 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/toPromise';
 import '@ngrx/core/add/operator/select';
