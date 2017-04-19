@@ -1,14 +1,13 @@
 <section>
-  <h2>Player Groups</h2>
-
   <button class="btn btn-primary mb-1" [routerLink]="['/groups/new']">Create new group</button>
 
   <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
   <div class="mb-1" *ngIf="!(loading$ | async)">
-    <h4>My Groups</h4>
-    {{ myGroups$ | async | json }}
-    <h4>The Rest</h4>
-    {{ groups$ | async | json }}
+    <h3>My Groups</h3>
+    <agot-groups-list [groups]="myGroups$ | async"></agot-groups-list>
+
+    <h3>The Rest</h3>
+    <agot-groups-list [groups]="groups$ | async"></agot-groups-list>
   </div>
 </section>

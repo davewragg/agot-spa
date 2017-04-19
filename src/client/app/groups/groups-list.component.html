@@ -1,0 +1,26 @@
+<div class="card-deck">
+  <div class="card" *ngFor="let group of groups">
+    <h4 class="card-header">{{ group.name }}</h4>
+    <div class="card-block">
+      <blockquote class="card-text blockquote">
+        {{ group.description }}
+      </blockquote>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let player of group.players">
+        <agot-player-link [player]="player"></agot-player-link>
+      </li>
+    </ul>
+    <div class="card-block text-right">
+      <!--TODO if not member-->
+      <a href="#" class="btn btn-success">Join Group</a>
+      <!--TODO if admin-->
+      <a href="#" class="btn btn-secondary">Edit Group</a>
+      <!--TODO missing API-->
+      <a href="#" class="btn btn-primary">Leave Group</a>
+    </div>
+    <div class="card-footer text-muted">
+      <small>{{ group.location }} {{ group.country }}</small>
+    </div>
+  </div>
+</div>
