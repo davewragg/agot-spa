@@ -133,14 +133,24 @@ export const getPlayerStatsFilterCriteria = createSelector(getPlayersState, from
 export const getSelectedPlayerStats = createSelector(getPlayersState, fromPlayers.getSelectedPlayerStats);
 
 export const getPlayerGroupState = (state: State) => state.playerGroups;
+export const getPlayerGroupEntities = createSelector(getPlayerGroupState, fromPlayerGroups.getEntities);
 export const getAllPlayerGroups = createSelector(getPlayerGroupState, fromPlayerGroups.getAll);
-export const getMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, (ids, groups) => {
-  return groups.filter((group) => ids.includes(group.id));
-});
-export const getAllButMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, (ids, groups) => {
-  return groups.filter((group) => !ids.includes(group.id));
-});
+export const getMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, getPlayerEntities,
+  (ids, groups, players) => {
+    return groups.filter((group) => ids.includes(group.id)).map((group) =>
+      Object.assign({}, group, {
+        players: group.players.map((player) => players[player.playerId])
+      }));
+  });
+export const getAllButMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, getPlayerEntities,
+  (ids, groups, players) => {
+    return groups.filter((group) => !ids.includes(group.id)).map((group) =>
+      Object.assign({}, group, {
+        players: group.players.map((player) => players[player.playerId])
+      }));
+  });
 export const getSelectedPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getSelectedId);
+export const getViewingPlayerGroup = createSelector(getPlayerGroupState, fromPlayerGroups.getViewing);
 export const getPlayerGroupsLoading = createSelector(getPlayerGroupState, fromPlayerGroups.getLoading);
 
 export const getDecksState = (state: State) => state.decks;

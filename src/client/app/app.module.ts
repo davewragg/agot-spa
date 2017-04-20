@@ -30,6 +30,7 @@ import { ThronesDbEffects } from './state-management/effects/thrones-db.effects'
 import { reducer } from './state-management/reducers/root';
 import { LayoutModule } from './layout/layout.module';
 import { GroupsModule } from './groups/groups.module';
+import { PlayerGroupModule } from './group/group.module';
 // import { schema } from './db';
 
 @NgModule({
@@ -98,6 +99,7 @@ import { GroupsModule } from './groups/groups.module';
     PlayersModule,
     PlayerModule,
     GroupsModule,
+    PlayerGroupModule,
   ],
   declarations: [AppComponent],
   providers: [

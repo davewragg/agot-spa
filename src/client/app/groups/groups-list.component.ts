@@ -6,6 +6,11 @@ import { PlayerGroup } from '../shared/models/player-group.model';
   selector: 'agot-groups-list',
   templateUrl: 'groups-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [`
+    .icon {
+      height: 2.4em;
+    }
+  `],
 })
 export class GroupsListComponent {
   @Input()

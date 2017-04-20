@@ -6,6 +6,7 @@ export interface State {
   ids: number[];
   entities: { [id: string]: PlayerGroup };
   selectedPlayerGroupId: number | null;
+  viewingId: number | null;
   loading: boolean;
 }
 
@@ -13,6 +14,7 @@ const initialState: State = {
   ids: [],
   entities: {},
   selectedPlayerGroupId: null,
+  viewingId: null,
   loading: false,
 };
 
@@ -59,7 +61,13 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
 
     case playerGroupActions.SELECT: {
       return Object.assign({}, state, {
-        selectedPlayerGroupId: action.payload
+        selectedPlayerGroupId: action.payload,
+      });
+    }
+
+    case playerGroupActions.SET_FOR_EDIT: {
+      return Object.assign({}, state, {
+        viewingId: action.payload,
       });
     }
 
@@ -75,9 +83,11 @@ export const getIds = (state: State) => state.ids;
 
 export const getSelectedId = (state: State) => state.selectedPlayerGroupId;
 
+export const getViewingId = (state: State) => state.viewingId;
+
 export const getLoading = (state: State) => state.loading;
 
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
+export const getViewing = createSelector(getEntities, getViewingId, (entities, selectedId) => {
   return entities[selectedId];
 });
 

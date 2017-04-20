@@ -14,8 +14,8 @@ export const FILTER = '[PlayerGroup] Filter';
 export const FILTER_COMPLETE = '[PlayerGroup] Filter Complete';
 export const LOAD = '[PlayerGroup] Load';
 export const SELECT = '[PlayerGroup] Select';
+export const SET_FOR_EDIT = '[PlayerGroup] Set for Edit';
 export const GET_SELECTED = '[PlayerGroup] Get Selected';
-export const APPLY_SELECTED = '[PlayerGroup] Apply Selected';
 
 /**
  * Every action is comprised of at least a type and an optional
@@ -52,6 +52,13 @@ export class SelectAction implements Action {
   }
 }
 
+export class SetForEditAction implements Action {
+  readonly type = SET_FOR_EDIT;
+
+  constructor(public payload: number) {
+  }
+}
+
 export class GetSelectedAction implements Action {
   readonly type = GET_SELECTED;
 }
@@ -65,4 +72,5 @@ export type Actions
   | FilterCompleteAction
   | LoadAction
   | SelectAction
+  | SetForEditAction
   | GetSelectedAction;

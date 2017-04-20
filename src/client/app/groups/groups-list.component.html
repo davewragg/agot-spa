@@ -8,6 +8,7 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item" *ngFor="let player of group.players">
+        <img class="icon" src="./assets/img/icon{{ player.mostPlayedFactionId }}.png">
         <agot-player-link [player]="player"></agot-player-link>
       </li>
     </ul>
@@ -15,7 +16,7 @@
       <!--TODO if not member-->
       <a href="#" class="btn btn-success">Join Group</a>
       <!--TODO if admin-->
-      <a href="#" class="btn btn-secondary">Edit Group</a>
+      <a [routerLink]="['/groups', group.id]" class="btn btn-secondary">Edit Group</a>
       <!--TODO missing API-->
       <a href="#" class="btn btn-primary">Leave Group</a>
     </div>
@@ -23,4 +24,5 @@
       <small>{{ group.location }} {{ group.country }}</small>
     </div>
   </div>
+  <div class="alert alert-warning" *ngIf="!groups.length">Nothing to see here</div>
 </div>
