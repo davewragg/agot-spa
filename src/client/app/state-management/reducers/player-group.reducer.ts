@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import * as playerGroupActions from '../actions/player-group.actions';
 import { PlayerGroup } from '../../shared/models/player-group.model';
+import * as playerGroupActions from '../actions/player-group.actions';
 
 export interface State {
   ids: number[];
@@ -68,6 +68,19 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
     case playerGroupActions.SET_FOR_EDIT: {
       return Object.assign({}, state, {
         viewingId: action.payload,
+      });
+    }
+
+    case playerGroupActions.SAVE: {
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    }
+
+    case playerGroupActions.SAVE_COMPLETE:
+    case playerGroupActions.SAVE_FAILURE: {
+      return Object.assign({}, state, {
+        loading: false,
       });
     }
 

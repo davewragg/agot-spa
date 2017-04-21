@@ -27,6 +27,19 @@ export class PlayerGroupService {
     return of(this.setToLocal(playerGroupId));
   }
 
+  updatePlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    if (playerGroup.id) {
+      return this.dataService.updatePlayerGroup(playerGroup);
+    } else {
+      return this.dataService.createPlayerGroup(playerGroup);
+    }
+  }
+
+  // deletePlayerGroup(playerGroupId: number): Observable<any> {
+  //   this.cacheService.invalidate();
+  //   return this.dataService.deletePlayerGroup(playerGroupId);
+  // }
+
   private getFromLocal() {
     console.log('get selected player group id from local storage');
     return playerGroupStorage.getPlayerGroupId();
@@ -36,18 +49,4 @@ export class PlayerGroupService {
     console.log('set selected player group id to local storage', playerGroupId);
     return playerGroupStorage.setPlayerGroupId(playerGroupId);
   }
-
-  // updatePlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
-  //   this.cacheService.invalidate();
-  //   if (playerGroup.id) {
-  //     return this.dataService.updatePlayerGroup(playerGroup);
-  //   } else {
-  //     return this.dataService.createPlayerGroup(playerGroup);
-  //   }
-  // }
-
-  // deletePlayerGroup(playerGroupId: number): Observable<any> {
-  //   this.cacheService.invalidate();
-  //   return this.dataService.deletePlayerGroup(playerGroupId);
-  // }
 }

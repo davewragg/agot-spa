@@ -60,6 +60,12 @@ export class DataService {
     return gameCopy;
   }
 
+  private static _serialisePlayerGroup(playerGroup: PlayerGroup): string {
+    const playerGroupCopy = cloneDeep(playerGroup);
+    delete playerGroupCopy.players;
+    return JSON.stringify(playerGroupCopy);
+  }
+
   private static _serialiseDeck(deck: Deck): string {
     const deckCopy = this._prepareDeckData(deck);
     return JSON.stringify(deckCopy);
@@ -110,6 +116,24 @@ export class DataService {
   getPlayerGroups() {
     console.log('getPlayerGroups called');
     return this.http.get(`${this.baseUrl}api/playergroups/getall`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  updatePlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    console.log('updatePlayerGroup called', playerGroup);
+    return this.http.put(`${this.baseUrl}api/playergroups/edit`,
+      DataService._serialisePlayerGroup(playerGroup),
+      DataService._getContentHeaders())
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  createPlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    console.log('createPlayerGroup called', playerGroup);
+    return this.http.post(`${this.baseUrl}api/playergroups/create`,
+      DataService._serialisePlayerGroup(playerGroup),
+      DataService._getContentHeaders())
       .map(DataService.handleResponse)
       .catch(this.handleError.bind(this));
   }

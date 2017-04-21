@@ -16,6 +16,9 @@ export const LOAD = '[PlayerGroup] Load';
 export const SELECT = '[PlayerGroup] Select';
 export const SET_FOR_EDIT = '[PlayerGroup] Set for Edit';
 export const GET_SELECTED = '[PlayerGroup] Get Selected';
+export const SAVE = '[PlayerGroup] Save';
+export const SAVE_COMPLETE = '[PlayerGroup] Save Complete';
+export const SAVE_FAILURE = '[PlayerGroup] Save Failure';
 
 /**
  * Every action is comprised of at least a type and an optional
@@ -63,6 +66,27 @@ export class GetSelectedAction implements Action {
   readonly type = GET_SELECTED;
 }
 
+export class SaveAction implements Action {
+  readonly type = SAVE;
+
+  constructor(public payload: PlayerGroup) {
+  }
+}
+
+export class SaveCompleteAction implements Action {
+  readonly type = SAVE_COMPLETE;
+
+  constructor(public payload: PlayerGroup) {
+  }
+}
+
+export class SaveFailureAction implements Action {
+  readonly type = SAVE_FAILURE;
+
+  constructor(public payload: any) {
+  }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -73,4 +97,7 @@ export type Actions
   | LoadAction
   | SelectAction
   | SetForEditAction
-  | GetSelectedAction;
+  | GetSelectedAction
+  | SaveAction
+  | SaveCompleteAction
+  | SaveFailureAction;
