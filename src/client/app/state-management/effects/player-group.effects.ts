@@ -56,7 +56,10 @@ export class PlayerGroupEffects {
   savePlayerGroupSuccess$: Observable<Action> = this.actions$
     .ofType(playerGroupActions.SAVE_COMPLETE)
     .map((action: playerGroupActions.SaveCompleteAction) => action.payload)
-    .map(playerGroup => go(['groups']));
+    .mergeMap(playerGroup => [
+      new playerGroupActions.LoadAction(playerGroup),
+      go(['groups']),
+    ]);
 
   @Effect({ dispatch: false })
   savePlayerGroupError$ = this.actions$
