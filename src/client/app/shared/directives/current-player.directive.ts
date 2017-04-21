@@ -53,10 +53,20 @@ export class CurrentPlayerComponent implements OnChanges {
 
     if (this.isGamePlayer) {
       // TODO game logic here
+      const game = this.isGamePlayer;
+      const gamePlayerIds = game.gamePlayers.map(x => x.playerId);
+      const isGamePlayer = gamePlayerIds.includes(currentPlayer.playerId);
+      if ((!this.not && isGamePlayer) || (this.not && !isGamePlayer)) {
+        return false;
+      }
     }
 
     if (this.isDeckOwner) {
-      // TODO deck owner
+      const deck = this.isDeckOwner;
+      const isDeckOwner = deck.creatorId === currentPlayer.playerId;
+      if ((!this.not && isDeckOwner) || (this.not && !isDeckOwner)) {
+        return false;
+      }
     }
 
     if (this.isGroupAdmin) {

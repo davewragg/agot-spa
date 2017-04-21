@@ -13,12 +13,13 @@
       </li>
     </ul>
     <div class="card-block text-right">
-      <!--TODO if not member-->
       <agot-current-player [isGroupMember]="group" [not]="true">
         <a href="#" class="btn btn-success">Join Group</a>
       </agot-current-player>
       <!--TODO if admin-->
-      <a [routerLink]="['/groups', group.id]" class="btn btn-secondary">Edit Group</a>
+      <agot-current-player [isGroupAdmin]="group">
+        <a [routerLink]="['/groups', group.id]" class="btn btn-secondary">Edit Group</a>
+      </agot-current-player>
       <!--TODO missing API-->
       <!--<a href="#" class="btn btn-primary">Leave Group</a>-->
     </div>
