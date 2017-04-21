@@ -92,6 +92,7 @@
 - [x] unauth bootloop
 
 - [ ] switch confirm prompts for proper dialogues
+- [ ] hide selectors with only one option (eg playergroups)
 
 - [ ] import/reuse/check saved deck
 
