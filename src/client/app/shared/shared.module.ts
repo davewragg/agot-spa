@@ -41,6 +41,7 @@ import { DateService } from './services/date.service';
 import { PlayerGroupService } from './services/player-group.service';
 import { PlayerGroupSelectorComponent } from './components/player-group-selector.component';
 import { ThronesDbLinkComponent } from './components/thrones-db-link.component';
+import { CurrentPlayerComponent } from './directives/current-player.directive';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -69,7 +70,8 @@ import { ThronesDbLinkComponent } from './components/thrones-db-link.component';
     PlayerGroupSelectorComponent,
     PlayerLinkComponent,
     ThronesDbLinkComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    CurrentPlayerComponent,
   ],
   exports: [
     StatsTableComponent,
@@ -97,7 +99,8 @@ import { ThronesDbLinkComponent } from './components/thrones-db-link.component';
     PlayerGroupSelectorComponent,
     PlayerLinkComponent,
     ThronesDbLinkComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    CurrentPlayerComponent,
   ],
 })
 export class SharedModule {
