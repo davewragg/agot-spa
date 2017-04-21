@@ -139,14 +139,14 @@ export const getMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAll
   (ids, groups, players) => {
     return groups.filter((group) => ids.includes(group.id)).map((group) =>
       Object.assign({}, group, {
-        players: group.players.map((player) => players[player.playerId])
+        players: group.players.map((player) => players[player.playerId] ? players[player.playerId] : player)
       }));
   });
 export const getAllButMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, getAllPlayerGroups, getPlayerEntities,
   (ids, groups, players) => {
     return groups.filter((group) => !ids.includes(group.id)).map((group) =>
       Object.assign({}, group, {
-        players: group.players.map((player) => players[player.playerId])
+        players: group.players.map((player) => players[player.playerId] ? players[player.playerId] : player)
       }));
   });
 export const getSelectedPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getSelectedId);
