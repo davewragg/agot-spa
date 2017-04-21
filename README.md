@@ -118,6 +118,7 @@
   - [ ] decks
   - [ ] games
   - [ ] infinite scroll!
+  - [ ] https://github.com/robianmcd/angular-lazy-for ?
 - [x] login and route/content protection
 - [ ] player groups/metas view
   - [ ] create

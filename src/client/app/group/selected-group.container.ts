@@ -47,7 +47,9 @@ export class SelectedPlayerGroupPageComponent {
   }
 
   saveGroup(changes: any) {
-    console.log(changes);
-    this.store.dispatch(new playerGroupActions.SaveAction(changes));
+    let group;
+    this.playerGroup$.subscribe(x => group = x || {});
+    const updatedGroup = Object.assign({}, group, changes);
+    this.store.dispatch(new playerGroupActions.SaveAction(updatedGroup));
   }
 }
