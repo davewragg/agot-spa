@@ -25,9 +25,9 @@ import * as fromRoot from '../state-management/reducers/root';
           <agot-player-link [player]="player"></agot-player-link>
           <span class="pull-right">
             <!--TODO is admin-->
-            <span class="tag tag-success">Admin</span>
+            <!--<span class="tag tag-success">Admin</span>-->
             <!--TODO kick-->
-            <span class="tag tag-danger">Eject</span>
+            <!--<span class="tag tag-danger">Eject</span>-->
           </span>
         </li>
       </ul>

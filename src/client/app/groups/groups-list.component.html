@@ -18,7 +18,7 @@
       <!--TODO if admin-->
       <a [routerLink]="['/groups', group.id]" class="btn btn-secondary">Edit Group</a>
       <!--TODO missing API-->
-      <a href="#" class="btn btn-primary">Leave Group</a>
+      <!--<a href="#" class="btn btn-primary">Leave Group</a>-->
     </div>
     <div class="card-footer text-muted" *ngIf="group.location || group.country">
       <small>{{ group.location }} {{ group.country }}</small>
