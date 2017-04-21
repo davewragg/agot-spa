@@ -1,5 +1,6 @@
-import * as currentPlayerActions from '../actions/current-player.actions';
 import { Player } from '../../shared/models/player.model';
+import * as currentPlayerActions from '../actions/current-player.actions';
+import * as playerGroupActions from '../actions/player-group.actions';
 
 export interface State {
   loading: boolean;
@@ -13,7 +14,7 @@ const initialState: State = {
   groupIds: [],
 };
 
-export function reducer(state = initialState, action: currentPlayerActions.Actions): State {
+export function reducer(state = initialState, action: currentPlayerActions.Actions | playerGroupActions.Actions): State {
   switch (action.type) {
     case currentPlayerActions.LOAD: {
       return Object.assign({}, state, {
@@ -28,6 +29,18 @@ export function reducer(state = initialState, action: currentPlayerActions.Actio
         loading: false,
         currentPlayer: player,
         groupIds: ids,
+      });
+    }
+
+    case playerGroupActions.SAVE_COMPLETE: {
+      const group = action.payload;
+      const updatedGroupIds = state.groupIds.includes(group.id) ? state.groupIds : [
+        ...state.groupIds,
+        group.id,
+      ];
+      return Object.assign({}, state, {
+        loading: false,
+        groupIds: updatedGroupIds,
       });
     }
 
