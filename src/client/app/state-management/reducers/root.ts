@@ -150,7 +150,15 @@ export const getAllButMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, 
       }));
   });
 export const getSelectedPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getSelectedId);
-export const getViewingPlayerGroup = createSelector(getPlayerGroupState, fromPlayerGroups.getViewing);
+export const getViewingPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getViewingId);
+export const getViewingPlayerGroup = createSelector(getViewingPlayerGroupId, getPlayerGroupEntities, getPlayerEntities,
+  (id, groups, players) => {
+    const group = groups[id];
+    return Object.assign({}, group, {
+      players: group.players.map((player) => players[player.playerId] ? players[player.playerId] : player)
+    });
+  });
+
 export const getPlayerGroupsLoading = createSelector(getPlayerGroupState, fromPlayerGroups.getLoading);
 
 export const getDecksState = (state: State) => state.decks;

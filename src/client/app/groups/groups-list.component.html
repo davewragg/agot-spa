@@ -1,7 +1,7 @@
 <div class="card-deck">
   <div class="card" *ngFor="let group of groups">
     <h4 class="card-header">{{ group.name }}</h4>
-    <div class="card-block">
+    <div class="card-block" *ngIf="group.description">
       <blockquote class="card-text blockquote">
         {{ group.description }}
       </blockquote>
@@ -20,7 +20,7 @@
       <!--TODO missing API-->
       <a href="#" class="btn btn-primary">Leave Group</a>
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer text-muted" *ngIf="group.location || group.country">
       <small>{{ group.location }} {{ group.country }}</small>
     </div>
   </div>

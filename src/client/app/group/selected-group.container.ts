@@ -21,6 +21,7 @@ import * as fromRoot from '../state-management/reducers/root';
 
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let player of (playerGroup$ | async)?.players">
+          <img class="icon" src="./assets/img/icon{{ player.mostPlayedFactionId }}.png">
           <agot-player-link [player]="player"></agot-player-link>
           <span class="pull-right">
             <!--TODO is admin-->

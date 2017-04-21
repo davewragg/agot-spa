@@ -100,10 +100,6 @@ export const getViewingId = (state: State) => state.viewingId;
 
 export const getLoading = (state: State) => state.loading;
 
-export const getViewing = createSelector(getEntities, getViewingId, (entities, selectedId) => {
-  return entities[selectedId];
-});
-
 export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });
