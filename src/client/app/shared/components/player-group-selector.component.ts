@@ -13,6 +13,8 @@ import { PlayerGroup } from '../models/player-group.model';
 export class PlayerGroupSelectorComponent {
   @Input()
   playerGroupId: number;
+  @Input()
+  allowAll: boolean = false;
   @Output()
   playerGroupChange: EventEmitter<number> = new EventEmitter<number>();
 
