@@ -56,15 +56,31 @@ export class PlayerGroupEffects {
   savePlayerGroupSuccess$: Observable<Action> = this.actions$
     .ofType(playerGroupActions.SAVE_COMPLETE)
     .map((action: playerGroupActions.SaveCompleteAction) => action.payload)
-    .mergeMap(playerGroup => [
-      new playerGroupActions.LoadAction(playerGroup),
-      go(['groups']),
-    ]);
+    .map(playerGroup => go(['groups']));
 
   @Effect({ dispatch: false })
   savePlayerGroupError$ = this.actions$
     .ofType(playerGroupActions.SAVE_FAILURE)
     .map((action: playerGroupActions.SaveFailureAction) => action.payload)
+    .do(error =>
+      // TODO check error code for 403 here and admonish
+      this.notificationService.error('Whoops', error.message || error._body || error)
+    );
+
+  @Effect()
+  joinPlayerGroup$: Observable<Action> = this.actions$
+    .ofType(playerGroupActions.JOIN)
+    .map((action: playerGroupActions.JoinAction) => action.payload)
+    .mergeMap(playerGroup =>
+      this.playerGroupService.joinPlayerGroup(playerGroup)
+        .map((updatedPlayerGroup) => new playerGroupActions.JoinCompleteAction(updatedPlayerGroup))
+        .catch((error) => of(new playerGroupActions.JoinFailureAction(error.toString())))
+    );
+
+  @Effect({ dispatch: false })
+  joinPlayerGroupError$ = this.actions$
+    .ofType(playerGroupActions.JOIN_FAILURE)
+    .map((action: playerGroupActions.JoinFailureAction) => action.payload)
     .do(error =>
       // TODO check error code for 403 here and admonish
       this.notificationService.error('Whoops', error.message || error._body || error)

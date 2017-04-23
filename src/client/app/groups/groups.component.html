@@ -8,6 +8,6 @@
     <agot-groups-list [groups]="myGroups$ | async"></agot-groups-list>
 
     <h3>The Rest</h3>
-    <agot-groups-list [groups]="groups$ | async"></agot-groups-list>
+    <agot-groups-list [groups]="groups$ | async" (joinGroup)="onGroupJoin($event)"></agot-groups-list>
   </div>
 </section>

@@ -27,6 +27,10 @@ export class PlayerGroupService {
     return of(this.setToLocal(playerGroupId));
   }
 
+  joinPlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    return this.dataService.joinPlayerGroup(playerGroup);
+  }
+
   updatePlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
     if (playerGroup.id) {
       return this.dataService.updatePlayerGroup(playerGroup);
@@ -34,11 +38,6 @@ export class PlayerGroupService {
       return this.dataService.createPlayerGroup(playerGroup);
     }
   }
-
-  // deletePlayerGroup(playerGroupId: number): Observable<any> {
-  //   this.cacheService.invalidate();
-  //   return this.dataService.deletePlayerGroup(playerGroupId);
-  // }
 
   private getFromLocal() {
     console.log('get selected player group id from local storage');

@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { PlayerGroup } from '../../shared/models/player-group.model';
+import { Player } from '../../shared/models/player.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -19,6 +20,9 @@ export const GET_SELECTED = '[PlayerGroup] Get Selected';
 export const SAVE = '[PlayerGroup] Save';
 export const SAVE_COMPLETE = '[PlayerGroup] Save Complete';
 export const SAVE_FAILURE = '[PlayerGroup] Save Failure';
+export const JOIN = '[PlayerGroup] Join';
+export const JOIN_COMPLETE = '[PlayerGroup] Join Complete';
+export const JOIN_FAILURE = '[PlayerGroup] Join Failure';
 
 /**
  * Every action is comprised of at least a type and an optional
@@ -87,6 +91,27 @@ export class SaveFailureAction implements Action {
   }
 }
 
+export class JoinAction implements Action {
+  readonly type = JOIN;
+
+  constructor(public payload: PlayerGroup) {
+  }
+}
+
+export class JoinCompleteAction implements Action {
+  readonly type = JOIN_COMPLETE;
+
+  constructor(public payload: PlayerGroup) {
+  }
+}
+
+export class JoinFailureAction implements Action {
+  readonly type = JOIN_FAILURE;
+
+  constructor(public payload: any) {
+  }
+}
+
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
@@ -100,4 +125,7 @@ export type Actions
   | GetSelectedAction
   | SaveAction
   | SaveCompleteAction
-  | SaveFailureAction;
+  | SaveFailureAction
+  | JoinAction
+  | JoinCompleteAction
+  | JoinFailureAction;

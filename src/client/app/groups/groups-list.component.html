@@ -14,7 +14,7 @@
     </ul>
     <div class="card-block text-right">
       <agot-current-player [isGroupMember]="group" [not]="true">
-        <a href="#" class="btn btn-success">Join Group</a>
+        <button (click)="onJoin(group)" class="btn btn-success">Join Group</button>
       </agot-current-player>
       <!--TODO if admin-->
       <agot-current-player [isGroupAdmin]="group">

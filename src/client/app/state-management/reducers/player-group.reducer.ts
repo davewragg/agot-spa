@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { union } from 'lodash';
 import { PlayerGroup } from '../../shared/models/player-group.model';
 import * as playerGroupActions from '../actions/player-group.actions';
 
@@ -71,13 +72,27 @@ export function reducer(state = initialState, action: playerGroupActions.Actions
       });
     }
 
+    case playerGroupActions.JOIN:
     case playerGroupActions.SAVE: {
       return Object.assign({}, state, {
         loading: true,
       });
     }
 
-    case playerGroupActions.SAVE_COMPLETE:
+    case playerGroupActions.JOIN_COMPLETE:
+    case playerGroupActions.SAVE_COMPLETE: {
+      const playerGroup = action.payload;
+
+      return Object.assign({}, state, {
+        ids: union(state.ids, [playerGroup.id]),
+        entities: Object.assign({}, state.entities, {
+          [playerGroup.id]: playerGroup
+        }),
+        loading: false,
+      });
+    }
+
+    case playerGroupActions.JOIN_FAILURE:
     case playerGroupActions.SAVE_FAILURE: {
       return Object.assign({}, state, {
         loading: false,

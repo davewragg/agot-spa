@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Player } from '../models/player.model';
 import { Deck } from '../models/deck.model';
 import { PlayerGroup } from '../models/player-group.model';
@@ -16,8 +17,9 @@ import * as fromRoot from '../../state-management/reducers/root';
     </ng-container>
   `
 })
-export class CurrentPlayerComponent implements OnChanges {
+export class CurrentPlayerComponent implements OnChanges, OnDestroy {
   currentPlayer$: Observable<Player>;
+  playerSub: Subscription;
 
   passesChecks: boolean;
 
@@ -37,14 +39,26 @@ export class CurrentPlayerComponent implements OnChanges {
 
   constructor(private store: Store<fromRoot.State>) {
     this.currentPlayer$ = store.select(fromRoot.getCurrentPlayer).filter(x => !!x);
+    this.playerSub = this.currentPlayer$.subscribe(this.setCheckState.bind(this));
   }
 
   ngOnChanges() {
-    this.passesChecks = this.checkChecks();
+    let currentPlayer = this.getCurrentPlayer();
+    this.setCheckState(currentPlayer);
   }
 
-  checkChecks(): boolean {
-    let currentPlayer = this.getCurrentPlayer();
+  ngOnDestroy() {
+    this.playerSub.unsubscribe();
+  }
+
+  private setCheckState(currentPlayer: Player) {
+    this.passesChecks = this.checkChecks(currentPlayer);
+  }
+
+  private checkChecks(currentPlayer: Player): boolean {
+    if (!currentPlayer) {
+      return false;
+    }
 
     // TODO export logic to service
     if (this.allowSuperUserOverride) {
@@ -75,9 +89,10 @@ export class CurrentPlayerComponent implements OnChanges {
 
     if (this.isGroupMember) {
       const group = this.isGroupMember;
-      const memberIds = currentPlayer.playerGroups.map((x: PlayerGroup) => x.id);
-      const isGroupMember = !memberIds.includes(group.id);
-      if ((!this.not && isGroupMember) || (this.not && !isGroupMember)) {
+      const memberIds = currentPlayer.playerGroups.map(x => x.id);
+      const groupMembers = group.players.map(x => x.playerId);
+      const isGroupMember = memberIds.includes(group.id) || groupMembers.includes(currentPlayer.playerId);
+      if ((this.not && isGroupMember) || (!this.not && !isGroupMember)) {
         return false;
       }
     }

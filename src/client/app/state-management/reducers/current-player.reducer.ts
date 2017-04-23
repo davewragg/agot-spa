@@ -32,14 +32,14 @@ export function reducer(state = initialState, action: currentPlayerActions.Actio
       });
     }
 
-    case playerGroupActions.SAVE_COMPLETE: {
+    case playerGroupActions.SAVE_COMPLETE:
+    case playerGroupActions.JOIN_COMPLETE: {
       const group = action.payload;
       const updatedGroupIds = state.groupIds.includes(group.id) ? state.groupIds : [
         ...state.groupIds,
         group.id,
       ];
       return Object.assign({}, state, {
-        loading: false,
         groupIds: updatedGroupIds,
       });
     }

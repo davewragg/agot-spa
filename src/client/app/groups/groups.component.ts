@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { PlayerGroup } from '../shared/models/player-group.model';
+import * as playerGroupActions from '../state-management/actions/player-group.actions';
 import * as fromRoot from '../state-management/reducers/root';
 
 @Component({
@@ -21,5 +22,9 @@ export class GroupsComponent {
     this.myGroups$ = store.select(fromRoot.getMyPlayerGroups);
     this.groups$ = store.select(fromRoot.getAllButMyPlayerGroups);
     this.loading$ = store.select(fromRoot.getPlayerGroupsLoading);
+  }
+
+  onGroupJoin(group: PlayerGroup) {
+    this.store.dispatch(new playerGroupActions.JoinAction(group));
   }
 }

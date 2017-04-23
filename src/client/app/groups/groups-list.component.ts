@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { PlayerGroup } from '../shared/models/player-group.model';
 
 @Component({
@@ -15,4 +15,11 @@ import { PlayerGroup } from '../shared/models/player-group.model';
 export class GroupsListComponent {
   @Input()
   groups: PlayerGroup[];
+
+  @Output()
+  joinGroup: EventEmitter<PlayerGroup> = new EventEmitter<PlayerGroup>();
+
+  onJoin(group: PlayerGroup) {
+    this.joinGroup.emit(group);
+  }
 }

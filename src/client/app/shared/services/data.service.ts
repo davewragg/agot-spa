@@ -120,6 +120,20 @@ export class DataService {
       .catch(this.handleError.bind(this));
   }
 
+  joinPlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    console.log('joinPlayerGroup called', playerGroup);
+    return this.http.post(`${this.baseUrl}api/playergroups/addcurrentplayertogroup`,
+      undefined,
+      Object.assign({
+        search: {
+          playerGroupId: playerGroup.id,
+        }
+      }, DataService._getContentHeaders())
+    )
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
   updatePlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
     console.log('updatePlayerGroup called', playerGroup);
     return this.http.put(`${this.baseUrl}api/playergroups/edit`,
