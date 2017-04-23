@@ -2,7 +2,7 @@
   <h2 [hidden]="loading$ | async">{{ title || 'Rankings' }}</h2>
 
   <div class="mb-1" *ngIf="!(loading$ | async)">
-    <agot-player-group-selector [playerGroup]="selectedGroupId$ | async"
+    <agot-player-group-selector [playerGroupId]="selectedGroupId$ | async"
                                 (playerGroupChange)="onSelectedGroupChange($event)"
                                 [hidden]="hideFilters">
     </agot-player-group-selector>

@@ -1,5 +1,11 @@
 <button class="btn btn-primary mb-1" [routerLink]="['/games/new']">Create new game</button>
 
+<div class="mb-1">
+  <agot-player-group-selector [playerGroupId]="selectedGroupId$ | async"
+                              (playerGroupChange)="onGroupChange($event)">
+  </agot-player-group-selector>
+</div>
+
 <agot-rankings [hideFilters]="true" title="All-time rankings"></agot-rankings>
 <div class="text-sm-right mb-1"><a class="btn btn-outline-primary" [routerLink]="['/rankings']">More...</a></div>
 

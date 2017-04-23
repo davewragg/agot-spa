@@ -1,9 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../state-management/reducers/root';
-import { pull, cloneDeep } from 'lodash';
-import { FilterCriteria } from '../models/filter-criteria.model';
 import { PlayerGroup } from '../models/player-group.model';
 
 @Component({
@@ -12,68 +10,31 @@ import { PlayerGroup } from '../models/player-group.model';
   templateUrl: 'player-group-selector.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlayerGroupSelectorComponent implements OnInit {
+export class PlayerGroupSelectorComponent {
   @Input()
-  playerGroup: FilterCriteria | number;
-  criteria: FilterCriteria;
-  @Input()
-  multiSelect: boolean = false;
+  playerGroupId: number;
   @Output()
-  playerGroupChange: EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
+  playerGroupChange: EventEmitter<number> = new EventEmitter<number>();
 
   showAll: boolean = false;
 
   myPlayerGroups$: Observable<PlayerGroup[]>;
   playerGroups$: Observable<PlayerGroup[]>;
 
-  private static getCriteria(playerGroup: FilterCriteria | number) {
-    if (typeof playerGroup === 'number') {
-      const criteria = new FilterCriteria();
-      criteria.playerGroupIds = [playerGroup];
-      return criteria;
-    }
-    return cloneDeep(playerGroup);
-  }
-
   constructor(private store: Store<fromRoot.State>) {
     this.playerGroups$ = store.select(fromRoot.getAllPlayerGroups);
     this.myPlayerGroups$ = store.select(fromRoot.getMyPlayerGroups);
   }
 
-  ngOnInit() {
-    this.criteria = this.playerGroup ?
-      PlayerGroupSelectorComponent.getCriteria(this.playerGroup) : new FilterCriteria();
-  }
-
   onPlayerGroupChange($event: any) {
     const checked = $event.target.checked;
     const playerGroupId = +$event.target.value;
-    if (this.multiSelect) {
-      this.processMultiSelectChange(checked, playerGroupId);
-    } else {
-      // this.criteria.playerGroupIds = checked ? [playerGroupId] : [];
-      if (!checked) return;
-      this.criteria.playerGroupIds = [playerGroupId];
-    }
+    if (!checked) return;
     console.log(playerGroupId, checked);
-    this.onExecute();
+    this.onExecute(playerGroupId);
   }
 
-  // onClear() {
-  //   this.criteria.playerGroupIds.length = 0;
-  //   this.onExecute();
-  // }
-
-  onExecute() {
-    this.playerGroupChange.emit(this.criteria);
+  onExecute(playerGroupId: number) {
+    this.playerGroupChange.emit(playerGroupId);
   }
-
-  private processMultiSelectChange(checked: boolean, playerGroupId: number) {
-    if (checked && !this.criteria.playerGroupIds.includes(playerGroupId)) {
-      this.criteria.playerGroupIds.push(playerGroupId);
-    } else if (!checked) {
-      pull(this.criteria.playerGroupIds, playerGroupId);
-    }
-  }
-
 }
