@@ -15,11 +15,19 @@ import { PlayerGroup } from '../shared/models/player-group.model';
 export class GroupsListComponent {
   @Input()
   groups: PlayerGroup[];
+  @Input()
+  selectedGroupId: number;
 
   @Output()
   joinGroup: EventEmitter<PlayerGroup> = new EventEmitter<PlayerGroup>();
+  @Output()
+  selectGroup: EventEmitter<PlayerGroup> = new EventEmitter<PlayerGroup>();
 
   onJoin(group: PlayerGroup) {
     this.joinGroup.emit(group);
+  }
+
+  onSelect(group: PlayerGroup) {
+    this.selectGroup.emit(group);
   }
 }

@@ -27,4 +27,8 @@ export class GroupsComponent {
   onGroupJoin(group: PlayerGroup) {
     this.store.dispatch(new playerGroupActions.JoinAction(group));
   }
+
+  onGroupSelect(group: PlayerGroup) {
+    this.store.dispatch(new playerGroupActions.SelectAction(group.id));
+  }
 }

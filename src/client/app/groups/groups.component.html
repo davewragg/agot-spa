@@ -5,9 +5,12 @@
 
   <div class="mb-1" *ngIf="!(loading$ | async)">
     <h3>My Groups</h3>
-    <agot-groups-list [groups]="myGroups$ | async"></agot-groups-list>
+    <agot-groups-list [groups]="myGroups$ | async"
+                      [selectedGroupId]="selectedGroupId$ | async"
+                      (selectGroup)="onGroupSelect($event)"></agot-groups-list>
 
     <h3>The Rest</h3>
-    <agot-groups-list [groups]="groups$ | async" (joinGroup)="onGroupJoin($event)"></agot-groups-list>
+    <agot-groups-list [groups]="groups$ | async"
+                      (joinGroup)="onGroupJoin($event)"></agot-groups-list>
   </div>
 </section>

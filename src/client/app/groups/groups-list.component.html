@@ -1,31 +1,33 @@
-<div class="card-deck">
-  <div class="card" *ngFor="let group of groups">
-    <h4 class="card-header">{{ group.name }}</h4>
-    <div class="card-block" *ngIf="group.description">
-      <blockquote class="card-text blockquote">
-        {{ group.description }}
-      </blockquote>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" *ngFor="let player of group.players">
-        <img class="icon" src="./assets/img/icon{{ player.mostPlayedFactionId }}.png">
-        <agot-player-link [player]="player"></agot-player-link>
-      </li>
-    </ul>
-    <div class="card-block text-right">
-      <agot-current-player [isGroupMember]="group" [not]="true">
-        <button (click)="onJoin(group)" class="btn btn-success">Join Group</button>
-      </agot-current-player>
+<div class="card" *ngFor="let group of groups">
+  <h4 class="card-header">{{ group.name }}</h4>
+  <div class="card-block" *ngIf="group.description">
+    <blockquote class="card-text blockquote">
+      {{ group.description }}
+    </blockquote>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" *ngFor="let player of group.players">
+      <img class="icon" src="./assets/img/icon{{ player.mostPlayedFactionId }}.png">
+      <agot-player-link [player]="player"></agot-player-link>
+    </li>
+  </ul>
+  <div class="card-block text-right">
+    <agot-current-player [isGroupMember]="group" [not]="true">
+      <button (click)="onJoin(group)" class="btn btn-success">Join Group</button>
+    </agot-current-player>
+    <agot-current-player [isGroupMember]="group">
+      <button (click)="onSelect(group)" class="btn btn-secondary"
+              [disabled]="selectedGroupId === group.id">Select</button>
       <!--TODO if admin-->
       <agot-current-player [isGroupAdmin]="group">
-        <a [routerLink]="['/groups', group.id]" class="btn btn-secondary">Edit Group</a>
+        <a [routerLink]="['/groups', group.id]" class="btn btn-warning">Edit Group</a>
       </agot-current-player>
       <!--TODO missing API-->
       <!--<a href="#" class="btn btn-primary">Leave Group</a>-->
-    </div>
-    <div class="card-footer text-muted" *ngIf="group.location || group.country">
-      <small>{{ group.location }} {{ group.country }}</small>
-    </div>
+    </agot-current-player>
   </div>
-  <div class="alert alert-warning" *ngIf="!groups.length">Nothing to see here</div>
+  <div class="card-footer text-muted" *ngIf="group.location || group.country">
+    <small>{{ group.location }} {{ group.country }}</small>
+  </div>
 </div>
+<div class="alert alert-warning" *ngIf="!groups.length">Nothing to see here</div>
