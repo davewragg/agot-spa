@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { PlayerGroup } from '../shared/models/player-group.model';
 import * as playerGroupActions from '../state-management/actions/player-group.actions';
@@ -30,5 +31,6 @@ export class GroupsComponent {
 
   onGroupSelect(group: PlayerGroup) {
     this.store.dispatch(new playerGroupActions.SelectAction(group.id));
+    this.store.dispatch(go(['/']));
   }
 }
