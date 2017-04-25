@@ -7,7 +7,6 @@ import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 // Load i18n providers
 // import { TranslationProviders } from './i18n.providers';
-import './operators';
 // The app module
 import { AppModule } from './app.module';
 
