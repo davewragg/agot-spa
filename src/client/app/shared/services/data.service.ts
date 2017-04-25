@@ -37,6 +37,9 @@ export class DataService {
     if (filterCriteria.deckIds) {
       filterCriteria.deckIds.forEach((deckId) => params.append('deckIds', deckId + ''));
     }
+    if (filterCriteria.playerGroupIds) {
+      filterCriteria.playerGroupIds.forEach((playerGroupId) => params.append('playerGroupIds', playerGroupId + ''));
+    }
     return params;
   }
 

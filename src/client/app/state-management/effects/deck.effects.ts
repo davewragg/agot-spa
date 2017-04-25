@@ -67,10 +67,13 @@ export class DeckEffects {
     .ofType(playerGroupActions.SELECT)
     .map((action: playerGroupActions.SelectAction) => action.payload)
     .switchMap(playerGroupId => {
-      const nextSearch$ = this.actions$.ofType(gameActions.EDIT_PLAYER).skip(1);
+      if (!playerGroupId) {
+        return empty();
+      }
+      const nextSearch$ = this.actions$.ofType(gameActions.SELECT).skip(1);
 
       return this.deckService.getDecksBy({
-        playerGroupId,
+        playerGroupIds: [playerGroupId],
       })
         .takeUntil(nextSearch$)
         .map(decks => new deckActions.LoadForGroupAction(decks))
