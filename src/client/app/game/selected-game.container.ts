@@ -18,7 +18,7 @@ import { Game } from '../shared/models/game.model';
 
     </div>
     <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
-    
+
     <h3 *ngIf="!(loading$ | async) && !(game$ | async)" class="alert alert-danger">Game not found</h3>
   `
 })

@@ -29,7 +29,7 @@ export class DeckChooserComponent {
     } else {
       this.deckChooserForm.patchValue({ deckId: '' });
     }
-  };
+  }
 
   deckChooserForm: FormGroup = new FormGroup({
     deckId: new FormControl('', Validators.required),

@@ -54,7 +54,7 @@ export class GameFormComponent implements OnInit, OnDestroy {
   private static convertDateString(date: string) {
     // have to remove the time and timezone to populate the control correctly
     return date.slice(0, 16);
-  };
+  }
 
   constructor(private store: Store<fromRoot.State>,
               private notificationService: NotificationService) {
@@ -108,5 +108,5 @@ export class GameFormComponent implements OnInit, OnDestroy {
       }
       return true;
     });
-  };
+  }
 }
