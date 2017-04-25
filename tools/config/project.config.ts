@@ -71,11 +71,7 @@ export class ProjectConfig extends SeedConfig {
     let additionalPackages: ExtendPackages[] = [
       {
         name: 'angular2-toaster',
-        path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
-      },
-      {
-        name: 'angular2-toaster/*',
-        path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.min.js'
+        path: 'node_modules/angular2-toaster/bundles/angular2-toaster.umd.js'
       },
       {
         name: 'date-fns',

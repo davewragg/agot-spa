@@ -153,7 +153,7 @@
     "@ngrx/store": "^2.2.1",
     "@ngrx/store-devtools": "^3.2.2",
     "angular2-highcharts": "^0.4.1",
-    "angular2-toaster": "^2.0.0",
+    "angular2-toaster": "^3.0.0",
     "autotrack": "^1.0.3",
     "bootstrap": "4.0.0-alpha.5",
     "core-js": "^2.4.1",
