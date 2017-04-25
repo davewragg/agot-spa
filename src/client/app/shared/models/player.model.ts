@@ -5,4 +5,5 @@ export interface Player {
   name: string;
   mostPlayedFactionId: number;
   playerGroups?: PlayerGroup[];
+  adminGroupIds?: number[];
 }

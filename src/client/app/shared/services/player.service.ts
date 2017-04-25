@@ -33,6 +33,21 @@ export class PlayerService {
   private _getCurrentPlayer(): Observable<Player> {
     console.log('_getCurrentPlayer called');
     return this.dataService.getCurrentPlayer()
+      .map(this.mapPlayerGroupAdmin.bind(this))
       .publishReplay(1).refCount();
+  }
+
+  private mapPlayerGroupAdmin(player: Player) {
+    let adminGroupIds: number[] = [];
+    const playerGroups = player.playerGroups.map((group: any) => {
+      if (group.isUserGroupAdmin) {
+        adminGroupIds.push(group.playerGroup.id);
+      }
+      return group.playerGroup;
+    });
+    return Object.assign({}, player, {
+      playerGroups,
+      adminGroupIds,
+    });
   }
 }

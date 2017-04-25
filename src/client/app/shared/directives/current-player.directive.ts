@@ -78,13 +78,18 @@ export class CurrentPlayerComponent implements OnChanges, OnDestroy {
     if (this.isDeckOwner) {
       const deck = this.isDeckOwner;
       const isDeckOwner = deck.creatorId === currentPlayer.playerId;
-      if ((!this.not && isDeckOwner) || (this.not && !isDeckOwner)) {
+      if ((this.not && isDeckOwner) || (!this.not && !isDeckOwner)) {
         return false;
       }
     }
 
     if (this.isGroupAdmin) {
-      // TODO group admin
+      const group = this.isGroupAdmin;
+      const adminGroups = currentPlayer.adminGroupIds;
+      const isGroupAdmin = adminGroups.includes(group.id);
+      if ((this.not && isGroupAdmin) || (!this.not && !isGroupAdmin)) {
+        return false;
+      }
     }
 
     if (this.isGroupMember) {
