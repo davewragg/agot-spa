@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       ascending: true,
       rangeSelection: DateRangeType.THIS_WEEK,
       playerGroupIds: [groupId],
+      limit: null,
     });
     this.store.dispatch(new gameActions.SetFilterAction(gameFilterCriteria));
   }

@@ -44,7 +44,7 @@ export class GameEffects {
         this.gameService.getGames(criteria)
           .takeUntil(nextSearch$)
           .map(games => new gameActions.FilterCompleteAction(games))
-          .catch(() => of(new gameActions.FilterCompleteAction([])))
+          .catch(() => of(new gameActions.FilterCompleteAction({ records: [], totalRecords: 0 })))
       );
     });
 

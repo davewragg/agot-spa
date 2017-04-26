@@ -15,6 +15,11 @@ import { Router } from '@angular/router';
 
 declare let Rollbar: any;
 
+export interface PaginatedResponse {
+  records: Array<Game> | Array<Deck>;
+  totalRecords: number;
+}
+
 @Injectable()
 export class DataService {
   private baseUrl = Config.API;
@@ -25,6 +30,8 @@ export class DataService {
     params.set('endDate', !filterCriteria.toDate ? 'null' : filterCriteria.toDate);
     // yes I know this is backwards but it's a quick fix here
     params.set('sortBy', filterCriteria.ascending ? 'desc' : 'asc');
+    params.set('limit', filterCriteria.limit + '');
+    params.set('offset', filterCriteria.offset + '');
     if (filterCriteria.playerIds) {
       filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId));
     }
@@ -155,7 +162,7 @@ export class DataService {
       .catch(this.handleError.bind(this));
   }
 
-  getFilteredGames(filterCriteria: FilterCriteria) {
+  getFilteredGames(filterCriteria: FilterCriteria): Observable<PaginatedResponse> {
     console.log('getfilteredgames called');
     const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
     return this.http.get(`${this.baseUrl}api/games/searchgames`, {
@@ -165,7 +172,7 @@ export class DataService {
       .catch(this.handleError.bind(this));
   }
 
-  getGames(criteria: FilterCriteria) {
+  getGames(criteria: FilterCriteria): Observable<PaginatedResponse> {
     return this.getFilteredGames(criteria);
   }
 
@@ -274,5 +281,4 @@ export class DataService {
     }
     return Observable.throw(error);
   }
-
 }

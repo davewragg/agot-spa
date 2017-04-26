@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { DataService } from './data.service';
+import { DataService, PaginatedResponse } from './data.service';
 import { CacheService } from './cache.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Game } from '../models/game.model';
@@ -12,7 +12,7 @@ export class GameService {
               private cacheService: CacheService) {
   }
 
-  getGames(filterCriteria?: FilterCriteria): Observable<Game[]> {
+  getGames(filterCriteria?: FilterCriteria): Observable<PaginatedResponse> {
     return this.cacheService.getFilteredData('games', this.dataService.getGames, filterCriteria, this.dataService);
   }
 

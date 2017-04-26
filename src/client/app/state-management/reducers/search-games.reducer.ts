@@ -1,16 +1,19 @@
 import * as game from '../actions/game.actions';
 import { FilterCriteria } from '../../shared/models/filter-criteria.model';
+import { Game } from '../../shared/models/game.model';
 
 export interface State {
   ids: number[];
   loading: boolean;
   criteria: FilterCriteria;
+  totalRecords: number;
 }
 
 const initialState: State = {
   ids: [],
   loading: false,
   criteria: null,
+  totalRecords: 0,
 };
 
 export function reducer(state = initialState, action: game.Actions): State {
@@ -18,13 +21,13 @@ export function reducer(state = initialState, action: game.Actions): State {
     case game.FILTER: {
       const criteria = action.payload;
 
-      if (!criteria) {
-        return {
-          ids: [],
-          loading: false,
-          criteria
-        };
-      }
+      // if (!criteria) {
+      //   return {
+      //     ids: [],
+      //     loading: false,
+      //     criteria
+      //   };
+      // }
 
       return Object.assign({}, state, {
         criteria,
@@ -33,12 +36,14 @@ export function reducer(state = initialState, action: game.Actions): State {
     }
 
     case game.FILTER_COMPLETE: {
-      const games = action.payload;
+      const games = <Game[]>action.payload.records;
+      const totalRecords = action.payload.totalRecords;
 
       return {
         ids: games.map(game => game.gameId),
         loading: false,
-        criteria: state.criteria
+        criteria: state.criteria,
+        totalRecords,
       };
     }
 
@@ -53,3 +58,5 @@ export const getIds = (state: State) => state.ids;
 export const getCriteria = (state: State) => state.criteria;
 
 export const getLoading = (state: State) => state.loading;
+
+export const getTotalRecords = (state: State) => state.totalRecords;

@@ -5,6 +5,7 @@ import { DateRangeType } from './date-range-type.model';
 export class FilterCriteria {
   private static NUMBER_ARRAY_PARAM_KEYS = ['factionIds', 'agendaIds', 'deckIds', 'playerGroupIds'];
   private static ARRAY_PARAM_KEYS = ['playerIds', ...FilterCriteria.NUMBER_ARRAY_PARAM_KEYS];
+  private static DEFAULT_PAGE_SIZE = 30;
 
   fromDate: string; //iso
   toDate: string; //iso
@@ -15,6 +16,8 @@ export class FilterCriteria {
   agendaIds: number[] = [];
   deckIds: number[] = [];
   playerGroupIds: number[] = [];
+  limit: number = FilterCriteria.DEFAULT_PAGE_SIZE;
+  offset: number = 0;
   [key: string]: string | boolean | string[] | number[] | DateRangeType;
 
   static patchValues(source: FilterCriteria = new FilterCriteria(), changes: any) {

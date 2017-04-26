@@ -3,6 +3,7 @@ import { FilterCriteria } from '../../shared/models/filter-criteria.model';
 import { Game } from '../../shared/models/game.model';
 import { GamePlayer } from '../../shared/models/game-player.model';
 import { Player } from '../../shared/models/player.model';
+import { PaginatedResponse } from '../../shared/services/data.service';
 
 /**
  * For each action type in an action group, make a simple
@@ -58,7 +59,7 @@ export class FilterAction implements Action {
 export class FilterCompleteAction implements Action {
   readonly type = FILTER_COMPLETE;
 
-  constructor(public payload: Game[]) {
+  constructor(public payload: PaginatedResponse) {
   }
 }
 

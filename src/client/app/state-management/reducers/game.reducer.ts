@@ -31,7 +31,7 @@ const initialState: State = {
 export function reducer(state = initialState, action: gameActions.Actions): State {
   switch (action.type) {
     case gameActions.FILTER_COMPLETE: {
-      const games = action.payload;
+      const games = <Game[]>action.payload.records;
       const newGames = games.filter(game => !state.entities[game.gameId]);
 
       const newGameIds = newGames.map(game => game.gameId);

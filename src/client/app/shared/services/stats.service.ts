@@ -79,7 +79,7 @@ export class StatsService {
     return chain(games).groupBy((game: Game): string => {
       return game.date.substr(0, 10);
     }).toPairs()
-      .map(([dateKey, games]:[string, Game[]]) => {
+      .map(([dateKey, games]: [string, Game[]]) => {
         const year = +dateKey.substr(0, 4);
         const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
         const date = +dateKey.substr(8, 2);
@@ -90,7 +90,7 @@ export class StatsService {
   }
 
   getGamesPlayedData(sortedGames: [number, Game[]][]) {
-    return sortedGames.map(([dateKey, games]:[number, Game[]]) => {
+    return sortedGames.map(([dateKey, games]: [number, Game[]]) => {
       //noinspection TypeScriptUnresolvedVariable
       return [dateKey, games.length];
     });
@@ -102,7 +102,7 @@ export class StatsService {
       [Result.DREW]: [],
       [Result.LOST]: []
     };
-    sortedGames.forEach(([dateKey, games]:[number, Game[]]) => {
+    sortedGames.forEach(([dateKey, games]: [number, Game[]]) => {
       //noinspection TypeScriptValidateTypes
       const resultsForDay = playerId ?
         getDayResultsForPlayer(games, playerId) :
@@ -155,12 +155,14 @@ export class StatsService {
 
   _getDeckStats(criteria: FilterCriteria): Observable<DeckStats> {
     const deckId = +first(criteria.deckIds);
-    return this.gameService.getGames(Object.assign(new FilterCriteria(), {
+    return this.gameService.getGames(FilterCriteria.patchValues(undefined, {
       deckIds: [deckId],
       asc: false,
       rangeSelection: DateRangeType.ALL_TIME,
+      limit: null,
     }))
-      .map((games: Game[]): DeckStats => {
+      .map((response): DeckStats => {
+        const games = <Game[]>response.records;
         return games.reduce(buildStatsFromGames, new DeckStats());
       }).do((deckStats: DeckStats) => {
         if (deckStats.games.length === 0) {
@@ -194,7 +196,9 @@ export class StatsService {
   }
 
   getPlayerStats(playerId: string, criteria: FilterCriteria): Observable<PlayerStats> {
-    const criteriaCopy = cloneDeep(criteria);
+    const criteriaCopy = FilterCriteria.patchValues(criteria, {
+      limit: null,
+    });
     criteriaCopy.playerIds = [playerId];
     return this.cacheService.getFilteredData('playerStats', this._getPlayerStats, criteriaCopy, this);
   }
@@ -202,7 +206,8 @@ export class StatsService {
   _getPlayerStats(criteria: FilterCriteria): Observable<PlayerStats> {
     const playerId = first(criteria.playerIds);
     return this.gameService.getGames(criteria)
-      .map((games: Game[]): PlayerStats => {
+      .map((response): PlayerStats => {
+        const games = <Game[]>response.records;
         return games
           .reduce(buildStatsFromGames, new PlayerStats());
       }).do((playerStats: PlayerStats) => {
