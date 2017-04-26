@@ -81,7 +81,7 @@
 
 - [x] start using getPlayer API
 - [x] start using getDeck API
-- [ ] start using searchDecks API (and cut the "all decks" selector loose) - deckTitle=?
+- [x] start using searchDecks API (and cut the "all decks" selector loose) - deckTitle=?
 - [ ] start using searchPlayers API 
 - [x] use deck.creator
 
@@ -138,9 +138,9 @@
   - [ ] layout module
   - [ ] convert filters bars to single/multi-select dropdowns
 - [ ] improve deck selector - search by name, by recent, more details
-- [ ] deck date range filtering?
+- [x] deck date range filtering?
 - [ ] unsubscriptions for containers?
-- [ ] route change transitions
+- [ ] route change transitions [e.g.](http://jasonwatmore.com/post/2017/04/19/angular-2-4-router-animation-tutorial-example?utm_campaign=NG-Newsletter&utm_medium=email&utm_source=NG-Newsletter_197)
 - [ ] fix that memory leak - decks page?
 - [ ] app shell
 - [ ] service worker
