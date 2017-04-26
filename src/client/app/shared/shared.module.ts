@@ -42,6 +42,7 @@ import { PlayerGroupService } from './services/player-group.service';
 import { PlayerGroupSelectorComponent } from './components/player-group-selector.component';
 import { ThronesDbLinkComponent } from './components/thrones-db-link.component';
 import { CurrentPlayerComponent } from './directives/current-player.directive';
+import { PaginationComponent } from './components/pagination.component';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -58,6 +59,7 @@ import { CurrentPlayerComponent } from './directives/current-player.directive';
     AgendaFilterComponent,
     CountComponent,
     DateRangeComponent,
+    PaginationComponent,
     DeckClassBadgeComponent,
     DeckClassBlockComponent,
     DeckLinkComponent,
@@ -87,6 +89,7 @@ import { CurrentPlayerComponent } from './directives/current-player.directive';
     AgendaFilterComponent,
     CountComponent,
     DateRangeComponent,
+    PaginationComponent,
     DeckClassBadgeComponent,
     DeckClassBlockComponent,
     DeckLinkComponent,

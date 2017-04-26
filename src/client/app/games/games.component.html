@@ -19,8 +19,7 @@
 
   <agot-games-table [games]="games$ | async" [hidden]="loading$ | async"></agot-games-table>
 
-  {{ (searchQuery$ | async)?.offset }} +
-  {{ (searchQuery$ | async)?.limit }} <
-  {{ (totalRecords$ | async) }} ?
-  <button (click)="onShowMore(40)" class="btn btn-secondary">Show more</button>
+  <agot-pagination [criteria]="searchQuery$ | async"
+                   [totalRecords]="totalRecords$ | async"
+                   (showMore)="onShowMore($event)"></agot-pagination>
 </section>

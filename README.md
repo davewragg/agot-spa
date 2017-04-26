@@ -100,6 +100,7 @@
 - [ ] not a member of any groups? why not [go have a look]
 
 - [ ] import/reuse/check saved deck
+- [ ] playergroupid not set on games filtering
 
 - [ ] update charts to 5.5
   - [ ] update imports and check build
