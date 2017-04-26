@@ -5,6 +5,8 @@ import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/mergeMap';
 import * as gameActions from '../actions/game.actions';
 import { GameService } from '../../shared/services/game.service';
 import { DateService } from '../../shared/services/date.service';

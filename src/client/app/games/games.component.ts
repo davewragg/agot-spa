@@ -23,12 +23,14 @@ export class GamesComponent {
   searchQuery$: Observable<FilterCriteria>;
   games$: Observable<Game[]>;
   loading$: Observable<boolean>;
+  totalRecords$: Observable<number>;
 
   constructor(private store: Store<fromRoot.State>) {
     this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
     this.searchQuery$ = store.select(fromRoot.getSearchQuery);
     this.games$ = store.select(fromRoot.getSearchResults);
     this.loading$ = store.select(fromRoot.getSearchLoading);
+    this.totalRecords$ = store.select(fromRoot.getSearchTotalRecords);
   }
 
   onSelectedGroupChange(partialCriteria: FilterCriteria) {
@@ -40,6 +42,12 @@ export class GamesComponent {
 
   onDateRangeChange(partialCriteria: FilterCriteria) {
     this.loadGames(partialCriteria);
+  }
+
+  onShowMore(newLimit: number) {
+    this.loadGames(<FilterCriteria>{
+      limit: newLimit,
+    });
   }
 
   loadGames(changedCriteria?: FilterCriteria) {

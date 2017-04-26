@@ -44,7 +44,6 @@ import * as fromDeck from './deck.reducer';
 import * as fromThronesDb from './thrones-db.reducer';
 import * as fromLayout from './layout.reducer';
 import { Game } from '../../shared/models/game.model';
-import { Deck } from '../../shared/models/deck.model';
 
 
 /**
@@ -228,6 +227,7 @@ export const getSearchState = (state: State) => state.search;
 export const getSearchGameIds = createSelector(getSearchState, fromSearchGames.getIds);
 export const getSearchQuery = createSelector(getSearchState, fromSearchGames.getCriteria);
 export const getSearchLoading = createSelector(getSearchState, fromSearchGames.getLoading);
+export const getSearchTotalRecords = createSelector(getSearchState, fromSearchGames.getTotalRecords);
 /**
  * Some selector functions create joins across parts of state. This selector
  * composes the search result IDs to return an array of games in the store.

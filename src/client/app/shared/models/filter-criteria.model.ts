@@ -3,9 +3,10 @@ import { cloneDeep, merge, pick } from 'lodash';
 import { DateRangeType } from './date-range-type.model';
 
 export class FilterCriteria {
+  static DEFAULT_PAGE_SIZE = 20;
+
   private static NUMBER_ARRAY_PARAM_KEYS = ['factionIds', 'agendaIds', 'deckIds', 'playerGroupIds'];
   private static ARRAY_PARAM_KEYS = ['playerIds', ...FilterCriteria.NUMBER_ARRAY_PARAM_KEYS];
-  private static DEFAULT_PAGE_SIZE = 30;
 
   fromDate: string; //iso
   toDate: string; //iso
@@ -46,6 +47,12 @@ export class FilterCriteria {
     if (routeParams['rangeSelection']) {
       criteria.rangeSelection = +routeParams['rangeSelection'];
     }
+    if (routeParams['offset']) {
+      criteria.offset = +routeParams['offset'];
+    }
+    if (routeParams['limit']) {
+      criteria.limit = +routeParams['limit'];
+    }
     if (routeParams['ascending']) {
       criteria.ascending = routeParams['ascending'] === 'true';
     }
@@ -57,7 +64,7 @@ export class FilterCriteria {
       return memo;
     }, criteria);
 
-    function extractArray(param: string): (number|string)[] {
+    function extractArray(param: string): (number | string)[] {
       return param ? param.split(',').map((id) =>
         FilterCriteria.NUMBER_ARRAY_PARAM_KEYS.includes(param) ? +id : id) : [];
     }

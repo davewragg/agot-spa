@@ -14,13 +14,13 @@
 
   <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-  <!--<div *ngIf="loadingError" class="alert alert-danger">-->
-    <!--Well, shit. {{ loadingError | json }}-->
-    <!--<button type="button" (click)="loadGames(criteria)">Try again</button>-->
-  <!--</div>-->
-
   <agot-game-timeline-chart [hidden]="loading$ | async"
                             [games]="games$ | async"></agot-game-timeline-chart>
 
   <agot-games-table [games]="games$ | async" [hidden]="loading$ | async"></agot-games-table>
+
+  {{ (searchQuery$ | async)?.offset }} +
+  {{ (searchQuery$ | async)?.limit }} <
+  {{ (totalRecords$ | async) }} ?
+  <button (click)="onShowMore(40)" class="btn btn-secondary">Show more</button>
 </section>
