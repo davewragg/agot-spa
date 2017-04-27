@@ -17,9 +17,10 @@
   <agot-game-timeline-chart [hidden]="loading$ | async"
                             [games]="games$ | async"></agot-game-timeline-chart>
 
-  <agot-games-table [games]="games$ | async" [hidden]="loading$ | async"></agot-games-table>
+  <agot-games-table [games]="games$ | async"></agot-games-table>
 
   <agot-pagination [criteria]="searchQuery$ | async"
                    [totalRecords]="totalRecords$ | async"
+                   [loading]="loading$ | async"
                    (showMore)="onShowMore($event)"></agot-pagination>
 </section>

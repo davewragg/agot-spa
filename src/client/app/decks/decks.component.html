@@ -10,4 +10,4 @@
 <agot-agenda-filter [criteria]="criteria$ | async" (agendaChange)="onFilterChange($event)"></agot-agenda-filter>
 
 <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
-<agot-decks-table [decks]="decks$ | async" [hidden]="loading$ | async"></agot-decks-table>
+<agot-decks-table [decks]="decks$ | async"></agot-decks-table>
