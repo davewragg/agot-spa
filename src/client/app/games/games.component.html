@@ -1,12 +1,14 @@
 <section>
   <h2 [hidden]="loading$ | async">{{ title || 'Games' }}</h2>
 
+<!--
   <div class="mb-1" *ngIf="!(loading$ | async)">
     <agot-player-group-selector [playerGroupId]="selectedGroupId$ | async"
                                 (playerGroupChange)="onSelectedGroupChange($event)"
                                 [hidden]="hideFilters">
     </agot-player-group-selector>
   </div>
+-->
 
   <agot-date-range [showSort]="true" [criteria]="searchQuery$ | async"
                    [hidden]="hideFilters"
@@ -21,6 +23,7 @@
 
   <agot-pagination [criteria]="searchQuery$ | async"
                    [totalRecords]="totalRecords$ | async"
+                   [hidden]="hideFilters"
                    [loading]="loading$ | async"
                    (showMore)="onShowMore($event)"></agot-pagination>
 </section>

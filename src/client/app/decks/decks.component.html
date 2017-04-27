@@ -2,9 +2,11 @@
 <div class="mb-1">
   <agot-date-range [criteria]="criteria$ | async" [showSort]="false"
                    (rangeChange)="onFilterChange($event)"></agot-date-range>
+<!--
   <agot-player-group-selector [playerGroupId]="selectedGroupId$ | async"
                               (playerGroupChange)="onSelectedGroupChange($event)">
   </agot-player-group-selector>
+-->
   <agot-player-filter [criteria]="criteria$ | async" (playerChange)="onFilterChange($event)"></agot-player-filter>
   <agot-faction-filter [criteria]="criteria$ | async" (factionChange)="onFilterChange($event)"></agot-faction-filter>
   <agot-agenda-filter [criteria]="criteria$ | async" (agendaChange)="onFilterChange($event)"></agot-agenda-filter>

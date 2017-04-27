@@ -1,11 +1,13 @@
 <h2>Players</h2>
 <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
+<!--
 <div class="mb-1" *ngIf="!(loading$ | async)">
   <agot-player-group-selector [playerGroupId]="selectedGroupId$ | async"
                               (playerGroupChange)="onSelectedGroupChange($event)">
   </agot-player-group-selector>
 </div>
+-->
 
 <div class="card-deck-wrapper">
   <div class="card-deck">

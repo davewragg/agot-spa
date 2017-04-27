@@ -1,5 +1,8 @@
 <div class="card" *ngFor="let group of groups">
-  <h4 class="card-header">{{ group.name }}</h4>
+  <h4 class="card-header">
+    {{ group.name }}
+    <span *ngIf="selectedGroupId === group.id" class="tag tag-success">Selected</span>
+  </h4>
   <div class="card-block" *ngIf="group.description">
     <blockquote class="card-text blockquote">
       {{ group.description }}

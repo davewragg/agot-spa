@@ -28,8 +28,12 @@ export class RankingsContainerComponent implements OnDestroy {
   actionsSubscription: Subscription;
 
   constructor(private store: Store<fromRoot.State>, route: ActivatedRoute) {
+    let playerGroupId: number;
+    store.select(fromRoot.getSelectedPlayerGroupId).subscribe(x => playerGroupId = x);
     this.actionsSubscription = route.params
-      .map(params => isEmpty(params) ? new FilterCriteria() : FilterCriteria.deserialise(params))
+      .map(params => isEmpty(params) ? FilterCriteria.patchValues(undefined, {
+        playerGroupIds: [playerGroupId]
+      }) : FilterCriteria.deserialise(params))
       .map(criteria => new rankingActions.SetFilterAction(criteria))
       .subscribe(store);
   }
