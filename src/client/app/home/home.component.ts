@@ -8,6 +8,7 @@ import * as rankingActions from '../state-management/actions/rankings.actions';
 import * as gameActions from '../state-management/actions/game.actions';
 import * as playerGroupActions from '../state-management/actions/player-group.actions';
 import * as fromRoot from '../state-management/reducers/root';
+import { PlayerGroup } from '../shared/models/player-group.model';
 
 @Component({
   moduleId: module.id,
@@ -18,9 +19,11 @@ import * as fromRoot from '../state-management/reducers/root';
 export class HomeComponent implements OnInit, OnDestroy {
   groupSub: Subscription;
   selectedGroupId$: Observable<number>;
+  selectedGroup$: Observable<PlayerGroup>;
 
   constructor(private store: Store<fromRoot.State>) {
     this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
+    this.selectedGroup$ = store.select(fromRoot.getSelectedPlayerGroup);
   }
 
   ngOnInit() {

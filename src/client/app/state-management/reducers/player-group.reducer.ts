@@ -115,6 +115,6 @@ export const getViewingId = (state: State) => state.viewingId;
 
 export const getLoading = (state: State) => state.loading;
 
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});
+export const getSelected = createSelector(getEntities, getSelectedId, (entities, id) => entities[id]);
+
+export const getAll = createSelector(getEntities, getIds, (entities, ids) => ids.map(id => entities[id]));

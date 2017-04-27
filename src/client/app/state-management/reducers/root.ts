@@ -149,6 +149,7 @@ export const getAllButMyPlayerGroups = createSelector(getCurrentPlayerGroupIds, 
       }));
   });
 export const getSelectedPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getSelectedId);
+export const getSelectedPlayerGroup = createSelector(getPlayerGroupState, fromPlayerGroups.getSelected);
 export const getViewingPlayerGroupId = createSelector(getPlayerGroupState, fromPlayerGroups.getViewingId);
 export const getViewingPlayerGroup = createSelector(getViewingPlayerGroupId, getPlayerGroupEntities, getPlayerEntities,
   (id, groups, players) => {
