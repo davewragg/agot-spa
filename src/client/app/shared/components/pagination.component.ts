@@ -6,7 +6,7 @@ import { FilterCriteria } from '../models/filter-criteria.model';
   selector: 'agot-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="recordsRemaining > 0">
+    <div *ngIf="recordsRemaining > 0 && !loading">
       <button (click)="onExecute()" class="btn btn-secondary btn-block">
         Show more
         <small>(showing {{ criteria.offset + 1 }}-{{ criteria.offset + criteria.limit }} of
@@ -14,6 +14,7 @@ import { FilterCriteria } from '../models/filter-criteria.model';
         </small>
       </button>
     </div>
+    <agot-spinner [isRunning]="loading"></agot-spinner>
   `,
 })
 export class PaginationComponent implements OnChanges {
@@ -21,6 +22,8 @@ export class PaginationComponent implements OnChanges {
   criteria: FilterCriteria;
   @Input()
   totalRecords: number = 0;
+  @Input()
+  loading: boolean = false;
 
   @Output()
   showMore: EventEmitter<number> = new EventEmitter<number>();
