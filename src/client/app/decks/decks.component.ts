@@ -29,21 +29,52 @@ export class DecksComponent {
     this.loading$ = store.select(fromRoot.getDecksLoading);
   }
 
-  onSelectedGroupChange(partialCriteria: FilterCriteria) {
-    const [playerGroupId] = partialCriteria.playerGroupIds;
+  onSelectedGroupChange(playerGroupId: number) {
     this.store.dispatch(new playerGroupActions.SelectAction(playerGroupId));
 
-    this.loadDecks(partialCriteria);
+    this.loadDecks({ playerGroupIds: [playerGroupId] });
   }
 
   onFilterChange(partialCriteria: FilterCriteria) {
     this.loadDecks(partialCriteria);
   }
 
-  loadDecks(changedCriteria?: FilterCriteria) {
+  // onShowMore(newLimit: number) {
+  //   this.loadDecks({
+  //     limit: newLimit,
+  //   });
+  // }
+
+  loadDecks(changedCriteria?: object) {
+    const patchedCriteria = this.processUpdatedCriteria(changedCriteria);
+    this.store.dispatch(go(['/decks', FilterCriteria.serialise(patchedCriteria)]));
+  }
+
+  private processUpdatedCriteria(changedCriteria: object) {
+    const existingCriteria = this.getExistingCriteria();
+    const newCriteria = this.setCurrentPlayerGroup(existingCriteria, changedCriteria);
+    return FilterCriteria.patchValues(existingCriteria, newCriteria);
+  }
+
+  private getExistingCriteria() {
     let existingCriteria: FilterCriteria;
     this.criteria$.subscribe(x => existingCriteria = x);
-    const patchedCriteria = FilterCriteria.patchValues(existingCriteria, changedCriteria);
-    this.store.dispatch(go(['/decks', FilterCriteria.serialise(patchedCriteria)]));
+    return existingCriteria;
+  }
+
+  private setCurrentPlayerGroup(existingCriteria: FilterCriteria, changedCriteria: object) {
+    if (existingCriteria.playerGroupIds.length) {
+      return changedCriteria;
+    }
+    let selectedGroupId = this.getSelectedPlayerGroupId();
+    return Object.assign({
+      playerGroupIds: [selectedGroupId],
+    }, changedCriteria);
+  }
+
+  private getSelectedPlayerGroupId() {
+    let selectedGroupId;
+    this.selectedGroupId$.subscribe(x => selectedGroupId = x);
+    return selectedGroupId;
   }
 }

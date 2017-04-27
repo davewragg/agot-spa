@@ -33,11 +33,10 @@ export class GamesComponent {
     this.totalRecords$ = store.select(fromRoot.getSearchTotalRecords);
   }
 
-  onSelectedGroupChange(partialCriteria: FilterCriteria) {
-    const [playerGroupId] = partialCriteria.playerGroupIds;
+  onSelectedGroupChange(playerGroupId: number) {
     this.store.dispatch(new playerGroupActions.SelectAction(playerGroupId));
 
-    this.loadGames(partialCriteria);
+    this.loadGames({ playerGroupIds: [playerGroupId] });
   }
 
   onDateRangeChange(partialCriteria: FilterCriteria) {
@@ -45,15 +44,41 @@ export class GamesComponent {
   }
 
   onShowMore(newLimit: number) {
-    this.loadGames(<FilterCriteria>{
+    this.loadGames({
       limit: newLimit,
     });
   }
 
-  loadGames(changedCriteria?: FilterCriteria) {
+  loadGames(changedCriteria: object = {}) {
+    const patchedCriteria = this.processUpdatedCriteria(changedCriteria);
+    this.store.dispatch(go(['/games', FilterCriteria.serialise(patchedCriteria)]));
+  }
+
+  private processUpdatedCriteria(changedCriteria: object) {
+    const existingCriteria = this.getExistingCriteria();
+    const newCriteria = this.setCurrentPlayerGroup(existingCriteria, changedCriteria);
+    return FilterCriteria.patchValues(existingCriteria, newCriteria);
+  }
+
+  private getExistingCriteria() {
     let existingCriteria: FilterCriteria;
     this.searchQuery$.subscribe(x => existingCriteria = x);
-    const patchedCriteria = FilterCriteria.patchValues(existingCriteria, changedCriteria);
-    this.store.dispatch(go(['/games', FilterCriteria.serialise(patchedCriteria)]));
+    return existingCriteria;
+  }
+
+  private setCurrentPlayerGroup(existingCriteria: FilterCriteria, changedCriteria: object) {
+    if (existingCriteria.playerGroupIds.length) {
+      return changedCriteria;
+    }
+    let selectedGroupId = this.getSelectedPlayerGroupId();
+    return Object.assign({
+      playerGroupIds: [selectedGroupId],
+    }, changedCriteria);
+  }
+
+  private getSelectedPlayerGroupId() {
+    let selectedGroupId;
+    this.selectedGroupId$.subscribe(x => selectedGroupId = x);
+    return selectedGroupId;
   }
 }
