@@ -1,5 +1,6 @@
 <ng-container *ngIf="selectedGroupId$ | async; else selectAGroup">
   <button class="btn btn-primary mb-1" [routerLink]="['/games/new']">Create new game</button>
+  <button class="btn btn-success mb-1" [routerLink]="['/groups']">Change group</button>
 
 <!--
 <div class="mb-1">
