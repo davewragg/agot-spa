@@ -93,14 +93,14 @@
 
 - [ ] switch confirm prompts for proper dialogues
 - [ ] hide selectors with only one option (eg playergroups)
-- [ ] put deck and game editing protection in place for buttons
+- [x] put deck and game editing protection in place for buttons
 - [ ] add can edit guard for groups
 - [ ] add edit group button check when it's added to user
 - [ ] admin protections across the board when it's added to user
-- [ ] not a member of any groups? why not [go have a look]
+- [x] not a member of any groups? why not [go have a look]
 
 - [ ] import/reuse/check saved deck
-- [ ] playergroupid not set on games filtering
+- [x] playergroupid not set on games filtering
 
 - [ ] update charts to 5.5
   - [ ] update imports and check build
