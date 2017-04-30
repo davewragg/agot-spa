@@ -16,7 +16,10 @@ import { DeckStats } from '../shared/models/deck-stats.model';
 
       <agot-view-deck [deck]="deck$ | async"></agot-view-deck>
       <div>
-        <button *ngIf="!(deck$ | async)?.thronesDbId" type="button" class="btn btn-outline-success" (click)="onEdit()">Edit</button>
+        <agot-current-player [isDeckOwner]="deck$ | async">
+          <button *ngIf="!(deck$ | async)?.thronesDbId"
+                  type="button" class="btn btn-outline-success" (click)="onEdit()">Edit</button>
+        </agot-current-player>
         <a [routerLink]="['/decks']" class="btn btn-outline-primary">&laquo; All Decks</a>
       </div>
 

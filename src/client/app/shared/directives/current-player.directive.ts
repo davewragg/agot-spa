@@ -60,17 +60,16 @@ export class CurrentPlayerComponent implements OnChanges, OnDestroy {
       return false;
     }
 
-    // TODO export logic to service
+    // TODO export logic to a service
     if (this.allowSuperUserOverride) {
       // TODO if is superuser, return true;
     }
 
     if (this.isGamePlayer) {
-      // TODO game logic here
       const game = this.isGamePlayer;
       const gamePlayerIds = game.gamePlayers.map(x => x.playerId);
       const isGamePlayer = gamePlayerIds.includes(currentPlayer.playerId);
-      if ((!this.not && isGamePlayer) || (this.not && !isGamePlayer)) {
+      if ((this.not && isGamePlayer) || (!this.not && !isGamePlayer)) {
         return false;
       }
     }
