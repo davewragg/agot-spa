@@ -36,7 +36,7 @@
       captureUncaught: true,
       enabled: !!document.domain === 'paulhoughton.org',
       payload: {
-        environment: '<%=BUILD_TYPE%>',
+        environment: '<%= BUILD_TYPE %>',
         code_version: '<%= VERSION %>',
         host: document.domain
       }

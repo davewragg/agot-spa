@@ -41,6 +41,24 @@ export class ProjectConfig extends SeedConfig {
     this.ROLLUP_NAMED_EXPORTS = [
       ...this.ROLLUP_NAMED_EXPORTS,
       //{'node_modules/immutable/dist/immutable.js': [ 'Map' ]},
+      {
+        'node_modules/date-fns/index.js': [
+          'endOfDay',
+          'format',
+          'startOfQuarter',
+          'endOfQuarter',
+          'differenceInMinutes',
+          'distanceInWordsToNow',
+          'subDays',
+          'startOfDay',
+        ]
+      },
+      {
+        'node_modules/lodash/lodash.js': Object.keys(require('lodash')), // TODO get specific
+      },
+      {
+        'node_modules/angular2-highcharts/index.js': Object.keys(require('angular2-highcharts')),
+      },
     ];
 
     /*

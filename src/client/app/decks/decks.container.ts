@@ -36,7 +36,6 @@ export class DecksContainerComponent implements OnDestroy {
       }) : FilterCriteria.deserialise(params))
       .map(criteria => new deckActions.SetFilterAction(criteria))
       .subscribe(store);
-
   }
 
   ngOnDestroy() {
