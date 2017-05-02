@@ -21,7 +21,6 @@
     <agot-current-player [isGroupMember]="group">
       <button (click)="onSelect(group)" class="btn btn-secondary"
               [disabled]="selectedGroupId === group.id">Select</button>
-      <!--TODO if admin-->
       <agot-current-player [isGroupAdmin]="group">
         <a [routerLink]="['/groups', group.id]" class="btn btn-warning">Edit Group</a>
       </agot-current-player>

@@ -33,12 +33,10 @@ export class DeckEffects {
         .catch(() => empty());
     });
 
-  // TODO need to wait for players to load? what about players who aren't loaded?
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(deckActions.FILTER)
-    // .debounceTime(300)
-    // .startWith(new deckActions.FilterAction(null)) // load all decks from the off (!?)
+    .debounceTime(300)
     .map((action: deckActions.FilterAction) => action.payload)
     .switchMap(criteria => {
       const nextSearch$ = this.actions$.ofType(deckActions.FILTER).skip(1);

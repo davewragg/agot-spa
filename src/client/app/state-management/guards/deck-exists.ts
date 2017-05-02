@@ -40,7 +40,6 @@ export class DeckExistsGuard implements CanActivate {
       .do((action: deck.LoadAction) => this.store.dispatch(action))
       .map(deck => !!deck)
       .catch(() => {
-      // TODO have a 404
         this.router.navigate(['/404']);
         return of(false);
       });

@@ -28,7 +28,7 @@ export class SelectedGamePageComponent {
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
     this.game$ = store.select(fromRoot.getSelectedGame);
-    this.loading$ = store.select(fromRoot.getSearchLoading); // TODO cough
+    this.loading$ = store.select(fromRoot.getSearchLoading);
   }
 
   onEdit() {

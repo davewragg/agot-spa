@@ -1,13 +1,15 @@
-<h3 *ngIf="player$ | async">{{ (player$ | async).name }}</h3>
+<ng-container *ngIf="player$ | async as player">
+  <h3>{{ player.name }}</h3>
 
-<agot-date-range [showSort]="false" [criteria]="criteria$ | async"
-                 (rangeChange)="onDateRangeChange($event)"></agot-date-range>
+  <agot-date-range [showSort]="false" [criteria]="criteria$ | async"
+                   (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
-<agot-spinner [isRunning]="loading$ | async"></agot-spinner>
+  <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-<div *ngIf="(playerStats$ | async) && !(loading$ | async)">
-  <agot-player-stats [playerStats]="playerStats$ | async" [player]="player$ | async"></agot-player-stats>
-</div>
+  <div *ngIf="(playerStats$ | async) && !(loading$ | async)">
+    <agot-player-stats [playerStats]="playerStats$ | async" [player]="player"></agot-player-stats>
+  </div>
+</ng-container>
 
 <h3 *ngIf="!(player$ | async) && !(loading$ | async)" class="alert alert-danger">Player not found</h3>
 

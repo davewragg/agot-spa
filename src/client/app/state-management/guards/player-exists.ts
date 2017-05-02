@@ -27,7 +27,6 @@ export class PlayerExistsGuard implements CanActivate {
       .do((action: player.LoadAction) => this.store.dispatch(action))
       .map(player => !!player)
       .catch(() => {
-      // TODO have a 404
         this.router.navigate(['/404']);
         return of(false);
       });

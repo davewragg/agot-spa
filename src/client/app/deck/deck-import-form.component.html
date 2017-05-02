@@ -17,12 +17,11 @@
   <div class="col-md-6">
     <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-    <!--TODO let this on ng4+-->
-    <div *ngIf="importedDeck$ | async">
-      <agot-deck-class-block [deckClass]="importedDeck$ | async"
+    <div *ngIf="importedDeck$ | async as importedDeck">
+      <agot-deck-class-block [deckClass]="importedDeck"
                              class="card"
                              title="Does this look right?"
-                             footerText="{{ (importedDeck$ | async).thronesDbLink }}"></agot-deck-class-block>
+                             footerText="{{ importedDeck.thronesDbLink }}"></agot-deck-class-block>
       <div class="form-group">
         <button type="button" class="btn btn-success" (click)="onDeckSelect()">
           {{ creating ? 'Add Player' : 'Update' }}

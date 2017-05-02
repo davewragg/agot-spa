@@ -107,7 +107,10 @@ export class DataService {
   getRankings(criteria: FilterCriteria): Observable<SetOfResults> {
     console.log('getRankings called');
     const params = DataService.convertFilterCriteriaToSearchParams(criteria);
-    const playerGroup = (criteria && criteria.playerGroupIds[0]) || 1; // TODO cough
+    const playerGroup = (criteria && criteria.playerGroupIds[0]);
+    if (!playerGroup) {
+      console.warn('no player group specified', criteria);
+    }
 
     return this.http.get(`${this.baseUrl}api/rankings/get/${playerGroup}`, {
       search: params
@@ -209,7 +212,7 @@ export class DataService {
   }
 
   /*
-   @param refDataType: factions / agendas / players / decks
+   @param refDataType: factions / agendas / players
    */
   getReferenceData(refDataType: RefDataType, additionalParams?: string): Observable<any> {
     console.log('getReferenceData called', refDataType);
@@ -229,7 +232,11 @@ export class DataService {
 
   getPlayers(criteria: FilterCriteria): Observable<Player[]> {
     console.log('getPlayers called');
-    const playerGroup = (criteria && criteria.playerGroupIds[0]) || 1; // TODO cough
+    const playerGroup = (criteria && criteria.playerGroupIds[0]);
+    if (!playerGroup) {
+      console.warn('no player group specified', criteria);
+    }
+
     return this.http.get(this.baseUrl + `api/players/getall/${playerGroup}`, {
       search: 'includeMostPlayedFaction=true'
     })

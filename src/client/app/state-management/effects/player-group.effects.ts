@@ -36,7 +36,7 @@ export class PlayerGroupEffects {
     .switchMap(() => { // TODO filter some day? currently just loads all
       const nextSearch$ = this.actions$.ofType(playerGroupActions.FILTER).skip(1);
 
-      return this.playerGroupService.getPlayerGroups() // TODO filter
+      return this.playerGroupService.getPlayerGroups()
         .takeUntil(nextSearch$)
         .map(playerGroups => new playerGroupActions.FilterCompleteAction(playerGroups))
         .catch(() => of(new playerGroupActions.FilterCompleteAction([])));

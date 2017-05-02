@@ -33,7 +33,7 @@ export class CanEditGameGuard implements CanActivate {
       this.getCurrentPlayer(),
     ])
       .map(([game, currentPlayer]: [Game, Player]) => {
-        // TODO check whether there are any other permissions
+        // TODO extract to service
         const canEdit = some(game.gamePlayers, (gamePlayer) =>
           gamePlayer.playerId === currentPlayer.playerId);
         if (!canEdit) {

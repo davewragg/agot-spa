@@ -25,7 +25,6 @@ export class GamePlayerRowComponent {
   cancelEditPlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
   onUpdateDeck({ deck, version }: any) {
-    // TODO emit set_deck? this is duplication
     this.updatePlayer.emit(GamePlayer.patchValues(this.gamePlayer, {
       deck,
       deckId: deck.deckId,

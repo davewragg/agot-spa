@@ -86,7 +86,7 @@
 - [x] use deck.creator
 
 - [x] bump typescript to 2.2
-- [ ] make ng4 changes - let and else
+- [ ] make ng4 changes - `let` and `else` and `as` - check for multi async in templates
 
 - [x] game time entry - UTC/BST!
 - [x] unauth bootloop
@@ -99,12 +99,14 @@
 - [x] admin protections across the board when it's added to user
 - [x] not a member of any groups? why not [go have a look]
 
-- [ ] import/reuse/check saved deck
+- [ ] !!! import/reuse/check saved deck - deckId is lost
 - [x] playergroupid not set on games filtering
+- [ ] relocate all role/permission currentPlayer logic to service (currentPlayerService?)
 
 - [ ] update charts to 5.5
+  - [ ] make it work with AOT [https://github.com/gevgeny/angular2-highcharts/issues/163]
   - [ ] update imports and check build
-  - [ ] dynamic interactions on changes (https://github.com/gevgeny/angular2-highcharts#dynamic-interaction-with-chart-object)
+  - [ ] dynamic interactions on changes [https://github.com/gevgeny/angular2-highcharts#dynamic-interaction-with-chart-object]
 
 - [x] rename rankings -> rankings-table && all-rankings -> rankings 
 - [x] loading states
@@ -121,9 +123,9 @@
 - [x] AOT - sort out templates
 - [ ] updated insights view to match new service
 - [ ] make all those silly little helper components pure/onchange, push async props to them
-- [ ] truncate visible lists above a limit, add show more (there must be a lib for this)
+- [x] truncate visible lists above a limit, add show more (there must be a lib for this)
   - [ ] decks
-  - [ ] games
+  - [x] games
   - [ ] infinite scroll!
   - [ ] https://github.com/robianmcd/angular-lazy-for ?
 - [x] login and route/content protection
@@ -140,11 +142,11 @@
   - [ ] convert filters bars to single/multi-select dropdowns
 - [ ] improve deck selector - search by name, by recent, more details
 - [x] deck date range filtering?
-- [ ] unsubscriptions for containers?
+- [x] unsubscriptions for containers?
 - [ ] route change transitions [e.g.](http://jasonwatmore.com/post/2017/04/19/angular-2-4-router-animation-tutorial-example?utm_campaign=NG-Newsletter&utm_medium=email&utm_source=NG-Newsletter_197)
-- [ ] fix that memory leak - decks page?
+- [x] fix that memory leak - decks page?
 - [ ] app shell
-- [ ] service worker
+- [x] service worker
 
 # Introduction
 

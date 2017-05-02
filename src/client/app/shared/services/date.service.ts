@@ -18,7 +18,7 @@ export class DateService {
   }
 
   private static getCurrentSeason(): any {
-    // TODO this is a bit of a cheat
+    // this is a bit of a cheat
     const now = new Date();
     return {
       startDate: startOfQuarter(now).toISOString().slice(0, 10),

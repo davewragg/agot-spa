@@ -32,7 +32,7 @@ export class CanEditDeckGuard implements CanActivate {
       this.getCurrentPlayer(),
     ])
       .map(([deck, currentPlayer]) => {
-        // TODO check whether there are any other permissions
+        // TODO extract to service
         const isOwner = deck.creatorId === currentPlayer.playerId;
         const isImported = !!deck.thronesDbCode;
         const canEdit = !isImported && isOwner;
