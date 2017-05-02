@@ -7,7 +7,7 @@ import { PlayerExistsGuard } from '../state-management/guards/player-exists';
   imports: [
     RouterModule.forChild([
       {
-        path: 'player/:id',
+        path: 'players/:id',
         component: ViewPlayerPageComponent,
         canActivate: [PlayerExistsGuard],
       },
