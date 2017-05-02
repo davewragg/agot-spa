@@ -94,9 +94,9 @@
 - [ ] switch confirm prompts for proper dialogues
 - [ ] hide selectors with only one option (eg playergroups)
 - [x] put deck and game editing protection in place for buttons
-- [ ] add can edit guard for groups
+- [x] add can edit guard for groups
 - [ ] add edit group button check when it's added to user
-- [ ] admin protections across the board when it's added to user
+- [x] admin protections across the board when it's added to user
 - [x] not a member of any groups? why not [go have a look]
 
 - [ ] import/reuse/check saved deck

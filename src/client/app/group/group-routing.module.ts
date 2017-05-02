@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PlayerGroupPageComponent } from './group.container';
 import { PlayerGroupExistsGuard } from '../state-management/guards/group-exists';
+import { CanEditGroupGuard } from '../state-management/guards/group-can-edit';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { PlayerGroupExistsGuard } from '../state-management/guards/group-exists'
       {
         path: 'groups/:id',
         component: PlayerGroupPageComponent,
-        canActivate: [PlayerGroupExistsGuard],
+        canActivate: [CanEditGroupGuard, PlayerGroupExistsGuard],
       },
     ])
   ],

@@ -13,6 +13,7 @@ import { EditDeckPageComponent } from './edit-deck.container';
 import { DeckExistsGuard } from '../state-management/guards/deck-exists';
 import { DeckIsDirtyGuard } from '../state-management/guards/deck-is-dirty';
 import { CanEditDeckGuard } from '../state-management/guards/deck-can-edit';
+import { CanEditGroupGuard } from '../state-management/guards/group-can-edit';
 
 @NgModule({
   imports: [CommonModule, SharedModule, DeckRoutingModule],
@@ -30,6 +31,7 @@ import { CanEditDeckGuard } from '../state-management/guards/deck-can-edit';
     DeckExistsGuard,
     DeckIsDirtyGuard,
     CanEditDeckGuard,
+    CanEditGroupGuard
   ],
   exports: [DeckImportFormComponent, DeckEditFormComponent]
 })
