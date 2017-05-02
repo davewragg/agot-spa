@@ -55,14 +55,14 @@ export class CurrentPlayerComponent implements OnChanges, OnDestroy {
     this.passesChecks = this.checkChecks(currentPlayer);
   }
 
+  // TODO export all this logic to a service
   private checkChecks(currentPlayer: Player): boolean {
     if (!currentPlayer) {
       return false;
     }
 
-    // TODO export logic to a service
-    if (this.allowSuperUserOverride) {
-      // TODO if is superuser, return true;
+    if (this.allowSuperUserOverride && currentPlayer.superUser) {
+      return true;
     }
 
     if (this.isGamePlayer) {
