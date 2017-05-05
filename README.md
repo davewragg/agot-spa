@@ -86,13 +86,13 @@
 - [x] use deck.creator
 
 - [x] bump typescript to 2.2
-- [ ] make ng4 changes - `let` and `else` and `as` - check for multi async in templates
+- [x] make ng4 changes - `let` and `else` and `as` - check for multi async in templates
 
 - [x] game time entry - UTC/BST!
 - [x] unauth bootloop
 
 - [ ] switch confirm prompts for proper dialogues
-- [ ] hide selectors with only one option (eg playergroups)
+- [ ] ~~hide selectors with only one option (eg playergroups)~~
 - [x] put deck and game editing protection in place for buttons
 - [x] add can edit guard for groups
 - [x] add edit group button check when it's added to user
