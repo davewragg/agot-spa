@@ -47,6 +47,9 @@ export class DataService {
     if (filterCriteria.playerGroupIds) {
       filterCriteria.playerGroupIds.forEach((playerGroupId) => params.append('playerGroupIds', playerGroupId + ''));
     }
+    if (filterCriteria.thronesDbIds) {
+      filterCriteria.thronesDbIds.forEach((thronesDbId) => params.append('thronesDbIds', thronesDbId + ''));
+    }
     return params;
   }
 

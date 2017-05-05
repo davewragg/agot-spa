@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/distinctUntilChanged';
 import { Store } from '@ngrx/store';
 import { DeckService } from '../../shared/services/deck.service';
 import { NotificationService } from '../../shared/services/notification.service';
@@ -62,14 +63,13 @@ export class DeckSelectorComponent implements OnInit {
 
   onImportedDeckSelect(deck: Deck) {
     this.deckService.getDeckBy({
-      thronesDbId: deck.thronesDbId,
+      thronesDbIds: [deck.thronesDbId],
     }).take(1).subscribe(
       (existingDeck: Deck) => {
         if (existingDeck) {
           this.notificationService.warn('Already imported', 'Deck has already been imported, selecting existing');
           console.warn('Deck has already been imported', deck, existingDeck);
-          this.existingDeck = existingDeck;
-          this.onExistingDeckSelect(deck);
+          this.onExistingDeckSelect(existingDeck);
         } else {
           this.selectNewDeck(deck);
         }
@@ -92,7 +92,8 @@ export class DeckSelectorComponent implements OnInit {
     // TODO relocate to store?
     const updatedDeck = Deck.patchValues(deck, {
       creatorId: this.playerId,
-    });
+      deckTypeId: 3,
+  });
 
     this.updateDeck.emit({ deck: updatedDeck, version: this.deckVersion });
   }

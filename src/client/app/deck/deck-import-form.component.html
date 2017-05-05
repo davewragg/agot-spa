@@ -5,12 +5,14 @@
     <form [formGroup]="importForm" (ngSubmit)="onSubmit()" class="form">
       <div class="form-group">
         <label class="form-control-label">ThronesDB deck id</label>
-        <input type="text" pattern="[0-9]+" class="form-control" formControlName="thronesDbId" placeholder="e.g. 2570">
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-success" [disabled]="!importForm.valid || (loading$ | async)">
-          Import
-        </button>
+        <div class="input-group">
+          <input type="text" pattern="[0-9]+" class="form-control" formControlName="thronesDbId" placeholder="e.g. 2570">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-warning" [disabled]="!importForm.valid || (loading$ | async)">
+              Import Deck
+            </button>
+          </span>
+        </div>
       </div>
     </form>
   </div>
@@ -24,7 +26,7 @@
                              footerText="{{ importedDeck.thronesDbLink }}"></agot-deck-class-block>
       <div class="form-group">
         <button type="button" class="btn btn-success" (click)="onDeckSelect()">
-          {{ creating ? 'Add Player' : 'Update' }}
+          Set Deck
         </button>
       </div>
     </div>

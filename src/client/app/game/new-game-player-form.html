@@ -7,12 +7,16 @@
         </agot-player-group-selector>
       </ng-container>
 
-      <select class="form-control" formControlName="player">
-        <option value="">--{{ !(selectedGroupId$ | async) ? 'Select a Player Group' : (loading$ | async) ? 'Loading players' : 'Select player' }}--
-        </option>
-        <option *ngFor="let player of players$ | async" [ngValue]="player">{{ player.name }}</option>
-      </select>
-      <button type="submit" class="btn btn-primary btn-success">Add</button>
+      <div class="input-group">
+        <select class="form-control" formControlName="player">
+          <option value="">--{{ !(selectedGroupId$ | async) ? 'Select a Player Group' : (loading$ | async) ? 'Loading players' : 'Select player' }}--
+          </option>
+          <option *ngFor="let player of players$ | async" [ngValue]="player">{{ player.name }}</option>
+        </select>
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-primary btn-success">Add Player</button>
+        </span>
+      </div>
     </div>
   </div>
   <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
