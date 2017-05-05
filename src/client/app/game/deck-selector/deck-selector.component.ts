@@ -89,7 +89,7 @@ export class DeckSelectorComponent implements OnInit {
   private selectNewDeck(deck: Deck) {
     this.existingDeck = null;
 
-    // TODO relocate to store?
+    // TODO relocate to store/service?
     const updatedDeck = Deck.patchValues(deck, {
       creatorId: this.playerId,
       deckTypeId: 3,

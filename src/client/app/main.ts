@@ -23,7 +23,7 @@ if (String('<%= BUILD_TYPE %>') === 'prod') { enableProdMode(); }
 // uncomment this line. More about Service Workers here
 // https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
 //
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && String('<%= BUILD_TYPE %>') === 'prod') {
   let workerScript = '/worker-basic';
   if (String('<%= BUILD_TYPE %>') === 'prod') { workerScript = workerScript + '.min'; }
   workerScript = workerScript + '.js';

@@ -95,11 +95,11 @@
 - [ ] hide selectors with only one option (eg playergroups)
 - [x] put deck and game editing protection in place for buttons
 - [x] add can edit guard for groups
-- [ ] add edit group button check when it's added to user
+- [x] add edit group button check when it's added to user
 - [x] admin protections across the board when it's added to user
 - [x] not a member of any groups? why not [go have a look]
 
-- [ ] !!! import/reuse/check saved deck - deckId is lost
+- [x] !!! import/reuse/check saved deck - deckId is lost
 - [x] playergroupid not set on games filtering
 - [ ] relocate all role/permission currentPlayer logic to service (currentPlayerService?)
 
@@ -146,7 +146,7 @@
 - [ ] route change transitions [e.g.](http://jasonwatmore.com/post/2017/04/19/angular-2-4-router-animation-tutorial-example?utm_campaign=NG-Newsletter&utm_medium=email&utm_source=NG-Newsletter_197)
 - [x] fix that memory leak - decks page?
 - [ ] app shell
-- [x] service worker
+- [x] service worker - only for prod!
 
 # Introduction
 
