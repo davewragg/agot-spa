@@ -1,68 +1,80 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Params, ActivatedRoute, Router } from '@angular/router';
-import { isEmpty } from 'lodash';
-import { DeckService } from '../shared/services/deck.service';
-import { Deck } from '../shared/models/deck.model';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
+import { Deck } from '../shared/models/deck.model';
+import * as fromRoot from '../state-management/reducers/root';
+import * as playerGroupActions from '../state-management/actions/player-group.actions';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-decks',
   templateUrl: 'decks.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DecksComponent implements OnInit {
+export class DecksComponent {
   @Input()
   title: string;
-  @Input()
-  criteria: FilterCriteria;
 
-  decks: Deck[];
-  loadingError: any = null;
+  selectedGroupId$: Observable<number>;
+  criteria$: Observable<FilterCriteria>;
+  decks$: Observable<Deck[]>;
+  loading$: Observable<boolean>;
 
-  isLoading: boolean;
-
-  constructor(private _route: ActivatedRoute,
-              private _router: Router,
-              private _deckService: DeckService) {
-
+  constructor(private store: Store<fromRoot.State>) {
+    this.selectedGroupId$ = store.select(fromRoot.getSelectedPlayerGroupId);
+    this.criteria$ = store.select(fromRoot.getDecksCriteria);
+    this.decks$ = store.select(fromRoot.getFilteredDecks);
+    this.loading$ = store.select(fromRoot.getDecksLoading);
   }
 
-  ngOnInit() {
-    this._route.params
-      .map(this.setFiltering.bind(this))
-      .do(() => this.isLoading = true)
-      .switchMap((criteria: FilterCriteria) => this._deckService.getDecks(criteria))
-      .subscribe(
-        (decks: Deck[]) => {
-          this.loadingError = null;
-          this.decks = decks;
-          // TODO until loading states are sorted out
-          this.isLoading = false;
-        },
-        (err) => {
-          this.loadingError = err._body || err.message || err;
-          this.isLoading = false;
-        },
-        () => {
-          console.log('done');
-          this.isLoading = false;
-        }
-      );
+  onSelectedGroupChange(playerGroupId: number) {
+    this.store.dispatch(new playerGroupActions.SelectAction(playerGroupId));
+
+    this.loadDecks({ playerGroupIds: [playerGroupId] });
   }
 
-
-  onFilterChange(criteria: FilterCriteria) {
-    this.loadDecks(criteria);
+  onFilterChange(partialCriteria: FilterCriteria) {
+    this.loadDecks(partialCriteria);
   }
 
-  loadDecks(criteria?: FilterCriteria) {
-    this._router.navigate(['/decks', FilterCriteria.serialise(criteria)]);
+  // onShowMore(newLimit: number) {
+  //   this.loadDecks({
+  //     limit: newLimit,
+  //   });
+  // }
+
+  loadDecks(changedCriteria?: object) {
+    const patchedCriteria = this.processUpdatedCriteria(changedCriteria);
+    this.store.dispatch(go(['/decks', FilterCriteria.serialise(patchedCriteria)]));
   }
 
-  private setFiltering(params: Params) {
-    const defaultFilter = this.criteria || new FilterCriteria();
-    return this.criteria = isEmpty(params) ?
-      defaultFilter :
-      FilterCriteria.deserialise(params, defaultFilter);
+  private processUpdatedCriteria(changedCriteria: object) {
+    const existingCriteria = this.getExistingCriteria();
+    const newCriteria = this.setCurrentPlayerGroup(existingCriteria, changedCriteria);
+    return FilterCriteria.patchValues(existingCriteria, newCriteria);
+  }
+
+  private getExistingCriteria() {
+    let existingCriteria: FilterCriteria;
+    this.criteria$.subscribe(x => existingCriteria = x);
+    return existingCriteria;
+  }
+
+  private setCurrentPlayerGroup(existingCriteria: FilterCriteria, changedCriteria: object) {
+    if (existingCriteria.playerGroupIds.length) {
+      return changedCriteria;
+    }
+    let selectedGroupId = this.getSelectedPlayerGroupId();
+    return Object.assign({
+      playerGroupIds: [selectedGroupId],
+    }, changedCriteria);
+  }
+
+  private getSelectedPlayerGroupId() {
+    let selectedGroupId;
+    this.selectedGroupId$.subscribe(x => selectedGroupId = x);
+    return selectedGroupId;
   }
 }

@@ -1,53 +1,67 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { pull } from 'lodash';
-import { PlayerService } from '../services/player.service';
+import { without, cloneDeep } from 'lodash';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Player } from '../models/player.model';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-player-filter',
   templateUrl: 'player-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlayerFilterComponent implements OnInit {
+export class PlayerFilterComponent implements OnChanges {
   @Input()
   criteria: FilterCriteria;
   @Output()
   playerChange: EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
-  players: Observable<Player[]>;
+  players$: Observable<Player[]>;
 
-  constructor(private playerService: PlayerService) {
-    this.players = playerService.getPlayers();
+  constructor(private store: Store<fromRoot.State>) {
+    this.players$ = store.select(fromRoot.getGroupPlayers);
   }
 
-  ngOnInit() {
+  ngOnChanges(changes?: any) {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
+    } else {
+      this.criteria = cloneDeep(this.criteria);
     }
   }
 
   onPlayerChange($event: any) {
     //.debounceTime(400).distinctUntilChanged()
-    const checked = $event.target.checked;
-    const playerId = +$event.target.value;
+    const { checked, value: playerId } = $event.target;
+
+    let updatedCriteria: FilterCriteria;
     if (checked && !this.criteria.playerIds.includes(playerId)) {
-      this.criteria.playerIds.push(playerId);
+      updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+        playerIds: [
+          ...this.criteria.playerIds,
+          playerId,
+        ]
+      });
     } else if (!checked) {
-      pull(this.criteria.playerIds, playerId);
+      updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+        playerIds: without(this.criteria.playerIds, playerId),
+      });
     }
     console.log(playerId);
-    this.onExecute();
+    this.onExecute(updatedCriteria);
   }
 
   onClear() {
-    this.criteria.playerIds.length = 0;
-    this.onExecute();
+    const updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+      playerIds: [],
+    });
+    this.onExecute(updatedCriteria);
   }
 
-  onExecute() {
+  onExecute(criteria: FilterCriteria) {
     //.debounceTime(400).distinctUntilChanged()
-    this.playerChange.emit(this.criteria);
+    this.playerChange.emit(criteria);
   }
 }

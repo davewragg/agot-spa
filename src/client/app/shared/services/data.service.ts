@@ -1,48 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import * as moment from 'moment/moment';
+import { startOfQuarter, endOfQuarter, subDays, startOfDay, endOfDay } from 'date-fns';
 import { cloneDeep, pick, omit } from 'lodash';
 import { Config } from '../config/env.config';
 import { Game } from '../models/game.model';
 import { FilterCriteria } from '../models/filter-criteria.model';
-import { DateRangeType } from '../models/date-range-type.model';
 import { SetOfResults } from '../models/set-of-results.model';
 import { Deck } from '../models/deck.model';
+import { Player } from '../models/player.model';
+import { RefDataType } from './ref-data.type';
+import { PlayerGroup } from '../models/player-group.model';
+import { Router } from '@angular/router';
 
 declare let Rollbar: any;
 
+export interface PaginatedResponse {
+  records: Array<Game> | Array<Deck>;
+  totalRecords: number;
+}
+
 @Injectable()
 export class DataService {
-  private today: string;
-  private aWeekAgo: string;
-
   private baseUrl = Config.API;
-
-  private static setAllTime(criteria: FilterCriteria) {
-    return DataService.setDates(criteria, null, null);
-  }
-
-  private static setCurrentSeason(criteria: FilterCriteria) {
-    const currentSeason = DataService.getCurrentSeason();
-    return DataService.setDates(criteria, currentSeason.startDate, currentSeason.endDate);
-  }
-
-  private static getCurrentSeason(): any {
-    // TODO this is a bit of a cheat
-    const now = moment();
-    return {
-      startDate: now.startOf('quarter').toISOString().slice(0, 10),
-      endDate: now.endOf('quarter').toISOString().slice(0, 10),
-    };
-  }
-
-  private static setDates(criteria: FilterCriteria, fromDate?: string, toDate?: string) {
-    return Object.assign(criteria, {
-      fromDate: fromDate,
-      toDate: toDate,
-    });
-  }
 
   private static convertFilterCriteriaToSearchParams(filterCriteria: FilterCriteria) {
     const params: URLSearchParams = new URLSearchParams();
@@ -50,8 +30,10 @@ export class DataService {
     params.set('endDate', !filterCriteria.toDate ? 'null' : filterCriteria.toDate);
     // yes I know this is backwards but it's a quick fix here
     params.set('sortBy', filterCriteria.ascending ? 'desc' : 'asc');
+    params.set('limit', filterCriteria.limit + '');
+    params.set('offset', filterCriteria.offset + '');
     if (filterCriteria.playerIds) {
-      filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId + ''));
+      filterCriteria.playerIds.forEach((playerId) => params.append('playerIds', playerId));
     }
     if (filterCriteria.factionIds) {
       filterCriteria.factionIds.forEach((factionId) => params.append('factionIds', factionId + ''));
@@ -61,6 +43,12 @@ export class DataService {
     }
     if (filterCriteria.deckIds) {
       filterCriteria.deckIds.forEach((deckId) => params.append('deckIds', deckId + ''));
+    }
+    if (filterCriteria.playerGroupIds) {
+      filterCriteria.playerGroupIds.forEach((playerGroupId) => params.append('playerGroupIds', playerGroupId + ''));
+    }
+    if (filterCriteria.thronesDbIds) {
+      filterCriteria.thronesDbIds.forEach((thronesDbId) => params.append('thronesDbIds', thronesDbId + ''));
     }
     return params;
   }
@@ -85,13 +73,18 @@ export class DataService {
     return gameCopy;
   }
 
+  private static _serialisePlayerGroup(playerGroup: PlayerGroup): string {
+    const playerGroupCopy = cloneDeep(playerGroup);
+    delete playerGroupCopy.players;
+    return JSON.stringify(playerGroupCopy);
+  }
+
   private static _serialiseDeck(deck: Deck): string {
     const deckCopy = this._prepareDeckData(deck);
     return JSON.stringify(deckCopy);
   }
 
   private static _prepareDeckData(deck: Deck) {
-    //noinspection TypeScriptUnresolvedFunction
     return omit(cloneDeep(deck), [
       'faction', 'agenda', 'fallbackTitle', 'dateCreated', 'dateModified'
     ]);
@@ -111,99 +104,191 @@ export class DataService {
     return json.payload;
   }
 
-  constructor(private http: Http) {
-    // TODO strip time from these
-    this.today = moment().add(1, 'days').toISOString();
-    this.aWeekAgo = moment().subtract(7, 'days').toISOString();
+  constructor(private http: Http, private router: Router) {
   }
 
-  getRankings(filterCriteria: FilterCriteria): Observable<SetOfResults> {
+  getRankings(criteria: FilterCriteria): Observable<SetOfResults> {
     console.log('getRankings called');
-    const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
     const params = DataService.convertFilterCriteriaToSearchParams(criteria);
-    return this.http.get(this.baseUrl + 'api/rankings/get', {
+    const playerGroup = (criteria && criteria.playerGroupIds[0]);
+    if (!playerGroup) {
+      console.warn('no player group specified', criteria);
+    }
+
+    return this.http.get(`${this.baseUrl}api/rankings/get/${playerGroup}`, {
       search: params
     })
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
-  getFilteredGames(filterCriteria: FilterCriteria) {
+  getPlayerGroup(id: number): Observable<PlayerGroup> {
+    console.log('getPlayerGroup called', id);
+    return this.http.get(`${this.baseUrl}api/playergroups/get/${id}`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getPlayerGroups() {
+    console.log('getPlayerGroups called');
+    return this.http.get(`${this.baseUrl}api/playergroups/getall`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  joinPlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    console.log('joinPlayerGroup called', playerGroup);
+    return this.http.post(`${this.baseUrl}api/playergroups/addcurrentplayertogroup`,
+      undefined,
+      Object.assign({
+        search: {
+          playerGroupId: playerGroup.id,
+        }
+      }, DataService._getContentHeaders())
+    )
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  updatePlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    console.log('updatePlayerGroup called', playerGroup);
+    return this.http.put(`${this.baseUrl}api/playergroups/edit`,
+      DataService._serialisePlayerGroup(playerGroup),
+      DataService._getContentHeaders())
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  createPlayerGroup(playerGroup: PlayerGroup): Observable<PlayerGroup> {
+    console.log('createPlayerGroup called', playerGroup);
+    return this.http.post(`${this.baseUrl}api/playergroups/create`,
+      DataService._serialisePlayerGroup(playerGroup),
+      DataService._getContentHeaders())
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getFilteredGames(filterCriteria: FilterCriteria): Observable<PaginatedResponse> {
     console.log('getfilteredgames called');
     const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
-    return this.http.get(this.baseUrl + 'api/games/searchgames', {
+    return this.http.get(`${this.baseUrl}api/games/searchgames`, {
       search: params
     })
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
-  getGames(filterCriteria: FilterCriteria) {
-    const criteria: FilterCriteria = this.setDatesFromRangeType(filterCriteria);
+  getGames(criteria: FilterCriteria): Observable<PaginatedResponse> {
     return this.getFilteredGames(criteria);
   }
 
   getGame(gameId: number): Observable<Game> {
     console.log('getgame called', gameId);
-    return this.http.get(this.baseUrl + 'api/games/get/' + gameId)
-      .map(DataService.handleResponse);
+    return this.http.get(`${this.baseUrl}api/games/get/${gameId}`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
   updateGame(game: Game): Observable<Game> {
     console.log('updategame called', game);
-    return this.http.put(this.baseUrl + 'api/games/edit',
+    return this.http.put(`${this.baseUrl}api/games/edit`,
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
   createGame(game: Game): Observable<Game> {
     console.log('creategame called', game);
-    return this.http.post(this.baseUrl + 'api/games/create',
+    return this.http.post(`${this.baseUrl}api/games/create`,
       DataService._serialiseGame(game),
       DataService._getContentHeaders())
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
   deleteGame(gameId: number): Observable<any> {
     console.log('deletegame called', gameId);
-    return this.http.delete(this.baseUrl + 'api/games/delete/' + gameId)
-      .map(DataService.handleResponse);
+    return this.http.delete(`${this.baseUrl}api/games/delete/${gameId}`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
   /*
-   @param refDataType: factions / agendas / players / decks
+   @param refDataType: factions / agendas / players
    */
-  getReferenceData(refDataType: string, additionalParams?: string): Observable<any> {
+  getReferenceData(refDataType: RefDataType, additionalParams?: string): Observable<any> {
     console.log('getReferenceData called', refDataType);
     return this.http.get(this.baseUrl + `api/${refDataType}/getall`, {
       search: additionalParams
     })
-    // TODO .share()?
-    // .cache()
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getPlayer(playerId: string): Observable<Player> {
+    console.log('getPlayer called');
+    return this.http.get(this.baseUrl + `api/players/get/${playerId}`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getPlayers(criteria: FilterCriteria): Observable<Player[]> {
+    console.log('getPlayers called');
+    const playerGroup = (criteria && criteria.playerGroupIds[0]);
+    if (!playerGroup) {
+      console.warn('no player group specified', criteria);
+    }
+
+    return this.http.get(this.baseUrl + `api/players/getall/${playerGroup}`, {
+      search: 'includeMostPlayedFaction=true'
+    })
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getCurrentPlayer(): Observable<Player> {
+    console.log('getCurrentPlayer called');
+    return this.http.get(`${this.baseUrl}api/players/currentplayer`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getDeck(deckId: number): Observable<Deck> {
+    console.log('getdeck called', deckId);
+    return this.http.get(`${this.baseUrl}api/decks/get/${deckId}`)
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
+  }
+
+  getDecks(criteria: FilterCriteria) {
+    return this.getFilteredDecks(criteria);
+  }
+
+  getFilteredDecks(filterCriteria: FilterCriteria) {
+    console.log('getfiltereddecks called');
+    const params = DataService.convertFilterCriteriaToSearchParams(filterCriteria);
+    return this.http.get(`${this.baseUrl}api/decks/searchdecks`, {
+      search: params
+    })
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
   updateDeck(deck: Deck): Observable<Deck> {
     console.log('updatedeck called', deck);
-    return this.http.put(this.baseUrl + 'api/decks/edit',
+    return this.http.put(`${this.baseUrl}api/decks/edit`,
       DataService._serialiseDeck(deck),
       DataService._getContentHeaders())
-      .map(DataService.handleResponse);
+      .map(DataService.handleResponse)
+      .catch(this.handleError.bind(this));
   }
 
-  private setDatesFromRangeType(criteria: FilterCriteria) {
-    const updatedCriteria = Object.assign({}, criteria);
-    const range = updatedCriteria.rangeSelection;
-    if (range === DateRangeType.THIS_WEEK) {
-      this.setAWeekAgo(updatedCriteria);
-    } else if (range === DateRangeType.CURRENT_SEASON) {
-      DataService.setCurrentSeason(updatedCriteria);
-    } else if (range === DateRangeType.ALL_TIME) {
-      DataService.setAllTime(updatedCriteria);
+  private handleError(error: Response): any {
+    if (error.status === 401 && !this.router.url.startsWith('/401')) {
+      const currentUrl = this.router.url;
+      this.router.navigate(['/401', { q: currentUrl }]);
     }
-    return updatedCriteria;
-  }
-
-  private setAWeekAgo(criteria: FilterCriteria) {
-    return DataService.setDates(criteria, this.aWeekAgo, this.today);
+    return Observable.throw(error);
   }
 }

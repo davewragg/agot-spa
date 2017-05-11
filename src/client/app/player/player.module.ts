@@ -5,6 +5,8 @@ import { PlayerRoutingModule } from './player-routing.module';
 import { PlayerDetailsComponent } from './player-details.component';
 import { PlayerInsightsComponent } from './player-insights.component';
 import { PlayerStatsComponent } from './player-stats.component';
+import { ViewPlayerPageComponent } from './player.container';
+import { PlayerExistsGuard } from '../state-management/guards/player-exists';
 
 @NgModule({
   imports: [CommonModule, SharedModule, PlayerRoutingModule],
@@ -12,7 +14,11 @@ import { PlayerStatsComponent } from './player-stats.component';
     PlayerDetailsComponent,
     PlayerInsightsComponent,
     PlayerStatsComponent,
+    ViewPlayerPageComponent,
   ],
+  providers: [
+    PlayerExistsGuard,
+  ]
   // exports: [PlayersTableComponent, PlayersComponent]
 })
 export class PlayerModule {

@@ -9,7 +9,9 @@
     <div class="card-deck-wrapper">
       <div class="card-deck">
         <agot-game-player-row *ngFor="let gamePlayer of gamePlayers" [gamePlayer]="gamePlayer" class="card"
+                              [editing]="(editPlayerId$ | async) === gamePlayer.playerId"
                               [readOnly]="readOnly"
+                              (editPlayer)="onEditPlayer($event)" (cancelEditPlayer)="onCancelEditPlayer()"
                               (updatePlayer)="onPlayerEdit($event)" (removePlayer)="onRemove($event)">
         </agot-game-player-row>
       </div>
@@ -19,7 +21,7 @@
 
 <div class="card card-block" *ngIf="!readOnly">
   <h5 class="card-title">Add player</h5>
-  <agot-new-game-player-form (updatePlayer)="onNewPlayerAdd($event)" *ngIf="addActive"></agot-new-game-player-form>
+  <agot-new-game-player-form (updatePlayer)="onNewPlayerAdd($event)"></agot-new-game-player-form>
 </div>
 
 <div class="card card-block" *ngIf="!readOnly">

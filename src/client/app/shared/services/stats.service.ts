@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { cloneDeep, first, chain } from 'lodash';
+import { cloneDeep, first, chain, values } from 'lodash';
+import { Store } from '@ngrx/store';
 import { GameService } from './game.service';
-import { ReferenceDataService } from './reference-data.service';
+import { CacheService } from './cache.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Game } from '../models/game.model';
 import { DeckStats } from '../models/deck-stats.model';
@@ -16,15 +17,15 @@ import { DeckClass } from '../models/deck-class.model';
 import { Stats } from '../models/stats.model';
 import { PlayerInsights } from '../models/player-insights.model';
 import { DeckClassStats } from '../models/deck-class-stats.model';
-import { CacheService } from './cache.service';
 import { DateRangeType } from '../models/date-range-type.model';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Injectable()
 export class StatsService {
-  private _factions: Faction[];
-  private _agendas: Agenda[];
+  private _agendas: { [id: number]: Agenda };
+  private _factions: { [id: number]: Faction };
 
-  static getResultForPlayer(game: Game, playerId: number): Result {
+  static getResultForPlayer(game: Game, playerId: string): Result {
     const winner: GamePlayer = game.gamePlayers.find((gamePlayer: GamePlayer) => gamePlayer.isWinner);
     return !winner ? Result.DREW : winner.playerId === playerId ? Result.WON : Result.LOST;
   }
@@ -68,17 +69,17 @@ export class StatsService {
   }
 
   constructor(private gameService: GameService,
-              private _referenceDataService: ReferenceDataService,
+              private store: Store<fromRoot.State>,
               private cacheService: CacheService) {
-    _referenceDataService.factions.subscribe((factions) => this._factions = factions);
-    _referenceDataService.agendas.subscribe((agendas) => this._agendas = agendas);
+    this.store.select(fromRoot.getAgendas).subscribe(x => this._agendas = x);
+    this.store.select(fromRoot.getFactions).subscribe(x => this._factions = x);
   }
 
   getTimelineSortedGames(games: Game[]): any[] {
     return chain(games).groupBy((game: Game): string => {
       return game.date.substr(0, 10);
     }).toPairs()
-      .map(([dateKey, games]:[string, Game[]]) => {
+      .map(([dateKey, games]: [string, Game[]]) => {
         const year = +dateKey.substr(0, 4);
         const month = +dateKey.substr(5, 2) - 1; // goddam zero indexed month
         const date = +dateKey.substr(8, 2);
@@ -89,19 +90,19 @@ export class StatsService {
   }
 
   getGamesPlayedData(sortedGames: [number, Game[]][]) {
-    return sortedGames.map(([dateKey, games]:[number, Game[]]) => {
+    return sortedGames.map(([dateKey, games]: [number, Game[]]) => {
       //noinspection TypeScriptUnresolvedVariable
       return [dateKey, games.length];
     });
   }
 
-  getDeckOrPlayerResultsData(sortedGames: [number, Game[]][], playerId: number, deckId: number) {
+  getDeckOrPlayerResultsData(sortedGames: [number, Game[]][], playerId: string, deckId: number) {
     const results: any = {
       [Result.WON]: [],
       [Result.DREW]: [],
       [Result.LOST]: []
     };
-    sortedGames.forEach(([dateKey, games]:[number, Game[]]) => {
+    sortedGames.forEach(([dateKey, games]: [number, Game[]]) => {
       //noinspection TypeScriptValidateTypes
       const resultsForDay = playerId ?
         getDayResultsForPlayer(games, playerId) :
@@ -115,7 +116,7 @@ export class StatsService {
     });
     return results;
 
-    function getDayResultsForPlayer(games: Game[], playerId: number): Map<Result, number> {
+    function getDayResultsForPlayer(games: Game[], playerId: string): Map<Result, number> {
       const resultsForDay: Map<Result, number> = new Map<Result, number>();
       games.forEach((game) => {
         const result = StatsService.getResultForPlayer(game, playerId);
@@ -148,18 +149,20 @@ export class StatsService {
 
   getDeckStats(deckId: number): Observable<PlayerStats> {
     const criteria = new FilterCriteria();
-    criteria.deckIds = [deckId];
+    criteria.deckIds = [+deckId];
     return this.cacheService.getFilteredData('deckStats', this._getDeckStats, criteria, this);
   }
 
   _getDeckStats(criteria: FilterCriteria): Observable<DeckStats> {
-    const deckId = first(criteria.deckIds);
-    return this.gameService.getGames(Object.assign(new FilterCriteria(), {
+    const deckId = +first(criteria.deckIds);
+    return this.gameService.getGames(FilterCriteria.patchValues(undefined, {
       deckIds: [deckId],
       asc: false,
       rangeSelection: DateRangeType.ALL_TIME,
+      limit: null,
     }))
-      .map((games: Game[]): DeckStats => {
+      .map((response): DeckStats => {
+        const games = <Game[]>response.records;
         return games.reduce(buildStatsFromGames, new DeckStats());
       }).do((deckStats: DeckStats) => {
         if (deckStats.games.length === 0) {
@@ -192,8 +195,10 @@ export class StatsService {
     }
   }
 
-  getPlayerStats(playerId: number, criteria: FilterCriteria): Observable<PlayerStats> {
-    const criteriaCopy = cloneDeep(criteria);
+  getPlayerStats(playerId: string, criteria: FilterCriteria): Observable<PlayerStats> {
+    const criteriaCopy = FilterCriteria.patchValues(criteria, {
+      limit: null,
+    });
     criteriaCopy.playerIds = [playerId];
     return this.cacheService.getFilteredData('playerStats', this._getPlayerStats, criteriaCopy, this);
   }
@@ -201,7 +206,8 @@ export class StatsService {
   _getPlayerStats(criteria: FilterCriteria): Observable<PlayerStats> {
     const playerId = first(criteria.playerIds);
     return this.gameService.getGames(criteria)
-      .map((games: Game[]): PlayerStats => {
+      .map((response): PlayerStats => {
+        const games = <Game[]>response.records;
         return games
           .reduce(buildStatsFromGames, new PlayerStats());
       }).do((playerStats: PlayerStats) => {
@@ -284,11 +290,11 @@ export class StatsService {
   }
 
   private filterOutPlayedFactions(factionsMap: Map<number, Stats>): Faction[] {
-    return <Faction[]>this.filterPlayed(this._factions, factionsMap, 'factionId');
+    return <Faction[]>this.filterPlayed(values(this._factions), factionsMap, 'factionId');
   }
 
   private filterOutPlayedAgendas(agendasMap: Map<number, Stats>): Agenda[] {
-    return <Agenda[]>this.filterPlayed(this._agendas, agendasMap, 'agendaId');
+    return <Agenda[]>this.filterPlayed(values(this._agendas), agendasMap, 'agendaId');
   }
 
   private filterPlayed(allValues: Array<any>, playedValuesMap: Map<number, Stats>, idField: string) {
@@ -300,17 +306,14 @@ export class StatsService {
     return allValuesCopy;
   }
 
-  // TODO legacy sticking plaster
   private getFaction(factionId: number): Faction {
-    return this._factions.find((faction) => faction.factionId === factionId);
+    return this._factions[factionId];
   }
 
-  // TODO legacy sticking plaster
   private getAgenda(agendaId: number): Agenda {
-    return this._agendas.find((agenda) => agenda.agendaId === agendaId);
+    return this._agendas[agendaId];
   }
 
-  // TODO legacy sticking plaster
   private getDeckClass(deckClassId: number): DeckClass {
     const ids = DeckClass.getFactionAndAgendaId(deckClassId);
     return new DeckClass(this.getFaction(ids.factionId), this.getAgenda(ids.agendaId));

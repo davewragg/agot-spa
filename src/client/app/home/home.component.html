@@ -1,7 +1,27 @@
-<button class="btn btn-primary mb-1" [routerLink]="['/games/new']">Create new game</button>
+<ng-container *ngIf="selectedGroupId$ | async; else selectAGroup">
+  <button class="btn btn-primary mb-1" [routerLink]="['/games/new']">Create new game</button>
+  <button class="btn btn-success mb-1" [routerLink]="['/groups']">Change group</button>
 
-<agot-all-rankings [criteria]="rankingFilterCriteria" [hideFilters]="true" title="All-time rankings"></agot-all-rankings>
-<div class="text-sm-right mb-1"><a class="btn btn-outline-primary" [routerLink]="['/rankings']">More...</a></div>
+<!--
+<div class="mb-1">
+  <agot-player-group-selector [playerGroupId]="selectedGroupId$ | async"
+                              (playerGroupChange)="onGroupChange($event)">
+  </agot-player-group-selector>
+</div>
+-->
 
-<agot-games [criteria]="gameFilterCriteria" [hideFilters]="true" title="Latest games"></agot-games>
-<div class="text-sm-right mb-1"><a class="btn btn-outline-primary" [routerLink]="['/games']">More...</a></div>
+  <ng-container *ngIf="selectedGroup$ | async as group">
+    <h1>{{ group.name }}</h1>
+    <blockquote class="blockquote">{{ group.description }}</blockquote>
+  </ng-container>
+
+  <agot-rankings [hideFilters]="true" title="All-time rankings"></agot-rankings>
+  <div class="text-sm-right mb-1"><a class="btn btn-outline-primary" [routerLink]="['/rankings']">More...</a></div>
+
+  <agot-games [hideFilters]="true" title="Latest games"></agot-games>
+  <div class="text-sm-right mb-1"><a class="btn btn-outline-primary" [routerLink]="['/games']">More...</a></div>
+</ng-container>
+<ng-template #selectAGroup>
+  <h4>Better pick a group</h4>
+  <button class="btn btn-success" [routerLink]="['/groups']">View groups</button>
+</ng-template>

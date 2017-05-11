@@ -19,7 +19,7 @@ import { Stats } from '../models/stats.model';
           W{{ stats.won }}
           D{{ stats.drawn }}
           L{{ stats.lost }}
-          W%{{ stats.winPercentage }}
+          W% {{ stats.winPercentage }}
         </p>
         <p *ngIf="footerText">{{ footerText }}</p>
       </div>

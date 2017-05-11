@@ -1,19 +1,18 @@
 <div class="mb-1 row">
   <div *ngIf="deck"
-       class="text-xs-center deck-block col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4"
+       class="text-xs-center deck-block col-xs-10 offset-xs-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4"
        [style.backgroundImage]="(deck.agenda?.agendaId && ('url(./assets/img/agenda' + deck.agenda?.agendaId + '.png)'))">
     <div class="card-header">{{ deck.title || deck.fallbackTitle }}</div>
     <img class="card-img" src="./assets/img/icon{{ deck.faction.factionId }}.png"
          alt="{{ deck.faction.name }}">
-    <ul class="list-group list-group-flush" *ngIf="!editing">
+    <ul class="list-group list-group-flush">
       <li class="list-group-item">
         <span>{{ deck.faction?.name }}</span> /
         {{ deck.agenda?.title || 'No Agenda' }}
       </li>
       <li class="list-group-item small" *ngIf="deck.thronesDbLink">
         <span *ngIf="deck.thronesDbId">Imported from</span>
-        <a [href]="deck.thronesDbLink" rel="noopener" target="_blank"
-           [title]="deck.thronesDbLink">Thrones DB</a>
+        <agot-thrones-db-link [deck]="deck" [text]="'Thrones DB'" [classname]="''"></agot-thrones-db-link>
       </li>
     </ul>
     <div class="card-footer text-muted">
@@ -24,7 +23,7 @@
         </time>
         by
         <agot-player-link *ngIf="!!deck.creatorId"
-                          [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
+                          [player]="deck.creator"></agot-player-link>
         <span *ngIf="deck.dateCreated !== deck.dateModified"><br>
           Modified <time [attr.datetime]="deck.dateModified" title="{{ deck.dateModified | amDateFormat: 'LLLL' }}">
               {{ deck.dateModified | amTimeAgo }}

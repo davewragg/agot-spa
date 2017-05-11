@@ -1,19 +1,29 @@
 <section>
-  <h2 [hidden]="isLoading">{{ title || 'Games' }}</h2>
+  <h2 [hidden]="loading$ | async">{{ title || 'Games' }}</h2>
 
-  <agot-date-range [showSort]="true" [criteria]="criteria"
+<!--
+  <div class="mb-1" *ngIf="!(loading$ | async)">
+    <agot-player-group-selector [playerGroupId]="selectedGroupId$ | async"
+                                (playerGroupChange)="onSelectedGroupChange($event)"
+                                [hidden]="hideFilters">
+    </agot-player-group-selector>
+  </div>
+-->
+
+  <agot-date-range [showSort]="true" [criteria]="searchQuery$ | async"
                    [hidden]="hideFilters"
                    (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
-  <agot-spinner [isRunning]="isLoading"></agot-spinner>
+  <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-  <div *ngIf="loadingError" class="alert alert-danger">
-    Well, shit. {{ loadingError | json }}
-    <button type="button" (click)="loadGames(criteria)">Try again</button>
-  </div>
+  <agot-game-timeline-chart [hidden]="loading$ | async"
+                            [games]="games$ | async"></agot-game-timeline-chart>
 
-  <agot-game-timeline-chart *ngIf="!isLoading && !loadingError && games?.length"
-                            [games]="games"></agot-game-timeline-chart>
+  <agot-games-table [games]="games$ | async"></agot-games-table>
 
-  <agot-games-table [games]="games"></agot-games-table>
+  <agot-pagination [criteria]="searchQuery$ | async"
+                   [totalRecords]="totalRecords$ | async"
+                   [hidden]="hideFilters"
+                   [loading]="loading$ | async"
+                   (showMore)="onShowMore($event)"></agot-pagination>
 </section>

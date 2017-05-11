@@ -1,0 +1,36 @@
+<form class="form">
+  <div class="btn-group" data-toggle="buttons" *ngIf="!showAll">
+    <button class="btn btn-sm btn-secondary btn-outline-secondary label-button" type="button">
+      {{ allowAll ? '' : 'My' }} Player Groups
+    </button>
+    <label *ngFor="let playerGroup of myPlayerGroups$ | async"
+           class="btn btn-secondary btn-sm"
+           [class.active]="playerGroupId ===  playerGroup.id">
+      <input type="checkbox" name="ids" (change)="onPlayerGroupChange($event)"
+             [checked]="playerGroupId ===  playerGroup.id"
+             [value]="playerGroup.id">
+      {{ playerGroup.name }}
+    </label>
+    <button class="btn btn-secondary btn-outline-secondary label-button btn-sm" type="button"
+            *ngIf="allowAll"
+            (click)="showAll = true">
+      Mine
+    </button>
+  </div>
+
+  <div class="btn-group" data-toggle="buttons" *ngIf="allowAll && showAll">
+    <button class="btn btn-sm btn-secondary btn-outline-secondary label-button" type="button"> Player Groups
+    </button>
+    <label *ngFor="let playerGroup of playerGroups$ | async"
+           class="btn btn-secondary btn-sm"
+           [class.active]="playerGroupId ===  playerGroup.id">
+      <input type="checkbox" name="ids" (change)="onPlayerGroupChange($event)"
+             [checked]="playerGroupId ===  playerGroup.id"
+             [value]="playerGroup.id">
+      {{ playerGroup.name }}
+    </label>
+    <button class="btn btn-secondary btn-outline-secondary label-button btn-sm" type="button" (click)="showAll = false">
+      All
+    </button>
+  </div>
+</form>

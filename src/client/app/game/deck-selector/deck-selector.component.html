@@ -17,20 +17,16 @@
   <!--existing deck selection-->
   <div *ngSwitchCase="deckSelectionType.EXISTING" class="col-md-12">
     <agot-existing-deck-selector [playerId]="playerId" [existingDeck]="existingDeck"
-                                 (selectDeck)="onExistingDeckUpdate($event)"></agot-existing-deck-selector>
+                                 (selectDeck)="onExistingDeckSelect($event)"></agot-existing-deck-selector>
 
-    <div class="form-group">
-      <button type="button" (click)="onExistingDeckSelect()" class="btn btn-success" [disabled]="!existingDeck">
-        {{ creating ? 'Add Player' : 'Update' }}
-      </button>
-    </div>
   </div>
   <div *ngSwitchCase="deckSelectionType.IMPORT" class="col-md-12">
     <agot-deck-import-form (updateDeck)="onImportedDeckSelect($event)" [creating]="creating"></agot-deck-import-form>
   </div>
   <div *ngSwitchCase="deckSelectionType.NEW" class="col-md-12">
     <agot-deck-edit-form (updateDeck)="onNewDeckSelect($event)"
-                         [deck]="editDeck" [creating]="creating"></agot-deck-edit-form>
+                         (deckChange)="onNewDeckChanges($event)"
+                         [deck]="editDeck$ | async" [creating]="creating"></agot-deck-edit-form>
   </div>
 </div>
 

@@ -1,56 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
-import { isEmpty } from 'lodash';
-import { PlayerService } from '../shared/services/player.service';
-import { StatsService } from '../shared/services/stats.service';
 import { Player } from '../shared/models/player.model';
 import { PlayerStats } from '../shared/models/player-stats.model';
 import { FilterCriteria } from '../shared/models/filter-criteria.model';
-import { DateRangeType } from '../shared/models/date-range-type.model';
+import * as fromRoot from '../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-player-details',
   templateUrl: 'player-details.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlayerDetailsComponent implements OnInit {
-  player: Player;
-  playerIdParam: number;
-  playerStats: PlayerStats;
+export class PlayerDetailsComponent {
+  player$: Observable<Player>;
+  playerStats$: Observable<PlayerStats>;
+  criteria$: Observable<FilterCriteria>;
+  loading$: Observable<boolean>;
 
-  isLoading: boolean;
-
-  criteria: FilterCriteria;
-
-  constructor(private _route: ActivatedRoute,
-              private _router: Router,
-              private _statsService: StatsService,
-              private _playerService: PlayerService) {
-  }
-
-  ngOnInit() {
-    this._route.params
-      .do((params: Params) => this.playerIdParam = +params['id'])
-      .map(this.setFiltering.bind(this))
-      .do(() => this.isLoading = true)
-      .switchMap((criteria: FilterCriteria) =>
-        Observable.combineLatest(
-          this._playerService.getPlayer(this.playerIdParam),
-          this._statsService.getPlayerStats(this.playerIdParam, criteria)
-        )).subscribe(
-      ([player, stats]:[Player, PlayerStats]) => {
-        console.log(player, stats);
-        this.player = player;
-        this.playerStats = stats;
-        // .combineLatest may not trigger done()
-        this.stopLoading();
-      },
-      (error) => {
-        console.error(error);
-        this.stopLoading();
-      },
-      () => this.stopLoading());
+  constructor(private route: ActivatedRoute,
+              private store: Store<fromRoot.State>) {
+    this.player$ = this.store.select(fromRoot.getSelectedPlayer);
+    this.playerStats$ = this.store.select(fromRoot.getSelectedPlayerStats);
+    this.criteria$ = this.store.select(fromRoot.getPlayerStatsFilterCriteria);
+    this.loading$ = this.store.select(fromRoot.getPlayersLoading);
   }
 
   onDateRangeChange(criteria: FilterCriteria) {
@@ -58,21 +33,6 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   private loadPlayerAndStats(criteria?: FilterCriteria) {
-    this._router.navigate(['/players/', this.playerIdParam, FilterCriteria.serialise(criteria)]);
-  }
-
-  private stopLoading() {
-    console.log('done loadstats');
-    this.isLoading = false;
-  }
-
-  private setFiltering(params: Params) {
-    const defaultFilter = Object.assign(new FilterCriteria(), {
-      ascending: true,
-      rangeSelection: DateRangeType.ALL_TIME
-    });
-    return this.criteria = isEmpty(params) ?
-      defaultFilter :
-      FilterCriteria.deserialise(params, defaultFilter);
+    this.store.dispatch(go(['player', this.route.snapshot.params['id'], FilterCriteria.serialise(criteria)]));
   }
 }

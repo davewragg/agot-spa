@@ -1,5 +1,10 @@
+import { PlayerGroup } from './player-group.model';
+
 export interface Player {
-  playerId: number;
+  playerId: string;
   name: string;
   mostPlayedFactionId: number;
+  playerGroups?: PlayerGroup[];
+  adminGroupIds?: number[];
+  superUser?: boolean;
 }

@@ -12,12 +12,17 @@ import { GamePlayerRowComponent } from './game-player-row.component';
 import { GamePlayersComponent } from './game-players.component';
 import { NewGamePlayerFormComponent } from './new-game-player-form.component';
 import { ViewGameComponent } from './view-game.component';
-import { CreateGameComponent } from './create-game.component';
+import { GameExistsGuard } from '../state-management/guards/game-exists';
+import { ViewGamePageComponent } from './game.container';
+import { SelectedGamePageComponent } from './selected-game.container';
+import { EditGamePageComponent } from './edit-game.container';
+import { CreateGamePageComponent } from './create-game.container';
+import { GameIsDirtyGuard } from '../state-management/guards/game-is-dirty';
+import { CanEditGameGuard } from '../state-management/guards/game-can-edit';
 
 @NgModule({
   imports: [CommonModule, SharedModule, GameRoutingModule, DeckModule],
   declarations: [
-    CreateGameComponent,
     DeckChooserComponent,
     DeckSelectorComponent,
     ExistingDeckSelectorComponent,
@@ -27,7 +32,16 @@ import { CreateGameComponent } from './create-game.component';
     GamePlayersComponent,
     NewGamePlayerFormComponent,
     ViewGameComponent,
+    ViewGamePageComponent,
+    SelectedGamePageComponent,
+    EditGamePageComponent,
+    CreateGamePageComponent,
   ],
+  providers: [
+    GameExistsGuard,
+    GameIsDirtyGuard,
+    CanEditGameGuard,
+  ]
   // exports: []
 })
 export class GameModule {

@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { Game } from '../models/game.model';
 import { Result } from '../models/result.enum';
 import { StatsService } from '../services/stats.service';
@@ -9,16 +9,23 @@ import { StatsService } from '../services/stats.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="row">
-      <chart class="col-xs-12" [options]="options"></chart>
+      <chart class="col-xs-12 chart-box" [options]="options"></chart>
     </div>
   `,
+  styles: [
+    `.chart-box {
+      height: 300px;
+      min-width: 250px;
+      max-width: 1000px;
+    }`
+  ]
 })
-export class GameTimelineChartComponent implements OnInit, OnChanges {
+export class GameTimelineChartComponent implements OnChanges {
   @Input()
   games: Game[];
 
   @Input()
-  playerId: number;
+  playerId: string;
   @Input()
   deckId: number;
 
@@ -39,10 +46,6 @@ export class GameTimelineChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setOptions();
-  }
-
-  ngOnInit() {
     this.setOptions();
   }
 

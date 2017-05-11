@@ -1,68 +1,62 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 import { NotificationService } from '../shared/services/notification.service';
 import { GamePlayer } from '../shared/models/game-player.model';
+import { Player } from '../shared/models/player.model';
+import * as fromRoot from '../state-management/reducers/root';
+import * as gameActions from '../state-management/actions/game.actions';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-game-players',
   templateUrl: 'game-players.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamePlayersComponent {
   @Input()
   gamePlayers: GamePlayer[];
+
+  editPlayerId$: Observable<string>;
+
   @Input()
   readOnly: boolean = false;
-  @Output()
-  playerChange: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
-  addActive: boolean = true;
-
-  constructor(private notificationService: NotificationService) {
+  constructor(private store: Store<fromRoot.State>,
+              private notificationService: NotificationService) {
+    this.editPlayerId$ = store.select(fromRoot.getGameForEditPlayerId);
   }
 
   onWinnerChange(newWinner?: GamePlayer) {
-    this.gamePlayers.forEach((gamePlayer: GamePlayer) => {
-      gamePlayer.isWinner = (gamePlayer === newWinner);
-    });
-    this.playerChange.emit(newWinner);
+    this.store.dispatch(new gameActions.SetWinnerAction(newWinner));
   }
 
   onRemove(gamePlayer: GamePlayer) {
-    const playerIndex = this.gamePlayers.indexOf(gamePlayer);
-    if (playerIndex > -1) {
-      this.gamePlayers.splice(playerIndex, 1);
-      this.playerChange.emit(gamePlayer);
-    }
+    this.store.dispatch(new gameActions.RemovePlayerAction(gamePlayer));
   }
 
   onPlayerEdit(updatedPlayer: GamePlayer) {
-    this.playerChange.emit(updatedPlayer);
+    this.store.dispatch(new gameActions.UpdatePlayerAction(updatedPlayer));
   }
 
-  onNewPlayerAdd(newPlayer: GamePlayer) {
-    console.log(newPlayer);
-    //TODO proper validation here
-    if (!newPlayer || !this.validateNewPlayer(newPlayer)) {
+  onEditPlayer(gamePlayer: GamePlayer) {
+    this.store.dispatch(new gameActions.EditPlayerAction(gamePlayer));
+  }
+
+  onCancelEditPlayer() {
+    this.store.dispatch(new gameActions.CancelEditPlayerAction());
+  }
+
+  onNewPlayerAdd(player: Player) {
+    if (!player || !this.validateNewPlayer(player.playerId)) {
       return;
     }
-    if (this.gamePlayers.length < 1) {
-      newPlayer.isWinner = true;
-    }
-    this.gamePlayers.push(newPlayer);
-    this.resetForm();
-    this.playerChange.emit(newPlayer);
+    this.store.dispatch(new gameActions.AddPlayerAction(player));
   }
 
-  private resetForm() {
-    this.addActive = false;
-    setTimeout(() => {
-      this.addActive = true;
-    }, 0);
-  };
-
-  private validateNewPlayer(newPlayer: GamePlayer) {
+  private validateNewPlayer(newPlayerId: string) {
     // validate unique player
-    if (this.gamePlayers.find((gamePlayer) => gamePlayer.player.playerId === +newPlayer.playerId)) {
+    if (this.gamePlayers.find((gamePlayer) => gamePlayer.playerId === newPlayerId)) {
       console.warn('player already listed');
       this.notificationService.warn('Nope', 'player already listed');
       return false;

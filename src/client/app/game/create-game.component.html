@@ -1,8 +1,0 @@
-<div *ngIf="game">
-  <h2>Create Game</h2>
-
-  <agot-game-form [game]="game" [hidden]="formDisabled"
-                  (update)="onSubmit($event)" (cancel)="onCancel()"></agot-game-form>
-</div>
-
-<agot-spinner [isRunning]="isLoading"></agot-spinner>

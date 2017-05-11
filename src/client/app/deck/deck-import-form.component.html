@@ -5,30 +5,28 @@
     <form [formGroup]="importForm" (ngSubmit)="onSubmit()" class="form">
       <div class="form-group">
         <label class="form-control-label">ThronesDB deck id</label>
-        <input type="text" pattern="[0-9]+" class="form-control" formControlName="thronesDbId" placeholder="e.g. 2570">
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-success" [disabled]="!importForm.valid || isImporting">
-          Import
-        </button>
+        <div class="input-group">
+          <input type="text" pattern="[0-9]+" class="form-control" formControlName="thronesDbId" placeholder="e.g. 2570">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-warning" [disabled]="!importForm.valid || (loading$ | async)">
+              Import Deck
+            </button>
+          </span>
+        </div>
       </div>
     </form>
   </div>
   <div class="col-md-6">
-    <agot-spinner [isRunning]="isImporting"></agot-spinner>
+    <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-    <div class="alert alert-danger" *ngIf="importError">
-      {{ importError }}
-    </div>
-
-    <div *ngIf="importedDeck">
+    <div *ngIf="importedDeck$ | async as importedDeck">
       <agot-deck-class-block [deckClass]="importedDeck"
                              class="card"
                              title="Does this look right?"
                              footerText="{{ importedDeck.thronesDbLink }}"></agot-deck-class-block>
       <div class="form-group">
         <button type="button" class="btn btn-success" (click)="onDeckSelect()">
-          {{ creating ? 'Add Player' : 'Update' }}
+          Set Deck
         </button>
       </div>
     </div>

@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Config } from './shared/config/env.config';
-import './operators';
+import { Player } from './shared/models/player.model';
+import { Store } from '@ngrx/store';
+import * as fromRoot from './state-management/reducers/root';
 
 /**
  * This class represents the main application component.
@@ -9,9 +12,13 @@ import './operators';
   moduleId: module.id,
   selector: 'agot-app',
   templateUrl: 'app.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  constructor() {
+  currentPlayer$: Observable<Player>;
+
+  constructor(private store: Store<fromRoot.State>) {
     console.log('Environment config', Config);
+    this.currentPlayer$ = store.select(fromRoot.getCurrentPlayer);
   }
 }

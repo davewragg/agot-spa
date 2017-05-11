@@ -1,75 +1,71 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { SeasonService } from '../services/season.service';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Season } from '../models/season.model';
 import { DateRangeType } from '../models/date-range-type.model';
-import * as moment from 'moment/moment';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-date-range',
   templateUrl: 'date-range.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateRangeComponent implements OnInit {
+export class DateRangeComponent {
+  dateForm: FormGroup = new FormGroup({
+    rangeSelection: new FormControl('', Validators.required),
+    ascending: new FormControl(''),
+    fromDate: new FormControl(''),
+    toDate: new FormControl(''),
+  });
+
   @Input()
-  criteria: FilterCriteria;
+  set criteria(criteria: FilterCriteria) {
+    if (criteria) {
+      this.setSelectedSeason(criteria);
+      this.setShowCustomDates(criteria);
+      this.dateForm.patchValue(criteria, { emitEvent: false });
+    }
+  }
+
   @Input()
   showSort: boolean = true;
   @Output()
   rangeChange: EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
+  rangeSelection: DateRangeType;
   dateRangeType = DateRangeType;
-  seasons: Observable<Season[]>;
+  seasons$: Observable<Season[]>;
 
-  today: string;
-  aWeekAgo: string;
   selectedSeason: string;
+  showCustomDates: boolean;
 
-  constructor(private _seasonService: SeasonService) {
-    this.seasons = _seasonService.seasons;
-    this.today = moment().add(1, 'days').toISOString();
-    this.aWeekAgo = moment().subtract(7, 'days').toISOString();
-  }
-
-  ngOnInit() {
-    if (!this.criteria) {
-      this.criteria = new FilterCriteria();
-    }
-    this.setSelectedSeason();
-  }
-
-  onSortChange(ascending: boolean) {
-    this.criteria.ascending = ascending;
-    this.onExecute();
+  constructor(private store: Store<fromRoot.State>) {
+    this.seasons$ = this.store.select(fromRoot.getSeasons);
   }
 
   onSetSeason(season: Season) {
-    this.criteria.rangeSelection = DateRangeType.CUSTOM;
-    this.setDates(season.startDate, season.endDate);
-    this.onExecute();
-  }
-
-  onSetRange(range: DateRangeType) {
-    this.criteria.rangeSelection = range;
-    this.setDates(null, null);
+    const { startDate, endDate } = season;
+    this.dateForm.patchValue({
+      rangeSelection: DateRangeType.CUSTOM,
+      fromDate: startDate,
+      toDate: endDate,
+    });
     this.onExecute();
   }
 
   onExecute() {
-    //.debounceTime(400).distinctUntilChanged()
-    this.setSelectedSeason();
-    this.rangeChange.emit(this.criteria);
+    const values = this.dateForm.value;
+    return this.rangeChange.emit(values);
   }
 
-  private setDates(fromDate?: string, toDate?: string) {
-    Object.assign(this.criteria, {
-      fromDate,
-      toDate,
-    });
-  };
+  private setShowCustomDates(criteria: FilterCriteria) {
+    this.showCustomDates = criteria.rangeSelection === DateRangeType.CUSTOM;
+  }
 
-  private setSelectedSeason() {
-    this.selectedSeason = `${this.criteria.fromDate}:${this.criteria.toDate}`;
+  private setSelectedSeason(criteria: FilterCriteria) {
+    this.selectedSeason = `${criteria.fromDate}:${criteria.toDate}`;
   }
 }

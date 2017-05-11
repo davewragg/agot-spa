@@ -8,20 +8,19 @@
       <div class="col-sm-6 form-group">
         <label class="form-control-label">Venue</label>
         <select class="form-control" formControlName="venueId">
-          <option value="">--{{ isLoading ? 'Loading venues' : 'Select venue' }}--</option>
-          <option *ngFor="let venue of venues | async" [value]="venue.venueId">{{ venue.name }}</option>
+          <option value="">--{{ (refDataLoading$ | async) ? 'Loading venues' : 'Select venue' }}--</option>
+          <option *ngFor="let venue of venues$ | async" [value]="venue.venueId">{{ venue.name }}</option>
         </select>
       </div>
     </div>
-    <agot-spinner [isRunning]="isLoading"></agot-spinner>
+    <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
   </fieldset>
 
-  <agot-game-players [gamePlayers]="gamePlayers" [readOnly]="false"
-                     (playerChange)="onPlayerChange()"></agot-game-players>
+  <agot-game-players [gamePlayers]="gamePlayers$ | async" [readOnly]="false"></agot-game-players>
 
   <div class="form-group">
     <button type="submit" [disabled]="!gameForm.valid"
-            class="btn btn-primary">{{ game.gameId ? 'Save' : 'Create' }}
+            class="btn btn-primary">Save
     </button>
 
     <button type="button" class="btn" (click)="onCancel()" [hidden]="cancelling">Cancel</button>
@@ -31,8 +30,6 @@
       <button type="button" class="btn btn-sm btn-danger" (click)="onCancel(true)">Yep</button>
       <button type="button" class="btn btn-sm btn-secondary" (click)="cancelling = false">Whoops</button>
     </div>
-
-    <!--<code>valid? {{ gameForm.valid }} pristine? {{ gameForm.pristine }}</code>-->
   </div>
 
   <div [hidden]="gameForm.valid || gameForm.pristine" class="alert alert-danger">

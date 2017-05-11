@@ -12,8 +12,7 @@
         <div>
           <small *ngIf="deck.thronesDbId" class="pull-xs-right">[imported]</small>
           <agot-deck-link [deck]="deck"></agot-deck-link>
-          <a class="small" *ngIf="deck.thronesDbLink" [href]="deck.thronesDbLink" rel="noopener" target="_blank"
-             [title]="deck.thronesDbLink">[TDB]</a>
+          <agot-thrones-db-link [deck]="deck"></agot-thrones-db-link>
         </div>
         <div class="small">
           <span class="text-muted pull-xs-right">
@@ -27,7 +26,7 @@
               </time></span>
           </span>
           by
-          <agot-player-link *ngIf="!!deck.creatorId" [player]="getPlayer(deck.creatorId) | async"></agot-player-link>
+          <agot-player-link *ngIf="!!deck.creatorId" [player]="deck.creator"></agot-player-link>
         </div>
       </article>
     </td>

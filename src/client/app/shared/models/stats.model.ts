@@ -8,7 +8,7 @@ export class Stats {
   private static getPercentage(played: number, stat: number) {
     return played < 1 ? 0 :
       Math.floor((stat / played) * 100);
-  };
+  }
 
   get winPercentage(): number {
     return Stats.getPercentage(this.played, this.won);

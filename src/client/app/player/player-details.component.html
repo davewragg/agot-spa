@@ -1,15 +1,17 @@
-<h3 *ngIf="player">{{ player.name }}</h3>
+<ng-container *ngIf="player$ | async as player">
+  <h3>{{ player.name }}</h3>
 
-<agot-date-range [showSort]="false" [criteria]="criteria"
-                 (rangeChange)="onDateRangeChange($event)"></agot-date-range>
+  <agot-date-range [showSort]="false" [criteria]="criteria$ | async"
+                   (rangeChange)="onDateRangeChange($event)"></agot-date-range>
 
-<agot-spinner [isRunning]="isLoading"></agot-spinner>
+  <agot-spinner [isRunning]="loading$ | async"></agot-spinner>
 
-<div *ngIf="playerStats">
-  <agot-player-stats [playerStats]="playerStats" [player]="player"></agot-player-stats>
-</div>
+  <div *ngIf="(playerStats$ | async) && !(loading$ | async)">
+    <agot-player-stats [playerStats]="playerStats$ | async" [player]="player"></agot-player-stats>
+  </div>
+</ng-container>
 
-<h3 *ngIf="!player && !isLoading" class="alert alert-danger">Player not found</h3>
+<h3 *ngIf="!(player$ | async) && !(loading$ | async)" class="alert alert-danger">Player not found</h3>
 
 <div class="">
   <a [routerLink]="['/players']" class="btn btn-outline-primary">&laquo; Back to Players</a>

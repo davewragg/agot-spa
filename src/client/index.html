@@ -16,7 +16,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="./assets/icons/apple-touch-icon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="./assets/icons/apple-touch-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon-180x180.png">
-  <link rel="icon" href="assets/favicon/favicon-<%= ENV_CONFIG.ENV %>.ico" type="image/png">
+  <link rel="icon" href="<%= APP_BASE %>assets/favicon/favicon-<%= ENV_CONFIG.ENV %>.ico" type="image/png">
   <link rel="icon" type="image/png" href="./assets/icons/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="./assets/icons/android-chrome-192x192.png" sizes="192x192">
   <link rel="icon" type="image/png" href="./assets/icons/favicon-96x96.png" sizes="96x96">
@@ -36,7 +36,7 @@
       captureUncaught: true,
       enabled: !!document.domain === 'paulhoughton.org',
       payload: {
-        environment: '<%=BUILD_TYPE%>',
+        environment: '<%= BUILD_TYPE %>',
         code_version: '<%= VERSION %>',
         host: document.domain
       }
@@ -56,7 +56,16 @@
   <div class="small text-xs-right text-muted"><%= VERSION %> <%= BUILD_TYPE %>&nbsp;</div>
 </div>
 
-<script>
+  <!--<script defer>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', '<%= GOOGLE_ANALYTICS_ID %>', 'auto');
+    ga('send', 'pageview');
+  </script>-->
+
+  <script>
   // Fixes undefined module function in SystemJS bundle
   function module() {}
 </script>

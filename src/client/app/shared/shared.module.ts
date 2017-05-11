@@ -2,11 +2,8 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ToasterModule } from 'angular2-toaster/angular2-toaster';
+import { ToasterModule } from 'angular2-toaster';
 import { ChartModule } from 'angular2-highcharts';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
 import { StatsTableComponent } from './stats-table/stats-table.component';
 import { ColourRangeDirective } from './directives/index';
 import {
@@ -26,7 +23,7 @@ import {
   PlayerLinkComponent,
   SpinnerComponent
 } from './components/index';
-import { CalendarPipe, DateFormatPipe, TimeAgoPipe } from './pipes/index';
+import { DateFormatPipe, TimeAgoPipe } from './pipes/index';
 import {
   CacheService,
   DataService,
@@ -40,6 +37,12 @@ import {
   StatsService,
   ThronesDbService
 } from './services/index';
+import { DateService } from './services/date.service';
+import { PlayerGroupService } from './services/player-group.service';
+import { PlayerGroupSelectorComponent } from './components/player-group-selector.component';
+import { ThronesDbLinkComponent } from './components/thrones-db-link.component';
+import { CurrentPlayerComponent } from './directives/current-player.directive';
+import { PaginationComponent } from './components/pagination.component';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -48,11 +51,7 @@ import {
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ToasterModule, ChartModule],
   declarations: [
-    ToolbarComponent,
-    NavbarComponent,
-    FooterComponent,
     StatsTableComponent,
-    CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
     ColourRangeDirective,
@@ -60,6 +59,7 @@ import {
     AgendaFilterComponent,
     CountComponent,
     DateRangeComponent,
+    PaginationComponent,
     DeckClassBadgeComponent,
     DeckClassBlockComponent,
     DeckLinkComponent,
@@ -69,20 +69,19 @@ import {
     NgPluralizeComponent,
     PlayedStatsChartComponent,
     PlayerFilterComponent,
+    PlayerGroupSelectorComponent,
     PlayerLinkComponent,
-    SpinnerComponent
+    ThronesDbLinkComponent,
+    SpinnerComponent,
+    CurrentPlayerComponent,
   ],
   exports: [
-    ToolbarComponent,
-    NavbarComponent,
-    FooterComponent,
     StatsTableComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     ToasterModule,
-    CalendarPipe,
     DateFormatPipe,
     TimeAgoPipe,
     ColourRangeDirective,
@@ -90,6 +89,7 @@ import {
     AgendaFilterComponent,
     CountComponent,
     DateRangeComponent,
+    PaginationComponent,
     DeckClassBadgeComponent,
     DeckClassBlockComponent,
     DeckLinkComponent,
@@ -99,8 +99,11 @@ import {
     NgPluralizeComponent,
     PlayedStatsChartComponent,
     PlayerFilterComponent,
+    PlayerGroupSelectorComponent,
     PlayerLinkComponent,
-    SpinnerComponent
+    ThronesDbLinkComponent,
+    SpinnerComponent,
+    CurrentPlayerComponent,
   ],
 })
 export class SharedModule {
@@ -108,13 +111,14 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        // NameListService,
         CacheService,
         DataService,
+        DateService,
         DeckService,
         GameService,
         NotificationService,
         PlayerService,
+        PlayerGroupService,
         RankingService,
         ReferenceDataService,
         SeasonService,

@@ -1,5 +1,5 @@
 <toaster-container></toaster-container>
-<agot-toolbar></agot-toolbar>
+<agot-toolbar [currentPlayer]="currentPlayer$ | async"></agot-toolbar>
 <agot-navbar></agot-navbar>
 <section class="container">
   <router-outlet></router-outlet>

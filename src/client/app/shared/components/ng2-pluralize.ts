@@ -46,5 +46,5 @@ export class NgPluralizeComponent implements OnChanges {
     }
 
     this.content = content;
-  };
+  }
 }

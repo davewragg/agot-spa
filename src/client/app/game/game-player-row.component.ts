@@ -11,19 +11,25 @@ export class GamePlayerRowComponent {
   @Input()
   gamePlayer: GamePlayer;
   @Input()
+  editing: boolean = false;
+  @Input()
   readOnly: boolean = false;
+
   @Output()
   updatePlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
   @Output()
   removePlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
-
-  editing: boolean = false;
+  @Output()
+  editPlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
+  @Output()
+  cancelEditPlayer: EventEmitter<GamePlayer> = new EventEmitter<GamePlayer>();
 
   onUpdateDeck({ deck, version }: any) {
-    this.gamePlayer.deck = deck;
-    this.gamePlayer.thronesDbVersion = version;
-    this.updatePlayer.emit(this.gamePlayer);
-    this.editing = false;
+    this.updatePlayer.emit(GamePlayer.patchValues(this.gamePlayer, {
+      deck,
+      deckId: deck.deckId,
+      thronesDbVersion: version,
+    }));
   }
 
   onRemove() {
@@ -31,6 +37,10 @@ export class GamePlayerRowComponent {
   }
 
   toggleEditing() {
-    this.editing = !this.editing;
+    if (this.editing) {
+      this.cancelEditPlayer.emit(this.gamePlayer);
+    } else {
+      this.editPlayer.emit(this.gamePlayer);
+    }
   }
 }

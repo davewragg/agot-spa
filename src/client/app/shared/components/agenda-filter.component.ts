@@ -1,33 +1,36 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { pull } from 'lodash';
-import { ReferenceDataService } from '../services/reference-data.service';
+import { without, cloneDeep } from 'lodash';
 import { FilterCriteria } from '../models/filter-criteria.model';
 import { Agenda } from '../models/agenda.model';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../state-management/reducers/root';
 
 @Component({
   moduleId: module.id,
   selector: 'agot-agenda-filter',
   templateUrl: 'agenda-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AgendaFilterComponent implements OnInit {
+export class AgendaFilterComponent implements OnChanges {
   @Input()
   criteria: FilterCriteria;
   @Output()
   agendaChange: EventEmitter<FilterCriteria> = new EventEmitter<FilterCriteria>();
 
-  agendas: Observable<Agenda[]>;
+  agendas$: Observable<Agenda[]>;
   expanded: boolean = false;
 
-  constructor(private referenceDataService: ReferenceDataService) {
-    this.agendas = referenceDataService.agendas;
+  constructor(private store: Store<fromRoot.State>) {
+    this.agendas$ = store.select(fromRoot.getAgendasList);
   }
 
-  ngOnInit() {
+  ngOnChanges(changes?: any) {
     if (!this.criteria) {
       this.criteria = new FilterCriteria();
     } else {
       this.expanded = !!this.criteria.agendaIds.length;
+      this.criteria = cloneDeep(this.criteria);
     }
   }
 
@@ -39,22 +42,34 @@ export class AgendaFilterComponent implements OnInit {
     //.debounceTime(400).distinctUntilChanged()
     const checked = $event.target.checked;
     const agendaId = +$event.target.value;
+
+    let updatedCriteria: FilterCriteria;
+
     if (checked && !this.criteria.agendaIds.includes(agendaId)) {
-      this.criteria.agendaIds.push(agendaId);
+      updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+        agendaIds: [
+          ...this.criteria.agendaIds,
+          agendaId,
+        ]
+      });
     } else if (!checked) {
-      pull(this.criteria.agendaIds, agendaId);
+      updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+        agendaIds: without(this.criteria.agendaIds, agendaId),
+      });
     }
     console.log(agendaId);
-    this.onExecute();
+    this.onExecute(updatedCriteria);
   }
 
   onClear() {
-    this.criteria.agendaIds.length = 0;
-    this.onExecute();
+    const updatedCriteria = FilterCriteria.patchValues(this.criteria, {
+      agendaIds: [],
+    });
+    this.onExecute(updatedCriteria);
   }
 
-  onExecute() {
+  onExecute(criteria: FilterCriteria) {
     //.debounceTime(400).distinctUntilChanged()
-    this.agendaChange.emit(this.criteria);
+    this.agendaChange.emit(criteria);
   }
 }

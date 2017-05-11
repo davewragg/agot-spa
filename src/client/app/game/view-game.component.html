@@ -11,7 +11,7 @@
     <div class="col-sm-6 form-group" *ngIf="game.venueId">
       <label class="form-control-label">Venue</label>
       <span class="form-control-static font-weight-bold">
-        {{ getVenueName(game.venueId) | async }}
+        {{ game.venue.name }}
       </span>
     </div>
   </div>
@@ -20,9 +20,10 @@
 <agot-game-players [gamePlayers]="game.gamePlayers" [readOnly]="true"></agot-game-players>
 
 <div>
-  <button type="button" class="btn btn-outline-success" (click)="onEdit()">Edit</button>
-  <button type="button" class="btn btn-outline-danger" (click)="onDelete()" [hidden]="deleting">Delete</button>
-
+  <agot-current-player [isGamePlayer]="game">
+    <button type="button" class="btn btn-outline-success" (click)="onEdit()">Edit</button>
+    <button type="button" class="btn btn-outline-danger" (click)="onDelete()" [hidden]="deleting">Delete</button>
+  </agot-current-player>
   <div [hidden]="!deleting" class="card card-block alert-warning">
     <p class="card-text">Serious delete game?</p>
     <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(true)">Yep</button>

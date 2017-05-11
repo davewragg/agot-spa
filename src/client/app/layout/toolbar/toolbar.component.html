@@ -1,0 +1,8 @@
+<header>
+  <h1>A League of Thrones</h1>
+  <span class="header-icon"></span>
+  <span *ngIf="currentPlayer" class="user-controls">
+    Hi {{ currentPlayer.name }} |
+    <a href="/User/Account/Login">Account</a>
+  </span>
+</header>
