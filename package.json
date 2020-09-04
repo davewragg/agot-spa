@@ -109,7 +109,7 @@
     "karma-remap-istanbul": "^0.2.1",
     "merge-stream": "^1.0.0",
     "minimatch": "^3.0.3",
-    "open": "0.0.5",
+    "open": "6.0.0",
     "protractor": "^4.0.14",
     "remap-istanbul": "^0.8.4",
     "rimraf": "^2.5.4",
