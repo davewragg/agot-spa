@@ -89,6 +89,10 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/geojson@*":
+  version "7946.0.7"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.7.tgz#c8fa532b60a0042219cdf173ca21a975ef0666ad"
+
 "@types/gulp-filter@^3.0.29":
   version "3.0.29"
   resolved "https://registry.yarnpkg.com/@types/gulp-filter/-/gulp-filter-3.0.29.tgz#b81f6b98fc8268271080ef13c9e0f51ae8dff884"
@@ -133,9 +137,19 @@
     "@types/orchestrator" "*"
     "@types/vinyl" "*"
 
+"@types/highcharts@^4.2.36", "@types/highcharts@^4.2.43":
+  version "4.2.57"
+  resolved "https://registry.yarnpkg.com/@types/highcharts/-/highcharts-4.2.57.tgz#f756907fc1756c3148a6226efabd3520a8929db9"
+  dependencies:
+    "@types/geojson" "*"
+
 "@types/jasmine@^2.5.35", "@types/jasmine@^2.5.36":
   version "2.5.40"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.40.tgz#875c7ae739dcab1342794f51231c4aadcda6eb79"
+
+"@types/lodash@^4.14.44":
+  version "4.14.161"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.161.tgz#a21ca0777dabc6e4f44f3d07f37b765f54188b18"
 
 "@types/micromatch@*":
   version "2.3.29"
@@ -310,6 +324,17 @@ angular2-dependencies-graph@^1.0.0-alpha.12:
     svg-to-png "2.0.1"
     typescript "2.0.0"
     viz.js "1.3.0"
+
+angular2-highcharts@^0.4.1:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/angular2-highcharts/-/angular2-highcharts-0.4.3.tgz#83812292813bbf1d9f4be4bff54a2706610ef61b"
+  dependencies:
+    "@types/highcharts" "^4.2.36"
+    highcharts "^5.0.2"
+
+angular2-toaster@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/angular2-toaster/-/angular2-toaster-2.0.0.tgz#a42764dd4d470dee0e1209d6b0bd585b24e708c0"
 
 ansi-align@^1.1.0:
   version "1.1.0"
@@ -489,6 +514,14 @@ autoprefixer@^6.3.1, autoprefixer@^6.5.1:
     num2fraction "^1.2.2"
     postcss "^5.2.8"
     postcss-value-parser "^3.2.3"
+
+autotrack@^1.0.3:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/autotrack/-/autotrack-1.1.0.tgz#586f7009859f3621f4f29b52d7447153d3f65df7"
+  dependencies:
+    debounce "^1.0.0"
+    dom-utils "^0.4.0"
+    object-assign "^4.1.0"
 
 aws-sign2@~0.6.0:
   version "0.6.0"
@@ -795,6 +828,13 @@ boom@2.x.x:
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
   dependencies:
     hoek "2.x.x"
+
+bootstrap@4.0.0-alpha.5:
+  version "4.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-alpha.5.tgz#a126b648c3bd2f52b8fad4bbc5e2d0ad2abf7064"
+  dependencies:
+    jquery "1.9.1 - 3"
+    tether "^1.3.7"
 
 boxen@^0.6.0:
   version "0.6.0"
@@ -1505,6 +1545,10 @@ dateformat@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-2.0.0.tgz#2743e3abb5c3fc2462e527dca445e04e9f4dee17"
 
+debounce@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
+
 debug-fabulous@0.0.X:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/debug-fabulous/-/debug-fabulous-0.0.4.tgz#fa071c5d87484685424807421ca4b16b0b1a0763"
@@ -1686,6 +1730,10 @@ dom-serializer@0, dom-serializer@~0.1.0:
   dependencies:
     domelementtype "~1.1.1"
     entities "~1.1.1"
+
+dom-utils@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/dom-utils/-/dom-utils-0.4.1.tgz#22f1dbaf5fddecfc0525f2c07e92695744054f5d"
 
 domelementtype@1, domelementtype@^1.3.0:
   version "1.3.0"
@@ -2001,6 +2049,10 @@ eventemitter3@1.x.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
 
+eventemitter3@^4.0.0:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+
 exec-buffer@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/exec-buffer/-/exec-buffer-2.0.1.tgz#0028a31be0b1460b61d075f96af4583b9e335ea0"
@@ -2284,6 +2336,10 @@ flatten@^1.0.2:
 fn-args@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fn-args/-/fn-args-1.0.0.tgz#974dafa1aeac4ac7c21fa09cc3b80f650106ed32"
+
+follow-redirects@^1.0.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
 
 for-in@^0.1.5:
   version "0.1.6"
@@ -3062,6 +3118,10 @@ hawk@~3.1.0, hawk@~3.1.3:
     hoek "2.x.x"
     sntp "1.x.x"
 
+highcharts@^5.0.2, highcharts@^5.0.6:
+  version "5.0.15"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-5.0.15.tgz#a9af11538a85b85f300e66f7a0e048a7ef8ab381"
+
 highlight.js@^9.8.0:
   version "9.9.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.9.0.tgz#b9995dcfdc2773e307a34f0460d92b9a474782c0"
@@ -3123,12 +3183,29 @@ http-errors@~1.5.0:
     setprototypeof "1.0.2"
     statuses ">= 1.3.1 < 2"
 
+http-proxy-middleware@^0.17.3:
+  version "0.17.4"
+  resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-0.17.4.tgz#642e8848851d66f09d4f124912846dbaeb41b833"
+  dependencies:
+    http-proxy "^1.16.2"
+    is-glob "^3.1.0"
+    lodash "^4.17.2"
+    micromatch "^2.3.11"
+
 http-proxy@1.15.2, http-proxy@^1.13.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.15.2.tgz#642fdcaffe52d3448d2bda3b0079e9409064da31"
   dependencies:
     eventemitter3 "1.x.x"
     requires-port "1.x.x"
+
+http-proxy@^1.16.2:
+  version "1.18.1"
+  resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
+  dependencies:
+    eventemitter3 "^4.0.0"
+    follow-redirects "^1.0.0"
+    requires-port "^1.0.0"
 
 http-signature@~1.1.0:
   version "1.1.1"
@@ -3656,6 +3733,10 @@ jpegtran-bin@^3.0.0:
     bin-wrapper "^3.0.0"
     logalot "^2.0.0"
 
+"jquery@1.9.1 - 3":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
+
 js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
@@ -4080,8 +4161,8 @@ lodash.merge@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
 
 lodash.mergewith@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.2.tgz#617121f89ac55f59047c7aec1ccd6654c6590f55"
 
 lodash.pick@^4.2.1:
   version "4.4.0"
@@ -4135,6 +4216,10 @@ lodash@^3.10.1, lodash@^3.8.0:
 lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.3, lodash@^4.2.0, lodash@^4.5.0, lodash@^4.8.2:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
+lodash@^4.17.2:
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
 
 lodash@~1.0.1:
   version "1.0.2"
@@ -4295,7 +4380,7 @@ methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-micromatch@2.3.11, micromatch@^2.1.5, micromatch@^2.3.7, micromatch@^2.3.8:
+micromatch@2.3.11, micromatch@^2.1.5, micromatch@^2.3.11, micromatch@^2.3.7, micromatch@^2.3.8:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
   dependencies:
@@ -4394,6 +4479,10 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.17.1:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
 
 morgan@^1.6.1:
   version "1.7.0"
@@ -5146,7 +5235,7 @@ progress@~1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
 
-"protractor@>=4 <5", protractor@^4.0.9:
+"protractor@>=4 <5", protractor@^4.0.14:
   version "4.0.14"
   resolved "https://registry.yarnpkg.com/protractor/-/protractor-4.0.14.tgz#efc4a877fac3a182a9dded26cd5869f4762fd172"
   dependencies:
@@ -5570,7 +5659,7 @@ require-main-filename@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
 
-requires-port@1.x.x:
+requires-port@1.x.x, requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
 
@@ -6301,6 +6390,10 @@ tempfile@^1.0.0:
   dependencies:
     os-tmpdir "^1.0.0"
     uuid "^2.0.1"
+
+tether@^1.3.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.7.tgz#d56a818590d8fe72e387f77a67f93ab96d8e1fb2"
 
 textextensions@~1.0.0:
   version "1.0.2"
