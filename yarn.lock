@@ -2453,8 +2453,8 @@ fn-args@^1.0.0:
   resolved "https://registry.yarnpkg.com/fn-args/-/fn-args-1.0.0.tgz#974dafa1aeac4ac7c21fa09cc3b80f650106ed32"
 
 follow-redirects@^1.0.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
 
 for-in@^0.1.5:
   version "0.1.6"
