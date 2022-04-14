@@ -64,7 +64,7 @@
     "@types/systemjs": "^0.19.31",
     "@types/yargs": "^6.5.0",
     "@types/zone.js": "^0.0.27",
-    "async": "^2.1.1",
+    "async": "^3.2.2",
     "autoprefixer": "^6.5.1",
     "browser-sync": "^2.17.3",
     "codelyzer": "~2.0.0-beta.3",
